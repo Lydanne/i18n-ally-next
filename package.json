@@ -24,7 +24,7 @@
   "main": "./dist/extension",
   "icon": "res/logo.png",
   "engines": {
-    "vscode": "^1.100.0"
+    "vscode": "^1.109.0"
   },
   "activationEvents": [
     "workspaceContains:package.json",
