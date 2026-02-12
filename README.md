@@ -110,7 +110,6 @@ As a collaborative productivity platform, it helps structure and automate the tr
 - Supports [linked locale messages](https://kazupon.github.io/vue-i18n/guide/messages.html#linked-locale-messages)
 - Uses i18n for the extension itself, of course. [Translation List](https://github.com/lydanne/i18n-ally-next#-multilingual-support)
 
-
 ## 🌍 Multilingual Support
 
 This extension itself supports i18n as well. It will be auto-matched to the display language you use in your VS Code editor. We currently support the following languages.
@@ -144,7 +143,6 @@ This extension itself supports i18n as well. It will be auto-matched to the disp
 This extension was inspired by [think2011/vscode-vue-i18n](https://github.com/think2011/vscode-vue-i18n), it wouldn't exist without [@think2011](https://github.com/think2011)'s great work.
 
 Support for Vue Single File Component (SFC) is powered by [kazupon/vue-i18n-locale-message](https://github.com/kazupon/vue-i18n-locale-message), which is created by the author of vue-i18n. Thanks for making this!
-
 
 ### Code Contributors
 

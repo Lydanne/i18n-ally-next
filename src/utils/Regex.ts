@@ -1,10 +1,10 @@
+import type { KeyInDocument, RewriteKeyContext } from '../core/types'
+import type { ScopeRange } from '../frameworks/base'
 import { sortBy } from 'lodash'
-import { QUOTE_SYMBOLS } from '../meta'
-import { KeyInDocument, RewriteKeyContext } from '../core/types'
-import { ScopeRange } from '../frameworks/base'
-import { Log } from '.'
+import { Config, CurrentFile } from '~/core'
 import i18n from '~/i18n'
-import { CurrentFile, Config } from '~/core'
+import { Log } from '.'
+import { QUOTE_SYMBOLS } from '../meta'
 
 export function handleRegexMatch(
   text: string,
@@ -87,7 +87,7 @@ export function normalizeUsageMatchRegex(reg: (string | RegExp)[]): RegExp[] {
   return reg.map((i) => {
     if (typeof i === 'string') {
       try {
-        const interpated = i.replace(/{key}/g, Config.regexKey)
+        const interpated = i.replace(/\{key\}/g, Config.regexKey)
         return new RegExp(interpated, 'gm')
       }
       catch (e) {

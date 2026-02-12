@@ -1,16 +1,17 @@
-import path from 'path'
-import YAML from 'js-yaml'
+import type { FileSystemWatcher } from 'vscode'
+import type { PendingWrite, ReviewComment, ReviewCommentWithMeta, ReviewData, TranslationCandidate, TranslationCandidateWithMeta } from './types'
+import path from 'node:path'
 import fs from 'fs-extra'
-import { EventEmitter, window, workspace, FileSystemWatcher } from 'vscode'
+import YAML from 'js-yaml'
 import { get, set } from 'lodash'
 import { nanoid } from 'nanoid'
+import { EventEmitter, window, workspace } from 'vscode'
+import { Log } from '~/utils'
+import { FILEWATCHER_TIMEOUT } from '../meta'
 import { cleanObject } from '../utils/cleanObject'
 import { promptEdit } from '../utils/prompts'
-import { FILEWATCHER_TIMEOUT } from '../meta'
 import { Config } from './Config'
-import { ReviewData, ReviewComment, ReviewCommentWithMeta, TranslationCandidate, TranslationCandidateWithMeta, PendingWrite } from './types'
 import { CurrentFile } from './CurrentFile'
-import { Log } from '~/utils'
 
 export class Reviews {
   private filepath = ''
@@ -55,11 +56,11 @@ export class Reviews {
     return this.set(key, 'description', description)
   }
 
-  getDescription(key: string): string |undefined {
+  getDescription(key: string): string | undefined {
     return this.get(key, 'description')
   }
 
-  async setTranslationCandidates(items: {key: string; locale: string; translation?: TranslationCandidate}[]) {
+  async setTranslationCandidates(items: { key: string, locale: string, translation?: TranslationCandidate }[]) {
     for (const { key, translation, locale } of items)
       await this.set(key, 'translation_candidate', translation, locale, false)
     this.save()
@@ -69,7 +70,7 @@ export class Reviews {
     return this.get(key, 'translation_candidate', locale)
   }
 
-  async applyTranslationCandidates(candidates: {keypath: string; locale: string}[]) {
+  async applyTranslationCandidates(candidates: { keypath: string, locale: string }[]) {
     const pendings: PendingWrite[] = []
 
     for (const { keypath, locale } of candidates) {
@@ -134,7 +135,7 @@ export class Reviews {
     return this.set(key, 'comments', comments, locale)
   }
 
-  editComment(key: string, locale: string, data: Partial<ReviewComment> & {id: string}) {
+  editComment(key: string, locale: string, data: Partial<ReviewComment> & { id: string }) {
     const comments: ReviewComment[] = this.get(key, 'comments', locale) || []
     const comment = comments.find(i => i.id === data.id)
     if (comment) {

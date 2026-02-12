@@ -1,6 +1,6 @@
-import { CustomRefactorTemplate } from '~/core/types'
+import type { CustomRefactorTemplate } from '~/core/types'
 
-export function resolveRefactorTemplate(arr: (string | CustomRefactorTemplate & {template?: string})[] = []): CustomRefactorTemplate[] {
+export function resolveRefactorTemplate(arr: (string | CustomRefactorTemplate & { template?: string })[] = []): CustomRefactorTemplate[] {
   return arr.map((i) => {
     if (typeof i === 'string') {
       return {

@@ -1,11 +1,4 @@
-<template lang="pug">
-.avatar
-  .image
-    img(:src='src')
-</template>
-
 <script lang="js">
-/* eslint-disable vue/require-default-prop */
 import Vue from 'vue'
 import VCheck from 'vue-material-design-icons/Check.vue'
 import VPlusMinus from 'vue-material-design-icons/PlusMinus.vue'
@@ -28,6 +21,12 @@ export default Vue.extend({
   },
 })
 </script>
+
+<template lang="pug">
+.avatar
+  .image
+    img(:src='src')
+</template>
 
 <style lang="stylus">
 .avatar

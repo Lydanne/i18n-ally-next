@@ -1,14 +1,16 @@
-import path from 'path'
-import { execSync } from 'child_process'
-import { workspace, extensions, ExtensionContext, commands, ConfigurationScope, WorkspaceFolder } from 'vscode'
+import type { ConfigurationScope, ExtensionContext, WorkspaceFolder } from 'vscode'
+import type { DirStructureAuto, KeyStyle, SortCompare } from '.'
+import type { ExtractionBabelOptions, ExtractionHTMLOptions } from '~/extraction/parsers/options'
+import type { CaseStyles } from '~/utils/changeCase'
+import { execSync } from 'node:child_process'
+import path from 'node:path'
 import { trimEnd, uniq } from 'lodash'
-import { TagSystems } from '../tagSystems'
-import { EXT_NAMESPACE, EXT_ID, EXT_LEGACY_NAMESPACE, KEY_REG_DEFAULT, KEY_REG_ALL, DEFAULT_LOCALE_COUNTRY_MAP } from '../meta'
-import { KeyStyle, DirStructureAuto, SortCompare, TargetPickingStrategy } from '.'
+import { commands, extensions, workspace } from 'vscode'
 import i18n from '~/i18n'
-import { CaseStyles } from '~/utils/changeCase'
-import { ExtractionBabelOptions, ExtractionHTMLOptions } from '~/extraction/parsers/options'
 import { resolveRefactorTemplate } from '~/utils/resolveRefactorTemplate'
+import { TargetPickingStrategy } from '.'
+import { DEFAULT_LOCALE_COUNTRY_MAP, EXT_ID, EXT_LEGACY_NAMESPACE, EXT_NAMESPACE, KEY_REG_ALL, KEY_REG_DEFAULT } from '../meta'
+import { TagSystems } from '../tagSystems'
 
 export class Config {
   static readonly reloadConfigs = [
@@ -180,7 +182,7 @@ export class Config {
     return this.getConfig<SortCompare>('sortCompare') || 'binary'
   }
 
-  static get sortLocale(): string | undefined{
+  static get sortLocale(): string | undefined {
     return this.getConfig<string>('sortLocale')
   }
 
@@ -373,8 +375,8 @@ export class Config {
 
   static get usageDerivedKeyRules() {
     return this.getConfig<string[]>('usage.derivedKeyRules')
-    ?? this.getConfig<string[]>('derivedKeyRules') // back compatible, deprecated.
-    ?? undefined
+      ?? this.getConfig<string[]>('derivedKeyRules') // back compatible, deprecated.
+      ?? undefined
   }
 
   static get usageScanningIgnore() {
@@ -532,8 +534,7 @@ export class Config {
     // transfer legacy config
     if (workspace
       .getConfiguration(EXT_LEGACY_NAMESPACE)
-      .get<any>(key)
-    ) {
+      .get<any>(key)) {
       await workspace.getConfiguration(EXT_LEGACY_NAMESPACE)
         .update(key, undefined, isGlobal)
     }

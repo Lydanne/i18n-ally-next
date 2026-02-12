@@ -1,9 +1,9 @@
-import child_process from 'child_process'
-import path from 'path'
-import { Parser } from './base'
+import child_process from 'node:child_process'
+import path from 'node:path'
+import { Config, Global } from '~/core'
 import i18n from '~/i18n'
 import { Log } from '~/utils'
-import { Config, Global } from '~/core'
+import { Parser } from './base'
 
 const LanguageIds = {
   js: 'javascript',
@@ -18,7 +18,7 @@ const LanguageExts = {
 export class EcmascriptParser extends Parser {
   readonly readonly = true
 
-  constructor(public readonly id: 'js'|'ts' = 'js') {
+  constructor(public readonly id: 'js' | 'ts' = 'js') {
     super([LanguageIds[id]], LanguageExts[id])
   }
 

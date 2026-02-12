@@ -1,24 +1,25 @@
-import path from 'path'
-import { workspace, window, WorkspaceEdit, RelativePattern } from 'vscode'
+import type { DirStructure, ParsedFile, PendingWrite } from '../types'
+import path from 'node:path'
 import fg from 'fast-glob'
-import _, { uniq, throttle, set } from 'lodash'
 import fs from 'fs-extra'
+import _, { set, throttle, uniq } from 'lodash'
 import { findBestMatch } from 'string-similarity'
-import { FILEWATCHER_TIMEOUT } from '../../meta'
-import { ParsedFile, PendingWrite, DirStructure, TargetPickingStrategy } from '../types'
-import { LocaleTree } from '../Nodes'
-import { AllyError, ErrorType } from '../Errors'
-import { Analyst, Global, Config } from '..'
-import { Telemetry, TelemetryKey } from '../Telemetry'
-import { Loader } from './Loader'
-import { ReplaceLocale, Log, applyPendingToObject, unflatten, NodeHelper, getCache, setCache, getLocaleCompare } from '~/utils'
+import { RelativePattern, window, workspace, WorkspaceEdit } from 'vscode'
 import i18n from '~/i18n'
+import { applyPendingToObject, getCache, getLocaleCompare, Log, NodeHelper, ReplaceLocale, setCache, unflatten } from '~/utils'
+import { Analyst, Config, Global } from '..'
+import { FILEWATCHER_TIMEOUT } from '../../meta'
+import { AllyError, ErrorType } from '../Errors'
+import { LocaleTree } from '../Nodes'
+import { Telemetry, TelemetryKey } from '../Telemetry'
+import { TargetPickingStrategy } from '../types'
+import { Loader } from './Loader'
 
 const THROTTLE_DELAY = 1500
 
 export class LocaleLoader extends Loader {
   private _files: Record<string, ParsedFile> = {}
-  private _path_matchers: {regex: RegExp; matcher: string}[] = []
+  private _path_matchers: { regex: RegExp, matcher: string }[] = []
   private _dir_structure: DirStructure = 'file'
   private _locale_dirs: string[] = []
 
@@ -75,7 +76,7 @@ export class LocaleLoader extends Loader {
   }
 
   // #region throttled functions
-  private throttledFullReload = throttle(async() => {
+  private throttledFullReload = throttle(async () => {
     Log.info('🔄 Perfroming a full reload', 2)
     await this.loadAll(false)
     this.update()
@@ -87,7 +88,7 @@ export class LocaleLoader extends Loader {
 
   private throttledLoadFileWaitingList: [string, string][] = []
 
-  private throttledLoadFileExecutor = throttle(async() => {
+  private throttledLoadFileExecutor = throttle(async () => {
     const list = this.throttledLoadFileWaitingList
     this.throttledLoadFileWaitingList = []
     if (list.length) {
@@ -210,7 +211,8 @@ export class LocaleLoader extends Loader {
       {
         placeHolder: i18n.t('prompt.select_file_to_store_key', keypath),
         ignoreFocusOut: true,
-      })
+      },
+    )
 
     return result?.path
   }
@@ -259,7 +261,7 @@ export class LocaleLoader extends Loader {
     return findBestMatch(fromPath, paths).bestMatch.target
   }
 
-  async write(pendings: PendingWrite|PendingWrite[]) {
+  async write(pendings: PendingWrite | PendingWrite[]) {
     if (!Array.isArray(pendings))
       pendings = [pendings]
 
@@ -480,7 +482,7 @@ export class LocaleLoader extends Loader {
     catch (e) {
       this.unsetFile(relativePath)
       Log.info(`🐛 Failed to load ${e}`, 2)
-      // eslint-disable-next-line no-console
+
       console.error(e)
     }
   }

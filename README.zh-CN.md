@@ -33,7 +33,6 @@
 
 <br>
 
-
 <p align="center">
 <a href='https://github.com/lydanne/i18n-ally-next/wiki/Supported-Frameworks' target="__blank">
 <img src="https://github.com/lydanne/i18n-ally-next/blob/screenshots/supported-frameworks.png?raw=true" alt="Supported Frameworks" width="500"/>
@@ -92,16 +91,13 @@
 
 [查看维基](https://github.com/lydanne/i18n-ally-next/wiki)!
 
-
 ## 💭 常见问题
 
 [常见问题](https://github.com/lydanne/i18n-ally-next/wiki/FAQ).
 
-
 ## 📜 支持文件格式
 
 [支持的文件格式](https://github.com/lydanne/i18n-ally-next/wiki/Supported-Locale-Formats).
-
 
 ## ❤️ 感谢
 
@@ -110,7 +106,6 @@
 Vue SFC 的支持来自于 vue-i18n 的作者 [kazupon](https://github.com/kazupon) 的 [kazupon/vue-i18n-locale-message](https://github.com/kazupon/vue-i18n-locale-message)。感谢提供的帮助!
 
 同时也十分感谢所有这些很棒的 [贡献者](https://github.com/lydanne/i18n-ally-next/graphs/contributors) 和看到这里的你。
-
 
 ## 📄 License
 

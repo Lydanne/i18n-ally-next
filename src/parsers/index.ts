@@ -1,13 +1,13 @@
-import { Json5Parser } from './json5'
-import { JsonParser } from './json'
-import { YamlParser } from './yaml'
+import type { Parser } from './base'
 import { EcmascriptParser } from './ecmascript'
-import { IniParser } from './ini'
-import { PoParser } from './po'
-import { PhpParser } from './php'
-import { Properties } from './properties'
 import { FluentParser } from './ftl'
-import { Parser } from './base'
+import { IniParser } from './ini'
+import { JsonParser } from './json'
+import { Json5Parser } from './json5'
+import { PhpParser } from './php'
+import { PoParser } from './po'
+import { Properties } from './properties'
+import { YamlParser } from './yaml'
 
 export const DefaultEnabledParsers = ['json', 'yaml', 'json5']
 

@@ -1,10 +1,13 @@
-import path from 'path'
-import fs from 'fs'
-import { workspace, FileSystemWatcher, TextDocument } from 'vscode'
+import type { FileSystemWatcher, TextDocument } from 'vscode'
+import type { ScopeRange } from './base'
+import type { LanguageId } from '~/utils'
+import fs from 'node:fs'
+import path from 'node:path'
 import YAML from 'js-yaml'
-import { Framework, ScopeRange } from './base'
+import { workspace } from 'vscode'
 import { Global } from '~/core'
-import { LanguageId, File, Log } from '~/utils'
+import { File, Log } from '~/utils'
+import { Framework } from './base'
 
 const CustomFrameworkConfigFilename = './.vscode/i18n-ally-next-custom-framework.yml'
 

@@ -1,6 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { TextDocument } from 'vscode'
-import { KeyStyle, ParserOptions, KeyInDocument, Config } from '~/core'
+/* eslint-disable unused-imports/no-unused-vars */
+import type { TextDocument } from 'vscode'
+import type { KeyInDocument, KeyStyle, ParserOptions } from '~/core'
+import { Config } from '~/core'
 import { File } from '~/utils'
 
 export abstract class Parser {

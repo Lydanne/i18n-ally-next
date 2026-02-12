@@ -1,8 +1,8 @@
-import { TreeItem, ExtensionContext, TreeDataProvider, Command } from 'vscode'
-import { FeedbackItem } from '../items/FeedbackItem'
-import Links from '~/links'
+import type { Command, ExtensionContext, TreeDataProvider, TreeItem } from 'vscode'
 import { Commands } from '~/commands'
 import i18n from '~/i18n'
+import Links from '~/links'
+import { FeedbackItem } from '../items/FeedbackItem'
 
 export interface FeedbackItemDefintion {
   text: string

@@ -1,12 +1,12 @@
-import { randomUUID } from 'crypto'
+import type { CommandOptions } from '~/commands/manipulations/common'
+import { randomUUID } from 'node:crypto'
 import * as amplitude from '@amplitude/analytics-node'
-import { version } from '../../package.json'
-import { Config } from './Config'
-import { Log } from '~/utils'
 import { isDev, isProd, isTest } from '~/env'
 import { Global } from '~/extension'
+import { Log } from '~/utils'
 import { LocaleTreeItem, ProgressSubmenuItem } from '~/views'
-import { CommandOptions } from '~/commands/manipulations/common'
+import { version } from '../../package.json'
+import { Config } from './Config'
 
 const AMPLITUDE_API = isProd
   ? '710028b04f0f9274085eec6885e94ceb' // Prod
@@ -40,7 +40,7 @@ export enum TelemetryKey {
   TranslateKey = 'translate_key',
   Updated = 'updated',
   ReviewEditComment = 'review_edit_comment',
-  ReviewResolveComment = 'review_resolve_comment'
+  ReviewResolveComment = 'review_resolve_comment',
 }
 
 export enum ActionSource {
@@ -50,7 +50,7 @@ export enum ActionSource {
   Hover = 'hover',
   ContextMenu = 'context_menu',
   UiEditor = 'ui_editor',
-  Review = 'review'
+  Review = 'review',
 }
 
 export class Telemetry {

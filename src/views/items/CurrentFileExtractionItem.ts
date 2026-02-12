@@ -1,9 +1,9 @@
+import type { CurrentFileLocalesTreeProvider } from '../providers'
 import { TreeItemCollapsibleState, window } from 'vscode'
-import { CurrentFileLocalesTreeProvider } from '../providers'
+import { Config, CurrentFile, Global } from '~/core'
+import i18n from '~/i18n'
 import { BaseTreeItem } from './Base'
 import { HardStringDetectResultItem } from './HardStringDetectResultItem'
-import i18n from '~/i18n'
-import { Config, CurrentFile, Global } from '~/core'
 
 export class CurrentFileExtractionItem extends BaseTreeItem {
   langId = 'unknown'

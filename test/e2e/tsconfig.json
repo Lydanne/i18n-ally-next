@@ -1,16 +1,16 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
     "target": "esnext",
     "lib": ["ESNext"],
+    "module": "commonjs",
     "moduleResolution": "node",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "outDir": "../e2e-out",
     "paths": {
       "~/*": ["../../dist/src/*"]
-    }
+    },
+    "strict": true,
+    "outDir": "../e2e-out",
+    "esModuleInterop": true,
+    "skipLibCheck": true
   },
   "exclude": [
     "../../src/",

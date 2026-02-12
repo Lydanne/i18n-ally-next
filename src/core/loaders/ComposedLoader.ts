@@ -1,13 +1,14 @@
-import { Disposable } from 'vscode'
-import _ from 'lodash'
+import type { Disposable } from 'vscode'
+import type { FlattenLocaleTree, LocaleNode } from '../Nodes'
+import type { PendingWrite } from '../types'
 import { uniq } from '@antfu/utils'
-import { PendingWrite } from '../types'
-import { Translator } from '../Translator'
-import { Config } from '../Config'
-import { FulfillAllMissingKeys } from '../../commands/manipulations'
-import { LocaleTree, LocaleNode, FlattenLocaleTree } from '../Nodes'
-import { Loader } from './Loader'
+import _ from 'lodash'
 import { Log } from '~/utils'
+import { FulfillAllMissingKeys } from '../../commands/manipulations'
+import { Config } from '../Config'
+import { LocaleTree } from '../Nodes'
+import { Translator } from '../Translator'
+import { Loader } from './Loader'
 
 export class ComposedLoader extends Loader {
   constructor() {
@@ -126,7 +127,7 @@ export class ComposedLoader extends Loader {
 
     pendings = pendings.filter(i => i)
 
-    const distrubtedPendings: PendingWrite[][] = new Array(this.loadersReversed.length).fill(null).map(() => [])
+    const distrubtedPendings: PendingWrite[][] = Array.from({ length: this.loadersReversed.length }).fill(null).map(() => [])
     const loaders = this.loadersReversed
     for (const pending of pendings) {
       let handled = false
@@ -142,7 +143,7 @@ export class ComposedLoader extends Loader {
         Log.info(`💥 Unhandled write ${JSON.stringify(pending)}`)
     }
 
-    await Promise.all(loaders.map(async(loader, index) => {
+    await Promise.all(loaders.map(async (loader, index) => {
       if (distrubtedPendings[index] && distrubtedPendings[index].length)
         await loader.write(distrubtedPendings[index])
     }))

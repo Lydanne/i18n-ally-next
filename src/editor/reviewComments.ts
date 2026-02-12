@@ -1,13 +1,15 @@
-import { comments, CommentController, TextDocument, Range, Disposable, commands, CommentReply, CommentAuthorInformation, Uri, Comment, MarkdownString, CommentMode, CommentThread } from 'vscode'
+import type { Comment, CommentAuthorInformation, CommentController, CommentReply, CommentThread, TextDocument } from 'vscode'
+import type { ReviewComment } from '~/core'
+import type { ExtensionModule } from '~/modules'
+import { commands, CommentMode, comments, Disposable, MarkdownString, Range, Uri } from 'vscode'
+import { Commands } from '~/commands'
+import { ActionSource, Config, Global, KeyDetector, Telemetry, TelemetryKey } from '~/core'
+import i18n from '~/i18n'
+import { Log } from '~/utils'
 import { EXT_REVIEW_ID } from '../meta'
 import { getAvatarFromEmail } from '../utils/shared'
-import { ExtensionModule } from '~/modules'
-import { Commands } from '~/commands'
-import i18n from '~/i18n'
-import { Config, Global, ReviewComment, KeyDetector, ActionSource, Telemetry, TelemetryKey } from '~/core'
-import { Log } from '~/utils'
 
-function userToAuthorInfo(user?: {name?: string; email?: string}): CommentAuthorInformation {
+function userToAuthorInfo(user?: { name?: string, email?: string }): CommentAuthorInformation {
   if (!user) {
     return {
       name: i18n.t('review.unknown_user'),
@@ -36,7 +38,7 @@ class ReviewReply implements Comment {
 
 class ReviewCommentProvider implements Disposable {
   private _disposables: Disposable[] = []
-  private _cache: Record<string, [Range, {locale: string; keypath: string}][]> = {}
+  private _cache: Record<string, [Range, { locale: string, keypath: string }][]> = {}
   private _threads: Record<string, CommentThread[]> = {}
 
   constructor(public readonly controller: CommentController) {
@@ -93,7 +95,7 @@ class ReviewCommentProvider implements Disposable {
       })
   }
 
-  async createComment(reply: CommentReply, type: 'comment'|'approve'|'request_change') {
+  async createComment(reply: CommentReply, type: 'comment' | 'approve' | 'request_change') {
     const thread = reply.thread
     const info = this.getThreadInfo(thread)
 

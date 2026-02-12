@@ -1,4 +1,3 @@
-/* eslint-disable no-dupe-keys */
 import { expect } from 'chai'
 import { flatten, ROOT_KEY, unflatten } from '../../../src/utils/flat'
 

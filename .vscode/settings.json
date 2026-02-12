@@ -42,7 +42,7 @@
     "view.progress_submenu.empty_keys"
   ],
   "i18n-ally-next.usage.scanningIgnore": [
-    "examples",
+    "examples"
   ],
   "i18n-ally-next.regex.usageMatchAppend": [
     "/\\*\\s*i18n\\s*\\*/\\s*['\"`]({key})['\"`]"
@@ -109,5 +109,5 @@
     "examples/by-features/module-style/modules/moduleA/locales",
     "examples/by-features/module-style/modules/moduleB/locales",
     "examples/by-features/module-style/modules/moduleC/nested/locales"
-  ],
+  ]
 }

@@ -1,13 +1,15 @@
-import { workspace, ExtensionContext, Uri, window, EventEmitter } from 'vscode'
+import type { ExtensionContext, Uri } from 'vscode'
+import type { Loader } from '.'
+import type { DetectionResult } from '~/core/types'
 import { throttle } from 'lodash'
-import { ComposedLoader } from './loaders/ComposedLoader'
-import { Global } from './Global'
-import { VueSfcLoader } from './loaders/VueSfcLoader'
-import { FluentVueSfcLoader } from './loaders/FluentVueSfcLoader'
-import { Loader, Analyst } from '.'
+import { EventEmitter, window, workspace } from 'vscode'
 import { DetectHardStrings } from '~/commands/detectHardStrings'
-import { DetectionResult } from '~/core/types'
 import { Log } from '~/utils/Log'
+import { Analyst } from '.'
+import { Global } from './Global'
+import { ComposedLoader } from './loaders/ComposedLoader'
+import { FluentVueSfcLoader } from './loaders/FluentVueSfcLoader'
+import { VueSfcLoader } from './loaders/VueSfcLoader'
 
 export class CurrentFile {
   static _vue_sfc_loader: VueSfcLoader | null = null

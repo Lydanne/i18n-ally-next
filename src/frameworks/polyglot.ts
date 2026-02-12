@@ -1,11 +1,11 @@
+import type { LanguageId } from '~/utils'
 import { Framework } from './base'
-import { LanguageId } from '~/utils'
 
 class PolyglotFramework extends Framework {
   id = 'polyglot'
-  display= 'Polyglot'
+  display = 'Polyglot'
 
-  detection= {
+  detection = {
     packageJSON: [
       'node-polyglot',
     ],

@@ -1,4 +1,4 @@
-import { basename, dirname, join } from 'path'
+import { basename, dirname, join } from 'node:path'
 import * as Chai from 'chai'
 // @ts-ignore
 import Snapshot from 'chai-jest-snapshot'
@@ -8,7 +8,7 @@ before(() => {
   Snapshot.resetSnapshotRegistry()
 })
 
-beforeEach(function() {
+beforeEach(function () {
   const { currentTest } = this
   const file = currentTest!.file!
   const path = join(dirname(file), '__snapshots__', `${basename(file)}.snap`)

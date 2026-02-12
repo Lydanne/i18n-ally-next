@@ -1,6 +1,8 @@
-import { CompletionItemProvider, TextDocument, Position, CompletionItem, CompletionItemKind, languages } from 'vscode'
-import { ExtensionModule } from '~/modules'
-import { Global, KeyDetector, Loader, CurrentFile, LocaleTree, LocaleNode } from '~/core'
+import type { CompletionItemProvider, Position, TextDocument } from 'vscode'
+import type { Loader, LocaleNode, LocaleTree } from '~/core'
+import type { ExtensionModule } from '~/modules'
+import { CompletionItem, CompletionItemKind, languages } from 'vscode'
+import { CurrentFile, Global, KeyDetector } from '~/core'
 
 class CompletionProvider implements CompletionItemProvider {
   public provideCompletionItems(
@@ -23,9 +25,8 @@ class CompletionProvider implements CompletionItemProvider {
         .values(CurrentFile.loader.keys)
         .map((key) => {
           let resolvedKey = key
-          if (scopedKey)
-          {
-            resolvedKey = key.replace(`${scopedKey}.`, "")
+          if (scopedKey) {
+            resolvedKey = key.replace(`${scopedKey}.`, '')
           }
           const item = new CompletionItem(resolvedKey, CompletionItemKind.Text)
           item.detail = loader.getValueByKey(key)
@@ -77,7 +78,11 @@ const m: ExtensionModule = () => {
   return languages.registerCompletionItemProvider(
     Global.getDocumentSelectors(),
     new CompletionProvider(),
-    '.', '\'', '"', '`', ':',
+    '.',
+    '\'',
+    '"',
+    '`',
+    ':',
   )
 }
 

@@ -1,11 +1,11 @@
+import type { LanguageId } from '~/utils'
 import { Framework } from './base'
-import { LanguageId } from '~/utils'
 
 class GlobalizeFramework extends Framework {
   id = 'globalize'
-  display= 'Globalize'
+  display = 'Globalize'
 
-  detection= {
+  detection = {
     packageJSON: [
       'globalize',
     ],

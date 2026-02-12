@@ -1,4 +1,4 @@
-import { resolve, join } from 'path'
+import { join, resolve } from 'node:path'
 import fs from 'fs-extra'
 // @ts-expect-error
 import { glob } from 'glob-gitignore'

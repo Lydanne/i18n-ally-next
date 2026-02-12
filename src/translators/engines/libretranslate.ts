@@ -1,6 +1,7 @@
+import type { TranslateOptions, TranslateResult } from './base'
 import axios from 'axios'
-import TranslateEngine, { TranslateOptions, TranslateResult } from './base'
 import { Config } from '~/core'
+import TranslateEngine from './base'
 
 export default class LibreTranslate extends TranslateEngine {
   apiRoot = 'http://localhost:5000'
@@ -19,13 +20,12 @@ export default class LibreTranslate extends TranslateEngine {
       q: options.text,
       source: from,
       target: to,
-      format: "html",
+      format: 'html',
     }, {
       headers: {
         'Content-Type': 'application/json',
       },
-    },
-    )
+    })
 
     return this.transform(response, options)
   }

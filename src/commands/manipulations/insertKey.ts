@@ -1,7 +1,7 @@
 import { window } from 'vscode'
-import { promptKeys, promptTemplates } from '~/utils'
-import i18n from '~/i18n'
 import { Telemetry, TelemetryKey } from '~/core/Telemetry'
+import i18n from '~/i18n'
+import { promptKeys, promptTemplates } from '~/utils'
 
 export async function InsertKey() {
   Telemetry.track(TelemetryKey.InsertKey)

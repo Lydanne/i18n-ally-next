@@ -1,14 +1,15 @@
-import { commands, window, ViewColumn, workspace, TextDocument } from 'vscode'
-import { EditorPanel } from '../webview/panel'
-import { LocaleTreeItem } from '../views'
-import { Commands } from './commands'
-import { CommandOptions } from './manipulations/common'
-import { ExtensionModule } from '~/modules'
-import i18n from '~/i18n'
+import type { TextDocument } from 'vscode'
+import type { CommandOptions } from './manipulations/common'
+import type { ExtensionModule } from '~/modules'
+import { commands, ViewColumn, window, workspace } from 'vscode'
 import { ActionSource, Global, Telemetry, TelemetryKey } from '~/core'
+import i18n from '~/i18n'
 import { promptKeys } from '~/utils'
+import { LocaleTreeItem } from '../views'
+import { EditorPanel } from '../webview/panel'
+import { Commands } from './commands'
 
-export default <ExtensionModule> function(ctx) {
+export default <ExtensionModule> function (ctx) {
   // if the editor is bind with current document
 
   const supportedFileOpen = () => {
@@ -20,7 +21,7 @@ export default <ExtensionModule> function(ctx) {
     return true
   }
 
-  const openEditor = async(item?: string | LocaleTreeItem | CommandOptions) => {
+  const openEditor = async (item?: string | LocaleTreeItem | CommandOptions) => {
     let actionSource = ActionSource.None
 
     let key: string | undefined
@@ -75,8 +76,9 @@ export default <ExtensionModule> function(ctx) {
       && window.activeTextEditor?.document === doc
       && EditorPanel.currentPanel?.visible
       && supportedFileOpen()
-    )
+    ) {
       EditorPanel.currentPanel.sendCurrentFileContext()
+    }
   }
 
   return [

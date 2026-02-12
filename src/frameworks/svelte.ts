@@ -1,17 +1,17 @@
-import { TextDocument } from 'vscode'
-import { Framework } from './base'
-import { LanguageId } from '~/utils'
+import type { TextDocument } from 'vscode'
+import type { LanguageId } from '~/utils'
 import { Config } from '~/core'
-import { extractionsParsers, DefaultExtractionRules, DefaultDynamicExtractionsRules } from '~/extraction'
+import { DefaultDynamicExtractionsRules, DefaultExtractionRules, extractionsParsers } from '~/extraction'
+import { Framework } from './base'
 
 class SvelteFramework extends Framework {
-  id= 'svelte'
-  display= 'Svelte'
+  id = 'svelte'
+  display = 'Svelte'
 
-  detection= {
+  detection = {
     packageJSON: [
       'svelte-i18n',
-      'sveltekit-i18n'
+      'sveltekit-i18n',
     ],
   }
 

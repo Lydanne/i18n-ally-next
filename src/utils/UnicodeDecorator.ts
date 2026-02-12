@@ -30,7 +30,8 @@ export function unicodeTransform(text: string, from: FontNames, to: FontNames) {
       if (FromFont.includes(c))
         return ToFont[FromFont.indexOf(c)]
       return c
-    }).join('')
+    })
+    .join('')
 }
 
 export function unicodeDecorate(text: string, to: FontNames) {

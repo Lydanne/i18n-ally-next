@@ -1,10 +1,12 @@
-import { workspace, Uri, WorkspaceEdit, Range } from 'vscode'
-import { getVueMessages, mergeVue, MessagesWithLocale } from 'fluent-vue-cli'
-import { PendingWrite, NodeOptions } from '../types'
-import { LocaleTree } from '../Nodes'
-import { Config } from '../Config'
-import { Loader } from './Loader'
+import type { MessagesWithLocale } from 'fluent-vue-cli'
+import type { Uri } from 'vscode'
+import type { NodeOptions, PendingWrite } from '../types'
+import { getVueMessages, mergeVue } from 'fluent-vue-cli'
+import { Range, workspace, WorkspaceEdit } from 'vscode'
 import { File, Log } from '~/utils'
+import { Config } from '../Config'
+import { LocaleTree } from '../Nodes'
+import { Loader } from './Loader'
 
 export class FluentVueSfcLoader extends Loader {
   constructor(

@@ -1,13 +1,13 @@
+import type { LanguageId } from '~/utils'
 import { Framework } from './base'
-import { LanguageId } from '~/utils'
 
 class ReactFramework extends Framework {
-  id= 'react'
-  display= 'React'
+  id = 'react'
+  display = 'React'
 
-  detection= {
+  detection = {
     packageJSON: [
-      'react-intl'
+      'react-intl',
     ],
   }
 

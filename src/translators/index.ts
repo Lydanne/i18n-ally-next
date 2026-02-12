@@ -1,13 +1,14 @@
-import TranslateEngine, { TranslateOptions } from './engines/base'
+import type { TranslateOptions } from './engines/base'
+import BaiduTranslate from './engines/baidu'
+import TranslateEngine from './engines/base'
+import DeepLTranslateEngine from './engines/deepl'
 import GoogleTranslateEngine from './engines/google'
 import GoogleTranslateCnEngine from './engines/google-cn'
-import DeepLTranslateEngine from './engines/deepl'
 import LibreTranslateEngine from './engines/libretranslate'
-import BaiduTranslate from './engines/baidu'
 import OpenAITranslateEngine from './engines/openai'
 
 export class Translator {
-  engines: Record<string, TranslateEngine> ={
+  engines: Record<string, TranslateEngine> = {
     'google': new GoogleTranslateEngine(),
     'google-cn': new GoogleTranslateCnEngine(),
     'deepl': new DeepLTranslateEngine(),
@@ -23,13 +24,13 @@ export class Translator {
 }
 
 export {
-  TranslateEngine,
-  GoogleTranslateEngine,
-  GoogleTranslateCnEngine,
-  DeepLTranslateEngine,
-  LibreTranslateEngine,
   BaiduTranslate,
+  DeepLTranslateEngine,
+  GoogleTranslateCnEngine,
+  GoogleTranslateEngine,
+  LibreTranslateEngine,
   OpenAITranslateEngine,
+  TranslateEngine,
 }
 
 export * from './engines/base'

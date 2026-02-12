@@ -1,13 +1,15 @@
-import fs from 'fs'
-import { workspace, Range, Location, TextDocument, Uri, EventEmitter } from 'vscode'
-import micromatch from 'micromatch'
+import type { TextDocument } from 'vscode'
+import type { KeyOccurrence, KeyUsage } from '.'
+import type { UsageReport } from './types'
+import fs from 'node:fs'
 import _, { uniq } from 'lodash'
-import { Global } from './Global'
-import { CurrentFile } from './CurrentFile'
-import { UsageReport } from './types'
-import { KeyDetector, Config, KeyOccurrence, KeyUsage } from '.'
+import micromatch from 'micromatch'
+import { EventEmitter, Location, Range, Uri, workspace } from 'vscode'
 import { Log } from '~/utils'
 import { gitignoredGlob } from '~/utils/glob'
+import { Config, KeyDetector } from '.'
+import { CurrentFile } from './CurrentFile'
+import { Global } from './Global'
 
 export class Analyst {
   private static _cache: KeyOccurrence[] | null = null

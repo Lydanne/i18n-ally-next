@@ -1,10 +1,12 @@
-import path from 'path'
-import fs from 'fs'
-import { WebviewPanel, Disposable, window, ViewColumn, Uri, ExtensionContext, workspace, EventEmitter, Selection, TextEditorRevealType } from 'vscode'
+import type { ExtensionContext, WebviewPanel } from 'vscode'
+import type { KeyInDocument } from '~/core'
+import fs from 'node:fs'
+import path from 'node:path'
+import { Disposable, EventEmitter, Selection, TextEditorRevealType, Uri, ViewColumn, window, workspace } from 'vscode'
+import { ActionSource, Config, CurrentFile, Global, KeyDetector, Telemetry, TelemetryKey } from '~/core'
+import i18n from '~/i18n'
 import { EXT_EDITOR_ID } from '~/meta'
 import { Protocol } from '~/protocol'
-import i18n from '~/i18n'
-import { CurrentFile, Global, KeyInDocument, KeyDetector, Config, Telemetry, TelemetryKey, ActionSource } from '~/core'
 
 export class EditorContext {
   filepath?: string
@@ -68,13 +70,13 @@ export class EditorPanel {
     const webview = this._panel.webview
 
     this._protocol = new Protocol(
-      async(message) => {
+      async (message) => {
         if (message.type === 'switch-to')
           this.openKey(message.keypath!)
         else
           this._panel.webview.postMessage(message)
       },
-      async(message) => {
+      async (message) => {
         switch (message.type) {
           case 'webview.refresh':
             this.init()
@@ -197,7 +199,7 @@ export class EditorPanel {
     }
   }
 
-  async navigateKey(data: KeyInDocument & {filepath: string; keyIndex: number}) {
+  async navigateKey(data: KeyInDocument & { filepath: string, keyIndex: number }) {
     Telemetry.track(TelemetryKey.GoToKey, { source: ActionSource.UiEditor })
 
     if (!data.filepath)

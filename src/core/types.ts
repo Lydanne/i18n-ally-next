@@ -1,4 +1,4 @@
-import { Range, TextDocument } from 'vscode'
+import type { Range, TextDocument } from 'vscode'
 
 export interface OptionalFeatures {
   VueSfc?: boolean
@@ -152,7 +152,7 @@ export interface DataProcessContext {
 export enum TargetPickingStrategy {
   None = 'none',
   MostSimilar = 'most-similar',
-  FilePrevious ='file-previous',
+  FilePrevious = 'file-previous',
   GlobalPrevious = 'global-previous',
   MostSimilarByKey = 'most-similar-by-key',
 }

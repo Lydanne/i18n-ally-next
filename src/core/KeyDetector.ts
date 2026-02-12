@@ -1,14 +1,16 @@
-import { TextDocument, Position, Range, ExtensionContext, workspace } from 'vscode'
-import { Global } from './Global'
-import { RewriteKeyContext } from './types'
-import { Config } from './Config'
-import { Loader } from './loaders/Loader'
-import { ScopeRange } from '~/frameworks'
+import type { ExtensionContext, TextDocument } from 'vscode'
+import type { Loader } from './loaders/Loader'
+import type { RewriteKeyContext } from './types'
+import type { KeyInDocument } from '~/core'
+import type { ScopeRange } from '~/frameworks'
+import { Position, Range, workspace } from 'vscode'
+import { CurrentFile } from '~/core'
 import { regexFindKeys } from '~/utils'
-import { KeyInDocument, CurrentFile } from '~/core'
+import { Config } from './Config'
+import { Global } from './Global'
 
 export interface KeyUsages {
-  type: 'code'| 'locale'
+  type: 'code' | 'locale'
   keys: KeyInDocument[]
   locale: string
   namespace?: string
@@ -55,11 +57,9 @@ export class KeyDetector {
     return keyRange?.key
   }
 
-  static getScopedKey(document: TextDocument, position: Position)
-  {
+  static getScopedKey(document: TextDocument, position: Position) {
     const scopes = Global.enabledFrameworks.flatMap(f => f.getScopeRange(document) || [])
-    if (scopes.length > 0)
-    {
+    if (scopes.length > 0) {
       const offset = document.offsetAt(position)
       return scopes.filter(s => s.start < offset && offset < s.end).map(s => s.namespace).join('.')
     }
@@ -96,7 +96,7 @@ export class KeyDetector {
 
   static getKeys(document: TextDocument | string, regs?: RegExp[], dotEnding?: boolean, scopes?: ScopeRange[]): KeyInDocument[] {
     let text = ''
-    let rewriteContext: RewriteKeyContext| undefined
+    let rewriteContext: RewriteKeyContext | undefined
     let filepath = ''
     if (typeof document !== 'string') {
       filepath = document.uri.fsPath

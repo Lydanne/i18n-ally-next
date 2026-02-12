@@ -1,25 +1,11 @@
-<template lang="pug">
-.container
-  template(v-if='$store.state.ready')
-    .actions-bar
-      v-magnify.setting-button(@click='openSearch')
-      v-refresh.setting-button(v-if='$store.state.config.debug' @click='refresh')
-      v-cog.setting-button(@click='openSettings')
-
-    key-editor(v-if='state.route === "open-key"' :data='state.routeData')
-
-  template(v-else)
-    p.loading Loading...
-</template>
-
 <script lang="js">
 import Vue from 'vue'
 import VCog from 'vue-material-design-icons/Cog.vue'
-import VRefresh from 'vue-material-design-icons/Refresh.vue'
 import VMagnify from 'vue-material-design-icons/Magnify.vue'
+import VRefresh from 'vue-material-design-icons/Refresh.vue'
+import { vscode } from './api'
 import Flag from './Flag.vue'
 import KeyEditor from './KeyEditor.vue'
-import { vscode } from './api'
 
 export default Vue.extend({
   components: {
@@ -61,6 +47,20 @@ export default Vue.extend({
   },
 })
 </script>
+
+<template lang="pug">
+.container
+  template(v-if='$store.state.ready')
+    .actions-bar
+      v-magnify.setting-button(@click='openSearch')
+      v-refresh.setting-button(v-if='$store.state.config.debug' @click='refresh')
+      v-cog.setting-button(@click='openSettings')
+
+    key-editor(v-if='state.route === "open-key"' :data='state.routeData')
+
+  template(v-else)
+    p.loading Loading...
+</template>
 
 <style lang="stylus">
 :root

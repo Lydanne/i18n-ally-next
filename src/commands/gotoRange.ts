@@ -1,6 +1,7 @@
-import { commands, Range, Selection, TextDocument, TextEditorRevealType, window } from 'vscode'
+import type { Range, TextDocument } from 'vscode'
+import type { ExtensionModule } from '~/modules'
+import { commands, Selection, TextEditorRevealType, window } from 'vscode'
 import { Commands } from '~/extension'
-import { ExtensionModule } from '~/modules'
 
 export async function GoToRange(document: TextDocument, range: Range) {
   if (document && range) {
@@ -13,7 +14,7 @@ export async function GoToRange(document: TextDocument, range: Range) {
   }
 }
 
-export default <ExtensionModule> function() {
+export default <ExtensionModule> function () {
   return [
     commands.registerCommand(Commands.go_to_range, GoToRange),
   ]

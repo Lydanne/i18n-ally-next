@@ -1,8 +1,9 @@
-import { TextDocument } from 'vscode'
-import { LanguageId } from '../utils'
+import type { TextDocument } from 'vscode'
+import type { LanguageId } from '../utils'
+import type { DetectionResult } from '~/core'
+import { Config } from '~/core'
+import { DefaultDynamicExtractionsRules, DefaultExtractionRules, ExtractionRule, ExtractionScore, extractionsParsers } from '~/extraction'
 import { Framework } from './base'
-import { Config, DetectionResult } from '~/core'
-import { extractionsParsers, DefaultExtractionRules, DefaultDynamicExtractionsRules, ExtractionRule, ExtractionScore } from '~/extraction'
 
 class FluentVueFramework extends Framework {
   id = 'fluent-vue'
@@ -84,7 +85,7 @@ export class FluentVueExtractionRule extends ExtractionRule {
 
   shouldExtract(str: string) {
     // Looks like ftl format: "key = value"
-    if (str.match(/[\w-]+\s?=.+/gm))
+    if (str.match(/[\w-]+\s?=.+/g))
       return ExtractionScore.MustExclude
     return ExtractionScore.ShouldInclude
   }

@@ -1,5 +1,5 @@
+import type { ProgressRootItem } from './ProgressRootItem'
 import { ProgressSubmenuItem } from './ProgressSubmenuItem'
-import { ProgressRootItem } from './ProgressRootItem'
 
 export class ProgressTranslatedListItem extends ProgressSubmenuItem {
   constructor(protected root: ProgressRootItem) {

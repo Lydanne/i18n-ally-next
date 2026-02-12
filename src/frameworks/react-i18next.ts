@@ -1,8 +1,10 @@
-import { TextDocument } from 'vscode'
-import { Framework, ScopeRange } from './base'
-import { LanguageId } from '~/utils'
-import { extractionsParsers, DefaultExtractionRules, DefaultDynamicExtractionsRules } from '~/extraction'
-import { Config, RewriteKeySource, RewriteKeyContext } from '~/core'
+import type { TextDocument } from 'vscode'
+import type { ScopeRange } from './base'
+import type { RewriteKeyContext, RewriteKeySource } from '~/core'
+import type { LanguageId } from '~/utils'
+import { Config } from '~/core'
+import { DefaultDynamicExtractionsRules, DefaultExtractionRules, extractionsParsers } from '~/extraction'
+import { Framework } from './base'
 
 class ReactI18nextFramework extends Framework {
   id = 'react-i18next'
@@ -108,9 +110,10 @@ class ReactI18nextFramework extends Framework {
       this.namespaceDelimiters.some(d => key.includes(d))
       && context.namespace
       && dottedKey.startsWith(context.namespace.split(this.namespaceDelimitersRegex).join('.'))
-    )
+    ) {
       // +1 for the an extra `.`
       key = key.slice(context.namespace.length + 1)
+    }
 
     // replace colons
     return dottedKey
@@ -145,7 +148,7 @@ class ReactI18nextFramework extends Framework {
     }
 
     // <Trans i18nKey="foo" ns="ns1" />
-    const regTrans = /\Wi18nKey=(?:(?!\/Trans>|\/>)[\S\s])*?ns=\s*['"`](.+?)['"`]/g
+    const regTrans = /\Wi18nKey=(?:(?!\/Trans>|\/>)[\s\S])*?ns=\s*['"`](.+?)['"`]/g
 
     for (const match of text.matchAll(regTrans)) {
       if (typeof match.index !== 'number')
@@ -162,7 +165,7 @@ class ReactI18nextFramework extends Framework {
 
     // Add first namespace as a global scope resetting on each occurrence
     // useTranslation(ns1) and useTranslation(['ns1', ...])
-    const regUse = /useTranslation\(\s*\[?\s*['"`](.*?)['"`]/g
+    const regUse = /useTranslation\(\s*(?:\[\s*)?['"`](.*?)['"`]/g
     let prevGlobalScope = false
     for (const match of text.matchAll(regUse)) {
       if (typeof match.index !== 'number')

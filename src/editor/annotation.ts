@@ -1,10 +1,12 @@
-import { window, DecorationOptions, Range, Disposable, TextEditorDecorationType, TextEditor, workspace, TextDocument, languages, Hover } from 'vscode'
+import type { DecorationOptions, Disposable, TextDocument, TextEditor, TextEditorDecorationType } from 'vscode'
+import type { KeyUsages, Loader } from '~/core'
+import type { ExtensionModule } from '~/modules'
 import throttle from 'lodash/throttle'
-import { getCommentState } from '../utils/shared'
+import { Hover, languages, Range, window, workspace } from 'vscode'
+import { Config, CurrentFile, Global, KeyDetector } from '~/core'
 import { THROTTLE_DELAY } from '../meta'
+import { getCommentState } from '../utils/shared'
 import { createHover } from './hover'
-import { ExtensionModule } from '~/modules'
-import { Global, KeyDetector, Config, Loader, CurrentFile, KeyUsages } from '~/core'
 
 const underlineDecorationType = window.createTextEditorDecorationType({
   textDecoration: 'underline',
@@ -14,7 +16,7 @@ const disappearDecorationType = window.createTextEditorDecorationType({
   textDecoration: 'none; display: none;', // a hack to inject custom style
 })
 
-export type DecorationOptionsWithGutter = DecorationOptions & {gutterType: string}
+export type DecorationOptionsWithGutter = DecorationOptions & { gutterType: string }
 
 const annotation: ExtensionModule = (ctx) => {
   const gutterTypes: Record<string, TextEditorDecorationType> = {
@@ -111,9 +113,9 @@ const annotation: ExtensionModule = (ctx) => {
       )
       const rangeWithQuotes = key.quoted
         ? new Range(
-          range.start.with(undefined, range.start.character - 1),
-          range.end.with(undefined, range.end.character + 1),
-        )
+            range.start.with(undefined, range.start.character - 1),
+            range.end.with(undefined, range.end.character + 1),
+          )
         : range
 
       let text: string | undefined
@@ -135,7 +137,7 @@ const annotation: ExtensionModule = (ctx) => {
         if (
           Config.annotationInPlace && (
             (selection.start.line <= range.start.line && range.start.line <= selection.end.line)
-          || (selection.start.line <= range.end.line && range.end.line <= selection.end.line))
+            || (selection.start.line <= range.end.line && range.end.line <= selection.end.line))
         ) {
           editing = true
           inplace = false
@@ -266,7 +268,8 @@ const annotation: ExtensionModule = (ctx) => {
         new Range(
           document.positionAt(key.start),
           document.positionAt(key.end),
-        ))
+        ),
+      )
     },
   })
 

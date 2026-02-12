@@ -1,8 +1,8 @@
 import { window } from 'vscode'
-import { getExt, openFile, Global, is, not, setupTest, expect, KeyDetector, timeout } from '../../ctx'
+import { expect, getExt, Global, is, KeyDetector, not, openFile, setupTest, timeout } from '../../ctx'
 
 setupTest('Vue i18n', () => {
-  it('opens entry file', async() => {
+  it('opens entry file', async () => {
     await openFile('package.json')
   })
 
@@ -11,7 +11,7 @@ setupTest('Vue i18n', () => {
     is(ext?.isActive, true)
   })
 
-  it('enables correct frameworks', async() => {
+  it('enables correct frameworks', async () => {
     not(Global, undefined)
     is(Global.enabled, true)
     is(Global.enabledFrameworks.length, 2)
@@ -19,7 +19,7 @@ setupTest('Vue i18n', () => {
     is(Global.enabledFrameworks[1].id, 'general')
   })
 
-  it('get keys', async() => {
+  it('get keys', async () => {
     await openFile('App.vue')
     await timeout(500)
     const keys = KeyDetector.getKeys(window.activeTextEditor!.document)

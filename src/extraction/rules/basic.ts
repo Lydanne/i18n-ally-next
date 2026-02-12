@@ -9,7 +9,7 @@ export class BasicExtrationRule extends ExtractionRule {
     if (s.length === 0)
       return ExtractionScore.MustExclude
     // ❌ brackets
-    if (s.match(/^{.*}$/))
+    if (s.match(/^\{.*\}$/))
       return ExtractionScore.MustExclude
     // ✅ has a space, and any meaning full letters
     if (s.includes(' ') && s.match(/\w/))
@@ -27,7 +27,7 @@ export class BasicExtrationRule extends ExtractionRule {
     if (s.match(/^[\d.]+$/))
       return ExtractionScore.ShouldExclude
     // ✅ all words
-    if (s.match(/^[A-Za-z0-9]+$/))
+    if (s.match(/^[A-Z0-9]+$/i))
       return ExtractionScore.ShouldInclude
     // ✅ one char
     if (s.length === 1 && !'/.-\\:+$^#_"\','.includes(s))

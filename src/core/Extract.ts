@@ -1,11 +1,12 @@
-import { basename, extname } from 'path'
-import { TextDocument, window } from 'vscode'
-import { nanoid } from 'nanoid'
+import type { TextDocument } from 'vscode'
+import type { ExtractInfo } from './types'
+import { basename, extname } from 'node:path'
 import limax from 'limax'
-import { Config, Global } from '../extension'
-import { ExtractInfo } from './types'
-import { CurrentFile } from './CurrentFile'
+import { nanoid } from 'nanoid'
+import { window } from 'vscode'
 import { changeCase } from '~/utils/changeCase'
+import { Config, Global } from '../extension'
+import { CurrentFile } from './CurrentFile'
 
 export function generateKeyFromText(text: string, filepath?: string, reuseExisting = false, usedKeys: string[] = []): string {
   let key: string | undefined

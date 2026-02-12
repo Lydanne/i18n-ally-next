@@ -1,10 +1,10 @@
-import path from 'path'
+import path from 'node:path'
 import fg from 'fast-glob'
 import fs from 'fs-extra'
 
 const DEFAULT_LOCALE = 'en'
 
-;(async() => {
+;(async () => {
   const fallbackMessages = JSON.parse(await fs.readFile(`./locales/${DEFAULT_LOCALE}.json`, 'utf-8'))
 
   const files = await fg('./locales/*.json')

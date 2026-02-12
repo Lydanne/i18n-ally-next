@@ -1,6 +1,6 @@
-import { mergeFtl, getFtlMessages } from 'fluent-vue-cli'
-import { Parser } from './base'
+import { getFtlMessages, mergeFtl } from 'fluent-vue-cli'
 import { File } from '~/utils'
+import { Parser } from './base'
 
 export class FluentParser extends Parser {
   id = 'ftl'

@@ -1,11 +1,12 @@
-import { ExtensionContext, window, TreeDataProvider, TreeItem, Event, EventEmitter } from 'vscode'
+import type { Event, ExtensionContext, TreeDataProvider, TreeItem } from 'vscode'
+import type { BaseTreeItem } from '../items/Base'
 import { uniq } from 'lodash'
-import { BaseTreeItem } from '../items/Base'
-import { CurrentFileNotFoundItem } from '../items/CurrentFileNotFoundItem'
-import { CurrentFileInUseItem } from '../items/CurrentFileInUseItem'
-import { CurrentFileExtractionItem } from '../items/CurrentFileExtractionItem'
-import { KeyDetector, Global, CurrentFile } from '~/core'
+import { EventEmitter, window } from 'vscode'
+import { CurrentFile, Global, KeyDetector } from '~/core'
 import { resolveFlattenRootKeypath } from '~/utils'
+import { CurrentFileExtractionItem } from '../items/CurrentFileExtractionItem'
+import { CurrentFileInUseItem } from '../items/CurrentFileInUseItem'
+import { CurrentFileNotFoundItem } from '../items/CurrentFileNotFoundItem'
 
 export class CurrentFileLocalesTreeProvider implements TreeDataProvider<BaseTreeItem> {
   protected name = 'CurrentFileLocalesTreeProvider'

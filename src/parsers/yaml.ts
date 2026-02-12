@@ -1,8 +1,9 @@
+import type { KeyInDocument } from '~/core'
 import YAML from 'js-yaml'
-import YamlLex from 'yaml'
 import _ from 'lodash'
+import YamlLex from 'yaml'
+import { Config } from '~/core'
 import { Parser } from './base'
-import { KeyInDocument, Config } from '~/core'
 
 export class YamlParser extends Parser {
   id = 'yaml'
@@ -12,7 +13,7 @@ export class YamlParser extends Parser {
   }
 
   async parse(text: string) {
-    return YAML.load(text, Config.parserOptions?.yaml?.load) as Object
+    return YAML.load(text, Config.parserOptions?.yaml?.load) as object
   }
 
   async dump(object: object, sort: boolean, compare: ((x: string, y: string) => number) | undefined) {

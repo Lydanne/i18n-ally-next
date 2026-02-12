@@ -1,15 +1,3 @@
-<template lang="pug">
-.flag-icon(:style='style')
-  img(
-    v-if='$store.state.config.showFlags'
-    v-bind='$attrs'
-    :src='src'
-    :width='size || "20"'
-    :height='size || "20"'
-  )
-  .locale-label.monospace(v-if='label') {{locale}}
-</template>
-
 <script lang="ts">
 import Vue from 'vue'
 
@@ -44,6 +32,18 @@ export default Vue.extend({
   },
 })
 </script>
+
+<template lang="pug">
+.flag-icon(:style='style')
+  img(
+    v-if='$store.state.config.showFlags'
+    v-bind='$attrs'
+    :src='src'
+    :width='size || "20"'
+    :height='size || "20"'
+  )
+  .locale-label.monospace(v-if='label') {{locale}}
+</template>
 
 <style lang="stylus" scoped>
 .flag-icon

@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import { ParsePathMatcher, ReplaceLocale } from '../../../src/utils/PathMatcher'
 
-describe('PathMatching', () => {
+describe('pathMatching', () => {
   const cases = [
     ['{namespace}/**/{locale}.json', 'moduleC/nested/locales/zh-cn.json', 'moduleC', 'zh-cn'],
     ['{namespaces}/{locale}.json', 'modules/nested/en.json', 'modules/nested', 'en'],
@@ -35,7 +35,7 @@ describe('PathMatching', () => {
   }
 })
 
-describe('ReplaceLocale', () => {
+describe('replaceLocale', () => {
   const cases = [
     ['en/nested/en.json', '{namespaces}/{locale}.json', 'zh', 'en/nested/zh.json'],
     ['en/zh/fr/en.json', 'en/zh/{locale}/{namespace}.json', 'fr', 'en/zh/fr/en.json'],

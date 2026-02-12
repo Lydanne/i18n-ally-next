@@ -1,5 +1,5 @@
+import type { LanguageId } from '~/utils'
 import { Framework } from './base'
-import { LanguageId } from '~/utils'
 
 class NgxTranslateFramework extends Framework {
   id = 'ngx-translate'
@@ -20,7 +20,7 @@ class NgxTranslateFramework extends Framework {
   ]
 
   // for visualize the regex, you can use https://regexper.com/
-  usageMatchRegex= [
+  usageMatchRegex = [
     '[`\'"]({key})[`\'"][\\s\\n]*\\|[\\s\\n]*translate',
     '(?:translate|translateService)\\.(?:get|instant|stream)\\([\\s\\n]*\[[\\s\\n]*[\'"`]({key})[\'"`]',
     '[\\s\\n]translate>[\\s\\n]*({key})[\\s\\n]*</',

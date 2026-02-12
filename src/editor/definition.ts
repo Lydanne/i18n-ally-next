@@ -1,6 +1,7 @@
-import { languages, TextDocument, Position, Definition, DefinitionLink, Uri, workspace, Location, Range } from 'vscode'
-import { ExtensionModule } from '~/modules'
-import { Global, KeyDetector, CurrentFile } from '~/core'
+import type { Definition, DefinitionLink, Position, TextDocument } from 'vscode'
+import type { ExtensionModule } from '~/modules'
+import { languages, Location, Range, Uri, workspace } from 'vscode'
+import { CurrentFile, Global, KeyDetector } from '~/core'
 
 class DefinitionProvider {
   async provideDefinition(document: TextDocument, position: Position): Promise<Definition | DefinitionLink[]> {

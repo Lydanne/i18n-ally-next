@@ -1,5 +1,6 @@
-import { ExtensionContext, window, Uri, env } from 'vscode'
+import type { ExtensionContext } from 'vscode'
 import semver from 'semver'
+import { env, Uri, window } from 'vscode'
 import { version } from '../package.json'
 // import i18n from './i18n'
 

@@ -1,70 +1,8 @@
-<template lang="pug">
-.key-editor(
-  :class='{"with-sidebar": sidebar}'
-  @mousedown='onMousedown'
-  @mouseup='dragging=false'
-  @mousemove='onMove'
-)
-  .sidebar(:style='{width: sidebarWidth +"px"}' v-if='sidebar')
-    .keys
-      .item.panel(
-        v-for='(key, idx) in contextKeys'
-        @click='gotoKey(idx)'
-        :class='{active: idx === keyIndex}'
-      )
-        .key {{key.key}}
-        .value(:class='{empty: !key.value}') {{key.value || $t('editor.empty')}}
-
-    .resize-handler
-      .inner
-
-  .content
-    .header
-      template(v-if='contextKeys.length')
-        .buttons
-          .button(@click='sidebar = !sidebar' v-if='contextKeys.length')
-            v-menu
-          .button(@click='nextKey(-1)' :disabled='keyIndex <= 0')
-            v-chevron-left
-          .button(@click='nextKey(1)' :disabled='keyIndex >= contextKeys.length - 1')
-            v-chevron-right
-        br
-
-      .key-name
-        span "{{data.keypath}}"
-        v-pencil.setting-button.small(@click='renameKey')
-
-      // pre {{$store.state.context}} {{keyIndex}}
-
-      .reviews
-        template(v-if='!data.reviews.description')
-          .description.add(@click='editDescription') {{ $t('editor.add_description') }}
-        template(v-else)
-          .description(@click='editDescription') {{data.reviews.description}}
-
-      .buttons.actions
-        .button(@click='translateAll' v-if='emptyRecords.length')
-          v-earth
-          span {{ $t('editor.translate_all_missing') }} ({{emptyRecords.length}})
-        // .button Mark all as...
-
-    .records
-      record-editor(
-        v-for='r in records'
-        :keypath='data.keypath'
-        :record='r'
-        :review='(data.reviews.locales || {})[r.locale]'
-        :key='r.locale'
-        :active='current === r.locale'
-        @update:active='current = r.locale'
-      )
-</template>
-
 <script lang="js">
 import Vue from 'vue'
+import { vscode } from './api'
 import Flag from './Flag.vue'
 import RecordEditor from './RecordEditor.vue'
-import { vscode } from './api'
 
 export default Vue.extend({
   components: {
@@ -181,6 +119,68 @@ export default Vue.extend({
   },
 })
 </script>
+
+<template lang="pug">
+.key-editor(
+  :class='{"with-sidebar": sidebar}'
+  @mousedown='onMousedown'
+  @mouseup='dragging=false'
+  @mousemove='onMove'
+)
+  .sidebar(:style='{width: sidebarWidth +"px"}' v-if='sidebar')
+    .keys
+      .item.panel(
+        v-for='(key, idx) in contextKeys'
+        @click='gotoKey(idx)'
+        :class='{active: idx === keyIndex}'
+      )
+        .key {{key.key}}
+        .value(:class='{empty: !key.value}') {{key.value || $t('editor.empty')}}
+
+    .resize-handler
+      .inner
+
+  .content
+    .header
+      template(v-if='contextKeys.length')
+        .buttons
+          .button(@click='sidebar = !sidebar' v-if='contextKeys.length')
+            v-menu
+          .button(@click='nextKey(-1)' :disabled='keyIndex <= 0')
+            v-chevron-left
+          .button(@click='nextKey(1)' :disabled='keyIndex >= contextKeys.length - 1')
+            v-chevron-right
+        br
+
+      .key-name
+        span "{{data.keypath}}"
+        v-pencil.setting-button.small(@click='renameKey')
+
+      // pre {{$store.state.context}} {{keyIndex}}
+
+      .reviews
+        template(v-if='!data.reviews.description')
+          .description.add(@click='editDescription') {{ $t('editor.add_description') }}
+        template(v-else)
+          .description(@click='editDescription') {{data.reviews.description}}
+
+      .buttons.actions
+        .button(@click='translateAll' v-if='emptyRecords.length')
+          v-earth
+          span {{ $t('editor.translate_all_missing') }} ({{emptyRecords.length}})
+        // .button Mark all as...
+
+    .records
+      record-editor(
+        v-for='r in records'
+        :keypath='data.keypath'
+        :record='r'
+        :review='(data.reviews.locales || {})[r.locale]'
+        :key='r.locale'
+        :active='current === r.locale'
+        @update:active='current = r.locale'
+      )
+</template>
 
 <style lang="stylus" scoped>
 .key-editor

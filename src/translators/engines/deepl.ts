@@ -1,9 +1,10 @@
+import type { TranslateOptions, TranslateResult } from './base'
 import axios from 'axios'
-import qs from 'qs'
 
-import TranslateEngine, { TranslateOptions, TranslateResult } from './base'
-import { Log } from '~/utils'
+import qs from 'qs'
 import { Config } from '~/core'
+import { Log } from '~/utils'
+import TranslateEngine from './base'
 
 interface DeepLUsage {
   character_count: number
@@ -48,8 +49,8 @@ deepl.interceptors.response.use((res) => {
 
 function log(inspector: boolean, ...args: any[]): void {
   if (Config.deeplLog) {
-    // eslint-disable-next-line no-console
-    if (inspector) console.log('[DeepL]\n', ...args)
+    if (inspector)
+      console.log('[DeepL]\n', ...args)
     else Log.raw(...args)
   }
 }
@@ -114,7 +115,8 @@ class DeepL extends TranslateEngine {
     }
     catch (err) {}
 
-    if (!r.detailed && !r.result) r.error = new Error('No result')
+    if (!r.detailed && !r.result)
+      r.error = new Error('No result')
 
     log(false, `DEEPL TRANSLATE!! ${JSON.stringify(r.result)}, from ${options.from} to ${options.to}`)
 

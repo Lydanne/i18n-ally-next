@@ -1,12 +1,14 @@
-import { CodeAction, CodeActionContext, CodeActionKind, CodeActionProvider, Command, languages, Range, Selection, TextDocument } from 'vscode'
-import { DiagnosticWithDetection, PROBLEM_CODE_HARD_STRING } from './problems'
-import { ExtensionModule } from '~/modules'
-import { Config, CurrentFile, Global } from '~/core'
+import type { CodeActionContext, CodeActionProvider, Command, TextDocument } from 'vscode'
+import type { DiagnosticWithDetection } from './problems'
+import type { ExtractTextOptions } from '~/commands/extractString'
+import type { DetectionResult } from '~/core/types'
+import type { ExtensionModule } from '~/modules'
+import { CodeAction, CodeActionKind, languages, Range, Selection } from 'vscode'
 import { Commands } from '~/commands'
-import i18n from '~/i18n'
+import { Config, CurrentFile, Global } from '~/core'
 import { parseHardString } from '~/extraction/parseHardString'
-import { ExtractTextOptions } from '~/commands/extractString'
-import { DetectionResult } from '~/core/types'
+import i18n from '~/i18n'
+import { PROBLEM_CODE_HARD_STRING } from './problems'
 
 export function DetectionResultToExtraction(detection: DetectionResult, document: TextDocument): ExtractTextOptions {
   return {

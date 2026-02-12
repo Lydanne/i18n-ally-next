@@ -1,5 +1,5 @@
+import type { LanguageId } from '~/utils'
 import { Framework } from './base'
-import { LanguageId } from '~/utils'
 
 class JekyllFramework extends Framework {
   id = 'jekyll'

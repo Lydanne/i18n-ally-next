@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
-import { dirname, join, basename, resolve } from 'path'
+import type { ArrayChange } from 'diff'
+import { basename, dirname, join, resolve } from 'node:path'
 import { runTests } from '@vscode/test-electron'
+import { cyan, gray, green, red, yellow } from 'chalk'
+import { diffArrays } from 'diff'
 import fg from 'fast-glob'
 import fs from 'fs-extra'
-import { red, green, yellow, gray, cyan } from 'chalk'
-import { ArrayChange, diffArrays } from 'diff'
 
 const args = process.argv.slice(2)
 
@@ -112,7 +113,7 @@ async function testFixture(fixture: FixtureInfo) {
 
 async function compareOut(target: string, out: string) {
   const files = await fg('**/*.*', { onlyFiles: true, cwd: target })
-  return await Promise.all(files.map(async(file) => {
+  return await Promise.all(files.map(async (file) => {
     const path = join(out, file)
     if (!fs.existsSync(path))
       return { name: file, result: null }

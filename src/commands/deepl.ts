@@ -1,10 +1,10 @@
+import type { ExtensionModule } from '~/modules'
 import { commands, window } from 'vscode'
-import { Commands } from './commands'
-import { ExtensionModule } from '~/modules'
-import { usage } from '~/translators/engines/deepl'
-import i18n from '~/i18n'
 import { Config } from '~/core'
+import i18n from '~/i18n'
+import { usage } from '~/translators/engines/deepl'
 import { abbreviateNumber } from '~/utils'
+import { Commands } from './commands'
 
 async function deepAuth() {
   const apiKey = Config.deeplApiKey
@@ -32,7 +32,7 @@ async function deepAuth() {
   }
 }
 
-export default <ExtensionModule> function() {
+export default <ExtensionModule> function () {
   return [
     commands.registerCommand(Commands.deepl_usage, deepAuth),
   ]

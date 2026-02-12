@@ -1,7 +1,8 @@
-import { TextDocument } from 'vscode'
+import type { TextDocument } from 'vscode'
+import type { ScopeRange } from './base'
+import type { LanguageId } from '~/utils'
 import { Parser } from 'htmlparser2'
-import { Framework, ScopeRange } from './base'
-import { LanguageId } from '~/utils'
+import { Framework } from './base'
 
 export default class TranslocoFramework extends Framework {
   id = 'transloco'
@@ -40,7 +41,7 @@ export default class TranslocoFramework extends Framework {
 
   rewriteKeys(key: string) {
     // find extra scope
-    const regex = /[\'"`]([\w.]+)[\'"`]/gm
+    const regex = /['"`]([\w.]+)['"`]/g
     let index = 0
     let match, actualKey, scope
 

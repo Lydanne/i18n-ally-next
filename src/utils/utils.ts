@@ -1,6 +1,7 @@
-import { KeyStyle } from '../core/types'
+import type { KeyStyle } from '../core/types'
+import type { LocaleNode, LocaleRecord, LocaleTree, Node } from '~/core'
+import { Config } from '~/core'
 import { ROOT_KEY } from './flat'
-import { Node, LocaleTree, LocaleNode, LocaleRecord, Config } from '~/core'
 
 export function caseInsensitiveMatch(a: string, b: string) {
   return a.toUpperCase() === b.toUpperCase()
@@ -34,10 +35,10 @@ export function resolveFlattenRootKeypath(keypath: string) {
   return keypath
 }
 
-export function resolveFlattenRoot (node: undefined): undefined
-export function resolveFlattenRoot (node: LocaleRecord): LocaleRecord
-export function resolveFlattenRoot (node: LocaleTree | LocaleNode): LocaleTree | LocaleNode
-export function resolveFlattenRoot (node?: LocaleTree | LocaleNode): LocaleTree | LocaleNode | undefined
+export function resolveFlattenRoot(node: undefined): undefined
+export function resolveFlattenRoot(node: LocaleRecord): LocaleRecord
+export function resolveFlattenRoot(node: LocaleTree | LocaleNode): LocaleTree | LocaleNode
+export function resolveFlattenRoot(node?: LocaleTree | LocaleNode): LocaleTree | LocaleNode | undefined
 export function resolveFlattenRoot(node?: Node) {
   if (node?.type === 'tree' && node.getChild(ROOT_KEY)?.type === 'node')
     return node.getChild(ROOT_KEY)
@@ -46,8 +47,8 @@ export function resolveFlattenRoot(node?: Node) {
 
 export function set(obj: any, key: string, value: any, override = true) {
   if (Array.isArray(obj)) {
-    const num = parseInt(key)
-    if (!isNaN(num)) {
+    const num = Number.parseInt(key)
+    if (!Number.isNaN(num)) {
       if (override || obj[num] == null)
         obj[num] = value
       return obj[num]
@@ -102,8 +103,8 @@ export function abbreviateNumber(value: number): string {
  */
 export function getLocaleCompare(
   sortLocaleSetting: string | undefined,
-  fileLocale: string
+  fileLocale: string,
 ): (x: string, y: string) => number {
-  const sortLocale = sortLocaleSetting ? sortLocaleSetting : fileLocale;
-  return new Intl.Collator(sortLocale).compare;
+  const sortLocale = sortLocaleSetting || fileLocale
+  return new Intl.Collator(sortLocale).compare
 }

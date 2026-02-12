@@ -14,7 +14,7 @@ export const QUOTE_SYMBOLS = '\'"`'
 export const THROTTLE_DELAY = 800
 export const FILEWATCHER_TIMEOUT = 100
 
-export const linkKeyMatcher = /(?:@(?:\.[a-z]+)?:(?:[\w\-_|.]+|\([\w\-_|.]+\)))/g
+export const linkKeyMatcher = /(?:@(?:\.[a-z]+)?:(?:[\w\-|.]+|\([\w\-|.]+\)))/g
 export const linkKeyPrefixMatcher = /^@(?:\.([a-z]+))?:/
 export const bracketsMatcher = /[()]/g
 export const linkedKeyModifiers = {
@@ -30,5 +30,5 @@ export const DEFAULT_LOCALE_COUNTRY_MAP = {
   ja: 'ja',
   es: 'es',
   vi: 'vn',
-  lb: 'lu'
+  lb: 'lu',
 }

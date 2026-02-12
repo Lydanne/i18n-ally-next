@@ -19,4 +19,4 @@ function getCache<T = any>(key: string, value?: T): T {
   return cache[key]
 }
 
-export { hasCache, getCache, setCache }
+export { getCache, hasCache, setCache }

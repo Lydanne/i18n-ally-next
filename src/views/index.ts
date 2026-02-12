@@ -1,8 +1,8 @@
+import type { ExtensionModule } from '~/modules'
 import { window } from 'vscode'
-import { ExtensionModule } from '~/modules'
-import { ViewIds } from './ViewIds'
-import { CurrentFileLocalesTreeProvider, HelpFeedbackProvider, ProgressProvider, LocalesTreeProvider } from './providers'
+import { CurrentFileLocalesTreeProvider, HelpFeedbackProvider, LocalesTreeProvider, ProgressProvider } from './providers'
 import { UsageReportProvider } from './providers/UsageReportProvider'
+import { ViewIds } from './ViewIds'
 
 export * from './items'
 export * from './providers'

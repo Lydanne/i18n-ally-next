@@ -1,12 +1,15 @@
-import { EventEmitter, CancellationToken, window, ProgressLocation, commands } from 'vscode'
-import { AllyError, ErrorType } from './Errors'
-import { PendingWrite } from './types'
-import { Global } from './Global'
-import { LocaleTree, LocaleNode, LocaleRecord, Config, Loader } from '.'
+import type { CancellationToken } from 'vscode'
+import type { Loader, LocaleNode, LocaleRecord, LocaleTree } from '.'
+import type { PendingWrite } from './types'
+import type { TranslateResult } from '~/translators'
+import { commands, EventEmitter, ProgressLocation, window } from 'vscode'
 import { Commands } from '~/commands'
 import i18n from '~/i18n'
+import { Translator as TranslateEngine } from '~/translators'
 import { Log } from '~/utils'
-import { Translator as TranslateEngine, TranslateResult } from '~/translators'
+import { Config } from '.'
+import { AllyError, ErrorType } from './Errors'
+import { Global } from './Global'
 
 interface TranslatorChangeEvent {
   keypath: string
@@ -23,13 +26,13 @@ export interface TranslateJob {
   token?: CancellationToken
 }
 
-export type AccaptableTranslateItem =
-  | LocaleNode
-  | LocaleRecord
-  | {locale: string; keypath: string; type: undefined }
+export type AccaptableTranslateItem
+  = | LocaleNode
+    | LocaleRecord
+    | { locale: string, keypath: string, type: undefined }
 
 export class Translator {
-  private static translatingKeys: {keypath: string; locale: string}[] = []
+  private static translatingKeys: { keypath: string, locale: string }[] = []
   private static _onDidChange = new EventEmitter<TranslatorChangeEvent>()
   static readonly onDidChange = Translator._onDidChange.event
   private static _translator = new TranslateEngine()
@@ -48,7 +51,7 @@ export class Translator {
       this._onDidChange.fire({ keypath, locale, action: 'end' })
   }
 
-  static isTranslating(node: LocaleNode| LocaleRecord | LocaleTree) {
+  static isTranslating(node: LocaleNode | LocaleRecord | LocaleTree) {
     if (node.type === 'record')
       return !!this.translatingKeys.find(i => i.keypath === node.keypath && i.locale === node.locale)
     if (node.type === 'node')
@@ -110,8 +113,7 @@ export class Translator {
       location: ProgressLocation.Notification,
       title: i18n.t('prompt.translate_in_progress'),
       cancellable: true,
-    },
-    async(progress, token) => {
+    }, async (progress, token) => {
       jobs.forEach(job => job.token = token)
 
       const successJobs: TranslateJob[] = []
@@ -122,7 +124,7 @@ export class Translator {
 
       const increment = 1 / total * 100
 
-      const doJob = async(job: TranslateJob) => {
+      const doJob = async (job: TranslateJob) => {
         let result: PendingWrite | undefined
         const message = `"${job.keypath}" (${job.source}->${job.locale}) ${finished + 1}/${total}`
         progress.report({ increment: 0, message })
@@ -134,7 +136,6 @@ export class Translator {
             cancelledJobs.push(job)
         }
         catch (err) {
-          // eslint-disable-next-line no-console
           console.error(err)
           failedJobs.push([job, err])
         }
@@ -157,7 +158,7 @@ export class Translator {
 
       // translating done
       if (successJobs.length === 1) {
-        (async() => {
+        (async () => {
           const job = successJobs[0]
 
           const editButton = i18n.t('prompt.translate_edit_translated')
@@ -279,10 +280,10 @@ export class Translator {
 
   private static async saveTranslations(
     loader: Loader,
-    results: ({result: PendingWrite | undefined; job: TranslateJob})[],
+    results: ({ result: PendingWrite | undefined, job: TranslateJob })[],
   ) {
     const now = new Date().toISOString()
-    const r = results.filter(i => i.result) as ({result: PendingWrite; job: TranslateJob})[]
+    const r = results.filter(i => i.result) as ({ result: PendingWrite, job: TranslateJob })[]
 
     if (Config.translateSaveAsCandidates) {
       await Global.reviews.setTranslationCandidates(r.map(i => ({

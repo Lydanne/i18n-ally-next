@@ -1,9 +1,9 @@
+import type { RewriteKeyContext, RewriteKeySource } from '~/core'
+import type { LanguageId } from '~/utils'
 import { Framework } from './base'
-import { RewriteKeySource, RewriteKeyContext } from '~/core'
-import { LanguageId } from '~/utils'
 
 class I18nextFramework extends Framework {
-  id ='i18next'
+  id = 'i18next'
   display = 'i18next'
   namespaceDelimiter = ':'
 
@@ -53,7 +53,7 @@ class I18nextFramework extends Framework {
     '{key}_two',
     '{key}_few',
     '{key}_many',
-    '{key}_other'
+    '{key}_other',
   ]
 
   refactorTemplates(keypath: string) {
@@ -70,9 +70,10 @@ class I18nextFramework extends Framework {
       this.namespaceDelimiters.some(d => key.includes(d))
       && context.namespace
       && dottedKey.startsWith(context.namespace.split(this.namespaceDelimitersRegex).join('.'))
-    )
+    ) {
       // +1 for the an extra `.`
       key = key.slice(context.namespace.length + 1)
+    }
 
     // replace colons
     return dottedKey

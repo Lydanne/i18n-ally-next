@@ -1,6 +1,7 @@
+import type { TranslateOptions, TranslateResult } from './base'
 import axios from 'axios'
-import TranslateEngine, { TranslateOptions, TranslateResult } from './base'
 import { Config } from '~/core'
+import TranslateEngine from './base'
 
 export default class GoogleTranslate extends TranslateEngine {
   link = 'https://translate.google.com'

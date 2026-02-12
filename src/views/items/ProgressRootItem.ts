@@ -1,14 +1,14 @@
-import { unicodeProgressBar, unicodeDecorate } from '~/utils'
-import { ProgressMissingListItem } from './ProgressMissingListItem'
-import { ProgressEmptyListItem } from './ProgressEmptyListItem'
+import type { BaseTreeItem } from './Base'
+import { Config, Global } from '~/core'
+import { unicodeDecorate, unicodeProgressBar } from '~/utils'
 import { ProgressBaseItem } from './ProgressBaseItem'
+import { ProgressEmptyListItem } from './ProgressEmptyListItem'
+import { ProgressMissingListItem } from './ProgressMissingListItem'
 import { ProgressTranslatedListItem } from './ProgressTranslatedListItem'
 import { ReviewRequestChangesRoot } from './ReviewRequestChanges'
-import { BaseTreeItem } from './Base'
-import { ReviewTranslationCandidates } from './ReviewTranslationCandidates'
 import { ReviewSuggestions } from './ReviewSuggestions'
+import { ReviewTranslationCandidates } from './ReviewTranslationCandidates'
 import { Seperator } from './Seperator'
-import { Config, Global } from '~/core'
 
 export class ProgressRootItem extends ProgressBaseItem {
   // @ts-expect-error

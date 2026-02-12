@@ -1,7 +1,8 @@
+import type { LocaleRecord } from '~/core'
 import { MarkdownString } from 'vscode'
 import { Commands } from '~/commands'
+import { ActionSource, Config, CurrentFile, Global } from '~/core'
 import i18n from '~/i18n'
-import { CurrentFile, Global, LocaleRecord, Config, ActionSource } from '~/core'
 import { decorateLocale, escapeMarkdown, NodeHelper } from '~/utils'
 
 const EmptyButton = '⠀⠀'
@@ -11,7 +12,7 @@ function makeMarkdownCommand(command: Commands, args: any): string {
 }
 
 function formatValue(text: string) {
-  return escapeMarkdown(text.replace(/[\s]+/g, ' '))
+  return escapeMarkdown(text.replace(/\s+/g, ' '))
 }
 
 function getAvaliableCommands(record?: LocaleRecord, keyIndex?: number) {

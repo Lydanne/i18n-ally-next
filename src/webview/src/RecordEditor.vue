@@ -1,64 +1,10 @@
-<template lang="pug">
-.record-editor(:class='{active}')
-  .edit-input.panel(:class='{"top-stacked": active && review.translation_candidate }')
-    flag(:locale='record.locale' size='18')
-    textarea(
-      ref='textarea1'
-      rows='1'
-      v-model='value'
-      :placeholder='$t("editor.empty")'
-      :readonly='readonly'
-      @focus='onFocus'
-      @blur='onBlur'
-      @input='onInput'
-    )
-
-    .buttons(v-if='active')
-      .button(v-if='readonly' disabled)
-        v-pencil-off
-
-      .button(@click='translate' v-if='!readonly && !review.translation_candidate && record.locale !== $store.state.config.sourceLanguage')
-        v-earth
-        span {{ $t('editor.translate') }}
-
-      .button(@click='reviewing=!reviewing' v-if='$store.state.config.review')
-        v-comment-edit-outline
-        span {{ $t('review.review') }}
-
-    .review-brief(v-if='$store.state.config.review')
-      v-earth.state-icon(v-if='!active && review.translation_candidate')
-      v-check.state-icon(v-if='reviewBrief==="approve"')
-      v-plus-minus.state-icon(v-else-if='reviewBrief==="request_change"')
-      v-comment-question-outline.state-icon(v-else-if='reviewBrief==="conflict"')
-      v-comment-outline.state-icon(v-else-if='reviewBrief==="comment"')
-
-  .translation-candidate.panel.shadow.bottom-stacked(v-if='active && review.translation_candidate')
-    v-earth
-    .text {{review.translation_candidate.text}}
-    .buttons
-      .button.flat(@click='transDiscard()') {{$t('prompt.button_discard')}}
-      .button(@click='transEdit()')
-        v-pencil
-        span {{$t('prompt.button_edit_end_apply')}}
-      .button(@click='transApply()')
-        v-check-all
-        span {{$t('prompt.button_apply')}}
-
-  .review-panel(v-if='$store.state.config.review && ((comments.length && active) || reviewing)')
-    template(v-for='c in comments')
-      review-comment(:record='record' :comment='c' :key='c.locale')
-
-    template(v-if='reviewing')
-      review-comment(:record='record' :editing='true' mode='create' @done='reviewing=false')
-</template>
-
 <script lang="js">
 import Vue from 'vue'
 import { getCommentState } from '../../utils/shared'
-import ReviewComment from './ReviewComment.vue'
-import Flag from './Flag.vue'
-import Avatar from './Avatar.vue'
 import { vscode } from './api'
+import Avatar from './Avatar.vue'
+import Flag from './Flag.vue'
+import ReviewComment from './ReviewComment.vue'
 
 export default Vue.extend({
   components: {
@@ -192,6 +138,60 @@ export default Vue.extend({
   },
 })
 </script>
+
+<template lang="pug">
+.record-editor(:class='{active}')
+  .edit-input.panel(:class='{"top-stacked": active && review.translation_candidate }')
+    flag(:locale='record.locale' size='18')
+    textarea(
+      ref='textarea1'
+      rows='1'
+      v-model='value'
+      :placeholder='$t("editor.empty")'
+      :readonly='readonly'
+      @focus='onFocus'
+      @blur='onBlur'
+      @input='onInput'
+    )
+
+    .buttons(v-if='active')
+      .button(v-if='readonly' disabled)
+        v-pencil-off
+
+      .button(@click='translate' v-if='!readonly && !review.translation_candidate && record.locale !== $store.state.config.sourceLanguage')
+        v-earth
+        span {{ $t('editor.translate') }}
+
+      .button(@click='reviewing=!reviewing' v-if='$store.state.config.review')
+        v-comment-edit-outline
+        span {{ $t('review.review') }}
+
+    .review-brief(v-if='$store.state.config.review')
+      v-earth.state-icon(v-if='!active && review.translation_candidate')
+      v-check.state-icon(v-if='reviewBrief==="approve"')
+      v-plus-minus.state-icon(v-else-if='reviewBrief==="request_change"')
+      v-comment-question-outline.state-icon(v-else-if='reviewBrief==="conflict"')
+      v-comment-outline.state-icon(v-else-if='reviewBrief==="comment"')
+
+  .translation-candidate.panel.shadow.bottom-stacked(v-if='active && review.translation_candidate')
+    v-earth
+    .text {{review.translation_candidate.text}}
+    .buttons
+      .button.flat(@click='transDiscard()') {{$t('prompt.button_discard')}}
+      .button(@click='transEdit()')
+        v-pencil
+        span {{$t('prompt.button_edit_end_apply')}}
+      .button(@click='transApply()')
+        v-check-all
+        span {{$t('prompt.button_apply')}}
+
+  .review-panel(v-if='$store.state.config.review && ((comments.length && active) || reviewing)')
+    template(v-for='c in comments')
+      review-comment(:record='record' :comment='c' :key='c.locale')
+
+    template(v-if='reviewing')
+      review-comment(:record='record' :editing='true' mode='create' @done='reviewing=false')
+</template>
 
 <style lang="stylus">
 .panel

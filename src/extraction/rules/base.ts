@@ -3,13 +3,13 @@ export enum ExtractionScore {
   ShouldInclude,
   None,
   ShouldExclude,
-  MustExclude
+  MustExclude,
 }
 
 export abstract class ExtractionRule {
   abstract name: string
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line unused-imports/no-unused-vars
   shouldExtract(str: string): ExtractionScore | void {
     return ExtractionScore.None
   }

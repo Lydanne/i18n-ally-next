@@ -1,8 +1,9 @@
+import type { PendingWrite } from '~/core'
 import { window } from 'vscode'
-import { overrideConfirm } from '../overrideConfirm'
-import { keypathValidate, Log, promptEdit } from '~/utils'
+import { Config, CurrentFile, Global, Telemetry, TelemetryKey } from '~/core'
 import i18n from '~/i18n'
-import { CurrentFile, Config, Global, PendingWrite, Telemetry, TelemetryKey } from '~/core'
+import { keypathValidate, Log, promptEdit } from '~/utils'
+import { overrideConfirm } from '../overrideConfirm'
 
 export async function NewKey(keypath?: string) {
   Telemetry.track(TelemetryKey.NewKey)

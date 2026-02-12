@@ -1,5 +1,5 @@
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 import { env } from 'vscode'
 
 export default class i18n {
@@ -15,7 +15,7 @@ export default class i18n {
   }
 
   static format(str: string, args: any[]) {
-    return str.replace(/{(\d+)}/g, (match, number) => {
+    return str.replace(/\{(\d+)\}/g, (match, number) => {
       return typeof args[number] !== 'undefined'
         ? args[number].toString()
         : match

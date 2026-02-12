@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable ts/no-use-before-define */
 
 export function cleanArray(obj: any[]) {
   obj = obj

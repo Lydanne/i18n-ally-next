@@ -6,13 +6,13 @@ import {
   snakeCase,
 } from 'change-case'
 
-export type CaseStyles =
- | 'default'
- | 'kebab-case'
- | 'snake_case'
- | 'camelCase'
- | 'PascalCase'
- | 'ALL_CAPS'
+export type CaseStyles
+  = | 'default'
+    | 'kebab-case'
+    | 'snake_case'
+    | 'camelCase'
+    | 'PascalCase'
+    | 'ALL_CAPS'
 
 export function changeCase(str: string, style: CaseStyles) {
   if (!style || style === 'default')

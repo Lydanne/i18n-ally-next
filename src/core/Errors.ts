@@ -14,7 +14,8 @@ export class AllyError extends Error {
   constructor(
     public readonly type: ErrorType,
     public readonly error?: Error,
-    ...args: any[]) {
+    ...args: any[]
+  ) {
     // @ts-ignore
     super(i18n.t(type.toString(), ...args))
     this.args = args

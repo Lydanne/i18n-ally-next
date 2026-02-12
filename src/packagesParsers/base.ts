@@ -1,4 +1,4 @@
-import fs from 'fs'
+import fs from 'node:fs'
 import { File, Log } from '~/utils'
 
 export abstract class PackageParser {

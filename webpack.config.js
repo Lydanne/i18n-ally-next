@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 // @ts-check
 'use strict'
 
-const path = require('path')
+const path = require('node:path')
 const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin')
 const { createUnplugin } = require('unplugin')
 

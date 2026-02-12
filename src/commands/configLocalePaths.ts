@@ -1,11 +1,11 @@
-import path from 'path'
-import { Uri, workspace, window, commands } from 'vscode'
+import type { ExtensionModule } from '~/modules'
+import path from 'node:path'
 import fg from 'fast-glob'
-import { Commands } from './commands'
-import { ExtensionModule } from '~/modules'
+import { commands, Uri, window, workspace } from 'vscode'
 import { Config } from '~/core'
 import i18n from '~/i18n'
 import { Log } from '~/utils'
+import { Commands } from './commands'
 
 export class ConfigLocalesGuide {
   static async prompt() {
@@ -95,11 +95,9 @@ export class ConfigLocalesGuide {
   }
 }
 
-export default <ExtensionModule> function() {
+export default <ExtensionModule> function () {
   return [
-    commands.registerCommand(Commands.config_locales_auto,
-      () => ConfigLocalesGuide.autoSet()),
-    commands.registerCommand(Commands.config_locales,
-      () => ConfigLocalesGuide.config()),
+    commands.registerCommand(Commands.config_locales_auto, () => ConfigLocalesGuide.autoSet()),
+    commands.registerCommand(Commands.config_locales, () => ConfigLocalesGuide.config()),
   ]
 }

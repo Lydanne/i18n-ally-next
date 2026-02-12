@@ -1,9 +1,11 @@
+import type { CommandOptions } from './common'
+import type { AccaptableTranslateItem, LocaleNode } from '~/core'
 import { window } from 'vscode'
-import { getNodeOrRecord, CommandOptions, getNode } from './common'
-import { LocaleTreeItem, ProgressSubmenuItem } from '~/views'
-import { Translator, CurrentFile, Config, Global, LocaleNode, AccaptableTranslateItem } from '~/core'
-import i18n from '~/i18n'
+import { Config, CurrentFile, Global, Translator } from '~/core'
 import { Telemetry, TelemetryKey } from '~/core/Telemetry'
+import i18n from '~/i18n'
+import { LocaleTreeItem, ProgressSubmenuItem } from '~/views'
+import { getNode, getNodeOrRecord } from './common'
 
 export async function promptForSourceLocale(defaultLocale: string, node?: LocaleNode) {
   const locales = Global.allLocales

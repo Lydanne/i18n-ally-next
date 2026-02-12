@@ -1,11 +1,11 @@
+import type { LanguageId } from '~/utils'
 import { Framework } from './base'
-import { LanguageId } from '~/utils'
 
 class NextTranslateFramework extends Framework {
-  id= 'next-translate'
-  display= 'Next Translate'
+  id = 'next-translate'
+  display = 'Next Translate'
 
-  detection= {
+  detection = {
     packageJSON: [
       'next-translate',
     ],

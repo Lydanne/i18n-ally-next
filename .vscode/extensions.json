@@ -4,6 +4,6 @@
   "recommendations": [
     "dbaeumer.vscode-eslint",
     "lydanne.i18n-ally-next",
-    "amodio.tsl-problem-matcher",
+    "amodio.tsl-problem-matcher"
   ]
 }

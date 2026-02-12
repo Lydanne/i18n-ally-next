@@ -1,25 +1,24 @@
-/* eslint-disable no-undef */
 import Vue from 'vue'
-import Vuex from 'vuex'
-import 'vue-material-design-icons/styles.css'
 import VueI18n from 'vue-i18n'
 import VCheck from 'vue-material-design-icons/Check.vue'
-import VPlusMinus from 'vue-material-design-icons/PlusMinus.vue'
-import VCommentOutline from 'vue-material-design-icons/CommentOutline.vue'
-import VEarth from 'vue-material-design-icons/Earth.vue'
-import VCommentEditOutline from 'vue-material-design-icons/CommentEditOutline.vue'
-import VCommentQuestionOutline from 'vue-material-design-icons/CommentQuestionOutline.vue'
-import VCheckboxMarkedOutline from 'vue-material-design-icons/CheckboxMarkedOutline.vue'
-import VPencilOff from 'vue-material-design-icons/PencilOff.vue'
-import VPencil from 'vue-material-design-icons/Pencil.vue'
 import VCheckAll from 'vue-material-design-icons/CheckAll.vue'
-import VMenu from 'vue-material-design-icons/Menu.vue'
+import VCheckboxMarkedOutline from 'vue-material-design-icons/CheckboxMarkedOutline.vue'
 import VChevronLeft from 'vue-material-design-icons/ChevronLeft.vue'
 import VChevronRight from 'vue-material-design-icons/ChevronRight.vue'
+import VCommentEditOutline from 'vue-material-design-icons/CommentEditOutline.vue'
+import VCommentOutline from 'vue-material-design-icons/CommentOutline.vue'
+import VCommentQuestionOutline from 'vue-material-design-icons/CommentQuestionOutline.vue'
 import VDeleteEmptyOutline from 'vue-material-design-icons/DeleteEmptyOutline.vue'
+import VEarth from 'vue-material-design-icons/Earth.vue'
 import VFormatQuoteOpen from 'vue-material-design-icons/FormatQuoteOpen.vue'
+import VMenu from 'vue-material-design-icons/Menu.vue'
+import VPencil from 'vue-material-design-icons/Pencil.vue'
+import VPencilOff from 'vue-material-design-icons/PencilOff.vue'
+import VPlusMinus from 'vue-material-design-icons/PlusMinus.vue'
+import Vuex from 'vuex'
 import { vscode } from './api'
 import App from './App.vue'
+import 'vue-material-design-icons/styles.css'
 
 Vue.component('VCheck', VCheck)
 Vue.component('VPlusMinus', VPlusMinus)
@@ -64,9 +63,7 @@ const store = new Vuex.Store({
       i18n: {},
       route: 'welcome',
       routeData: {},
-    },
-    vscode.getState(),
-    { ready: false })
+    }, vscode.getState(), { ready: false })
   },
   mutations: {
     config(state, data) {

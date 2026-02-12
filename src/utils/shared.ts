@@ -1,6 +1,6 @@
+import type { ReviewComment } from '~/core/types'
 // @ts-ignore
 import md5 from 'blueimp-md5'
-import { ReviewComment } from '~/core/types'
 
 export function getAvatarFromEmail(email?: string) {
   const hash = md5(email || 'noname')

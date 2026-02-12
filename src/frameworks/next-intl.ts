@@ -1,7 +1,8 @@
-import { TextDocument } from 'vscode'
-import { Framework, ScopeRange } from './base'
-import { LanguageId } from '~/utils'
-import { RewriteKeySource, RewriteKeyContext, KeyStyle } from '~/core'
+import type { TextDocument } from 'vscode'
+import type { ScopeRange } from './base'
+import type { KeyStyle, RewriteKeyContext, RewriteKeySource } from '~/core'
+import type { LanguageId } from '~/utils'
+import { Framework } from './base'
 
 class NextIntlFramework extends Framework {
   id = 'next-intl'
@@ -10,7 +11,7 @@ class NextIntlFramework extends Framework {
   perferredKeystyle?: KeyStyle = 'nested'
 
   namespaceDelimiters = ['.']
-  namespaceDelimitersRegex = /[\.]/g
+  namespaceDelimitersRegex = /\./g
 
   detection = {
     packageJSON: [

@@ -1,4 +1,5 @@
-import { ExtensionContext, TreeItem, Uri } from 'vscode'
+import type { ExtensionContext } from 'vscode'
+import { TreeItem, Uri } from 'vscode'
 import { Config } from '~/core'
 
 export abstract class BaseTreeItem extends TreeItem {
