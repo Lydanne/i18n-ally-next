@@ -55,7 +55,7 @@ export enum ActionSource {
 
 export class Telemetry {
   private static _userProperties: object
-  private static _amplitude: amplitude.Types.NodeClient
+  private static _amplitude: ReturnType<typeof amplitude.createInstance>
 
   static async track(key: TelemetryKey, properties?: Record<string, any>, immediate = false) {
     const isEnabled = Config.telemetry && !isTest

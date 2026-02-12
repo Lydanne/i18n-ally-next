@@ -30,9 +30,9 @@ export class CurrentFileLocalesTreeProvider implements TreeDataProvider<BaseTree
     return element
   }
 
-  async getChildren(element?: BaseTreeItem) {
+  async getChildren(element?: BaseTreeItem): Promise<BaseTreeItem[]> {
     if (element)
-      return await element.getChildren()
+      return await element.getChildren() as BaseTreeItem[]
 
     const items: BaseTreeItem[] = [
       new CurrentFileInUseItem(this),

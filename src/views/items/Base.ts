@@ -1,4 +1,4 @@
-import { ExtensionContext, TreeItem } from 'vscode'
+import { ExtensionContext, TreeItem, Uri } from 'vscode'
 import { Config } from '~/core'
 
 export abstract class BaseTreeItem extends TreeItem {
@@ -34,12 +34,12 @@ export abstract class BaseTreeItem extends TreeItem {
   getIcon(name: string, themed = true) {
     if (themed) {
       return {
-        light: this.ctx.asAbsolutePath(`res/light/${name}.svg`),
-        dark: this.ctx.asAbsolutePath(`res/dark/${name}.svg`),
+        light: Uri.file(this.ctx.asAbsolutePath(`res/light/${name}.svg`)),
+        dark: Uri.file(this.ctx.asAbsolutePath(`res/dark/${name}.svg`)),
       }
     }
     else {
-      return this.ctx.asAbsolutePath(`res/dark/${name}.svg`)
+      return Uri.file(this.ctx.asAbsolutePath(`res/dark/${name}.svg`))
     }
   }
 
@@ -49,6 +49,6 @@ export abstract class BaseTreeItem extends TreeItem {
 
     const flag = Config.tagSystem.getFlagName(locale)
     if (flag)
-      return this.ctx.asAbsolutePath(`res/flags/${flag}.svg`)
+      return Uri.file(this.ctx.asAbsolutePath(`res/flags/${flag}.svg`))
   }
 }

@@ -132,7 +132,7 @@ class ReviewCommentProvider implements Disposable {
   }
 
   getThreadInfo(thread: CommentThread) {
-    const info = this._cache[thread.uri.fsPath]?.find(([r]) => r.start.line === thread.range.start.line)
+    const info = this._cache[thread.uri.fsPath]?.find(([r]) => r.start.line === thread.range?.start.line)
     if (info)
       return info[1]
   }
