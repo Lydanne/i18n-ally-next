@@ -28,6 +28,7 @@
   ],
   "exclude": [
     "./test/fixtures/**/*",
-    "./src/webview/src/**/*"
+    "./src/webview/src/**/*",
+    "./src/webview/vite.config.ts"
   ]
 }
