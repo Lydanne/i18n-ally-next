@@ -1,16 +1,22 @@
 <script lang="js">
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { vscode } from './api'
+import { useAppStore } from './store'
 import Flag from './Flag.vue'
 import RecordEditor from './RecordEditor.vue'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     Flag,
     RecordEditor,
   },
 
   inheritAttrs: false,
+
+  setup() {
+    const store = useAppStore()
+    return { store }
+  },
 
   props: {
     data: { type: Object, default: () => ({ records: {} }) },
@@ -28,13 +34,13 @@ export default Vue.extend({
 
   computed: {
     context() {
-      return this.$store.state.context
+      return this.store.context
     },
     contextKeys() {
       return this.context.keys || []
     },
     config() {
-      return this.$store.state.config
+      return this.store.config
     },
     records() {
       return (this.config.locales || [])

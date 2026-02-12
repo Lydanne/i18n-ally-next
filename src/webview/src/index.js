@@ -1,5 +1,6 @@
-import Vue from 'vue'
-import VueI18n from 'vue-i18n'
+import { createApp, watch } from 'vue'
+import { createI18n } from 'vue-i18n'
+import { createPinia } from 'pinia'
 import VCheck from 'vue-material-design-icons/Check.vue'
 import VCheckAll from 'vue-material-design-icons/CheckAll.vue'
 import VCheckboxMarkedOutline from 'vue-material-design-icons/CheckboxMarkedOutline.vue'
@@ -15,110 +16,66 @@ import VMenu from 'vue-material-design-icons/Menu.vue'
 import VPencil from 'vue-material-design-icons/Pencil.vue'
 import VPencilOff from 'vue-material-design-icons/PencilOff.vue'
 import VPlusMinus from 'vue-material-design-icons/PlusMinus.vue'
-import Vuex from 'vuex'
 import { vscode } from './api'
+import { useAppStore } from './store'
 import App from './App.vue'
 import 'vue-material-design-icons/styles.css'
 
-Vue.component('VCheck', VCheck)
-Vue.component('VPlusMinus', VPlusMinus)
-Vue.component('VCommentOutline', VCommentOutline)
-Vue.component('VEarth', VEarth)
-Vue.component('VCommentEditOutline', VCommentEditOutline)
-Vue.component('VCommentQuestionOutline', VCommentQuestionOutline)
-Vue.component('VCheckboxMarkedOutline', VCheckboxMarkedOutline)
-Vue.component('VPencilOff', VPencilOff)
-Vue.component('VPencil', VPencil)
-Vue.component('VCheckAll', VCheckAll)
-Vue.component('VDeleteEmptyOutline', VDeleteEmptyOutline)
-Vue.component('VFormatQuoteOpen', VFormatQuoteOpen)
-Vue.component('VMenu', VMenu)
-Vue.component('VChevronLeft', VChevronLeft)
-Vue.component('VChevronRight', VChevronRight)
-
-Vue.use(Vuex)
-Vue.use(VueI18n)
-
 const locale = 'en'
-const i18n = new VueI18n({
+const i18n = createI18n({
+  legacy: true,
   locale,
   messages: {},
 })
 
-const store = new Vuex.Store({
-  state: () => {
-    return Object.assign({
-      ready: false,
-      config: {
-        debug: false,
-        sourceLanguage: 'en',
-        displayLanguage: 'en',
-        enabledFrameworks: [],
-        ignoredLocales: [],
-        extensionRoot: '',
-        flags: [],
-        locales: [],
-      },
-      context: {},
-      i18n: {},
-      route: 'welcome',
-      routeData: {},
-    }, vscode.getState(), { ready: false })
-  },
-  mutations: {
-    config(state, data) {
-      state.config = data
-    },
-    i18n(state, data) {
-      state.i18n = data
-      i18n.setLocaleMessage(locale, data)
-    },
-    route(state, { route, data }) {
-      state.routeData = data
-      state.route = route
-    },
-    context(state, context) {
-      state.context = context
-    },
-    ready(state) {
-      state.ready = true
-    },
-  },
-})
+const pinia = createPinia()
+const app = createApp(App)
+app.use(pinia)
+app.use(i18n)
+app.component('VCheck', VCheck)
+app.component('VPlusMinus', VPlusMinus)
+app.component('VCommentOutline', VCommentOutline)
+app.component('VEarth', VEarth)
+app.component('VCommentEditOutline', VCommentEditOutline)
+app.component('VCommentQuestionOutline', VCommentQuestionOutline)
+app.component('VCheckboxMarkedOutline', VCheckboxMarkedOutline)
+app.component('VPencilOff', VPencilOff)
+app.component('VPencil', VPencil)
+app.component('VCheckAll', VCheckAll)
+app.component('VDeleteEmptyOutline', VDeleteEmptyOutline)
+app.component('VFormatQuoteOpen', VFormatQuoteOpen)
+app.component('VMenu', VMenu)
+app.component('VChevronLeft', VChevronLeft)
+app.component('VChevronRight', VChevronRight)
+app.mount('#app')
+
+const store = useAppStore()
 
 window.addEventListener('message', (event) => {
   const message = event.data
   switch (message.type) {
     case 'ready':
-      store.commit('ready')
+      store.setReady()
       break
     case 'config':
-      store.commit('config', message.data)
+      store.setConfig(message.data)
       break
     case 'route':
-      store.commit('route', message)
+      store.setRoute(message)
       break
     case 'i18n':
-      store.commit('i18n', message.data)
+      store.setI18n(message.data)
+      i18n.global.setLocaleMessage(locale, message.data)
       break
     case 'context':
-      store.commit('context', message.data)
+      store.setContext(message.data)
   }
 })
 
-// @ts-ignore
-window.app = new Vue({
-  store,
-  i18n,
-  watch: {
-    '$store.state': {
-      deep: true,
-      handler() {
-        vscode.setState(this.$store.state)
-      },
-    },
-  },
-  render: createElement => createElement(App),
-}).$mount('#app')
+watch(
+  () => store.$state,
+  () => { vscode.setState(store.$state) },
+  { deep: true },
+)
 
 vscode.postMessage({ type: 'ready' })

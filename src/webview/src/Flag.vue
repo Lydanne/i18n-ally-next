@@ -1,8 +1,14 @@
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from 'vue'
+import { useAppStore } from './store'
 
-export default Vue.extend({
+export default defineComponent({
   inheritAttrs: false,
+
+  setup() {
+    const store = useAppStore()
+    return { store }
+  },
 
   props: {
     locale: { type: String, default: 'en' },
@@ -12,14 +18,11 @@ export default Vue.extend({
 
   computed: {
     src() {
-      // @ts-ignore
-      const idx = this.$store.state.config.locales.indexOf(this.locale)
-      // @ts-ignore
-      const flag = this.$store.state.config.flags[idx]
+      const idx = this.store.config.locales.indexOf(this.locale)
+      const flag = this.store.config.flags[idx]
       if (!flag)
         return ''
-      // @ts-ignore
-      return `${this.$store.state.config.extensionRoot}/res/flags/${flag}.svg`
+      return `${this.store.config.extensionRoot}/res/flags/${flag}.svg`
     },
     style() {
       if (this.label) {
@@ -36,7 +39,7 @@ export default Vue.extend({
 <template lang="pug">
 .flag-icon(:style='style')
   img(
-    v-if='$store.state.config.showFlags'
+    v-if='store.config.showFlags'
     v-bind='$attrs'
     :src='src'
     :width='size || "20"'

@@ -1,12 +1,18 @@
 <script lang="js">
 import cloneDeep from 'lodash/cloneDeep'
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { vscode } from './api'
+import { useAppStore } from './store'
 import Avatar from './Avatar.vue'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     Avatar,
+  },
+
+  setup() {
+    const store = useAppStore()
+    return { store }
   },
 
   props: {
@@ -34,7 +40,7 @@ export default Vue.extend({
       }
     },
     isEditable() {
-      return this.comment.user?.email === this.$store.state.config.user?.email
+      return this.comment.user?.email === this.store.config.user?.email
     },
   },
 
@@ -137,7 +143,7 @@ export default Vue.extend({
           .button.flat(@click='acceptSuggestion(comment)') {{$t('review.accept_suggestion')}}
 
   .editing(v-else)
-    avatar(:user='$store.state.config.user')
+    avatar(:user='store.config.user')
     .panel.comment-form
       label {{$t('review.comment')}}
       .panel

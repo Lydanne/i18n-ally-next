@@ -1,16 +1,22 @@
 <script lang="js">
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { getCommentState } from '../../utils/shared'
 import { vscode } from './api'
+import { useAppStore } from './store'
 import Avatar from './Avatar.vue'
 import Flag from './Flag.vue'
 import ReviewComment from './ReviewComment.vue'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     Flag,
     Avatar,
     ReviewComment,
+  },
+
+  setup() {
+    const store = useAppStore()
+    return { store }
   },
 
   props: {
@@ -158,15 +164,15 @@ export default Vue.extend({
       .button(v-if='readonly' disabled)
         v-pencil-off
 
-      .button(@click='translate' v-if='!readonly && !review.translation_candidate && record.locale !== $store.state.config.sourceLanguage')
+      .button(@click='translate' v-if='!readonly && !review.translation_candidate && record.locale !== store.config.sourceLanguage')
         v-earth
         span {{ $t('editor.translate') }}
 
-      .button(@click='reviewing=!reviewing' v-if='$store.state.config.review')
+      .button(@click='reviewing=!reviewing' v-if='store.config.review')
         v-comment-edit-outline
         span {{ $t('review.review') }}
 
-    .review-brief(v-if='$store.state.config.review')
+    .review-brief(v-if='store.config.review')
       v-earth.state-icon(v-if='!active && review.translation_candidate')
       v-check.state-icon(v-if='reviewBrief==="approve"')
       v-plus-minus.state-icon(v-else-if='reviewBrief==="request_change"')
@@ -185,9 +191,9 @@ export default Vue.extend({
         v-check-all
         span {{$t('prompt.button_apply')}}
 
-  .review-panel(v-if='$store.state.config.review && ((comments.length && active) || reviewing)')
-    template(v-for='c in comments')
-      review-comment(:record='record' :comment='c' :key='c.locale')
+  .review-panel(v-if='store.config.review && ((comments.length && active) || reviewing)')
+    template(v-for='c in comments' :key='c.id || c.locale')
+      review-comment(:record='record' :comment='c')
 
     template(v-if='reviewing')
       review-comment(:record='record' :editing='true' mode='create' @done='reviewing=false')

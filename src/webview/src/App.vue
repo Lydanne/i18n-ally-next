@@ -1,19 +1,25 @@
 <script lang="js">
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import VCog from 'vue-material-design-icons/Cog.vue'
 import VMagnify from 'vue-material-design-icons/Magnify.vue'
 import VRefresh from 'vue-material-design-icons/Refresh.vue'
 import { vscode } from './api'
+import { useAppStore } from './store'
 import Flag from './Flag.vue'
 import KeyEditor from './KeyEditor.vue'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     Flag,
     KeyEditor,
     VCog,
     VRefresh,
     VMagnify,
+  },
+
+  setup() {
+    const store = useAppStore()
+    return { store }
   },
 
   data() {
@@ -24,10 +30,7 @@ export default Vue.extend({
 
   computed: {
     logo() {
-      return `${this.state.config.extensionRoot}/res/logo.svg`
-    },
-    state() {
-      return this.$store.state
+      return `${this.store.config.extensionRoot}/res/logo.svg`
     },
   },
 
@@ -50,13 +53,13 @@ export default Vue.extend({
 
 <template lang="pug">
 .container
-  template(v-if='$store.state.ready')
+  template(v-if='store.ready')
     .actions-bar
       v-magnify.setting-button(@click='openSearch')
-      v-refresh.setting-button(v-if='$store.state.config.debug' @click='refresh')
+      v-refresh.setting-button(v-if='store.config.debug' @click='refresh')
       v-cog.setting-button(@click='openSettings')
 
-    key-editor(v-if='state.route === "open-key"' :data='state.routeData')
+    key-editor(v-if='store.route === "open-key"' :data='store.routeData')
 
   template(v-else)
     p.loading Loading...
