@@ -1,284 +1,305 @@
-<script lang="js">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+import { computed, ref, watch } from 'vue'
 import { vscode } from './api'
 import { useAppStore } from './store'
 import Flag from './Flag.vue'
 import RecordEditor from './RecordEditor.vue'
 
-export default defineComponent({
-  components: {
-    Flag,
-    RecordEditor,
-  },
+defineOptions({ inheritAttrs: false })
 
-  inheritAttrs: false,
+const props = withDefaults(defineProps<{
+  data?: Record<string, any>
+}>(), {
+  data: () => ({ records: {} }),
+})
 
-  setup() {
-    const store = useAppStore()
-    return { store }
-  },
+const store = useAppStore()
 
-  props: {
-    data: { type: Object, default: () => ({ records: {} }) },
-  },
+const dragging = ref(false)
+const sidebarWidth = ref(150)
+const sidebar = ref(false)
+const current = ref('')
+const keyIndex = ref(0)
 
-  data() {
-    return {
-      dragging: false,
-      sidebarWidth: 150,
-      sidebar: false,
-      current: '',
-      keyIndex: 0,
-    }
-  },
+const context = computed(() => store.context as Record<string, any>)
+const contextKeys = computed(() => (context.value.keys || []) as Record<string, any>[])
+const config = computed(() => store.config)
 
-  computed: {
-    context() {
-      return this.store.context
-    },
-    contextKeys() {
-      return this.context.keys || []
-    },
-    config() {
-      return this.store.config
-    },
-    records() {
-      return (this.config.locales || [])
-        .filter(i => !(this.config.ignoredLocales || []).includes(i))
-        .map(l => this.data.records[l])
-    },
-    emptyRecords() {
-      return this.records.filter(i =>
-        !i.readonly
-        && !i.value
-        && !((this.data?.reviews?.locales || {})[i.locale]?.translation_candidate),
-      )
-    },
-  },
+const records = computed(() =>
+  (config.value.locales || [])
+    .filter((i: string) => !(config.value.ignoredLocales || []).includes(i))
+    .map((l: string) => props.data.records[l]),
+)
 
-  watch: {
-    'data.locale': {
-      immiediate: true,
-      handler(v) {
-        if (v)
-          this.current = v || ''
-      },
-    },
-    'context': {
-      immiediate: true,
-      handler() {
-        this.keyIndex = this.data.keyIndex ?? this.contextKeys.indexOf(this.data.keypath) ?? 0
-      },
-    },
-    keyIndex() {
-      vscode.postMessage({
-        type: 'navigate-key',
-        data: {
-          filepath: this.context.filepath,
-          keyIndex: this.keyIndex,
-          ...this.contextKeys[this.keyIndex],
-        },
-      })
-    },
-    contextKeys() {
-      if (!this.contextKeys?.length)
-        this.sidebar = false
-    },
-  },
+const emptyRecords = computed(() =>
+  records.value.filter((i: any) =>
+    !i.readonly
+    && !i.value
+    && !((props.data?.reviews?.locales || {})[i.locale]?.translation_candidate),
+  ),
+)
 
-  methods: {
-    editDescription() {
-      vscode.postMessage({
-        type: 'review.description',
-        keypath: this.data.keypath,
-      })
+function editDescription() {
+  vscode.postMessage({ type: 'review.description', keypath: props.data.keypath })
+}
+
+function renameKey() {
+  vscode.postMessage({ type: 'rename-key', keypath: props.data.keypath })
+}
+
+function translateAll() {
+  vscode.postMessage({
+    type: 'translate',
+    data: {
+      keypath: props.data.keypath,
+      locales: emptyRecords.value.map((i: any) => i.locale),
     },
-    renameKey() {
-      vscode.postMessage({
-        type: 'rename-key',
-        keypath: this.data.keypath,
-      })
+  })
+}
+
+function gotoKey(v: number) {
+  keyIndex.value = v
+}
+
+function nextKey(offset: number) {
+  gotoKey(keyIndex.value + offset)
+}
+
+function onMousedown(e: MouseEvent) {
+  if ((e.target as HTMLElement).className === 'resize-handler')
+    dragging.value = true
+}
+
+function onMove(e: MouseEvent) {
+  if (dragging.value)
+    sidebarWidth.value = Math.min(Math.max(100, e.clientX - 20), window.innerWidth * 0.6)
+}
+
+watch(() => props.data.locale, (v) => {
+  if (v)
+    current.value = v || ''
+})
+
+watch(context, () => {
+  keyIndex.value = props.data.keyIndex ?? contextKeys.value.indexOf(props.data.keypath) ?? 0
+})
+
+watch(keyIndex, () => {
+  vscode.postMessage({
+    type: 'navigate-key',
+    data: {
+      filepath: context.value.filepath,
+      keyIndex: keyIndex.value,
+      ...contextKeys.value[keyIndex.value],
     },
-    translateAll() {
-      vscode.postMessage({
-        type: 'translate',
-        data: {
-          keypath: this.data.keypath,
-          locales: this.emptyRecords.map(i => i.locale),
-        },
-      })
-    },
-    gotoKey(v) {
-      this.keyIndex = v
-    },
-    nextKey(offset) {
-      this.gotoKey(this.keyIndex + offset)
-    },
-    onMousedown(e) {
-      if (e.target.className === 'resize-handler')
-        this.dragging = true
-    },
-    onMove(e) {
-      if (this.dragging)
-        this.sidebarWidth = Math.min(Math.max(100, e.clientX - 20), window.innerWidth * 0.6)
-    },
-  },
+  })
+})
+
+watch(contextKeys, () => {
+  if (!contextKeys.value?.length)
+    sidebar.value = false
 })
 </script>
 
-<template lang="pug">
-.key-editor(
-  :class='{"with-sidebar": sidebar}'
-  @mousedown='onMousedown'
-  @mouseup='dragging=false'
-  @mousemove='onMove'
-)
-  .sidebar(:style='{width: sidebarWidth +"px"}' v-if='sidebar')
-    .keys
-      .item.panel(
-        v-for='(key, idx) in contextKeys'
-        @click='gotoKey(idx)'
-        :class='{active: idx === keyIndex}'
-      )
-        .key {{key.key}}
-        .value(:class='{empty: !key.value}') {{key.value || $t('editor.empty')}}
+<template>
+  <div
+    class="key-editor"
+    :class="{ 'with-sidebar': sidebar }"
+    @mousedown="onMousedown"
+    @mouseup="dragging = false"
+    @mousemove="onMove"
+  >
+    <div v-if="sidebar" class="sidebar" :style="{ width: `${sidebarWidth}px` }">
+      <div class="keys">
+        <div
+          v-for="(key, idx) in contextKeys"
+          :key="idx"
+          class="item panel"
+          :class="{ active: idx === keyIndex }"
+          @click="gotoKey(idx)"
+        >
+          <div class="key">
+            {{ key.key }}
+          </div>
+          <div class="value" :class="{ empty: !key.value }">
+            {{ key.value || $t('editor.empty') }}
+          </div>
+        </div>
+      </div>
+      <div class="resize-handler">
+        <div class="inner" />
+      </div>
+    </div>
 
-    .resize-handler
-      .inner
+    <div class="content">
+      <div class="header">
+        <template v-if="contextKeys.length">
+          <div class="buttons">
+            <div v-if="contextKeys.length" class="button" @click="sidebar = !sidebar">
+              <VMenu />
+            </div>
+            <div class="button" :disabled="keyIndex <= 0 || undefined" @click="nextKey(-1)">
+              <VChevronLeft />
+            </div>
+            <div class="button" :disabled="keyIndex >= contextKeys.length - 1 || undefined" @click="nextKey(1)">
+              <VChevronRight />
+            </div>
+          </div>
+          <br>
+        </template>
 
-  .content
-    .header
-      template(v-if='contextKeys.length')
-        .buttons
-          .button(@click='sidebar = !sidebar' v-if='contextKeys.length')
-            v-menu
-          .button(@click='nextKey(-1)' :disabled='keyIndex <= 0')
-            v-chevron-left
-          .button(@click='nextKey(1)' :disabled='keyIndex >= contextKeys.length - 1')
-            v-chevron-right
-        br
+        <div class="key-name">
+          <span>"{{ data.keypath }}"</span>
+          <VPencil class="setting-button small" @click="renameKey" />
+        </div>
 
-      .key-name
-        span "{{data.keypath}}"
-        v-pencil.setting-button.small(@click='renameKey')
+        <div class="reviews">
+          <template v-if="!data.reviews?.description">
+            <div class="description add" @click="editDescription">
+              {{ $t('editor.add_description') }}
+            </div>
+          </template>
+          <template v-else>
+            <div class="description" @click="editDescription">
+              {{ data.reviews.description }}
+            </div>
+          </template>
+        </div>
 
-      // pre {{$store.state.context}} {{keyIndex}}
+        <div class="buttons actions">
+          <div v-if="emptyRecords.length" class="button" @click="translateAll">
+            <VEarth />
+            <span>{{ $t('editor.translate_all_missing') }} ({{ emptyRecords.length }})</span>
+          </div>
+        </div>
+      </div>
 
-      .reviews
-        template(v-if='!data.reviews.description')
-          .description.add(@click='editDescription') {{ $t('editor.add_description') }}
-        template(v-else)
-          .description(@click='editDescription') {{data.reviews.description}}
-
-      .buttons.actions
-        .button(@click='translateAll' v-if='emptyRecords.length')
-          v-earth
-          span {{ $t('editor.translate_all_missing') }} ({{emptyRecords.length}})
-        // .button Mark all as...
-
-    .records
-      record-editor(
-        v-for='r in records'
-        :keypath='data.keypath'
-        :record='r'
-        :review='(data.reviews.locales || {})[r.locale]'
-        :key='r.locale'
-        :active='current === r.locale'
-        @update:active='current = r.locale'
-      )
+      <div class="records">
+        <RecordEditor
+          v-for="r in records"
+          :key="r.locale"
+          :keypath="data.keypath"
+          :record="r"
+          :review="(data.reviews?.locales || {})[r.locale]"
+          :active="current === r.locale"
+          @update:active="current = r.locale"
+        />
+      </div>
+    </div>
+  </div>
 </template>
 
-<style lang="stylus" scoped>
-.key-editor
-  display grid
-  &.with-sidebar
-    grid-template-columns max-content auto
+<style scoped>
+.key-editor {
+  display: grid;
+}
 
-  .sidebar
-    overflow-y auto
-    overflow-x hidden
-    position relative
-    padding 0.8em
+.key-editor.with-sidebar {
+  grid-template-columns: max-content auto;
+}
 
-    .resize-handler
-      position absolute
-      top 0
-      right -6px
-      bottom 0
-      padding 0 6px
-      cursor ew-resize
+.sidebar {
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  padding: 0.8em;
+}
 
-      .inner
-        height 100%
-        width 1px
-        background var(--vscode-foreground)
-        pointer-events none
-        opacity 0
-        transition .2s ease-in-out
+.resize-handler {
+  position: absolute;
+  top: 0;
+  right: -6px;
+  bottom: 0;
+  padding: 0 6px;
+  cursor: ew-resize;
+}
 
-      &:hover .inner
-        opacity 0.5
+.resize-handler .inner {
+  height: 100%;
+  width: 1px;
+  background: var(--vscode-foreground);
+  pointer-events: none;
+  opacity: 0;
+  transition: 0.2s ease-in-out;
+}
 
-    .keys
-      display grid
-      grid-template-rows auto
-      grid-gap 0.4em
-      overflow-x auto
+.resize-handler:hover .inner {
+  opacity: 0.5;
+}
 
-      .item
-        font-size 0.8em
-        opacity 0.5
-        cursor pointer
+.keys {
+  display: grid;
+  grid-template-rows: auto;
+  gap: 0.4em;
+  overflow-x: auto;
+}
 
-        &::before
-          opacity 0.08
+.keys .item {
+  font-size: 0.8em;
+  opacity: 0.5;
+  cursor: pointer;
+}
 
-        &.active
-          opacity 1
-          cursor default
+.keys .item::before {
+  opacity: 0.08;
+}
 
-        &.active::before
-          opacity 0.1
+.keys .item.active {
+  opacity: 1;
+  cursor: default;
+}
 
-        &::after
-          opacity 0 !important
+.keys .item.active::before {
+  opacity: 0.1;
+}
 
-        .key
-          font-family var(--vscode-editor-font-family)
+.keys .item::after {
+  opacity: 0 !important;
+}
 
-        .value
-          &.empty
-            opacity 0.5
+.keys .item .key {
+  font-family: var(--vscode-editor-font-family);
+}
 
-  .header
-    padding var(--i18n-ally-next-margin)
+.keys .item .value.empty {
+  opacity: 0.5;
+}
 
-  .key-name
-    font-family var(--vscode-editor-font-family)
-    opacity 0.8
+.header {
+  padding: var(--i18n-ally-margin);
+}
 
-  .reviews
-    padding-bottom 0.5em
+.key-name {
+  font-family: var(--vscode-editor-font-family);
+  opacity: 0.8;
+}
 
-    .description
-      cursor pointer
-      min-width 100px
-      display inline-block
-      position relative
-      padding 0.4em
+.reviews {
+  padding-bottom: 0.5em;
+}
 
-      &:hover::after
-        content ""
-        background var(--vscode-foreground)
-        opacity 0.1
-        top 0
-        left 0
-        right 0
-        bottom 0
-        position absolute
-        border-radius 4px
+.description {
+  cursor: pointer;
+  min-width: 100px;
+  display: inline-block;
+  position: relative;
+  padding: 0.4em;
+}
 
-      &.add
-        opacity 0.5
-        font-style italic
+.description:hover::after {
+  content: "";
+  background: var(--vscode-foreground);
+  opacity: 0.1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  border-radius: 4px;
+}
+
+.description.add {
+  opacity: 0.5;
+  font-style: italic;
+}
 </style>

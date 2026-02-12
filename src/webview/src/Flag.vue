@@ -1,68 +1,65 @@
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+import { computed } from 'vue'
 import { useAppStore } from './store'
 
-export default defineComponent({
-  inheritAttrs: false,
+defineOptions({ inheritAttrs: false })
 
-  setup() {
-    const store = useAppStore()
-    return { store }
-  },
-
-  props: {
-    locale: { type: String, default: 'en' },
-    size: { type: String, default: '20' },
-    label: { type: Boolean, default: true },
-  },
-
-  computed: {
-    src() {
-      const idx = this.store.config.locales.indexOf(this.locale)
-      const flag = this.store.config.flags[idx]
-      if (!flag)
-        return ''
-      return `${this.store.config.extensionRoot}/res/flags/${flag}.svg`
-    },
-    style() {
-      if (this.label) {
-        return {
-          width: '50px',
-        }
-      }
-      return {}
-    },
-  },
+const props = withDefaults(defineProps<{
+  locale?: string
+  size?: string
+  label?: boolean
+}>(), {
+  locale: 'en',
+  size: '20',
+  label: true,
 })
+
+const store = useAppStore()
+
+const src = computed(() => {
+  const idx = store.config.locales.indexOf(props.locale)
+  const flag = store.config.flags[idx]
+  if (!flag)
+    return ''
+  return `${store.config.extensionRoot}/res/flags/${flag}.svg`
+})
+
+const wrapperStyle = computed(() => props.label ? { width: '50px' } : {})
 </script>
 
-<template lang="pug">
-.flag-icon(:style='style')
-  img(
-    v-if='store.config.showFlags'
-    v-bind='$attrs'
-    :src='src'
-    :width='size || "20"'
-    :height='size || "20"'
-  )
-  .locale-label.monospace(v-if='label') {{locale}}
+<template>
+  <div class="flag-icon" :style="wrapperStyle">
+    <img
+      v-if="store.config.showFlags"
+      v-bind="$attrs"
+      :src="src"
+      :width="size || '20'"
+      :height="size || '20'"
+    >
+    <div v-if="label" class="locale-label monospace">
+      {{ locale }}
+    </div>
+  </div>
 </template>
 
-<style lang="stylus" scoped>
-.flag-icon
-  padding 3px
-  text-align center
-  margin auto
+<style scoped>
+.flag-icon {
+  padding: 3px;
+  text-align: center;
+  margin: auto;
+}
 
-  img
-    margin auto
-    display block
+.flag-icon img {
+  margin: auto;
+  display: block;
+}
 
-  .locale-label
-    font-size 0.7em
-    opacity 0.6
-    line-height 1em
-    white-space nowrap
-    text-overflow ellipsis
-    overflow hidden
+.locale-label {
+  font-size: 0.7em;
+  opacity: 0.6;
+  line-height: 1em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 </style>

@@ -1,350 +1,308 @@
-<script lang="js">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+import { computed, nextTick, onMounted, ref, useTemplateRef, watch } from 'vue'
 import { getCommentState } from '../../utils/shared'
 import { vscode } from './api'
 import { useAppStore } from './store'
-import Avatar from './Avatar.vue'
 import Flag from './Flag.vue'
 import ReviewComment from './ReviewComment.vue'
 
-export default defineComponent({
-  components: {
-    Flag,
-    Avatar,
-    ReviewComment,
-  },
-
-  setup() {
-    const store = useAppStore()
-    return { store }
-  },
-
-  props: {
-    record: { type: Object, default: () => ({ locale: '', value: '' }) },
-    keypath: { type: String, default: '' },
-    review: { type: Object, default: () => ({ comments: [] }) },
-    active: { type: Boolean, default: false },
-  },
-
-  data() {
-    return {
-      focused: false,
-      reviewing: false,
-      value: '',
-    }
-  },
-
-  computed: {
-    comments() {
-      return (this.review?.comments || [])
-        .filter(i => !i.resolved)
-    },
-    reviewBrief() {
-      return getCommentState(this.comments)
-    },
-    readonly() {
-      return this.record.readonly
-    },
-    changed() {
-      return this.value !== this.record.value
-    },
-  },
-
-  watch: {
-    record: {
-      deep: true,
-      immediate: true,
-      handler() {
-        this.reset()
-      },
-    },
-    keypath() {
-      this.reset()
-    },
-    value() {
-      this.$nextTick(() => this.resize(this.$refs.textarea1))
-    },
-    active(value) {
-      if (!value && this.changed)
-        this.save()
-    },
-  },
-
-  mounted() {
-    this.$nextTick(() => this.resize(this.$refs.textarea1))
-  },
-
-  methods: {
-    reset() {
-      if (this.focused && this.changed)
-        return
-      this.value = this.record.value
-    },
-    resize(ta) {
-      if (!ta)
-        return
-
-      ta.style.height = 'auto'
-      ta.style.height = `${ta.scrollHeight - 3}px`
-    },
-    onInput() {
-      if (this.value !== this.record.value)
-        this.changed = true
-    },
-    onFocus() {
-      this.focused = true
-      this.value = this.record.value
-      this.$emit('update:active', true)
-    },
-    onBlur() {
-      this.focused = false
-      if (this.changed)
-        this.save()
-    },
-    save() {
-      vscode.postMessage({
-        type: 'edit',
-        data: {
-          keypath: this.record.keypath,
-          locale: this.record.locale,
-          value: this.value,
-        },
-      })
-    },
-    translate() {
-      vscode.postMessage({
-        type: 'translate',
-        data: {
-          keypath: this.record.keypath,
-          locale: this.record.locale,
-        },
-      })
-    },
-    transDiscard() {
-      vscode.postMessage({
-        type: 'translation.discard',
-        keypath: this.record.keypath,
-        locale: this.record.locale,
-      })
-    },
-    transApply() {
-      vscode.postMessage({
-        type: 'translation.apply',
-        keypath: this.record.keypath,
-        locale: this.record.locale,
-      })
-    },
-    transEdit() {
-      vscode.postMessage({
-        type: 'translation.edit',
-        keypath: this.record.keypath,
-        locale: this.record.locale,
-      })
-    },
-  },
+const props = withDefaults(defineProps<{
+  record?: Record<string, any>
+  keypath?: string
+  review?: Record<string, any>
+  active?: boolean
+}>(), {
+  record: () => ({ locale: '', value: '' }),
+  keypath: '',
+  review: () => ({ comments: [] }),
+  active: false,
 })
+
+const emit = defineEmits<{
+  'update:active': [value: boolean]
+}>()
+
+const store = useAppStore()
+
+const focused = ref(false)
+const reviewing = ref(false)
+const value = ref('')
+const textarea1 = useTemplateRef<HTMLTextAreaElement>('textarea1')
+
+const comments = computed(() =>
+  (props.review?.comments || []).filter((i: any) => !i.resolved),
+)
+
+const reviewBrief = computed(() => getCommentState(comments.value))
+
+const isReadonly = computed(() => props.record.readonly)
+
+const changed = computed(() => value.value !== props.record.value)
+
+function resizeTextarea(el: HTMLTextAreaElement | null | undefined) {
+  if (!el)
+    return
+  el.style.height = 'auto'
+  el.style.height = `${el.scrollHeight - 3}px`
+}
+
+function reset() {
+  if (focused.value && changed.value)
+    return
+  value.value = props.record.value
+}
+
+function onFocus() {
+  focused.value = true
+  value.value = props.record.value
+  emit('update:active', true)
+}
+
+function onBlur() {
+  focused.value = false
+  if (changed.value)
+    save()
+}
+
+function save() {
+  vscode.postMessage({
+    type: 'edit',
+    data: {
+      keypath: props.record.keypath,
+      locale: props.record.locale,
+      value: value.value,
+    },
+  })
+}
+
+function translate() {
+  vscode.postMessage({
+    type: 'translate',
+    data: { keypath: props.record.keypath, locale: props.record.locale },
+  })
+}
+
+function transDiscard() {
+  vscode.postMessage({
+    type: 'translation.discard',
+    keypath: props.record.keypath,
+    locale: props.record.locale,
+  })
+}
+
+function transApply() {
+  vscode.postMessage({
+    type: 'translation.apply',
+    keypath: props.record.keypath,
+    locale: props.record.locale,
+  })
+}
+
+function transEdit() {
+  vscode.postMessage({
+    type: 'translation.edit',
+    keypath: props.record.keypath,
+    locale: props.record.locale,
+  })
+}
+
+watch(() => props.record, () => reset(), { deep: true, immediate: true })
+watch(() => props.keypath, () => reset())
+watch(value, () => nextTick(() => resizeTextarea(textarea1.value)))
+watch(() => props.active, (v) => {
+  if (!v && changed.value)
+    save()
+})
+
+onMounted(() => nextTick(() => resizeTextarea(textarea1.value)))
 </script>
 
-<template lang="pug">
-.record-editor(:class='{active}')
-  .edit-input.panel(:class='{"top-stacked": active && review.translation_candidate }')
-    flag(:locale='record.locale' size='18')
-    textarea(
-      ref='textarea1'
-      rows='1'
-      v-model='value'
-      :placeholder='$t("editor.empty")'
-      :readonly='readonly'
-      @focus='onFocus'
-      @blur='onBlur'
-      @input='onInput'
-    )
+<template>
+  <div class="record-editor" :class="{ active }">
+    <div class="edit-input panel" :class="{ 'top-stacked': active && review.translation_candidate }">
+      <Flag :locale="record.locale" size="18" />
+      <textarea
+        ref="textarea1"
+        v-model="value"
+        rows="1"
+        :placeholder="$t('editor.empty')"
+        :readonly="isReadonly"
+        @focus="onFocus"
+        @blur="onBlur"
+      />
 
-    .buttons(v-if='active')
-      .button(v-if='readonly' disabled)
-        v-pencil-off
+      <div v-if="active" class="buttons">
+        <div v-if="isReadonly" class="button" disabled>
+          <VPencilOff />
+        </div>
+        <div
+          v-if="!isReadonly && !review.translation_candidate && record.locale !== store.config.sourceLanguage"
+          class="button"
+          @click="translate"
+        >
+          <VEarth />
+          <span>{{ $t('editor.translate') }}</span>
+        </div>
+        <div v-if="store.config.review" class="button" @click="reviewing = !reviewing">
+          <VCommentEditOutline />
+          <span>{{ $t('review.review') }}</span>
+        </div>
+      </div>
 
-      .button(@click='translate' v-if='!readonly && !review.translation_candidate && record.locale !== store.config.sourceLanguage')
-        v-earth
-        span {{ $t('editor.translate') }}
+      <div v-if="store.config.review" class="review-brief">
+        <VEarth v-if="!active && review.translation_candidate" class="state-icon" />
+        <VCheck v-if="reviewBrief === 'approve'" class="state-icon" />
+        <VPlusMinus v-else-if="reviewBrief === 'request_change'" class="state-icon" />
+        <VCommentQuestionOutline v-else-if="reviewBrief === 'conflict'" class="state-icon" />
+        <VCommentOutline v-else-if="reviewBrief === 'comment'" class="state-icon" />
+      </div>
+    </div>
 
-      .button(@click='reviewing=!reviewing' v-if='store.config.review')
-        v-comment-edit-outline
-        span {{ $t('review.review') }}
+    <div v-if="active && review.translation_candidate" class="translation-candidate panel shadow bottom-stacked">
+      <VEarth />
+      <div class="text">
+        {{ review.translation_candidate.text }}
+      </div>
+      <div class="buttons">
+        <div class="button flat" @click="transDiscard">
+          {{ $t('prompt.button_discard') }}
+        </div>
+        <div class="button" @click="transEdit">
+          <VPencil />
+          <span>{{ $t('prompt.button_edit_end_apply') }}</span>
+        </div>
+        <div class="button" @click="transApply">
+          <VCheckAll />
+          <span>{{ $t('prompt.button_apply') }}</span>
+        </div>
+      </div>
+    </div>
 
-    .review-brief(v-if='store.config.review')
-      v-earth.state-icon(v-if='!active && review.translation_candidate')
-      v-check.state-icon(v-if='reviewBrief==="approve"')
-      v-plus-minus.state-icon(v-else-if='reviewBrief==="request_change"')
-      v-comment-question-outline.state-icon(v-else-if='reviewBrief==="conflict"')
-      v-comment-outline.state-icon(v-else-if='reviewBrief==="comment"')
-
-  .translation-candidate.panel.shadow.bottom-stacked(v-if='active && review.translation_candidate')
-    v-earth
-    .text {{review.translation_candidate.text}}
-    .buttons
-      .button.flat(@click='transDiscard()') {{$t('prompt.button_discard')}}
-      .button(@click='transEdit()')
-        v-pencil
-        span {{$t('prompt.button_edit_end_apply')}}
-      .button(@click='transApply()')
-        v-check-all
-        span {{$t('prompt.button_apply')}}
-
-  .review-panel(v-if='store.config.review && ((comments.length && active) || reviewing)')
-    template(v-for='c in comments' :key='c.id || c.locale')
-      review-comment(:record='record' :comment='c')
-
-    template(v-if='reviewing')
-      review-comment(:record='record' :editing='true' mode='create' @done='reviewing=false')
+    <div v-if="store.config.review && ((comments.length && active) || reviewing)" class="review-panel">
+      <ReviewComment
+        v-for="c in comments"
+        :key="c.id || c.locale"
+        :record="record"
+        :comment="c"
+      />
+      <ReviewComment
+        v-if="reviewing"
+        :record="record"
+        :editing="true"
+        mode="create"
+        @done="reviewing = false"
+      />
+    </div>
+  </div>
 </template>
 
-<style lang="stylus">
-.panel
-  padding 0.4em
-  position relative
-  display grid
+<style scoped>
+.record-editor {
+  border-left: 2px solid transparent;
+  padding-right: var(--i18n-ally-margin);
+  padding-left: calc(var(--i18n-ally-margin) - 2px);
+}
 
-  &::before, &::after
-    content ""
-    position absolute
-    top 0
-    left 0
-    right 0
-    bottom 0
-    border-radius 4px
-    z-index -1
-    pointer-events none
+.record-editor.active {
+  border-left: 2px solid var(--vscode-foreground);
+}
 
-  &::before
-    background var(--vscode-foreground)
-    opacity 0.07
+.edit-input {
+  display: grid;
+  grid-template-columns: max-content auto max-content max-content;
+  margin-top: 8px;
+}
 
-  &::after
-    border 1px solid transparent
+.edit-input .flag-icon {
+  width: 2em;
+  height: 1.8em;
+  padding: 0.2em 0.2em 0.2em 0;
+}
 
-  &.active::after
-    border-color var(--vscode-foreground)
-    opacity 0.7
+.edit-input .buttons {
+  margin: auto;
+}
 
-  &.shadow
-    &::before
-      background var(--vscode-foreground)
-      opacity 0.04
+.review-panel {
+  padding-bottom: 8px;
+}
 
-  &.top-stacked
-    &::before, &::after
-      border-bottom-right-radius 0
-      border-bottom-left-radius 0
+.comment-form {
+  padding: 6px 12px;
+  margin-top: 0.3em;
+}
 
-  &.bottom-stacked
-    &::before, &::after
-      border-top-right-radius 0
-      border-top-left-radius 0
+.comment-form .buttons {
+  margin-top: 0.7em;
+  margin-bottom: 0.3em;
+}
 
-  label
-    display block
-    font-size 0.8em
-    margin-left 0.1em
-    margin-top 0.3em
-    margin-bottom 0.3em
-    opacity 0.8
+.state-icon {
+  padding-left: 0.2em;
+  font-size: 1.1em;
+  margin-top: -0.1em;
+}
 
-  label:not(:first-child)
-    margin-top 0.8em
+.state-icon.earth-icon {
+  opacity: 0.3;
+}
 
-.record-editor
-  border-left 2px solid transparent
-  padding-right var(--i18n-ally-next-margin)
-  padding-left calc(var(--i18n-ally-next-margin) - 2px)
+.state-icon.plus-minus-icon {
+  color: var(--review-request-change);
+}
 
-  &.active
-    border-left 2px solid var(--vscode-foreground)
+.state-icon.check-icon {
+  color: var(--review-approve);
+}
 
-  .edit-input
-    display grid
-    grid-template-columns max-content auto max-content max-content
-    margin-top 8px
+.state-icon.comment-question-outline-icon {
+  color: var(--review-comment);
+}
 
-    .flag-icon
-      width 2em
-      height 1.8em
-      padding 0.2em 0.2em 0.2em 0
+.state-icon.comment-outline-icon {
+  opacity: 0.3;
+}
 
-    .buttons
-      margin auto
+.state-icon.format-quote-open-icon {
+  opacity: 0.6;
+}
 
-  .review-panel
-    padding-bottom 8px
+.review-brief .state-icon {
+  font-size: 1.4em;
+  padding: 0.1em;
+  margin: auto 0.2em;
+}
 
-  .comment-form
-    padding 6px 12px
-    margin-top 0.3em
+.record-editor > * {
+  vertical-align: middle;
+}
 
-    .buttons
-      margin-top 0.7em
-      margin-bottom 0.3em
+.record-editor textarea {
+  margin: auto;
+  background: transparent;
+  border: none;
+  color: var(--vscode-foreground);
+  width: 100%;
+  resize: none;
+  overflow-y: hidden;
+  font-size: 0.8em;
+}
 
-  .state-icon
-    padding-left 0.2em
-    font-size 1.1em
-    margin-top -0.1em
+.translation-candidate {
+  display: grid;
+  grid-template-columns: max-content auto max-content;
+}
 
-    &.earth-icon
-      opacity 0.3
+.translation-candidate :deep(.earth-icon) {
+  margin: auto 0.6em auto 0.7em;
+  font-size: 1.2em;
+  height: 0.8em;
+  opacity: 0.6;
+}
 
-    &.plus-minus-icon
-      color var(--review-request-change)
-
-    &.check-icon
-      color var(--review-approve)
-
-    &.comment-question-outline-icon
-      color var(--review-comment)
-
-    &.comment-outline-icon
-      opacity 0.3
-
-    &.format-quote-open-icon
-      opacity 0.6
-
-  .review-brief
-    .state-icon
-      font-size 1.4em
-      padding 0.1em
-      margin auto 0.2em
-
-  & > *
-    vertical-align middle
-
-  textarea
-    margin auto
-    background transparent
-    border none
-    color var(--vscode-forground)
-    width 100%
-    resize none
-    overflow-y hidden
-    font-size 0.8em
-
-  input:focus,
-  select:focus,
-  textarea:focus,
-  button:focus
-    outline none
-
-.translation-candidate.panel
-  display grid
-  grid-template-columns max-content auto max-content
-
-  .earth-icon
-    margin auto 0.6em auto 0.7em
-    font-size 1.2em
-    height 0.8em
-    opacity 0.6
-
-  .text
-    margin auto 0.4em
-    font-size 0.8em
-    font-style italic
+.translation-candidate .text {
+  margin: auto 0.4em;
+  font-size: 0.8em;
+  font-style: italic;
+}
 </style>

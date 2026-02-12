@@ -19,39 +19,44 @@ import VPlusMinus from 'vue-material-design-icons/PlusMinus.vue'
 import { vscode } from './api'
 import { useAppStore } from './store'
 import App from './App.vue'
+import './styles.css'
 import 'vue-material-design-icons/styles.css'
 
-const locale = 'en'
+const LOCALE = 'en'
+
 const i18n = createI18n({
   legacy: true,
-  locale,
+  locale: LOCALE,
   messages: {},
 })
 
 const pinia = createPinia()
 const app = createApp(App)
+
 app.use(pinia)
 app.use(i18n)
+
 app.component('VCheck', VCheck)
-app.component('VPlusMinus', VPlusMinus)
-app.component('VCommentOutline', VCommentOutline)
-app.component('VEarth', VEarth)
-app.component('VCommentEditOutline', VCommentEditOutline)
-app.component('VCommentQuestionOutline', VCommentQuestionOutline)
-app.component('VCheckboxMarkedOutline', VCheckboxMarkedOutline)
-app.component('VPencilOff', VPencilOff)
-app.component('VPencil', VPencil)
 app.component('VCheckAll', VCheckAll)
-app.component('VDeleteEmptyOutline', VDeleteEmptyOutline)
-app.component('VFormatQuoteOpen', VFormatQuoteOpen)
-app.component('VMenu', VMenu)
+app.component('VCheckboxMarkedOutline', VCheckboxMarkedOutline)
 app.component('VChevronLeft', VChevronLeft)
 app.component('VChevronRight', VChevronRight)
+app.component('VCommentEditOutline', VCommentEditOutline)
+app.component('VCommentOutline', VCommentOutline)
+app.component('VCommentQuestionOutline', VCommentQuestionOutline)
+app.component('VDeleteEmptyOutline', VDeleteEmptyOutline)
+app.component('VEarth', VEarth)
+app.component('VFormatQuoteOpen', VFormatQuoteOpen)
+app.component('VMenu', VMenu)
+app.component('VPencil', VPencil)
+app.component('VPencilOff', VPencilOff)
+app.component('VPlusMinus', VPlusMinus)
+
 app.mount('#app')
 
 const store = useAppStore()
 
-window.addEventListener('message', (event) => {
+window.addEventListener('message', (event: MessageEvent) => {
   const message = event.data
   switch (message.type) {
     case 'ready':
@@ -65,16 +70,17 @@ window.addEventListener('message', (event) => {
       break
     case 'i18n':
       store.setI18n(message.data)
-      i18n.global.setLocaleMessage(locale, message.data)
+      i18n.global.setLocaleMessage(LOCALE, message.data)
       break
     case 'context':
       store.setContext(message.data)
+      break
   }
 })
 
 watch(
   () => store.$state,
-  () => { vscode.setState(store.$state) },
+  () => { vscode.setState(store.$state as unknown as Record<string, unknown>) },
   { deep: true },
 )
 

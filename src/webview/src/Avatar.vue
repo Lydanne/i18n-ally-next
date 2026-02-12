@@ -1,41 +1,32 @@
-<script lang="js">
-import { defineComponent } from 'vue'
-import VCheck from 'vue-material-design-icons/Check.vue'
-import VPlusMinus from 'vue-material-design-icons/PlusMinus.vue'
+<script setup lang="ts">
+import { computed } from 'vue'
 import { getAvatarFromEmail } from '../../utils/shared'
 
-export default defineComponent({
-  components: {
-    VCheck,
-    VPlusMinus,
-  },
+const props = defineProps<{
+  user?: { name: string, email: string }
+}>()
 
-  props: {
-    user: { type: Object, default: () => ({ name: '', email: '' }) },
-  },
-
-  computed: {
-    src() {
-      return getAvatarFromEmail(this.user.email)
-    },
-  },
-})
+const src = computed(() => getAvatarFromEmail(props.user?.email))
 </script>
 
-<template lang="pug">
-.avatar
-  .image
-    img(:src='src')
+<template>
+  <div class="avatar">
+    <div class="image">
+      <img :src="src">
+    </div>
+  </div>
 </template>
 
-<style lang="stylus">
-.avatar
-  position relative
+<style scoped>
+.avatar {
+  position: relative;
+}
 
-  .image
-    width 2em
-    height 2em
-    border-radius 50%
-    overflow hidden
-    background var(--vscode-foreground)
+.avatar .image {
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--vscode-foreground);
+}
 </style>

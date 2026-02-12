@@ -1,206 +1,227 @@
-<script lang="js">
+<script setup lang="ts">
+import { computed, nextTick, reactive, ref, useTemplateRef, watch } from 'vue'
 import cloneDeep from 'lodash/cloneDeep'
-import { defineComponent } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { vscode } from './api'
 import { useAppStore } from './store'
 import Avatar from './Avatar.vue'
 
-export default defineComponent({
-  components: {
-    Avatar,
-  },
-
-  setup() {
-    const store = useAppStore()
-    return { store }
-  },
-
-  props: {
-    editing: { type: Boolean, default: false },
-    mode: { type: String, default: 'edit' },
-    comment: { type: Object, default: () => ({ comment: '', suggestion: '' }) },
-    record: { type: Object, default: () => ({ keypath: '', locale: '' }) },
-  },
-
-  data() {
-    return {
-      form: {
-        comment: '',
-        suggestion: '',
-      },
-    }
-  },
-
-  computed: {
-    placeholders() {
-      return {
-        approve: this.$t('review.placeholder.approve'),
-        request_change: this.$t('review.placeholder.request_change'),
-        comment: this.$t('review.placeholder.comment'),
-      }
-    },
-    isEditable() {
-      return this.comment.user?.email === this.store.config.user?.email
-    },
-  },
-
-  watch: {
-    editing: {
-      immidate: true,
-      handler() {
-        if (this.editing)
-          this.resetForm()
-      },
-    },
-    form: {
-      deep: true,
-      handler() {
-        this.$nextTick(() => {
-          this.resize(this.$refs?.textarea2)
-          this.resize(this.$refs?.textarea3)
-        })
-      },
-    },
-  },
-
-  methods: {
-    resetForm() {
-      this.form = cloneDeep(this.comment)
-    },
-    resize(ta) {
-      if (!ta)
-        return
-
-      ta.style.height = 'auto'
-      ta.style.height = `${ta.scrollHeight - 3}px`
-    },
-    cancel() {
-      // eslint-disable-next-line vue/no-mutating-props
-      this.editing = false
-      this.$emit('done')
-    },
-    postComment(type) {
-      vscode.postMessage({
-        type: this.mode === 'create' ? 'review.comment' : 'review.edit',
-        keypath: this.record.keypath,
-        locale: this.record.locale,
-        data: {
-          ...this.form,
-          type,
-        },
-      })
-      // eslint-disable-next-line vue/no-mutating-props
-      this.editing = false
-      this.$emit('done')
-    },
-    resolveComment(comment) {
-      vscode.postMessage({
-        type: 'review.resolve',
-        keypath: this.record.keypath,
-        locale: this.record.locale,
-        commentId: comment.id,
-      })
-    },
-    acceptSuggestion(comment) {
-      vscode.postMessage({
-        type: 'review.apply-suggestion',
-        keypath: this.record.keypath,
-        locale: this.record.locale,
-        commentId: comment.id,
-      })
-    },
-  },
+const props = withDefaults(defineProps<{
+  editing?: boolean
+  mode?: string
+  comment?: Record<string, any>
+  record?: Record<string, any>
+}>(), {
+  editing: false,
+  mode: 'edit',
+  comment: () => ({ comment: '', suggestion: '' }),
+  record: () => ({ keypath: '', locale: '' }),
 })
+
+const emit = defineEmits<{
+  done: []
+  'update:editing': [value: boolean]
+}>()
+
+const store = useAppStore()
+const { t } = useI18n()
+
+const isEditing = ref(props.editing)
+const form = reactive({ comment: '', suggestion: '' })
+const textarea2 = useTemplateRef<HTMLTextAreaElement>('textarea2')
+const textarea3 = useTemplateRef<HTMLTextAreaElement>('textarea3')
+
+const placeholders = computed(() => ({
+  approve: t('review.placeholder.approve'),
+  request_change: t('review.placeholder.request_change'),
+  comment: t('review.placeholder.comment'),
+}))
+
+const isEditable = computed(
+  () => props.comment.user?.email === store.config.user?.email,
+)
+
+function resetForm() {
+  const cloned = cloneDeep(props.comment)
+  form.comment = cloned.comment ?? ''
+  form.suggestion = cloned.suggestion ?? ''
+}
+
+function resizeTextarea(el: HTMLTextAreaElement | null | undefined) {
+  if (!el)
+    return
+  el.style.height = 'auto'
+  el.style.height = `${el.scrollHeight - 3}px`
+}
+
+function cancel() {
+  isEditing.value = false
+  emit('update:editing', false)
+  emit('done')
+}
+
+function postComment(type: string) {
+  vscode.postMessage({
+    type: props.mode === 'create' ? 'review.comment' : 'review.edit',
+    keypath: props.record.keypath,
+    locale: props.record.locale,
+    data: { ...form, type },
+  })
+  isEditing.value = false
+  emit('update:editing', false)
+  emit('done')
+}
+
+function resolveComment(c: Record<string, any>) {
+  vscode.postMessage({
+    type: 'review.resolve',
+    keypath: props.record.keypath,
+    locale: props.record.locale,
+    commentId: c.id,
+  })
+}
+
+function acceptSuggestion(c: Record<string, any>) {
+  vscode.postMessage({
+    type: 'review.apply-suggestion',
+    keypath: props.record.keypath,
+    locale: props.record.locale,
+    commentId: c.id,
+  })
+}
+
+watch(() => props.editing, (v) => {
+  isEditing.value = v
+  if (v)
+    resetForm()
+}, { immediate: true })
+
+watch(form, () => {
+  nextTick(() => {
+    resizeTextarea(textarea2.value)
+    resizeTextarea(textarea3.value)
+  })
+}, { deep: true })
 </script>
 
-<template lang="pug">
-.review-comment
-  .viewing(v-if='!editing')
-    avatar(:user='comment.user')
-    .panel.shadow.comment-content
-      template
-        v-check.state-icon(v-if='comment.type==="approve"')
-        v-plus-minus.state-icon(v-else-if='comment.type==="request_change"')
-        v-comment-outline.state-icon(v-else)
+<template>
+  <div class="review-comment">
+    <!-- 查看模式 -->
+    <div v-if="!isEditing" class="viewing">
+      <Avatar :user="comment.user" />
+      <div class="panel shadow comment-content">
+        <VCheck v-if="comment.type === 'approve'" class="state-icon" />
+        <VPlusMinus v-else-if="comment.type === 'request_change'" class="state-icon" />
+        <VCommentOutline v-else class="state-icon" />
 
-      .text(:class='{placeholder: !comment.comment}') {{comment.comment || placeholders[comment.type]}}
+        <div class="text" :class="{ placeholder: !comment.comment }">
+          {{ comment.comment || placeholders[comment.type as keyof typeof placeholders] }}
+        </div>
 
-      .buttons
-        .button.flat(@click='editing = true' v-if='isEditable')
-          v-pencil
-          span {{ $t('review.edit') }}
+        <div class="buttons">
+          <div v-if="isEditable" class="button flat" @click="isEditing = true">
+            <VPencil />
+            <span>{{ $t('review.edit') }}</span>
+          </div>
+          <div class="button approve flat" @click="resolveComment(comment)">
+            <VCheckboxMarkedOutline />
+            <span>{{ $t('review.resolve') }}</span>
+          </div>
+        </div>
+      </div>
 
-        .button.approve.flat(@click='resolveComment(comment)')
-          v-checkbox-marked-outline
-          span {{ $t('review.resolve') }}
+      <template v-if="comment.suggestion">
+        <div />
+        <div class="panel shadow comment-content">
+          <VFormatQuoteOpen class="state-icon" />
+          <div class="text">
+            {{ comment.suggestion }}
+          </div>
+          <div class="buttons">
+            <div class="button flat" @click="acceptSuggestion(comment)">
+              {{ $t('review.accept_suggestion') }}
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
 
-    template(v-if='!readonly && comment.suggestion')
-      div
-      .panel.shadow.comment-content
-        v-format-quote-open.state-icon
-        .text {{comment.suggestion}}
-        .buttons
-          .button.flat(@click='acceptSuggestion(comment)') {{$t('review.accept_suggestion')}}
+    <!-- 编辑模式 -->
+    <div v-else class="editing">
+      <Avatar :user="store.config.user" />
+      <div class="panel comment-form">
+        <label>{{ $t('review.comment') }}</label>
+        <div class="panel">
+          <textarea
+            ref="textarea2"
+            v-model="form.comment"
+            rows="1"
+            :placeholder="$t('review.optional')"
+          />
+        </div>
 
-  .editing(v-else)
-    avatar(:user='store.config.user')
-    .panel.comment-form
-      label {{$t('review.comment')}}
-      .panel
-        textarea(
-          rows='1'
-          ref='textarea2'
-          :placeholder='$t("review.optional")'
-          v-model='form.comment'
-        )
+        <label>{{ $t('review.suggestion') }}</label>
+        <div class="panel">
+          <textarea
+            ref="textarea3"
+            v-model="form.suggestion"
+            rows="1"
+            :placeholder="$t('review.optional')"
+          />
+        </div>
 
-      template(v-if='!readonly')
-        label {{$t('review.suggestion')}}
-        .panel
-          textarea(
-            rows='1'
-            ref='textarea3'
-            :placeholder='$t("review.optional")'
-            v-model='form.suggestion'
-          )
-
-      .buttons
-        .button.approve(@click='postComment("approve")' :disabled='!!form.suggestion')
-          v-check
-          span {{$t('review.approve')}}
-        .button.request-change(@click='postComment("request_change")')
-          v-plus-minus
-          span {{$t('review.request_change')}}
-        .button.comment(@click='postComment("comment")' :disabled='!form.comment')
-          v-comment-outline
-          span {{$t('review.leave_comment')}}
-        .button(@click='cancel()') {{ $t('prompt.button_cancel') }}
+        <div class="buttons">
+          <div class="button approve" :disabled="!!form.suggestion || undefined" @click="postComment('approve')">
+            <VCheck />
+            <span>{{ $t('review.approve') }}</span>
+          </div>
+          <div class="button request-change" @click="postComment('request_change')">
+            <VPlusMinus />
+            <span>{{ $t('review.request_change') }}</span>
+          </div>
+          <div class="button comment" :disabled="!form.comment || undefined" @click="postComment('comment')">
+            <VCommentOutline />
+            <span>{{ $t('review.leave_comment') }}</span>
+          </div>
+          <div class="button" @click="cancel">
+            {{ $t('prompt.button_cancel') }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
-<style lang="stylus">
-.review-comment
-  .viewing, .editing
-    display grid
-    grid-template-columns max-content auto
+<style scoped>
+.viewing,
+.editing {
+  display: grid;
+  grid-template-columns: max-content auto;
+}
 
-    & > .avatar
-      margin 0.6em 0.4em 0 1.2em
+.viewing > .avatar,
+.editing > .avatar {
+  margin: 0.6em 0.4em 0 1.2em;
+}
 
-  .comment-content
-    display grid
-    grid-template-columns min-content auto max-content max-content
-    margin-top 0.4em
+.comment-content {
+  display: grid;
+  grid-template-columns: min-content auto max-content max-content;
+  margin-top: 0.4em;
+}
 
-    .text
-      margin auto 6px
-      font-size 0.8em
+.comment-content .text {
+  margin: auto 6px;
+  font-size: 0.8em;
+}
 
-      &.placeholder
-        font-style italic
-        opacity 0.4
+.comment-content .text.placeholder {
+  font-style: italic;
+  opacity: 0.4;
+}
 
-    .buttons
-      .button
-        margin-top 0
-        margin-bottom 0
+.comment-content .buttons .button {
+  margin-top: 0;
+  margin-bottom: 0;
+}
 </style>

@@ -1,4 +1,7 @@
 {
+  "references": [
+    { "path": "./src/webview" }
+  ],
   "compilerOptions": {
     "target": "es2019",
     "lib": ["ESNext", "ESNext.AsyncIterable", "ESNext.Array"],
@@ -24,6 +27,7 @@
     "./package.nls.*.json"
   ],
   "exclude": [
-    "./test/fixtures/**/*"
+    "./test/fixtures/**/*",
+    "./src/webview/src/**/*"
   ]
 }
