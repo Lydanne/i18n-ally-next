@@ -1,5 +1,5 @@
 import type { TranslateOptions, TranslateResult } from './base'
-import crypto from 'node:crypto'
+import crypto from 'crypto'
 import axios from 'axios'
 import qs from 'qs'
 import { Config } from '~/core'

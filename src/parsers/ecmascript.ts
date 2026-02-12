@@ -1,5 +1,5 @@
-import child_process from 'node:child_process'
-import path from 'node:path'
+import child_process from 'child_process'
+import path from 'path'
 import { Config, Global } from '~/core'
 import i18n from '~/i18n'
 import { Log } from '~/utils'

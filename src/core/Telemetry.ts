@@ -1,5 +1,5 @@
 import type { CommandOptions } from '~/commands/manipulations/common'
-import { randomUUID } from 'node:crypto'
+import { randomUUID } from 'crypto'
 import * as amplitude from '@amplitude/analytics-node'
 import { isDev, isProd, isTest } from '~/env'
 import { Global } from '~/extension'

@@ -1,6 +1,6 @@
 import type { FileSystemWatcher } from 'vscode'
 import type { PendingWrite, ReviewComment, ReviewCommentWithMeta, ReviewData, TranslationCandidate, TranslationCandidateWithMeta } from './types'
-import path from 'node:path'
+import path from 'path'
 import fs from 'fs-extra'
 import YAML from 'js-yaml'
 import { get, set } from 'lodash'

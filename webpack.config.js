@@ -1,7 +1,7 @@
 // @ts-check
 'use strict'
 
-const path = require('node:path')
+const path = require('path')
 const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin')
 const { createUnplugin } = require('unplugin')
 

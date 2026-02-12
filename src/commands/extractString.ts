@@ -1,7 +1,7 @@
 import type { QuickPickItem, Range, TextDocument } from 'vscode'
 import type { DetectionResult } from '~/core'
 import type { ExtensionModule } from '~/modules'
-import { relative } from 'node:path'
+import { relative } from 'path'
 import { trim } from 'lodash'
 import { commands, window } from 'vscode'
 import { Config, CurrentFile, extractHardStrings, generateKeyFromText, Telemetry, TelemetryKey } from '~/core'

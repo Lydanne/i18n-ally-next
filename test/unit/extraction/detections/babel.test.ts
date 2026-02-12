@@ -1,5 +1,5 @@
-import { promises as fs } from 'node:fs'
-import { basename } from 'node:path'
+import { promises as fs } from 'fs'
+import { basename } from 'path'
 import { expect } from 'chai'
 import fg from 'fast-glob'
 import { extractionsParsers } from '../../../../src/extraction'

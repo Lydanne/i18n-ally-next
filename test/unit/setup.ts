@@ -1,4 +1,4 @@
-import { basename, dirname, join } from 'node:path'
+import { basename, dirname, join } from 'path'
 import * as Chai from 'chai'
 // @ts-ignore
 import Snapshot from 'chai-jest-snapshot'

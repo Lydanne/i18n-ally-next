@@ -1,5 +1,5 @@
 import type { ExtensionModule } from '~/modules'
-import path from 'node:path'
+import path from 'path'
 import fg from 'fast-glob'
 import { commands, Uri, window, workspace } from 'vscode'
 import { Config } from '~/core'

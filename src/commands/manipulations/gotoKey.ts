@@ -1,6 +1,6 @@
 import type { CommandOptions } from './common'
 import type { LocaleTreeItem } from '~/views'
-import path from 'node:path'
+import path from 'path'
 import { commands, Selection, TextEditorRevealType, window, workspace } from 'vscode'
 import { ActionSource, Config, CurrentFile, Global, Telemetry, TelemetryKey } from '~/core'
 import i18n from '~/i18n'

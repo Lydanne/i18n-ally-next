@@ -1,6 +1,6 @@
 import type { TextDocument } from 'vscode'
 import type { LanguageId } from '~/utils'
-import { basename } from 'node:path'
+import { basename } from 'path'
 import { Framework } from './base'
 
 class VSCodeFramework extends Framework {

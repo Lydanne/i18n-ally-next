@@ -26,5 +26,6 @@ export default antfu({
     'no-control-regex': 'off',
     'regexp/no-escape-backspace': 'off',
     'style/max-statements-per-line': 'off',
+    'unicorn/prefer-node-protocol': 'off',
   },
 })

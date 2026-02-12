@@ -1,4 +1,4 @@
-import path from 'node:path'
+import path from 'path'
 import fg from 'fast-glob'
 import Mocha from 'mocha'
 import { window } from 'vscode'

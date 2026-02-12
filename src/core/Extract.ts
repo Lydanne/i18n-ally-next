@@ -1,6 +1,6 @@
 import type { TextDocument } from 'vscode'
 import type { ExtractInfo } from './types'
-import { basename, extname } from 'node:path'
+import { basename, extname } from 'path'
 import limax from 'limax'
 import { nanoid } from 'nanoid'
 import { window } from 'vscode'

@@ -2,7 +2,7 @@ import type { ConfigurationChangeEvent, Event, ExtensionContext, TextDocument, W
 import type { Framework } from '../frameworks/base'
 import type { DirStructure, KeyStyle, OptionalFeatures } from './types'
 import type { DetectionResult } from '~/core/types'
-import { extname, resolve } from 'node:path'
+import { extname, resolve } from 'path'
 import { slash } from '@antfu/utils'
 import { uniq } from 'lodash'
 import { isMatch } from 'micromatch'

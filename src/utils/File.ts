@@ -1,4 +1,4 @@
-import path, { normalize } from 'node:path'
+import path, { normalize } from 'path'
 import fs from 'fs-extra'
 import iconv from 'iconv-lite'
 import { Config } from '~/core'

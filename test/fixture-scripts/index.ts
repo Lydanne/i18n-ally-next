@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import type { ArrayChange } from 'diff'
-import { basename, dirname, join, resolve } from 'node:path'
+import { basename, dirname, join, resolve } from 'path'
 import { runTests } from '@vscode/test-electron'
 import { cyan, gray, green, red, yellow } from 'chalk'
 import { diffArrays } from 'diff'

@@ -1,4 +1,4 @@
-import { join, resolve } from 'node:path'
+import { join, resolve } from 'path'
 import fs from 'fs-extra'
 // @ts-expect-error
 import { glob } from 'glob-gitignore'
@@ -14,7 +14,7 @@ export async function gitignoredGlob(globStr: string, dir: string) {
   let gitignore = []
   try {
     if (fs.existsSync(gitignorePath))
-      gitignore = parseGitIgnore(await fs.promises.readFile(gitignorePath))
+      gitignore = parseGitIgnore(await fs.promises.readFile(gitignorePath)).patterns
   }
   catch (e) {
     Log.error(e)

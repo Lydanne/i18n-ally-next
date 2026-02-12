@@ -1,7 +1,7 @@
 import type { TextDocument } from 'vscode'
 import type { KeyOccurrence, KeyUsage } from '.'
 import type { UsageReport } from './types'
-import fs from 'node:fs'
+import fs from 'fs'
 import _, { uniq } from 'lodash'
 import micromatch from 'micromatch'
 import { EventEmitter, Location, Range, Uri, workspace } from 'vscode'

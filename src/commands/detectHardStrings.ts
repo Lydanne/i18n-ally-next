@@ -1,6 +1,6 @@
 import type { DetectionResult } from '~/core'
 import type { ExtensionModule } from '~/modules'
-import { relative } from 'node:path'
+import { relative } from 'path'
 import { commands, window } from 'vscode'
 import { Commands } from '~/commands'
 import { Config, Global } from '~/core'

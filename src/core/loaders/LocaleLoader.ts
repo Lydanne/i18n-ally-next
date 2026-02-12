@@ -1,5 +1,5 @@
 import type { DirStructure, ParsedFile, PendingWrite } from '../types'
-import path from 'node:path'
+import path from 'path'
 import fg from 'fast-glob'
 import fs from 'fs-extra'
 import _, { set, throttle, uniq } from 'lodash'

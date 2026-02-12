@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { join, resolve } from 'node:path'
+import { join, resolve } from 'path'
 import { runTests } from '@vscode/test-electron'
 import chalk from 'chalk'
 import fg from 'fast-glob'

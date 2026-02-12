@@ -1,6 +1,6 @@
 import type { DataProcessContext, RewriteKeyContext, RewriteKeySource } from '../core/types'
 import type { LanguageId } from '~/utils'
-import path from 'node:path'
+import path from 'path'
 import { Config, Global } from '~/core'
 import { Framework } from './base'
 

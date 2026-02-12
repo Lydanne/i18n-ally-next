@@ -1,5 +1,5 @@
-import { deepStrictEqual as is, notStrictEqual as not } from 'node:assert'
-import { join } from 'node:path'
+import { deepStrictEqual as is, notStrictEqual as not } from 'assert'
+import { join } from 'path'
 import Chai from 'chai'
 // @ts-ignore
 import Snapshot from 'chai-jest-snapshot'
