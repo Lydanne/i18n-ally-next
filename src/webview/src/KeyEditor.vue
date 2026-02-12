@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { vscode } from './api'
-import { useAppStore } from './store'
-import Flag from './Flag.vue'
 import RecordEditor from './RecordEditor.vue'
+import { useAppStore } from './store'
 
 defineOptions({ inheritAttrs: false })
 

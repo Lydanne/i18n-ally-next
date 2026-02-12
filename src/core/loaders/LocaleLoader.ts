@@ -270,8 +270,10 @@ export class LocaleLoader extends Loader {
   }
 
   private compareTwoStrings(a: string, b: string): number {
-    if (a === b) return 1
-    if (a.length < 2 || b.length < 2) return 0
+    if (a === b)
+      return 1
+    if (a.length < 2 || b.length < 2)
+      return 0
     const bigramsA = new Map<string, number>()
     for (let i = 0; i < a.length - 1; i++) {
       const bigram = a.substring(i, i + 2)

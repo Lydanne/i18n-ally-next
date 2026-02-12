@@ -1,7 +1,4 @@
 {
-  "references": [
-    { "path": "./src/webview" }
-  ],
   "compilerOptions": {
     "target": "es2019",
     "lib": ["ESNext", "ESNext.AsyncIterable", "ESNext.Array"],
@@ -22,6 +19,9 @@
     "esModuleInterop": true,
     "skipLibCheck": true
   },
+  "references": [
+    { "path": "./src/webview" }
+  ],
   "include": [
     "./src/**/*.ts",
     "./package.nls.*.json"

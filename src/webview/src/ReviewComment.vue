@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, nextTick, reactive, ref, useTemplateRef, watch } from 'vue'
 import cloneDeep from 'lodash/cloneDeep'
+import { computed, nextTick, reactive, ref, useTemplateRef, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { vscode } from './api'
-import { useAppStore } from './store'
 import Avatar from './Avatar.vue'
+import { useAppStore } from './store'
 
 const props = withDefaults(defineProps<{
   editing?: boolean
@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits<{
-  done: []
+  'done': []
   'update:editing': [value: boolean]
 }>()
 

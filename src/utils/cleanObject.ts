@@ -1,5 +1,3 @@
-/* eslint-disable ts/no-use-before-define */
-
 export function cleanArray(obj: any[]) {
   obj = obj
     .map((i: any) => cleanObject(i))

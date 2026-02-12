@@ -3,8 +3,8 @@ import VCog from 'vue-material-design-icons/Cog.vue'
 import VMagnify from 'vue-material-design-icons/Magnify.vue'
 import VRefresh from 'vue-material-design-icons/Refresh.vue'
 import { vscode } from './api'
-import { useAppStore } from './store'
 import KeyEditor from './KeyEditor.vue'
+import { useAppStore } from './store'
 
 const store = useAppStore()
 

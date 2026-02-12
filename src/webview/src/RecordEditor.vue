@@ -2,9 +2,9 @@
 import { computed, nextTick, onMounted, ref, useTemplateRef, watch } from 'vue'
 import { getCommentState } from '../../utils/shared'
 import { vscode } from './api'
-import { useAppStore } from './store'
 import Flag from './Flag.vue'
 import ReviewComment from './ReviewComment.vue'
+import { useAppStore } from './store'
 
 const props = withDefaults(defineProps<{
   record?: Record<string, any>
