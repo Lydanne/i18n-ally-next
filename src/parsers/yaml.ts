@@ -1,7 +1,6 @@
 import type { KeyInDocument } from '~/core'
 import YAML from 'js-yaml'
-import _ from 'lodash'
-import YamlLex from 'yaml'
+import { isMap, isPair, isScalar, isSeq, parseDocument } from 'yaml'
 import { Config } from '~/core'
 import { Parser } from './base'
 
@@ -29,39 +28,40 @@ export class YamlParser extends Parser {
   annotationLanguageIds = ['yaml']
 
   parseAST(text: string) {
-    const cst = YamlLex.parseCST(text)
-    cst.setOrigRanges() // Workaround for CRLF eol, https://github.com/eemeli/yaml/issues/127
-    const doc = new YamlLex.Document({ keepCstNodes: true }).parse(cst[0])
-
-    const findPairs = (node: any, path: string[] = []): KeyInDocument[] => {
+    const doc = parseDocument(text, { keepSourceTokens: true })
+    const results: KeyInDocument[] = []
+    const collectPairs = (node: any, path: string[] = []) => {
       if (!node)
-        return []
-      if (node.type === 'MAP' || node.type === 'SEQ')
-      // @ts-ignore
-        return _.flatMap(node.items, m => findPairs(m, path))
-      if (node.type === 'PAIR' && node.value != null && node.key != null) {
-        if (!['BLOCK_FOLDED', 'BLOCK_LITERAL', 'PLAIN', 'QUOTE_DOUBLE', 'QUOTE_SINGLE'].includes(node.value.type)) {
-          return findPairs(node.value, [...path, node.key.toString()])
+        return
+      if (isMap(node)) {
+        for (const item of node.items)
+          collectPairs(item, path)
+        return
+      }
+      if (isSeq(node)) {
+        for (const item of node.items)
+          collectPairs(item, path)
+        return
+      }
+      if (isPair(node)) {
+        const keyStr = String(node.key)
+        if (isScalar(node.value)) {
+          const range = node.value.range
+          if (range) {
+            results.push({
+              start: range[0] + 1,
+              end: range[1] - 1,
+              key: [...path, keyStr].join('.'),
+              quoted: true,
+            })
+          }
         }
         else {
-          const valueCST = node.value.cstNode
-          if (!valueCST || !valueCST.valueRange)
-            return []
-          const { start, end, origStart, origEnd } = valueCST.valueRange
-          const key = [...path, node.key.toString()].join('.')
-
-          return [{
-            start: (origStart || start) + 1,
-            end: (origEnd || end) - 1,
-            key,
-            quoted: true,
-          }]
+          collectPairs(node.value, [...path, keyStr])
         }
       }
-
-      return []
     }
-
-    return findPairs(doc.contents)
+    collectPairs(doc.contents)
+    return results
   }
 }

@@ -3,7 +3,6 @@ import path from 'path'
 import fg from 'fast-glob'
 import fs from 'fs-extra'
 import _, { set, throttle, uniq } from 'lodash'
-import { findBestMatch } from 'string-similarity'
 import { RelativePattern, window, workspace, WorkspaceEdit } from 'vscode'
 import i18n from '~/i18n'
 import { applyPendingToObject, getCache, getLocaleCompare, Log, NodeHelper, ReplaceLocale, setCache, unflatten } from '~/utils'
@@ -258,7 +257,36 @@ export class LocaleLoader extends Loader {
   }
 
   findBestMatchFile(fromPath: string, paths: string[]): string {
-    return findBestMatch(fromPath, paths).bestMatch.target
+    let bestTarget = paths[0]
+    let bestRating = 0
+    for (const target of paths) {
+      const rating = this.compareTwoStrings(fromPath, target)
+      if (rating > bestRating) {
+        bestRating = rating
+        bestTarget = target
+      }
+    }
+    return bestTarget
+  }
+
+  private compareTwoStrings(a: string, b: string): number {
+    if (a === b) return 1
+    if (a.length < 2 || b.length < 2) return 0
+    const bigramsA = new Map<string, number>()
+    for (let i = 0; i < a.length - 1; i++) {
+      const bigram = a.substring(i, i + 2)
+      bigramsA.set(bigram, (bigramsA.get(bigram) || 0) + 1)
+    }
+    let intersect = 0
+    for (let i = 0; i < b.length - 1; i++) {
+      const bigram = b.substring(i, i + 2)
+      const count = bigramsA.get(bigram) || 0
+      if (count > 0) {
+        bigramsA.set(bigram, count - 1)
+        intersect++
+      }
+    }
+    return (2.0 * intersect) / (a.length + b.length - 2)
   }
 
   async write(pendings: PendingWrite | PendingWrite[]) {
