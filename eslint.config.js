@@ -7,6 +7,7 @@ export default antfu({
     'examples/',
     '.cache/',
     'res/',
+    'docs/',
     'test-resources/',
     'test/e2e-out/',
     'test/e2e-fixtures-temp/',
