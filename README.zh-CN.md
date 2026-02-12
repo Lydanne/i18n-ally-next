@@ -1,118 +1,98 @@
 <p align="center">
-<img src="https://github.com/lydanne/i18n-ally-next/blob/master/screenshots/full-logo-new.png?raw=true" alt="logo" width="450"/>
+<img src="https://github.com/lydanne/i18n-ally-next/blob/main/res/logo.png?raw=true" alt="i18n Ally Next" width="128"/>
 </p>
 
-<p align='center'>
-<a href="https://github.com/lydanne/i18n-ally-next/blob/master/README.md">English</a> | 简体中文
+<h1 align="center">i18n Ally Next</h1>
+
+<p align="center">
+<b>VS Code 全能国际化插件</b>
 </p>
 
 <p align="center">
-<a href="https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next" target="__blank"><img src="https://img.shields.io/visual-studio-marketplace/v/lydanne.i18n-ally-next.svg?color=blue&amp;label=VS%20Code%20Marketplace&logo=visual-studio-code" alt="Visual Studio Marketplace Version" /></a>
-<a href="https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next" target="__blank"><img src="https://img.shields.io/visual-studio-marketplace/d/lydanne.i18n-ally-next.svg?color=4bdbe3" alt="Visual Studio Marketplace Downloads" /></a>
-<a href="https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next" target="__blank"><img src="https://img.shields.io/visual-studio-marketplace/i/lydanne.i18n-ally-next.svg?color=63ba83" alt="Visual Studio Marketplace Installs" /></a>
-<a href="https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next" target="__blank"><img src="https://vsmarketplacebadge.apphb.com/trending-monthly/lydanne.i18n-ally-next.svg?color=a1b858" alt="Marketplace Trending Monthly" /></a>
-<br/>
-<a href="https://github.com/lydanne/i18n-ally-next/wiki" target="__blank"><img alt="Wiki" src="https://img.shields.io/static/v1?label=docs&message=wiki&color=e3897b"></a>
-<a href="https://github.com/lydanne/i18n-ally-next" target="__blank"><img src="https://img.shields.io/github/last-commit/lydanne/i18n-ally-next.svg?color=c977be" alt="GitHub last commit" /></a>
-<a href="https://github.com/lydanne/i18n-ally-next/issues" target="__blank"><img src="https://img.shields.io/github/issues/lydanne/i18n-ally-next.svg?color=a38eed" alt="GitHub issues" /></a>
-<a href="https://github.com/lydanne/i18n-ally-next" target="__blank"><img alt="GitHub stars" src="https://img.shields.io/github/stars/lydanne/i18n-ally-next?style=social"></a>
+<a href="https://github.com/lydanne/i18n-ally-next/blob/main/readme.md">English</a> | 简体中文
 </p>
-
-<p align='center'>
-<b>v2.0</b> 已更新，伴随新的 <a href='https://github.com/lydanne/i18n-ally-next/wiki/Migration-v1.x'>可视化编辑器</a> 和 <a href='https://github.com/lydanne/i18n-ally-next/wiki/Review-System'>审阅系统</a> 🎉
-</p>
-
-<p align='center'><i>
-<a href="https://github.com/lydanne/i18n-ally-next/wiki/Migration-v1.x">从 v1.x 迁移到 v2.0</a>
-</i></p>
-<br>
-
-<p align='center'><b>
-🚧 请注意，中文文档仅供参考，非实时更新。可能会与英文版有所出入，如有歧义，一切请以<a href="https://github.com/lydanne/i18n-ally-next/blob/master/README.md">英文文档</a>为主。
-</b></p>
-
-<br>
 
 <p align="center">
-<a href='https://github.com/lydanne/i18n-ally-next/wiki/Supported-Frameworks' target="__blank">
-<img src="https://github.com/lydanne/i18n-ally-next/blob/screenshots/supported-frameworks.png?raw=true" alt="Supported Frameworks" width="500"/>
-</a>
+<a href="https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next"><img src="https://img.shields.io/visual-studio-marketplace/v/lydanne.i18n-ally-next?color=6366f1&amp;label=Marketplace&logo=visual-studio-code" alt="VS Code Marketplace" /></a>
+<a href="https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next"><img src="https://img.shields.io/visual-studio-marketplace/d/lydanne.i18n-ally-next?color=06b6d4" alt="Downloads" /></a>
+<a href="https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next"><img src="https://img.shields.io/visual-studio-marketplace/i/lydanne.i18n-ally-next?color=10b981" alt="Installs" /></a>
+<a href="https://github.com/lydanne/i18n-ally-next"><img alt="GitHub stars" src="https://img.shields.io/github/stars/lydanne/i18n-ally-next?style=social"></a>
 </p>
 
------
+---
 
-<details>
-<summary align='center'><b>⚡️ 截图和功能</b></summary>
+## 功能特性
 
-<h3 align='center'>内联提示</h3>
+- **🌍 内联注解** — 在代码中直接查看翻译内容
+- **🔍 悬浮预览** — 悬浮即可预览所有翻译，一键编辑
+- **📦 文案提取** — 检测硬编码字符串，一键提取到语言文件
+- **🤖 机器翻译** — 支持 Google、DeepL、百度、OpenAI 等引擎
+- **🗂 命名空间** — 支持 `t("ns:key")` 风格的命名空间组织
+- **📝 审阅系统** — 内置翻译审阅和团队协作
+- **🧩 30+ 框架** — Vue、React、Angular、Svelte、Flutter 等
+- **🎨 自定义框架** — 通过 YAML 配置定义你自己的框架
+
+## 快速开始
+
+```jsonc
+// .vscode/settings.json
+{
+  "i18n-ally-next.localesPaths": ["src/locales"],
+  "i18n-ally-next.sourceLanguage": "en",
+  "i18n-ally-next.displayLanguage": "zh-CN"
+}
+```
+
+> 框架会从 `package.json` 自动检测。完整列表见[支持的框架](#支持的框架)。
+
+## 截图
+
+<h4 align="center">内联注解</h4>
 
 ![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/annotation-animated.gif?raw=true)
 
-<h3 align='center'>悬浮窗和快捷操作</h3>
+<h4 align="center">悬浮预览与快捷操作</h4>
 
 ![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/hover.png?raw=true)
 
-<h3 align='center'>统一管理所有翻译</h3>
-
-![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/review-sidebar.png?raw=true)
-
-<h3 align='center'><a href='https://github.com/lydanne/i18n-ally-next/wiki/Editor-UI'>可视化编辑器</a> 和 <a href='https://github.com/lydanne/i18n-ally-next/wiki/Review-&-Collaboration-System'>审阅系统</a></h3>
+<h4 align="center">可视化编辑器与审阅系统</h4>
 
 ![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/review-editor.png?raw=true)
 
-<h3 align='center'>从代码中提取文案</h3>
+<h4 align="center">从代码中提取文案</h4>
 
 ![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/extract.png?raw=true)
 
-<h3 align='center'>缺失文案报告</h3>
-
-![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/problems.png?raw=true)
-
-<h3 align='center'>机器翻译</h3>
+<h4 align="center">机器翻译</h4>
 
 ![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/quick-actions.png?raw=true)
 
-<h3 align='center'>JSON 和 YAML 的内联提示</h3>
+## 支持的框架
 
-![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/annotation-locale.png?raw=true)
+| 分类 | 框架 |
+| --- | --- |
+| **Vue** | Vue I18n, Vue SFC, Fluent Vue |
+| **React** | React I18next, React Intl, Lingui |
+| **Next.js** | next-intl, next-i18next, next-translate, next-international |
+| **Angular** | ngx-translate, Transloco |
+| **其他** | Svelte, Ember, i18n-tag, Polyglot, Globalize, UI5 |
+| **移动端** | Flutter |
+| **后端** | Laravel, Ruby on Rails, PHP Gettext |
+| **工具** | VS Code 扩展, Chrome 扩展, Jekyll |
+| **自定义** | [定义你自己的框架](https://lydanne.github.io/i18n-ally-next/zh-CN/guide/custom-framework) |
 
-<h3 align="center"> 其他功能 </h3>
+## 文档
 
-- 支持多目录工作区
-- 支持远程开发 (Remote Development)
-- 支持大多数流行框架
-- 插件自身多语言支持 [翻译列表](https://github.com/lydanne/i18n-ally-next#-multilingual-support)
+📖 **[完整文档](https://lydanne.github.io/i18n-ally-next/zh-CN/)** — 快速开始、配置项、命名空间、自定义框架等。
 
-</details>
+## ❤️ 致谢
 
------
+本插件最初受 [think2011/vscode-vue-i18n](https://github.com/think2011/vscode-vue-i18n) 启发。Vue SFC 支持由 [kazupon/vue-i18n-locale-message](https://github.com/kazupon/vue-i18n-locale-message) 提供。
 
-## 📖 文档
+### 贡献者
 
-[查看维基](https://github.com/lydanne/i18n-ally-next/wiki)!
-
-## 💭 常见问题
-
-[常见问题](https://github.com/lydanne/i18n-ally-next/wiki/FAQ).
-
-## 📜 支持文件格式
-
-[支持的文件格式](https://github.com/lydanne/i18n-ally-next/wiki/Supported-Locale-Formats).
-
-## ❤️ 感谢
-
-本插件最初来源于 [think2011/vscode-vue-i18n](https://github.com/think2011/vscode-vue-i18n)，非常感谢 [@think2011](https://github.com/think2011) 的启发。
-
-Vue SFC 的支持来自于 vue-i18n 的作者 [kazupon](https://github.com/kazupon) 的 [kazupon/vue-i18n-locale-message](https://github.com/kazupon/vue-i18n-locale-message)。感谢提供的帮助!
-
-同时也十分感谢所有这些很棒的 [贡献者](https://github.com/lydanne/i18n-ally-next/graphs/contributors) 和看到这里的你。
+<a href="https://github.com/lydanne/i18n-ally-next/graphs/contributors"><img src="https://contrib.rocks/image?repo=lydanne/i18n-ally-next" /></a>
 
 ## 📄 License
 
-[MIT License](https://github.com/lydanne/i18n-ally-next/blob/master/LICENSE) © 2025 年至今 [Lydanne](https://github.com/lydanne)
-
-MIT License © 2021-2024 [Lokalise Inc.](https://github.com/lokalise)
-
-MIT License © 2019-2020 [Anthony Fu](https://github.com/antfu)
-
-MIT License © 2018-2019 [think2011](https://github.com/think2011)
+[MIT](./LICENSE) © 2025 至今 [Lydanne](https://github.com/lydanne) | MIT © 2021-2024 [Lokalise](https://github.com/lokalise) | MIT © 2019-2020 [Anthony Fu](https://github.com/antfu) | MIT © 2018-2019 [think2011](https://github.com/think2011)

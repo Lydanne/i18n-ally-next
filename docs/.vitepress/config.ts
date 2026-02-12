@@ -3,6 +3,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'i18n Ally Next',
   description: 'All in one i18n extension for VS Code',
+  base: '/i18n-ally-next/',
   lastUpdated: true,
   cleanUrls: true,
 
