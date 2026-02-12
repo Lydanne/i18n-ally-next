@@ -69,7 +69,7 @@ export abstract class Framework {
   pathMatcher(dirStructure?: DirStructure): string {
     if (dirStructure === 'file')
       return '{locale}.{ext}'
-    else if (Config.namespace)
+    else if (Config.namespace || this.enableFeatures?.namespace)
       return '{locale}/**/{namespace}.{ext}'
     else
       return '{locale}/**/*.{ext}'

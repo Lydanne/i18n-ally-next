@@ -44,6 +44,10 @@ class ReactI18nextFramework extends Framework {
     'html',
   ]
 
+  enableFeatures = {
+    namespace: true,
+  }
+
   derivedKeyRules = [
     '{key}_plural',
     '{key}_0',

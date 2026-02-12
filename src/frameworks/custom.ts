@@ -17,6 +17,8 @@ interface CustomFrameworkConfig {
   scopeRangeRegex?: string
   refactorTemplates?: string[]
   monopoly?: boolean
+  namespace?: boolean
+  namespaceDelimiter?: string
 
   keyMatchReg?: string[] | string // deprecated. use "usageMatchRegex" instead
 }
@@ -79,6 +81,22 @@ class CustomFramework extends Framework {
   }
 
   set monopoly(_) {}
+
+  // @ts-expect-error
+  get enableFeatures() {
+    if (this.data?.namespace)
+      return { namespace: true }
+    return undefined
+  }
+
+  set enableFeatures(_) {}
+
+  // @ts-expect-error
+  get namespaceDelimiter() {
+    return this.data?.namespaceDelimiter
+  }
+
+  set namespaceDelimiter(_) {}
 
   refactorTemplates(keypath: string) {
     return (this.data?.refactorTemplates || ['$1'])

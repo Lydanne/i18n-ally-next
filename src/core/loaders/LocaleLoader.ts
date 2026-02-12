@@ -151,7 +151,7 @@ export class LocaleLoader extends Loader {
     const { locale, keypath } = pending
 
     // try to match namespaces
-    if (Config.namespace) {
+    if (Global.namespaceEnabled) {
       const namespace = pending.namespace || this.getNodeByKey(keypath)?.meta?.namespace
 
       const filesSameLocale = this.files.find(f => f.namespace === namespace && f.locale === locale)
@@ -184,7 +184,7 @@ export class LocaleLoader extends Loader {
       return this.findBestMatchFile(pending.textFromPath, paths)
 
     if (Config.targetPickingStrategy === TargetPickingStrategy.MostSimilarByKey && keypath) {
-      const splitSymbol = Config.namespace ? Global.getNamespaceDelimiter() : '.'
+      const splitSymbol = Global.namespaceEnabled ? Global.getNamespaceDelimiter() : '.'
       const prefixKey = keypath.split(splitSymbol)[0]
       const matched = this.findBestMatchFile(`${this._locale_dirs}/${prefixKey}`, paths)
       if (matched.includes(prefixKey))
@@ -305,7 +305,7 @@ export class LocaleLoader extends Loader {
         continue
       }
 
-      if (Config.namespace)
+      if (Global.namespaceEnabled)
         pending.namespace = pending.namespace || this._files[filepath]?.namespace
 
       if (!distributed[filepath])

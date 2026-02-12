@@ -35,6 +35,10 @@ class I18nextFramework extends Framework {
     '(?:i18next|i18n|req)\\.t\\(\\s*[\'"`]({key})[\'"`]',
   ]
 
+  enableFeatures = {
+    namespace: true,
+  }
+
   derivedKeyRules = [
     '{key}_plural',
     '{key}_0',
