@@ -4,9 +4,9 @@ import { ExtensionModule } from '~/modules'
 import { Global, KeyDetector, Config, Loader, CurrentFile, DetectionResult } from '~/core'
 import i18n from '~/i18n'
 
-export const PROBLEM_CODE_HARD_STRING = 'i18n-ally-hard-string'
-export const PROBLEM_KEY_MISSING = 'i18n-ally-key-missing'
-export const PROBLEM_TRANSLATION_MISSING = 'i18n-ally-translation-missing'
+export const PROBLEM_CODE_HARD_STRING = 'i18n-ally-next-hard-string'
+export const PROBLEM_KEY_MISSING = 'i18n-ally-next-key-missing'
+export const PROBLEM_TRANSLATION_MISSING = 'i18n-ally-next-translation-missing'
 
 export interface DiagnosticWithDetection extends Diagnostic {
   detection?: DetectionResult

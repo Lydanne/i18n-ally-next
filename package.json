@@ -1,8 +1,8 @@
 {
-  "publisher": "lokalise",
-  "name": "i18n-ally",
-  "version": "2.13.1",
-  "displayName": "i18n Ally",
+  "publisher": "lydanne",
+  "name": "i18n-ally-next",
+  "version": "3.0.0",
+  "displayName": "i18n Ally Next",
   "description": "🌍 All in one i18n extension for VS Code",
   "keywords": [
     "vue",
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/lokalise/i18n-ally"
+    "url": "https://github.com/lydanne/i18n-ally-next"
   },
   "main": "./dist/extension",
   "scripts": {
@@ -34,7 +34,7 @@
     "lint:fix": "nr lint -- --fix",
     "test": "nr test:unit",
     "test:e2e": "rimraf test/e2e-out && tsc -p test/e2e && cross-env I18N_ALLY_ENV=test node ./test/e2e-out/index.js",
-    "test:e2e:update": "cross-env CHAI_JEST_SNAPSHOT_UPDATE_ALL=true yarn test:e2e",
+    "test:e2e:update": "cross-env CHAI_JEST_SNAPSHOT_UPDATE_ALL=true pnpm test:e2e",
     "test:e2e:dev": "rimraf test/e2e-out && tsc -p test/e2e --watch",
     "test:fixture": "rimraf test/fixture-scripts-out && tsc -p test/fixture-scripts && cross-env I18N_ALLY_ENV=test node ./test/fixture-scripts-out/index.js",
     "test:unit": "cross-env I18N_ALLY_ENV=test ts-mocha -p test/unit/tsconfig.json --file test/unit/setup.ts test/unit/**/*.test.ts test/unit/**/**/*.test.ts",
@@ -147,10 +147,10 @@
     "workspaceContains:pubspec.yaml",
     "workspaceContains:composer.json",
     "workspaceContains:Gemfile",
-    "workspaceContains:.vscode/i18n-ally-custom-framework.yml",
-    "workspaceContains:.vscode/i18n-ally-reviews.yml",
+    "workspaceContains:.vscode/i18n-ally-next-custom-framework.yml",
+    "workspaceContains:.vscode/i18n-ally-next-reviews.yml",
     "workspaceContains:*.vue",
-    "onWebviewPanel:i18n-ally-editor",
+    "onWebviewPanel:i18n-ally-next-editor",
     "onLanguage:vue",
     "onLanguage:html",
     "onLanguage:pug",
@@ -168,233 +168,233 @@
     "onLanguage:svelte"
   ],
   "icon": "res/logo.png",
-  "homepage": "https://github.com/lokalise/i18n-ally",
-  "bugs": "https://github.com/lokalise/i18n-ally/issues",
+  "homepage": "https://github.com/lydanne/i18n-ally-next",
+  "bugs": "https://github.com/lydanne/i18n-ally-next/issues",
   "contributes": {
     "commands": [
       {
-        "command": "i18n-ally.config-locales",
+        "command": "i18n-ally-next.config-locales",
         "title": "%command.config_locales%",
         "category": "%extname%"
       },
       {
-        "command": "i18n-ally.config-locales-auto",
+        "command": "i18n-ally-next.config-locales-auto",
         "title": "%command.config_locales_auto%",
         "category": "%extname%"
       },
       {
-        "command": "i18n-ally.config-display-language",
+        "command": "i18n-ally-next.config-display-language",
         "title": "%command.config_display_language%",
         "category": "%extname%"
       },
       {
-        "command": "i18n-ally.config-source-language",
+        "command": "i18n-ally-next.config-source-language",
         "title": "%command.config_source_language%",
         "category": "%extname%"
       },
       {
-        "command": "i18n-ally.set-display-language",
+        "command": "i18n-ally-next.set-display-language",
         "title": "%command.set_display_language%",
         "category": "%extname%"
       },
       {
-        "command": "i18n-ally.set-source-language",
+        "command": "i18n-ally-next.set-source-language",
         "title": "%command.set_source_language%",
         "category": "%extname%"
       },
       {
-        "command": "i18n-ally.copy-key",
+        "command": "i18n-ally-next.copy-key",
         "category": "%extname%",
         "title": "%command.copy_key%",
         "icon": "$(clippy)"
       },
       {
-        "command": "i18n-ally.translate-key",
+        "command": "i18n-ally-next.translate-key",
         "category": "%extname%",
         "title": "%command.translate_key%",
         "icon": "$(globe)"
       },
       {
-        "command": "i18n-ally.edit-key",
+        "command": "i18n-ally-next.edit-key",
         "category": "%extname%",
         "title": "%command.edit_key%",
         "icon": "$(edit)"
       },
       {
-        "command": "i18n-ally.open-key",
+        "command": "i18n-ally-next.open-key",
         "category": "%extname%",
         "title": "%command.open_key%",
         "icon": "$(go-to-file)"
       },
       {
-        "command": "i18n-ally.delete-key",
+        "command": "i18n-ally-next.delete-key",
         "category": "%extname%",
         "title": "%command.delete_key%"
       },
       {
-        "command": "i18n-ally.rename-key",
+        "command": "i18n-ally-next.rename-key",
         "category": "%extname%",
         "title": "%command.rename_key%"
       },
       {
-        "command": "i18n-ally.extract-text",
+        "command": "i18n-ally-next.extract-text",
         "category": "%extname%",
         "title": "%refactor.extract_text%",
         "icon": "$(symbol-string)"
       },
       {
-        "command": "i18n-ally.extract-hard-strings-batch",
+        "command": "i18n-ally-next.extract-hard-strings-batch",
         "category": "%extname%",
         "title": "Extract all hard-coded strings (experimental)"
       },
       {
-        "command": "i18n-ally.detect_hard_strings",
+        "command": "i18n-ally-next.detect_hard_strings",
         "category": "%extname%",
         "title": "Detect hard-coded strings in current file (experimental)"
       },
       {
-        "command": "i18n-ally.open-url",
+        "command": "i18n-ally-next.open-url",
         "category": "%extname%",
         "title": "%command.open_url%"
       },
       {
-        "command": "i18n-ally.fulfill-keys",
+        "command": "i18n-ally-next.fulfill-keys",
         "category": "%extname%",
         "title": "%command.fulfill_keys%",
         "icon": "$(selection)"
       },
       {
-        "command": "i18n-ally.refresh-usage",
+        "command": "i18n-ally-next.refresh-usage",
         "category": "%extname%",
         "title": "%command.refresh_usage%",
         "icon": "$(refresh)"
       },
       {
-        "command": "i18n-ally.support",
+        "command": "i18n-ally-next.support",
         "category": "%extname%",
         "title": "%feedback.support%"
       },
       {
-        "command": "i18n-ally.locale-visibility-show",
+        "command": "i18n-ally-next.locale-visibility-show",
         "category": "%extname%",
         "title": "%command.locale_visibility_show%",
         "icon": "$(eye)"
       },
       {
-        "command": "i18n-ally.locale-visibility-hide",
+        "command": "i18n-ally-next.locale-visibility-hide",
         "category": "%extname%",
         "title": "%command.locale_visibility_hide%",
         "icon": "$(eye-closed)"
       },
       {
-        "command": "i18n-ally.new-key",
+        "command": "i18n-ally-next.new-key",
         "category": "%extname%",
         "title": "%command.new_key%",
         "icon": "$(plus)"
       },
       {
-        "command": "i18n-ally.duplicate-key",
+        "command": "i18n-ally-next.duplicate-key",
         "category": "%extname%",
         "title": "%command.duplicate_key%"
       },
       {
-        "command": "i18n-ally.mark-key-as-in-use",
+        "command": "i18n-ally-next.mark-key-as-in-use",
         "category": "%extname%",
         "title": "%command.mark_key_as_in_use%"
       },
       {
-        "command": "i18n-ally.open-in-editor",
+        "command": "i18n-ally-next.open-in-editor",
         "category": "%extname%",
         "title": "%command.open_in_editor%",
         "icon": "$(file-symlink-file)"
       },
       {
-        "command": "i18n-ally.open-editor",
+        "command": "i18n-ally-next.open-editor",
         "category": "%extname%",
         "title": "%command.open_editor%"
       },
       {
-        "command": "i18n-ally.review.comment",
+        "command": "i18n-ally-next.review.comment",
         "category": "%extname%",
         "title": "%review.leave_comment%",
         "enablement": "!commentIsEmpty"
       },
       {
-        "command": "i18n-ally.review.approve",
+        "command": "i18n-ally-next.review.approve",
         "category": "%extname%",
         "title": "%review.approve%"
       },
       {
-        "command": "i18n-ally.review.request-change",
+        "command": "i18n-ally-next.review.request-change",
         "category": "%extname%",
         "title": "%review.request_change%"
       },
       {
-        "command": "i18n-ally.review.edit",
+        "command": "i18n-ally-next.review.edit",
         "category": "%extname%",
         "title": "%review.edit%",
         "icon": "$(edit)"
       },
       {
-        "command": "i18n-ally.review.resolve",
+        "command": "i18n-ally-next.review.resolve",
         "title": "%review.resolve%",
         "icon": "$(issue-closed)"
       },
       {
-        "command": "i18n-ally.review.resolve-thread",
+        "command": "i18n-ally-next.review.resolve-thread",
         "category": "%extname%",
         "title": "%review.resolve_all%",
         "icon": "$(checklist)"
       },
       {
-        "command": "i18n-ally.review.apply-translation",
+        "command": "i18n-ally-next.review.apply-translation",
         "category": "%extname%",
         "title": "%review.apply_translation_candidate%",
         "icon": "$(check)"
       },
       {
-        "command": "i18n-ally.review.apply-suggestion",
+        "command": "i18n-ally-next.review.apply-suggestion",
         "category": "%extname%",
         "title": "%review.apply_suggestion%"
       },
       {
-        "command": "i18n-ally.insert-key",
+        "command": "i18n-ally-next.insert-key",
         "category": "%extname%",
         "title": "%command.insert_key%"
       },
       {
-        "command": "i18n-ally.deepl-usage",
+        "command": "i18n-ally-next.deepl-usage",
         "category": "%extname%",
         "title": "%command.deepl_usage%"
       },
       {
-        "command": "i18n-ally.go-to-range",
+        "command": "i18n-ally-next.go-to-range",
         "category": "%extname%",
         "title": "%command.go_to_range%"
       },
       {
-        "command": "i18n-ally.go-to-next-usage",
+        "command": "i18n-ally-next.go-to-next-usage",
         "category": "%extname%",
         "title": "%command.go_to_next_usage%"
       },
       {
-        "command": "i18n-ally.go-to-prev-usage",
+        "command": "i18n-ally-next.go-to-prev-usage",
         "category": "%extname%",
         "title": "%command.go_to_prev_usage%"
       },
       {
-        "command": "i18n-ally.open-docs-hard-string",
+        "command": "i18n-ally-next.open-docs-hard-string",
         "category": "%extname%",
         "title": "%command.show_docs%",
         "icon": "$(question)"
       },
       {
-        "command": "i18n-ally.extract-disable-auto-detect",
+        "command": "i18n-ally-next.extract-disable-auto-detect",
         "category": "%extname%",
         "title": "%command.extract.disable-auto-detect%"
       },
       {
-        "command": "i18n-ally.extract-enable-auto-detect",
+        "command": "i18n-ally-next.extract-enable-auto-detect",
         "category": "%extname%",
         "title": "%command.extract.enable-auto-detect%"
       }
@@ -402,263 +402,263 @@
     "menus": {
       "commandPalette": [
         {
-          "command": "i18n-ally.set-display-language",
+          "command": "i18n-ally-next.set-display-language",
           "when": "false"
         },
         {
-          "command": "i18n-ally.set-source-language",
+          "command": "i18n-ally-next.set-source-language",
           "when": "false"
         },
         {
-          "command": "i18n-ally.copy-key",
+          "command": "i18n-ally-next.copy-key",
           "when": "false"
         },
         {
-          "command": "i18n-ally.edit-key",
+          "command": "i18n-ally-next.edit-key",
           "when": "false"
         },
         {
-          "command": "i18n-ally.delete-key",
+          "command": "i18n-ally-next.delete-key",
           "when": "false"
         },
         {
-          "command": "i18n-ally.rename-key",
+          "command": "i18n-ally-next.rename-key",
           "when": "false"
         },
         {
-          "command": "i18n-ally.translate-key",
+          "command": "i18n-ally-next.translate-key",
           "when": "false"
         },
         {
-          "command": "i18n-ally.open-key",
+          "command": "i18n-ally-next.open-key",
           "when": "false"
         },
         {
-          "command": "i18n-ally.open-url",
+          "command": "i18n-ally-next.open-url",
           "when": "false"
         },
         {
-          "command": "i18n-ally.locale-visibility-hide",
+          "command": "i18n-ally-next.locale-visibility-hide",
           "when": "false"
         },
         {
-          "command": "i18n-ally.locale-visibility-show",
+          "command": "i18n-ally-next.locale-visibility-show",
           "when": "false"
         },
         {
-          "command": "i18n-ally.mark-key-as-in-use",
+          "command": "i18n-ally-next.mark-key-as-in-use",
           "when": "false"
         },
         {
-          "command": "i18n-ally.review.comment",
+          "command": "i18n-ally-next.review.comment",
           "when": "false"
         },
         {
-          "command": "i18n-ally.review.approve",
+          "command": "i18n-ally-next.review.approve",
           "when": "false"
         },
         {
-          "command": "i18n-ally.review.request-change",
+          "command": "i18n-ally-next.review.request-change",
           "when": "false"
         },
         {
-          "command": "i18n-ally.review.resolve-thread",
+          "command": "i18n-ally-next.review.resolve-thread",
           "when": "false"
         },
         {
-          "command": "i18n-ally.review.resolve",
+          "command": "i18n-ally-next.review.resolve",
           "when": "false"
         },
         {
-          "command": "i18n-ally.review.apply-translation",
+          "command": "i18n-ally-next.review.apply-translation",
           "when": "false"
         },
         {
-          "command": "i18n-ally.review.apply-suggestion",
+          "command": "i18n-ally-next.review.apply-suggestion",
           "when": "false"
         },
         {
-          "command": "i18n-ally.open-in-editor",
+          "command": "i18n-ally-next.open-in-editor",
           "when": "false"
         },
         {
-          "command": "i18n-ally.edit-key",
+          "command": "i18n-ally-next.edit-key",
           "when": "false"
         },
         {
-          "command": "i18n-ally.duplicate-key",
+          "command": "i18n-ally-next.duplicate-key",
           "when": "false"
         },
         {
-          "command": "i18n-ally.go-to-range",
+          "command": "i18n-ally-next.go-to-range",
           "when": "false"
         },
         {
-          "command": "i18n-ally.extract-disable-auto-detect",
+          "command": "i18n-ally-next.extract-disable-auto-detect",
           "when": "false"
         },
         {
-          "command": "i18n-ally.extract-enable-auto-detect",
+          "command": "i18n-ally-next.extract-enable-auto-detect",
           "when": "false"
         }
       ],
       "view/item/context": [
         {
-          "command": "i18n-ally.open-in-editor",
-          "when": "view =~ /i18n-ally-locales/ && viewItem =~ /open-in-editor/",
+          "command": "i18n-ally-next.open-in-editor",
+          "when": "view =~ /i18n-ally-next-locales/ && viewItem =~ /open-in-editor/",
           "group": "inline@1"
         },
         {
-          "command": "i18n-ally.open-key",
-          "when": "view =~ /i18n-ally-locales/ && viewItem =~ /openable/",
+          "command": "i18n-ally-next.open-key",
+          "when": "view =~ /i18n-ally-next-locales/ && viewItem =~ /openable/",
           "group": "inline@2"
         },
         {
-          "command": "i18n-ally.copy-key",
-          "when": "view =~ /i18n-ally-locales/ && viewItem =~ /node/",
+          "command": "i18n-ally-next.copy-key",
+          "when": "view =~ /i18n-ally-next-locales/ && viewItem =~ /node/",
           "group": "inline@3"
         },
         {
-          "command": "i18n-ally.translate-key",
-          "when": "view =~ /i18n-ally-locales/ && viewItem =~ /translatable/",
+          "command": "i18n-ally-next.translate-key",
+          "when": "view =~ /i18n-ally-next-locales/ && viewItem =~ /translatable/",
           "group": "inline@4"
         },
         {
-          "command": "i18n-ally.edit-key",
-          "when": "view =~ /i18n-ally-locales/ && viewItem =~ /editable/",
+          "command": "i18n-ally-next.edit-key",
+          "when": "view =~ /i18n-ally-next-locales/ && viewItem =~ /editable/",
           "group": "inline@5"
         },
         {
-          "command": "i18n-ally.fulfill-keys",
-          "when": "view =~ /i18n-ally-locales/ && viewItem =~ /fulfillable/",
+          "command": "i18n-ally-next.fulfill-keys",
+          "when": "view =~ /i18n-ally-next-locales/ && viewItem =~ /fulfillable/",
           "group": "inline@3"
         },
         {
-          "command": "i18n-ally.review.apply-translation",
-          "when": "view =~ /i18n-ally-locales/ && viewItem =~ /translation-candidate/",
+          "command": "i18n-ally-next.review.apply-translation",
+          "when": "view =~ /i18n-ally-next-locales/ && viewItem =~ /translation-candidate/",
           "group": "inline@1"
         },
         {
-          "command": "i18n-ally.set-display-language",
-          "when": "view =~ /i18n-ally-locales-progress/ && viewItem =~ /notdisply/"
+          "command": "i18n-ally-next.set-display-language",
+          "when": "view =~ /i18n-ally-next-locales-progress/ && viewItem =~ /notdisply/"
         },
         {
-          "command": "i18n-ally.set-source-language",
-          "when": "view =~ /i18n-ally-locales-progress/ && viewItem =~ /notsource/"
+          "command": "i18n-ally-next.set-source-language",
+          "when": "view =~ /i18n-ally-next-locales-progress/ && viewItem =~ /notsource/"
         },
         {
-          "command": "i18n-ally.rename-key",
-          "when": "view =~ /i18n-ally-locales/ && viewItem =~ /node/ && viewItem =~ /writable/",
+          "command": "i18n-ally-next.rename-key",
+          "when": "view =~ /i18n-ally-next-locales/ && viewItem =~ /node/ && viewItem =~ /writable/",
           "group": "i18nally@1"
         },
         {
-          "command": "i18n-ally.duplicate-key",
-          "when": "view =~ /i18n-ally-locales-tree/ && viewItem =~ /node/ && viewItem =~ /writable/",
+          "command": "i18n-ally-next.duplicate-key",
+          "when": "view =~ /i18n-ally-next-locales-tree/ && viewItem =~ /node/ && viewItem =~ /writable/",
           "group": "i18nally@2"
         },
         {
-          "command": "i18n-ally.delete-key",
-          "when": "view =~ /i18n-ally-locales/ && viewItem =~ /node/ && viewItem =~ /writable/",
+          "command": "i18n-ally-next.delete-key",
+          "when": "view =~ /i18n-ally-next-locales/ && viewItem =~ /node/ && viewItem =~ /writable/",
           "group": "i18nally@3"
         },
         {
-          "command": "i18n-ally.locale-visibility-show",
-          "when": "view =~ /i18n-ally-locales-progress/ && viewItem =~ /show/",
+          "command": "i18n-ally-next.locale-visibility-show",
+          "when": "view =~ /i18n-ally-next-locales-progress/ && viewItem =~ /show/",
           "group": "inline@4"
         },
         {
-          "command": "i18n-ally.locale-visibility-hide",
-          "when": "view =~ /i18n-ally-locales-progress/ && viewItem =~ /hide/",
+          "command": "i18n-ally-next.locale-visibility-hide",
+          "when": "view =~ /i18n-ally-next-locales-progress/ && viewItem =~ /hide/",
           "group": "inline@4"
         },
         {
-          "command": "i18n-ally.delete-key",
-          "when": "view =~ /i18n-ally-locales-usage/ && viewItem =~ /usage_idle/",
+          "command": "i18n-ally-next.delete-key",
+          "when": "view =~ /i18n-ally-next-locales-usage/ && viewItem =~ /usage_idle/",
           "group": "i18nally@1"
         },
         {
-          "command": "i18n-ally.mark-key-as-in-use",
-          "when": "view =~ /i18n-ally-locales/ && viewItem =~ /key_idle/",
+          "command": "i18n-ally-next.mark-key-as-in-use",
+          "when": "view =~ /i18n-ally-next-locales/ && viewItem =~ /key_idle/",
           "group": "i18nally@1"
         },
         {
-          "command": "i18n-ally.open-docs-hard-string",
-          "when": "viewItem =~ /i18n-ally-hard-string-root/",
+          "command": "i18n-ally-next.open-docs-hard-string",
+          "when": "viewItem =~ /i18n-ally-next-hard-string-root/",
           "group": "inline@1"
         },
         {
-          "command": "i18n-ally.extract-text",
-          "when": "viewItem =~ /i18n-ally-hard-string-item/",
+          "command": "i18n-ally-next.extract-text",
+          "when": "viewItem =~ /i18n-ally-next-hard-string-item/",
           "group": "inline@1"
         },
         {
-          "command": "i18n-ally.extract-hard-strings-batch",
-          "when": "viewItem =~ /i18n-ally-hard-string-root/",
+          "command": "i18n-ally-next.extract-hard-strings-batch",
+          "when": "viewItem =~ /i18n-ally-next-hard-string-root/",
           "group": "i18nally@1"
         },
         {
-          "command": "i18n-ally.extract-disable-auto-detect",
-          "when": "viewItem =~ /i18n-ally-hard-string-root/ && i18n-ally.extract.autoDetect == true",
+          "command": "i18n-ally-next.extract-disable-auto-detect",
+          "when": "viewItem =~ /i18n-ally-next-hard-string-root/ && i18n-ally-next.extract.autoDetect == true",
           "group": "i18nally@2"
         },
         {
-          "command": "i18n-ally.extract-enable-auto-detect",
-          "when": "viewItem =~ /i18n-ally-hard-string-root/ && i18n-ally.extract.autoDetect == false",
+          "command": "i18n-ally-next.extract-enable-auto-detect",
+          "when": "viewItem =~ /i18n-ally-next-hard-string-root/ && i18n-ally-next.extract.autoDetect == false",
           "group": "i18nally@2"
         }
       ],
       "view/title": [
         {
-          "command": "i18n-ally.refresh-usage",
+          "command": "i18n-ally-next.refresh-usage",
           "group": "navigation",
-          "when": "view =~ /i18n-ally-locales-usage/"
+          "when": "view =~ /i18n-ally-next-locales-usage/"
         },
         {
-          "command": "i18n-ally.new-key",
+          "command": "i18n-ally-next.new-key",
           "group": "navigation",
-          "when": "view =~ /i18n-ally-locales-tree/"
+          "when": "view =~ /i18n-ally-next-locales-tree/"
         }
       ],
       "explorer/context": [
         {
-          "command": "i18n-ally.extract-hard-strings-batch",
+          "command": "i18n-ally-next.extract-hard-strings-batch",
           "group": "1_i18nally@1"
         }
       ],
       "comments/commentThread/title": [
         {
-          "command": "i18n-ally.review.resolve-thread",
+          "command": "i18n-ally-next.review.resolve-thread",
           "group": "navigation",
-          "when": "commentController == i18n-ally-review && !commentThreadIsEmpty"
+          "when": "commentController == i18n-ally-next-review && !commentThreadIsEmpty"
         }
       ],
       "comments/commentThread/context": [
         {
-          "command": "i18n-ally.review.approve",
+          "command": "i18n-ally-next.review.approve",
           "group": "inline@1",
-          "when": "commentController == i18n-ally-review"
+          "when": "commentController == i18n-ally-next-review"
         },
         {
-          "command": "i18n-ally.review.request-change",
+          "command": "i18n-ally-next.review.request-change",
           "group": "inline@2",
-          "when": "commentController == i18n-ally-review"
+          "when": "commentController == i18n-ally-next-review"
         },
         {
-          "command": "i18n-ally.review.comment",
+          "command": "i18n-ally-next.review.comment",
           "group": "inline@3",
-          "when": "commentController == i18n-ally-review"
+          "when": "commentController == i18n-ally-next-review"
         }
       ],
       "comments/comment/title": [
         {
-          "command": "i18n-ally.review.edit",
+          "command": "i18n-ally-next.review.edit",
           "group": "group@1",
-          "when": "commentController == i18n-ally-review && viewItem =~ /self/"
+          "when": "commentController == i18n-ally-next-review && viewItem =~ /self/"
         },
         {
-          "command": "i18n-ally.review.resolve",
+          "command": "i18n-ally-next.review.resolve",
           "group": "group@2",
-          "when": "commentController == i18n-ally-review"
+          "when": "commentController == i18n-ally-next-review"
         }
       ],
       "comments/comment/context": []
@@ -666,7 +666,7 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "i18n-ally",
+          "id": "i18n-ally-next",
           "title": "%extname%",
           "icon": "./res/logo-view-container.svg"
         }
@@ -675,36 +675,36 @@
     "views": {
       "explorer": [
         {
-          "id": "i18n-ally-locales-file-explorer",
+          "id": "i18n-ally-next-locales-file-explorer",
           "name": "%view.i18n_keys%",
-          "when": "i18n-ally-enabled"
+          "when": "i18n-ally-next-enabled"
         }
       ],
-      "i18n-ally": [
+      "i18n-ally-next": [
         {
-          "id": "i18n-ally-locales-sidebar-file",
+          "id": "i18n-ally-next-locales-sidebar-file",
           "name": "%view.current_file%",
-          "when": "i18n-ally-enabled"
+          "when": "i18n-ally-next-enabled"
         },
         {
-          "id": "i18n-ally-locales-progress",
+          "id": "i18n-ally-next-locales-progress",
           "name": "%view.progress%",
-          "when": "i18n-ally-enabled"
+          "when": "i18n-ally-next-enabled"
         },
         {
-          "id": "i18n-ally-locales-tree",
+          "id": "i18n-ally-next-locales-tree",
           "name": "%view.tree%",
-          "when": "i18n-ally-enabled"
+          "when": "i18n-ally-next-enabled"
         },
         {
-          "id": "i18n-ally-locales-usage",
+          "id": "i18n-ally-next-locales-usage",
           "name": "%view.usage%",
-          "when": "i18n-ally-enabled"
+          "when": "i18n-ally-next-enabled"
         },
         {
-          "id": "i18n-ally-help-feedback",
+          "id": "i18n-ally-next-help-feedback",
           "name": "%view.help_feedback%",
-          "when": "i18n-ally-enabled"
+          "when": "i18n-ally-next-enabled"
         }
       ]
     },
@@ -712,17 +712,17 @@
       "type": "object",
       "title": "%extname%",
       "properties": {
-        "i18n-ally.disabled": {
+        "i18n-ally-next.disabled": {
           "type": "boolean",
           "default": false,
           "description": "%config.disabled%"
         },
-        "i18n-ally.autoDetection": {
+        "i18n-ally-next.autoDetection": {
           "type": "boolean",
           "default": true,
           "description": "%config.auto_detection%"
         },
-        "i18n-ally.localesPaths": {
+        "i18n-ally-next.localesPaths": {
           "type": [
             "string",
             "array"
@@ -733,24 +733,24 @@
           "description": "%config.locales_paths%",
           "scope": "resource"
         },
-        "i18n-ally.encoding": {
+        "i18n-ally-next.encoding": {
           "type": "string",
           "default": "utf-8",
           "description": "%config.encoding%"
         },
-        "i18n-ally.sourceLanguage": {
+        "i18n-ally-next.sourceLanguage": {
           "type": "string",
           "description": "%config.source_language%"
         },
-        "i18n-ally.displayLanguage": {
+        "i18n-ally-next.displayLanguage": {
           "type": "string",
           "description": "%config.display_language%"
         },
-        "i18n-ally.ignoredLocales": {
+        "i18n-ally-next.ignoredLocales": {
           "type": "array",
           "description": "%config.ignored_locales%"
         },
-        "i18n-ally.keystyle": {
+        "i18n-ally-next.keystyle": {
           "type": "string",
           "enum": [
             "auto",
@@ -759,7 +759,7 @@
           ],
           "description": "%config.keystyle%"
         },
-        "i18n-ally.dirStructure": {
+        "i18n-ally-next.dirStructure": {
           "type": "string",
           "enum": [
             "auto",
@@ -768,42 +768,42 @@
           ],
           "description": "%config.dir_structure%"
         },
-        "i18n-ally.annotations": {
+        "i18n-ally-next.annotations": {
           "type": "boolean",
           "default": true,
           "description": "%config.annotations%"
         },
-        "i18n-ally.annotationInPlace": {
+        "i18n-ally-next.annotationInPlace": {
           "type": "boolean",
           "default": true,
           "description": "%config.annotation_in_place%"
         },
-        "i18n-ally.annotationMaxLength": {
+        "i18n-ally-next.annotationMaxLength": {
           "type": "number",
           "default": 40,
           "description": "%config.annotation_max_length%"
         },
-        "i18n-ally.annotationDelimiter": {
+        "i18n-ally-next.annotationDelimiter": {
           "type": "string",
           "default": "·",
           "description": "%config.annotation_delimiter%"
         },
-        "i18n-ally.includeSubfolders": {
+        "i18n-ally-next.includeSubfolders": {
           "type": "boolean",
           "default": true,
           "description": "%config.include_subfolders%"
         },
-        "i18n-ally.fullReloadOnChanged": {
+        "i18n-ally-next.fullReloadOnChanged": {
           "type": "boolean",
           "default": false,
           "description": "%config.full_reload_on_changed%"
         },
-        "i18n-ally.showFlags": {
+        "i18n-ally-next.showFlags": {
           "type": "boolean",
           "default": true,
           "description": "%config.show_flags%"
         },
-        "i18n-ally.enabledFrameworks": {
+        "i18n-ally-next.enabledFrameworks": {
           "type": "array",
           "items": {
             "type": "string",
@@ -840,7 +840,7 @@
           },
           "description": "%config.enabled_frameworks%"
         },
-        "i18n-ally.enabledParsers": {
+        "i18n-ally-next.enabledParsers": {
           "type": "array",
           "items": {
             "type": "string",
@@ -859,19 +859,19 @@
           },
           "description": "%config.enabled_parsers%"
         },
-        "i18n-ally.keysInUse": {
+        "i18n-ally-next.keysInUse": {
           "type": "array",
           "items": {
             "type": "string"
           },
           "description": "%config.keys_in_use%"
         },
-        "i18n-ally.sortKeys": {
+        "i18n-ally-next.sortKeys": {
           "type": "boolean",
           "default": false,
           "description": "%config.sort_keys%"
         },
-        "i18n-ally.sortCompare": {
+        "i18n-ally-next.sortCompare": {
           "type": "string",
           "enum": [
             "binary",
@@ -880,41 +880,41 @@
           "default": "binary",
           "description": "%config.sort_compare%"
         },
-        "i18n-ally.sortLocale": {
+        "i18n-ally-next.sortLocale": {
           "type": "string",
           "description": "%config.sort_locale%"
         },
-        "i18n-ally.preferredDelimiter": {
+        "i18n-ally-next.preferredDelimiter": {
           "type": "string",
           "default": "-",
           "description": "%config.preferred_delimiter%"
         },
-        "i18n-ally.readonly": {
+        "i18n-ally-next.readonly": {
           "type": "boolean",
           "default": false,
           "description": "%config.readonly%"
         },
-        "i18n-ally.keepFulfilled": {
+        "i18n-ally-next.keepFulfilled": {
           "type": "boolean",
           "default": false,
           "description": "%config.keep_fulfill%"
         },
-        "i18n-ally.localeCountryMap": {
+        "i18n-ally-next.localeCountryMap": {
           "type": "object",
           "default": {},
           "description": "%config.locale_country_map%"
         },
-        "i18n-ally.indent": {
+        "i18n-ally-next.indent": {
           "type": "number",
           "default": 2,
           "description": "%config.indent%"
         },
-        "i18n-ally.disablePathParsing": {
+        "i18n-ally-next.disablePathParsing": {
           "type": "boolean",
           "default": false,
           "description": "%config.disable_path_parsing%"
         },
-        "i18n-ally.tabStyle": {
+        "i18n-ally-next.tabStyle": {
           "type": "string",
           "default": "space",
           "enum": [
@@ -923,15 +923,15 @@
           ],
           "description": "%config.tab_style%"
         },
-        "i18n-ally.namespace": {
+        "i18n-ally-next.namespace": {
           "type": "boolean",
           "description": "%config.namespace%"
         },
-        "i18n-ally.pathMatcher": {
+        "i18n-ally-next.pathMatcher": {
           "type": "string",
           "description": "%config.path_matcher%"
         },
-        "i18n-ally.languageTagSystem": {
+        "i18n-ally-next.languageTagSystem": {
           "type": "string",
           "enum": [
             "bcp47",
@@ -941,48 +941,48 @@
           "default": "bcp47",
           "description": "%config.language_tag_system%"
         },
-        "i18n-ally.ignoreFiles": {
+        "i18n-ally-next.ignoreFiles": {
           "type": "array",
           "item": {
             "type": "string"
           },
           "description": "%config.ignore_files%"
         },
-        "i18n-ally.theme.annotation": {
+        "i18n-ally-next.theme.annotation": {
           "type": "string",
           "default": "rgba(153, 153, 153, .8)"
         },
-        "i18n-ally.theme.annotationMissing": {
+        "i18n-ally-next.theme.annotationMissing": {
           "type": "string",
           "default": "rgba(153, 153, 153, .3)"
         },
-        "i18n-ally.theme.annotationBorder": {
+        "i18n-ally-next.theme.annotationBorder": {
           "type": "string",
           "default": "rgba(153, 153, 153, .2)"
         },
-        "i18n-ally.theme.annotationMissingBorder": {
+        "i18n-ally-next.theme.annotationMissingBorder": {
           "type": "string",
           "default": "rgba(153, 153, 153, .2)"
         },
-        "i18n-ally.regex.key": {
+        "i18n-ally-next.regex.key": {
           "type": "string",
           "description": "%config.regex_key%"
         },
-        "i18n-ally.regex.usageMatch": {
+        "i18n-ally-next.regex.usageMatch": {
           "type": "array",
           "items": {
             "type": "string"
           },
           "description": "%config.regex_usage_match%"
         },
-        "i18n-ally.regex.usageMatchAppend": {
+        "i18n-ally-next.regex.usageMatchAppend": {
           "type": "array",
           "items": {
             "type": "string"
           },
           "description": "%config.regex_usage_match_append%"
         },
-        "i18n-ally.refactor.templates": {
+        "i18n-ally-next.refactor.templates": {
           "type": "array",
           "items": {
             "type": "object",
@@ -1022,17 +1022,17 @@
           },
           "description": "%config.refactor_templates%"
         },
-        "i18n-ally.translate.saveAsCandidates": {
+        "i18n-ally-next.translate.saveAsCandidates": {
           "type": "boolean",
           "default": false,
           "description": "%config.translate_save_as_candidates%"
         },
-        "i18n-ally.translate.fallbackToKey": {
+        "i18n-ally-next.translate.fallbackToKey": {
           "type": "boolean",
           "default": false,
           "description": "%config.translate.fallbackToKey%"
         },
-        "i18n-ally.translate.engines": {
+        "i18n-ally-next.translate.engines": {
           "type": "array",
           "items": {
             "type": "string",
@@ -1050,67 +1050,67 @@
           ],
           "description": "%config.translate.engines%"
         },
-        "i18n-ally.translate.parallels": {
+        "i18n-ally-next.translate.parallels": {
           "type": "number",
           "default": 5,
           "description": "%config.translate.parallels%"
         },
-        "i18n-ally.translate.promptSource": {
+        "i18n-ally-next.translate.promptSource": {
           "type": "boolean",
           "default": false,
           "description": "%config.prompt_translating_source%"
         },
-        "i18n-ally.translate.overrideExisting": {
+        "i18n-ally-next.translate.overrideExisting": {
           "type": "boolean",
           "default": false,
           "description": "%config.translate_override_existing%"
         },
-        "i18n-ally.translate.google.apiKey": {
+        "i18n-ally-next.translate.google.apiKey": {
           "type": "string",
           "default": null,
           "description": "%config.google_api_key%"
         },
-        "i18n-ally.translate.deepl.apiKey": {
+        "i18n-ally-next.translate.deepl.apiKey": {
           "type": "string",
           "default": null,
           "description": "%config.deepl_api_key%"
         },
-        "i18n-ally.translate.baidu.appid": {
+        "i18n-ally-next.translate.baidu.appid": {
           "type": "string",
           "default": null,
           "description": "%config.baidu_appid%"
         },
-        "i18n-ally.translate.baidu.apiSecret": {
+        "i18n-ally-next.translate.baidu.apiSecret": {
           "type": "string",
           "default": null,
           "description": "%config.baidu_app_secret%"
         },
-        "i18n-ally.translate.deepl.enableLog": {
+        "i18n-ally-next.translate.deepl.enableLog": {
           "type": "boolean",
           "default": false,
           "description": "%config.deepl_log%"
         },
-        "i18n-ally.translate.deepl.useFreeApiEntry": {
+        "i18n-ally-next.translate.deepl.useFreeApiEntry": {
           "type": "boolean",
           "default": false,
           "description": "%config.deepl_use_free_api_entry%"
         },
-        "i18n-ally.translate.libre.apiRoot": {
+        "i18n-ally-next.translate.libre.apiRoot": {
           "type": "string",
           "default": "http://localhost:5000",
           "description": "%config.libretranslate_api_root%"
         },
-        "i18n-ally.translate.openai.apiKey": {
+        "i18n-ally-next.translate.openai.apiKey": {
           "type": "string",
           "default": null,
           "description": "%config.openai_api_key%"
         },
-        "i18n-ally.translate.openai.apiRoot": {
+        "i18n-ally-next.translate.openai.apiRoot": {
           "type": "string",
           "default": "https://api.openai.com",
           "description": "%config.openai_api_root%"
         },
-        "i18n-ally.translate.openai.apiModel": {
+        "i18n-ally-next.translate.openai.apiModel": {
           "type": "string",
           "default": "gpt-3.5-turbo",
           "enum": [
@@ -1127,14 +1127,14 @@
           ],
           "description": "%config.openai_api_model%"
         },
-        "i18n-ally.usage.scanningIgnore": {
+        "i18n-ally-next.usage.scanningIgnore": {
           "type": "array",
           "items": {
             "type": "string"
           },
           "description": "%config.usage.scanning_ignore%"
         },
-        "i18n-ally.usage.derivedKeyRules": {
+        "i18n-ally-next.usage.derivedKeyRules": {
           "type": "array",
           "items": {
             "type": "string"
@@ -1142,51 +1142,51 @@
           "default": null,
           "description": "%config.derived_keys%"
         },
-        "i18n-ally.frameworks.ruby-rails.scopeRoot": {
+        "i18n-ally-next.frameworks.ruby-rails.scopeRoot": {
           "type": "string",
           "default": "app/views"
         },
-        "i18n-ally.parsers.typescript.tsNodePath": {
+        "i18n-ally-next.parsers.typescript.tsNodePath": {
           "type": "string",
           "default": "node_modules/ts-node/dist/bin.js"
         },
-        "i18n-ally.parsers.typescript.compilerOptions": {
+        "i18n-ally-next.parsers.typescript.compilerOptions": {
           "type": "object",
           "default": {}
         },
-        "i18n-ally.parsers.extendFileExtensions": {
+        "i18n-ally-next.parsers.extendFileExtensions": {
           "type": "object",
           "default": {}
         },
-        "i18n-ally.review.enabled": {
+        "i18n-ally-next.review.enabled": {
           "type": "boolean",
           "default": true,
           "description": "%config.review_enabled%"
         },
-        "i18n-ally.review.gutters": {
+        "i18n-ally-next.review.gutters": {
           "type": "boolean",
           "default": true,
           "description": "%config.review_gutters%"
         },
-        "i18n-ally.review.user.name": {
+        "i18n-ally-next.review.user.name": {
           "type": "string",
           "description": "%config.review_username%"
         },
-        "i18n-ally.review.user.email": {
+        "i18n-ally-next.review.user.email": {
           "type": "string",
           "description": "%config.review_email%"
         },
-        "i18n-ally.review.removeCommentOnResolved": {
+        "i18n-ally-next.review.removeCommentOnResolved": {
           "type": "boolean",
           "default": false,
           "description": "%config.review_remove_on_resolved%"
         },
-        "i18n-ally.editor.preferEditor": {
+        "i18n-ally-next.editor.preferEditor": {
           "type": "boolean",
           "default": false,
           "description": "%config.editor_prefer_editor%"
         },
-        "i18n-ally.extract.keygenStrategy": {
+        "i18n-ally-next.extract.keygenStrategy": {
           "type": "string",
           "default": "slug",
           "enum": [
@@ -1197,7 +1197,7 @@
           ],
           "description": "%config.keygen_strategy%"
         },
-        "i18n-ally.extract.keygenStyle": {
+        "i18n-ally-next.extract.keygenStyle": {
           "type": "string",
           "default": "default",
           "enum": [
@@ -1210,17 +1210,17 @@
           ],
           "description": "%config.keygen_style%"
         },
-        "i18n-ally.extract.keyPrefix": {
+        "i18n-ally-next.extract.keyPrefix": {
           "type": "string",
           "default": "",
           "description": "%config.key_prefix%"
         },
-        "i18n-ally.extract.keyMaxLength": {
+        "i18n-ally-next.extract.keyMaxLength": {
           "type": "number",
           "default": null,
           "description": "%config.key_max_length%"
         },
-        "i18n-ally.extract.targetPickingStrategy": {
+        "i18n-ally-next.extract.targetPickingStrategy": {
           "type": "string",
           "default": "none",
           "enum": [
@@ -1239,98 +1239,98 @@
           ],
           "description": "%config.target_picking_strategy%"
         },
-        "i18n-ally.extract.parsers.html": {
+        "i18n-ally-next.extract.parsers.html": {
           "type": "object",
           "default": {},
-          "description": "Parser options for extracting HTML, see https://github.com/lokalise/i18n-ally/blob/master/src/extraction/parsers/options.ts"
+          "description": "Parser options for extracting HTML, see https://github.com/lydanne/i18n-ally-next/blob/master/src/extraction/parsers/options.ts"
         },
-        "i18n-ally.extract.parsers.babel": {
+        "i18n-ally-next.extract.parsers.babel": {
           "type": "object",
           "default": {},
-          "description": "Parser options for extracting JS/TS/JSX/TSX, see https://github.com/lokalise/i18n-ally/blob/master/src/extraction/parsers/options.ts"
+          "description": "Parser options for extracting JS/TS/JSX/TSX, see https://github.com/lydanne/i18n-ally-next/blob/master/src/extraction/parsers/options.ts"
         },
-        "i18n-ally.extract.autoDetect": {
+        "i18n-ally-next.extract.autoDetect": {
           "type": "boolean",
           "default": false,
           "description": "Enables hard-coded strings detection automatically whenever opening a supported file"
         },
-        "i18n-ally.extract.ignored": {
+        "i18n-ally-next.extract.ignored": {
           "type": "array",
           "items": {
             "type": "string"
           },
           "description": "Strings to be ignored on hard-coded strings detection"
         },
-        "i18n-ally.extract.ignoredByFiles": {
+        "i18n-ally-next.extract.ignoredByFiles": {
           "type": "object",
           "default": {},
           "description": "Strings to be ignored on hard-coded strings detection, by files"
         },
-        "i18n-ally.parserOptions": {
+        "i18n-ally-next.parserOptions": {
           "type": "object"
         },
-        "i18n-ally.defaultNamespace": {
+        "i18n-ally-next.defaultNamespace": {
           "type": "string",
           "description": "%config.default_namespace%"
         },
-        "i18n-ally.derivedKeyRules": {
-          "deprecationMessage": "Deprecated. Use \"i18n-ally.usage.derivedKeyRules\" instead."
+        "i18n-ally-next.derivedKeyRules": {
+          "deprecationMessage": "Deprecated. Use \"i18n-ally-next.usage.derivedKeyRules\" instead."
         },
-        "i18n-ally.filenameMatchRegex": {
-          "deprecationMessage": "Deprecated. Use \"i18n-ally.pathMatcher\" instead."
+        "i18n-ally-next.filenameMatchRegex": {
+          "deprecationMessage": "Deprecated. Use \"i18n-ally-next.pathMatcher\" instead."
         },
-        "i18n-ally.fileNamespace": {
-          "deprecationMessage": "Deprecated. Use \"i18n-ally.namespace\" instead."
+        "i18n-ally-next.fileNamespace": {
+          "deprecationMessage": "Deprecated. Use \"i18n-ally-next.namespace\" instead."
         },
-        "i18n-ally.keyMatchRegex": {
-          "deprecationMessage": "Deprecated. Use \"i18n-ally.regex.key\" instead."
+        "i18n-ally-next.keyMatchRegex": {
+          "deprecationMessage": "Deprecated. Use \"i18n-ally-next.regex.key\" instead."
         },
-        "vue-i18n-ally.localesPaths": {
+        "vue-i18n-ally-next.localesPaths": {
           "deprecationMessage": "%config.deprecated%"
         },
-        "vue-i18n-ally.encoding": {
+        "vue-i18n-ally-next.encoding": {
           "deprecationMessage": "%config.deprecated%"
         },
-        "vue-i18n-ally.sourceLanguage": {
+        "vue-i18n-ally-next.sourceLanguage": {
           "deprecationMessage": "%config.deprecated%"
         },
-        "vue-i18n-ally.displayLanguage": {
+        "vue-i18n-ally-next.displayLanguage": {
           "deprecationMessage": "%config.deprecated%"
         },
-        "vue-i18n-ally.ignoredLocales": {
+        "vue-i18n-ally-next.ignoredLocales": {
           "deprecationMessage": "%config.deprecated%"
         },
-        "vue-i18n-ally.keystyle": {
+        "vue-i18n-ally-next.keystyle": {
           "deprecationMessage": "%config.deprecated%"
         },
-        "vue-i18n-ally.dirStructure": {
+        "vue-i18n-ally-next.dirStructure": {
           "deprecationMessage": "%config.deprecated%"
         },
-        "vue-i18n-ally.annotations": {
+        "vue-i18n-ally-next.annotations": {
           "deprecationMessage": "%config.deprecated%"
         },
-        "vue-i18n-ally.annotationMaxLength": {
+        "vue-i18n-ally-next.annotationMaxLength": {
           "deprecationMessage": "%config.deprecated%"
         },
-        "vue-i18n-ally.annotationDelimiter": {
+        "vue-i18n-ally-next.annotationDelimiter": {
           "deprecationMessage": "%config.deprecated%"
         },
-        "vue-i18n-ally.filenameMatchRegex": {
+        "vue-i18n-ally-next.filenameMatchRegex": {
           "deprecationMessage": "%config.deprecated%"
         },
-        "vue-i18n-ally.includeSubfolders": {
+        "vue-i18n-ally-next.includeSubfolders": {
           "deprecationMessage": "%config.deprecated%"
         },
-        "vue-i18n-ally.fullReloadOnChanged": {
+        "vue-i18n-ally-next.fullReloadOnChanged": {
           "deprecationMessage": "%config.deprecated%"
         },
-        "vue-i18n-ally.sortKeys": {
+        "vue-i18n-ally-next.sortKeys": {
           "deprecationMessage": "%config.deprecated%"
         },
-        "vue-i18n-ally.preferredDelimiter": {
+        "vue-i18n-ally-next.preferredDelimiter": {
           "deprecationMessage": "%config.deprecated%"
         },
-        "vue-i18n-ally.readonly": {
+        "vue-i18n-ally-next.readonly": {
           "deprecationMessage": "%config.deprecated%"
         }
       }
@@ -1368,5 +1368,5 @@
       }
     ]
   },
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "pnpm@9.15.4"
 }

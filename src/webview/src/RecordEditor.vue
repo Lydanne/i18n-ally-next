@@ -249,8 +249,8 @@ export default Vue.extend({
 
 .record-editor
   border-left 2px solid transparent
-  padding-right var(--i18n-ally-margin)
-  padding-left calc(var(--i18n-ally-margin) - 2px)
+  padding-right var(--i18n-ally-next-margin)
+  padding-left calc(var(--i18n-ally-next-margin) - 2px)
 
   &.active
     border-left 2px solid var(--vscode-foreground)

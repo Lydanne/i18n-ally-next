@@ -101,10 +101,10 @@ export class Telemetry {
   }
 
   private static _getUserId() {
-    let userId = Config.ctx.globalState.get('i18n-ally.telemetry-user-id') ?? ''
+    let userId = Config.ctx.globalState.get('i18n-ally-next.telemetry-user-id') ?? ''
     if (!userId) {
       userId = randomUUID()
-      Config.ctx.globalState.update('i18n-ally.telemetry-user-id', userId)
+      Config.ctx.globalState.update('i18n-ally-next.telemetry-user-id', userId)
     }
     Log.info(`📈 Telemetry id: ${userId}`)
     return userId

@@ -1,13 +1,13 @@
 {
-  "i18n-ally.localesPaths": "public/locales",
-  "i18n-ally.enabledFrameworks": [
+  "i18n-ally-next.localesPaths": "public/locales",
+  "i18n-ally-next.enabledFrameworks": [
     "react-i18next"
   ],
-  "i18n-ally.namespace": true,
-  "i18n-ally.pathMatcher": "{locale}/{namespaces}.json",
-  "i18n-ally.keystyle": "nested",
-  "i18n-ally.keysInUse": [
+  "i18n-ally-next.namespace": true,
+  "i18n-ally-next.pathMatcher": "{locale}/{namespaces}.json",
+  "i18n-ally-next.keystyle": "nested",
+  "i18n-ally-next.keysInUse": [
     "description.part2_whatever"
   ],
-  // "i18n-ally.defaultNamespace": "translation"
+  // "i18n-ally-next.defaultNamespace": "translation"
 }

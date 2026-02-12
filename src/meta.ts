@@ -1,8 +1,8 @@
-export const EXT_NAMESPACE = 'i18n-ally'
-export const EXT_ID = 'lokalise.i18n-ally'
-export const EXT_NAME = 'i18n Ally'
-export const EXT_EDITOR_ID = 'i18n-ally-editor'
-export const EXT_REVIEW_ID = 'i18n-ally-review'
+export const EXT_NAMESPACE = 'i18n-ally-next'
+export const EXT_ID = 'lydanne.i18n-ally-next'
+export const EXT_NAME = 'i18n Ally Next'
+export const EXT_EDITOR_ID = 'i18n-ally-next-editor'
+export const EXT_REVIEW_ID = 'i18n-ally-next-review'
 
 export const EXT_LEGACY_NAMESPACE = 'vue-i18n-ally'
 

@@ -20,6 +20,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
+      - uses: pnpm/action-setup@v4
 
       # The vue I18next framework fixture tests rely on the documents getting recognized as `vue` documents by VSCode.
       # We set the `file.association` in the tests' .vscode/settings.json. However, `vue` is not a language identifier
@@ -46,28 +47,28 @@ jobs:
         shell: powershell
 
       - name: Install
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
         env:
           CI: true
 
       - name: Build
-        run: yarn build
+        run: pnpm build
         env:
           CI: true
 
       - name: Unit Tests
-        run: yarn test:unit
+        run: pnpm test:unit
         env:
           CI: true
 
       - name: E2E Tests
-        run: yarn run test:e2e && yarn run test:fixture
+        run: pnpm run test:e2e && pnpm run test:fixture
         if: runner.os != 'Linux'
         env:
           CI: true
 
       - name: E2E Tests (Linux)
-        run: xvfb-run -a yarn run test:e2e && xvfb-run -a yarn run test:fixture
+        run: xvfb-run -a pnpm run test:e2e && xvfb-run -a pnpm run test:fixture
         if: runner.os == 'Linux'
         env:
           CI: true

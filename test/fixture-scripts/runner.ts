@@ -26,7 +26,7 @@ export const run = async() => {
     await window.showTextDocument(doc)
     await timeout(1000)
 
-    await commands.executeCommand('i18n-ally.extract-hard-strings-batch')
+    await commands.executeCommand('i18n-ally-next.extract-hard-strings-batch')
     await doc.save()
 
     await timeout(500)

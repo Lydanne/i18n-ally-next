@@ -64,7 +64,7 @@ export default Vue.extend({
 
 <style lang="stylus">
 :root
-  --i18n-ally-margin 0.8rem
+  --i18n-ally-next-margin 0.8rem
 
 body
   padding 0
@@ -187,5 +187,5 @@ body, html, #app
       margin 0.3em 0.3em 0.3em 0
 
 p.loading
-  padding var(--i18n-ally-margin)
+  padding var(--i18n-ally-next-margin)
 </style>

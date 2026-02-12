@@ -6,7 +6,7 @@ import { Framework, ScopeRange } from './base'
 import { Global } from '~/core'
 import { LanguageId, File, Log } from '~/utils'
 
-const CustomFrameworkConfigFilename = './.vscode/i18n-ally-custom-framework.yml'
+const CustomFrameworkConfigFilename = './.vscode/i18n-ally-next-custom-framework.yml'
 
 interface CustomFrameworkConfig {
   languageIds?: LanguageId[] | LanguageId

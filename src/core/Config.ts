@@ -465,7 +465,7 @@ export class Config {
 
   static set extractAutoDetect(v: boolean) {
     this.setConfig('extract.autoDetect', v, false)
-    commands.executeCommand('setContext', 'i18n-ally.extract.autoDetect', v)
+    commands.executeCommand('setContext', 'i18n-ally-next.extract.autoDetect', v)
   }
 
   static get extractParserHTMLOptions() {
@@ -518,7 +518,7 @@ export class Config {
       .getConfiguration(EXT_NAMESPACE, scope)
       .get<T>(key)
 
-    // compatible to vue-i18n-ally
+    // compatible to vue-i18n-ally-next
     if (config === undefined) {
       config = workspace
         .getConfiguration(EXT_LEGACY_NAMESPACE)

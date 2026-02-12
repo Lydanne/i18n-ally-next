@@ -9,7 +9,7 @@ web_modules
 .cache
 
 examples/**/package-lock.json
-examples/**/i18n-ally-reviews.yml
+examples/**/i18n-ally-next-reviews.yml
 package.nls.*
 stats.json
 

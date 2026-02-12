@@ -15,12 +15,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
+      - uses: pnpm/action-setup@v4
       - run: npm i -g vsce ovsx
-      - run: yarn install
-      - run: yarn run gh:release
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run gh:release
         env:
           CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - run: yarn run build
+      - run: pnpm run build
       - run: vsce publish -p ${{secrets.VSCE_TOKEN}}
         env:
           VSCE_TOKEN: ${{secrets.VSCE_TOKEN}}

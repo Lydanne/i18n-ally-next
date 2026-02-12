@@ -1,9 +1,9 @@
 {
-  "i18n-ally.enabledFrameworks": ["general"],
-  "i18n-ally.localesPaths": ".",
-  "i18n-ally.pathMatcher": "messages.{locale}.json",
-  "i18n-ally.enabledParsers": ["json"],
-  "i18n-ally.displayLanguage": "en",
-  "i18n-ally.sourceLanguage": "en",
-  "i18n-ally.keystyle": "nested"
+  "i18n-ally-next.enabledFrameworks": ["general"],
+  "i18n-ally-next.localesPaths": ".",
+  "i18n-ally-next.pathMatcher": "messages.{locale}.json",
+  "i18n-ally-next.enabledParsers": ["json"],
+  "i18n-ally-next.displayLanguage": "en",
+  "i18n-ally-next.sourceLanguage": "en",
+  "i18n-ally-next.keystyle": "nested"
 }

@@ -21,7 +21,7 @@ export function checkNotification(ctx: ExtensionContext) {
     //   message: i18n.t('notification.v2-update'),
     //   buttons: [{
     //     text: i18n.t('notification.migrate'),
-    //     url: 'https://github.com/lokalise/i18n-ally/wiki/Migration-v1.x',
+    //     url: 'https://github.com/lydanne/i18n-ally-next/wiki/Migration-v1.x',
     //   }],
     // },
   ]

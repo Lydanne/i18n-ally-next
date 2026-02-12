@@ -245,7 +245,7 @@ export default Vue.extend({
             opacity 0.5
 
   .header
-    padding var(--i18n-ally-margin)
+    padding var(--i18n-ally-next-margin)
 
   .key-name
     font-family var(--vscode-editor-font-family)
