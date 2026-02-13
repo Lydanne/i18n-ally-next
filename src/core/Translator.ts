@@ -240,6 +240,8 @@ export class Translator {
 
     for (const node of nodes) {
       if (!node.type) {
+        if (node.locale === sourceLanguage)
+          continue
         jobs.push({
           loader,
           locale: node.locale,
@@ -271,7 +273,7 @@ export class Translator {
       return
 
     if (locale === source)
-      throw new AllyError(ErrorType.translating_same_locale)
+      return
 
     const value = this.getValueOfKey(loader, keypath, source)
 
