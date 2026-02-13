@@ -1326,7 +1326,7 @@
     }
   },
   "scripts": {
-    "release": "pnpm run release:patch",
+    "release": "pnpm run build && pnpm run release:patch && pnpm run vsce:pack",
     "release:minor": "standard-version --release-as minor && git push --follow-tags",
     "release:patch": "standard-version --release-as patch && git push --follow-tags",
     "gh:release": "conventional-github-releaser -p angular",
