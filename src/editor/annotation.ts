@@ -159,13 +159,19 @@ const annotation: ExtensionModule = (ctx) => {
           missing = true
         }
 
-        // the key might not exist, disabled inplace
-        if (!text)
+        // the key might not exist, show key as missing
+        if (!text) {
+          text = keypath
+          missing = true
           inplace = false
+        }
       }
 
-      if (text && !inplace)
-        text = `${annotationDelimiter}${text}`
+      if (text) {
+        text = text.replace(/\r?\n/g, ' ')
+        if (!inplace)
+          text = `${annotationDelimiter}${text}`
+      }
 
       if (editing)
         text = ''
