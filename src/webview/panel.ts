@@ -229,10 +229,13 @@ export class EditorPanel {
     this._panel.iconPath = Uri.file(
       path.join(this._ctx.extensionPath, 'res/logo.svg'),
     )
-    this._panel.webview.html = fs.readFileSync(
-      path.join(this._ctx.extensionPath, 'dist/editor/index.html'),
-      'utf-8',
+    const editorDistUri = this._panel.webview.asWebviewUri(
+      Uri.file(path.join(this._ctx.extensionPath, 'res/editor')),
     )
+    this._panel.webview.html = fs.readFileSync(
+      path.join(this._ctx.extensionPath, 'res/editor/index.html'),
+      'utf-8',
+    ).replace(/(\/)(index\.(?:js|css))/g, `${editorDistUri}/$2`)
     this._protocol.updateI18nMessages()
   }
 

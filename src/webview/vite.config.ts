@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [vue()],
   root: resolve(__dirname, 'src'),
   build: {
-    outDir: resolve(__dirname, '../../dist/editor'),
+    outDir: resolve(__dirname, '../../res/editor'),
     emptyOutDir: true,
     rollupOptions: {
       output: {
