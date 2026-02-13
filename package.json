@@ -1230,6 +1230,8 @@
     "editor:dev": "vite build --config src/webview/vite.config.ts --watch",
     "i18n:build": "esno scripts/build-i18n.ts",
     "i18n:dev": "nodemon -w ./locales -e json --exec \"nr i18n:build\"",
+    "docs:build": "pnpm run -F i18n-ally-next-docs build",
+    "docs:dev": "pnpm run -F i18n-ally-next-docs dev",
     "flags:build": "esno scripts/build-flags.ts",
     "lint": "eslint .",
     "lint:fix": "nr lint -- --fix",
