@@ -41,6 +41,9 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           $content = Get-Content package.json -Raw | ConvertFrom-Json
+          if (-not $content.contributes.PSObject.Properties['languages']) {
+            $content.contributes | Add-Member -NotePropertyName 'languages' -NotePropertyValue @()
+          }
           $content.contributes.languages += @(@{id = "vue"})
           $content | ConvertTo-Json -Depth 100 | Set-Content package.json -Encoding UTF8
         shell: pwsh
