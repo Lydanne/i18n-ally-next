@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.5](https://github.com/lydanne/i18n-ally-next/compare/v3.0.4...v3.0.5) (2026-02-13)
+
+
+### 📚 Documentations
+
+* **config:** 扩展配置文档,为每个配置项添加详细说明和使用示例 ([1e3d4c5](https://github.com/lydanne/i18n-ally-next/commit/1e3d4c53164ed5010e6892841f9d25fcc79eba30))
+* **config:** 添加 annotationBrackets 配置项 ([6c53f10](https://github.com/lydanne/i18n-ally-next/commit/6c53f10f984abc3b79cd0ed0e6bad496419e2800))
+* **config:** 添加 annotationBrackets 配置项文档和实现 ([0b1073a](https://github.com/lydanne/i18n-ally-next/commit/0b1073a0593485d276513a110235d5346703e214))
+
+
+### 🔮 Refactor
+
+* **annotation:** 移除缺失键时的 inplace 标志重置逻辑 ([62281ac](https://github.com/lydanne/i18n-ally-next/commit/62281acda1982ec037e7bc7907a739ee108cef67))
+* **utils:** 将函数调用表达式解析逻辑提取到独立模块并优化注解显示 ([45cc13e](https://github.com/lydanne/i18n-ally-next/commit/45cc13ea5e2f9447117fd9c4b42841d3c727dc76))
+
 ### [3.0.4](https://github.com/lydanne/i18n-ally-next/compare/v3.0.3...v3.0.4) (2026-02-13)
 
 ### [3.0.3](https://github.com/lydanne/i18n-ally-next/compare/v3.0.2...v3.0.3) (2026-02-13)
