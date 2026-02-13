@@ -51,6 +51,7 @@
     "/\\*\\s*i18n\\s*\\*/\\s*['\"`]({key})['\"`]"
   ],
   "i18n-ally-next.enabledFrameworks": ["vscode", "vue", "general"],
+  "i18n-ally-next.annotationBrackets": ["`", "`"],
   "i18n-ally-next.theme.annotationMissingBorder": "#d37070",
   "i18n-ally-next.theme.annotationMissing": "#d37070",
   "eslint.validate": [
