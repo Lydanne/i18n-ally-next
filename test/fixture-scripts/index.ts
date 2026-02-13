@@ -49,8 +49,8 @@ export async function prepareFixture(info: FixtureInfo) {
     await fs.remove(path)
 
   await fs.ensureDir(info.dirConfig)
-  await fs.copy(info.dirInput, path, { recursive: true })
-  await fs.copy(info.dirConfig, join(path, '.vscode'), { recursive: true })
+  await fs.copy(info.dirInput, path)
+  await fs.copy(info.dirConfig, join(path, '.vscode'))
 
   return path
 }
@@ -70,7 +70,7 @@ async function run() {
     process.exit(1)
 }
 
-let vscodeExecutablePath: string
+let vscodeExecutablePath: string | undefined
 
 async function testFixture(fixture: FixtureInfo) {
   const root = resolve(__dirname, '../..')

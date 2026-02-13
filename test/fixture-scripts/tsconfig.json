@@ -10,7 +10,8 @@
     "resolveJsonModule": true,
     "strict": true,
     "outDir": "../fixture-scripts-out",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "skipLibCheck": true
   },
   "exclude": [
     "../../src/",
