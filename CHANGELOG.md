@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.2](https://github.com/lydanne/i18n-ally-next/compare/v3.0.1...v3.0.2) (2026-02-13)
+
+
+### ⚗ Tests
+
+* **fixture-scripts:** 移除 fs.copy 的 recursive 选项并优化类型定义 ([86b4155](https://github.com/lydanne/i18n-ally-next/commit/86b4155f82e313488f7233f9b0bf9b411eb3d776))
+
+
+### 🔮 Refactor
+
+* **extraction:** 优化模板表达式中的空格检测逻辑并简化测试配置 ([1dce9ea](https://github.com/lydanne/i18n-ally-next/commit/1dce9ea50538c1bea523e8c7d19666734f149809))
+
 ### [3.0.1](https://github.com/lydanne/i18n-ally-next/compare/v2.13.2...v3.0.1) (2026-02-13)
 
 
