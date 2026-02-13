@@ -12,7 +12,8 @@ i18n Ally Next supports multiple translation engines to automatically translate 
 | **Baidu** | `baidu` | ✅ |
 | **LibreTranslate** | `libretranslate` | - (self-hosted) |
 | **OpenAI** | `openai` | ✅ |
-| **Editor LLM** | `editor-llm` | - (uses built-in Copilot) |
+| **Ollama** | `ollama` | - (local, free) |
+| **Editor LLM** | `editor-llm` | - (uses built-in Copilot, VS Code only) |
 
 ## Configuration
 
@@ -48,7 +49,11 @@ i18n Ally Next supports multiple translation engines to automatically translate 
   "i18n-ally-next.translate.openai.apiRoot": "https://api.openai.com",
   "i18n-ally-next.translate.openai.apiModel": "gpt-3.5-turbo",
 
-  // Editor LLM (Cursor / Windsurf / VS Code Copilot)
+  // Ollama (local LLM)
+  "i18n-ally-next.translate.ollama.apiRoot": "http://localhost:11434",
+  "i18n-ally-next.translate.ollama.model": "qwen2.5:latest",
+
+  // Editor LLM (VS Code + Copilot only)
   "i18n-ally-next.translate.editor-llm.model": "" // leave empty to auto-select
 }
 ```

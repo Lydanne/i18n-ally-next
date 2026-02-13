@@ -982,6 +982,7 @@
               "libretranslate",
               "baidu",
               "openai",
+              "ollama",
               "editor-llm"
             ]
           },
@@ -1066,6 +1067,16 @@
             "gpt-4-32k-0613"
           ],
           "description": "%config.openai_api_model%"
+        },
+        "i18n-ally-next.translate.ollama.apiRoot": {
+          "type": "string",
+          "default": "http://localhost:11434",
+          "description": "%config.ollama_api_root%"
+        },
+        "i18n-ally-next.translate.ollama.model": {
+          "type": "string",
+          "default": "qwen2.5:latest",
+          "description": "%config.ollama_model%"
         },
         "i18n-ally-next.translate.editor-llm.model": {
           "type": "string",

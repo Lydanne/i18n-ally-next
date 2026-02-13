@@ -12,7 +12,8 @@ i18n Ally Next 支持多种翻译引擎，自动翻译缺失的键。
 | **百度翻译** | `baidu` | ✅ |
 | **LibreTranslate** | `libretranslate` | -（自托管） |
 | **OpenAI** | `openai` | ✅ |
-| **编辑器内置 LLM** | `editor-llm` | -（使用内置 Copilot） |
+| **Ollama** | `ollama` | -（本地免费） |
+| **编辑器内置 LLM** | `editor-llm` | -（使用内置 Copilot，仅 VS Code） |
 
 ## 配置
 
@@ -48,7 +49,11 @@ i18n Ally Next 支持多种翻译引擎，自动翻译缺失的键。
   "i18n-ally-next.translate.openai.apiRoot": "https://api.openai.com",
   "i18n-ally-next.translate.openai.apiModel": "gpt-3.5-turbo",
 
-  // 编辑器内置 LLM（Cursor / Windsurf / VS Code Copilot）
+  // Ollama（本地大模型）
+  "i18n-ally-next.translate.ollama.apiRoot": "http://localhost:11434",
+  "i18n-ally-next.translate.ollama.model": "qwen2.5:latest",
+
+  // 编辑器内置 LLM（仅 VS Code + Copilot）
   "i18n-ally-next.translate.editor-llm.model": "" // 留空则自动选择
 }
 ```

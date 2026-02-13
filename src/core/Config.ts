@@ -605,6 +605,14 @@ export class Config {
     return this.getConfig<string>('translate.openai.apiModel') ?? 'gpt-3.5-turbo'
   }
 
+  static get ollamaApiRoot() {
+    return this.getConfig<string | null | undefined>('translate.ollama.apiRoot')
+  }
+
+  static get ollamaModel() {
+    return this.getConfig<string | null | undefined>('translate.ollama.model')
+  }
+
   static get telemetry(): boolean {
     return workspace.getConfiguration().get('telemetry.enableTelemetry') as boolean
   }

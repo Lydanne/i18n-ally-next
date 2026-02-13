@@ -79,6 +79,8 @@
   "config.locales_paths": "Path to locales directory (relative to project root). Glob pattern is also acceptable.",
   "config.namespace": "Enable namespaces. Check out the docs for more details.",
   "config.editor_llm_model": "Preferred language model ID for editor-llm engine (e.g. \"copilot-gpt-4o\"). Leave empty to auto-select.",
+  "config.ollama_api_root": "Ollama API root URL",
+  "config.ollama_model": "Ollama model name (e.g. qwen2.5:latest, llama3:latest)",
   "config.openai_api_key": "OpenAI API key",
   "config.openai_api_model": "OpenAI chatgpt model",
   "config.openai_api_root": "OpenAI API root URL",

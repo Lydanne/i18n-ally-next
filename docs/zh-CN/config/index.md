@@ -101,7 +101,9 @@
 | `translate.openai.apiKey` | `string` | — | OpenAI API Key |
 | `translate.openai.apiRoot` | `string` | `"https://api.openai.com"` | OpenAI API 地址 |
 | `translate.openai.apiModel` | `string` | `"gpt-3.5-turbo"` | OpenAI 模型 |
-| `translate.editor-llm.model` | `string` | `""` | 编辑器内置 LLM 引擎的首选模型 ID，留空则自动选择。 |
+| `translate.ollama.apiRoot` | `string` | `"http://localhost:11434"` | Ollama API 地址 |
+| `translate.ollama.model` | `string` | `"qwen2.5:latest"` | Ollama 模型名称 |
+| `translate.editor-llm.model` | `string` | `""` | 编辑器内置 LLM 引擎的首选模型 ID（仅 VS Code），留空则自动选择。 |
 
 ## 审阅
 

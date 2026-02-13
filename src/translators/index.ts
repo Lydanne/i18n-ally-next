@@ -6,6 +6,7 @@ import EditorLLMTranslateEngine from './engines/editor-llm'
 import GoogleTranslateEngine from './engines/google'
 import GoogleTranslateCnEngine from './engines/google-cn'
 import LibreTranslateEngine from './engines/libretranslate'
+import OllamaTranslateEngine from './engines/ollama'
 import OpenAITranslateEngine from './engines/openai'
 
 export class Translator {
@@ -16,6 +17,7 @@ export class Translator {
     'libretranslate': new LibreTranslateEngine(),
     'baidu': new BaiduTranslate(),
     'openai': new OpenAITranslateEngine(),
+    'ollama': new OllamaTranslateEngine(),
     'editor-llm': new EditorLLMTranslateEngine(),
   }
 
@@ -32,6 +34,7 @@ export {
   GoogleTranslateCnEngine,
   GoogleTranslateEngine,
   LibreTranslateEngine,
+  OllamaTranslateEngine,
   OpenAITranslateEngine,
   TranslateEngine,
 }

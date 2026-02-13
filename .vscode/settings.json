@@ -35,7 +35,7 @@
   "i18n-ally-next.keepFulfilled": true,
   "i18n-ally-next.translate.promptSource": true,
   "i18n-ally-next.pathMatcher": "{locale}.json",
-  "i18n-ally-next.translate.engines": ["editor-llm"],
+  "i18n-ally-next.translate.engines": ["ollama"],
   "i18n-ally-next.translate.editor-llm.model": "",
   "i18n-ally-next.translate.saveAsCandidates": true,
   "i18n-ally-next.annotationInPlace": true,
