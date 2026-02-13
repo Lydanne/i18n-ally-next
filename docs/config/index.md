@@ -102,6 +102,7 @@ All settings are prefixed with `i18n-ally-next.` in your `.vscode/settings.json`
 | `translate.openai.apiKey` | `string` | — | OpenAI API key |
 | `translate.openai.apiRoot` | `string` | `"https://api.openai.com"` | OpenAI API root |
 | `translate.openai.apiModel` | `string` | `"gpt-3.5-turbo"` | OpenAI model |
+| `translate.editor-llm.model` | `string` | `""` | Preferred language model ID for editor-llm engine. Leave empty to auto-select. |
 
 ## Review
 

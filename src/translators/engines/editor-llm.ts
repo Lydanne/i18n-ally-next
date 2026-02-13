@@ -1,5 +1,6 @@
 import type { TranslateOptions, TranslateResult } from './base'
 import * as vscode from 'vscode'
+import { Config } from '~/core'
 import { Log } from '~/utils'
 import TranslateEngine from './base'
 
@@ -81,6 +82,16 @@ export default class EditorLLMTranslate extends TranslateEngine {
       return this.cachedModel
     if (!vscode.lm?.selectChatModels)
       throw new Error('Language Model API is not available in this editor version')
+    const preferredModel = Config.editorLLMModel
+    if (preferredModel) {
+      const matched = await vscode.lm.selectChatModels({ id: preferredModel })
+      if (matched.length) {
+        this.cachedModel = matched[0]
+        Log.info(`🤖 IDE: ${this.ideType}, Model (configured): ${matched[0].name} (${matched[0].id})`)
+        return this.cachedModel
+      }
+      Log.info(`🤖 Configured model "${preferredModel}" not found, falling back to auto-select`)
+    }
     const vendor = getVendorByIDE(this.ideType)
     const selector: vscode.LanguageModelChatSelector = vendor ? { vendor } : {}
     const models = await vscode.lm.selectChatModels(selector)

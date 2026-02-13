@@ -589,6 +589,10 @@ export class Config {
     return this.getConfig<string | null | undefined>('translate.libre.apiRoot')
   }
 
+  static get editorLLMModel() {
+    return this.getConfig<string | null | undefined>('translate.editor-llm.model')
+  }
+
   static get openaiApiKey() {
     return this.getConfig<string | null | undefined>('translate.openai.apiKey')
   }

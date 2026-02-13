@@ -12,6 +12,7 @@ i18n Ally Next supports multiple translation engines to automatically translate 
 | **Baidu** | `baidu` | ✅ |
 | **LibreTranslate** | `libretranslate` | - (self-hosted) |
 | **OpenAI** | `openai` | ✅ |
+| **Editor LLM** | `editor-llm` | - (uses built-in Copilot) |
 
 ## Configuration
 
@@ -45,9 +46,16 @@ i18n Ally Next supports multiple translation engines to automatically translate 
   // OpenAI
   "i18n-ally-next.translate.openai.apiKey": "YOUR_KEY",
   "i18n-ally-next.translate.openai.apiRoot": "https://api.openai.com",
-  "i18n-ally-next.translate.openai.apiModel": "gpt-3.5-turbo"
+  "i18n-ally-next.translate.openai.apiModel": "gpt-3.5-turbo",
+
+  // Editor LLM (Cursor / Windsurf / VS Code Copilot)
+  "i18n-ally-next.translate.editor-llm.model": "" // leave empty to auto-select
 }
 ```
+
+::: tip Editor LLM Quick Setup
+Run command **`i18n Ally Next: Select Editor LLM Model`** from the Command Palette (`Cmd+Shift+P`). It will list all available models, and automatically configure both the model and the engine for you.
+:::
 
 ::: warning
 Store API keys in **User Settings** (not Workspace Settings) to avoid committing them to version control.

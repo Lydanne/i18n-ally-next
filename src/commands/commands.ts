@@ -48,4 +48,5 @@ export const enum Commands {
   translate_all_missing = 'i18n-ally-next.translate-all-missing',
   scan_and_extract_all = 'i18n-ally-next.scan-and-extract-all',
   check_stale_translations = 'i18n-ally-next.check-stale-translations',
+  select_editor_llm_model = 'i18n-ally-next.select-editor-llm-model',
 }

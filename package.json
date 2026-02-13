@@ -296,6 +296,11 @@
         "category": "%extname%",
         "title": "%command.check_stale_translations%",
         "icon": "$(history)"
+      },
+      {
+        "command": "i18n-ally-next.select-editor-llm-model",
+        "category": "%extname%",
+        "title": "%command.select_editor_llm_model%"
       }
     ],
     "menus": {
@@ -1061,6 +1066,11 @@
             "gpt-4-32k-0613"
           ],
           "description": "%config.openai_api_model%"
+        },
+        "i18n-ally-next.translate.editor-llm.model": {
+          "type": "string",
+          "default": "",
+          "description": "%config.editor_llm_model%"
         },
         "i18n-ally-next.usage.scanningIgnore": {
           "type": "array",

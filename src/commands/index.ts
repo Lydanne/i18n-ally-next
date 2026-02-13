@@ -15,6 +15,7 @@ import editor from './openEditor'
 import refreshUsageReport from './refreshUsageReport'
 import review from './review'
 import scanAndExtractAll from './scanAndExtractAll'
+import selectEditorLLMModel from './selectEditorLLMModel'
 import translateAllMissing from './translateAllMissing'
 
 const m: ExtensionModule = (ctx) => {
@@ -35,6 +36,7 @@ const m: ExtensionModule = (ctx) => {
     translateAllMissing(ctx),
     scanAndExtractAll(ctx),
     checkStaleTranslations(ctx),
+    selectEditorLLMModel(ctx),
   ])
 }
 
