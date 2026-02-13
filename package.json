@@ -2,7 +2,7 @@
   "publisher": "lydanne",
   "name": "i18n-ally-next",
   "displayName": "i18n Ally Next",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "packageManager": "pnpm@9.15.4",
   "description": "🌍 All in one i18n extension for VS Code",
   "homepage": "https://lydanne.github.io/i18n-ally-next/",

@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.1](https://github.com/lydanne/i18n-ally-next/compare/v2.13.2...v3.0.1) (2026-02-13)
+
+
+### 🔮 Refactor
+
+* **loaders,parsers:** 将 fluent-vue-cli 和 vue-i18n-locale-message 改为可选依赖并延迟加载 ([bb3a6f7](https://github.com/lydanne/i18n-ally-next/commit/bb3a6f75f9bf222edbbf36f8236dd05bee06a50e))
+* **webview:** 将 Vue 组件从 Options API 迁移到 Composition API 并移除 Pug/Stylus ([21ca2b4](https://github.com/lydanne/i18n-ally-next/commit/21ca2b4ff35d75d67d127e71a28d335e9d2fa822))
+* 使用 `Global.namespaceEnabled` 和框架级 `enableFeatures` 替代 `Config.namespace` ([9b978b7](https://github.com/lydanne/i18n-ally-next/commit/9b978b72ad159f230d4903f1601d48ba3c24bebe))
+
+
+### ⚡ Features
+
+* **commands,locales:** 添加批量翻译、扫描提取和过期翻译检测功能 ([44c152c](https://github.com/lydanne/i18n-ally-next/commit/44c152cb5cd66f632338a38976512c91fd15a208))
+* **extract:** 添加 auto 目标文件推断策略 ([823887e](https://github.com/lydanne/i18n-ally-next/commit/823887e0ee1a3f1c7be80c707d72f62fa3588a1a))
+* **locales:** update translations for Ukrainian, Simplified Chinese, and Traditional Chinese ([2c8643d](https://github.com/lydanne/i18n-ally-next/commit/2c8643dad6c98dcf11237b76ee8f101738bedb14))
+* **review:** 添加批量应用所有候选翻译命令 ([a93359e](https://github.com/lydanne/i18n-ally-next/commit/a93359e747425cee2d20c7f32032ab22701d1dea))
+* **translate:** 在批量翻译中同时处理缺失键和空值键 ([344c51d](https://github.com/lydanne/i18n-ally-next/commit/344c51d1cbbb1c3c158c30abce808d1b9a7cc52f))
+* **translator:** 添加 editor-llm 翻译引擎并支持批量翻译 ([a8d9941](https://github.com/lydanne/i18n-ally-next/commit/a8d99416c255131a7bea03c912622f2aab993896))
+* **translator:** 添加 Ollama 翻译引擎支持 ([0ada9eb](https://github.com/lydanne/i18n-ally-next/commit/0ada9eb9b9de224569a7bcfb47cfc35886ec2dd0))
+* **translator:** 添加编辑器 LLM 模型选择命令和配置项 ([8dfe6b0](https://github.com/lydanne/i18n-ally-next/commit/8dfe6b01e4daca3955d36873a5a5a1ca94a4dc89))
+* **translator:** 跳过源语言节点并移除同语言翻译错误抛出 ([45a8df7](https://github.com/lydanne/i18n-ally-next/commit/45a8df756bce5922cbf7f12ec07d7e986f366d5e))
+
+
+### 📚 Documentations
+
+* **changelog,readme,test:** 添加 editor-llm 翻译引擎文档并新增单元测试 ([76be62b](https://github.com/lydanne/i18n-ally-next/commit/76be62b78e87f7200d3e512988afbfa008dad7a9))
+* **config,guide:** 更新 auto 目标文件选择策略文档说明 ([8a168a0](https://github.com/lydanne/i18n-ally-next/commit/8a168a0713765800c6f494791e8f674bf31b519e))
+* **readme,annotation:** 添加全量替换模式截图并说明长度限制自动取消 ([1081bb3](https://github.com/lydanne/i18n-ally-next/commit/1081bb3e4eb1169cf3497762492fd0888cf8ec22))
+* **readme,locales:** 添加内联注解模式文档并新增相关配置项 ([6c3344b](https://github.com/lydanne/i18n-ally-next/commit/6c3344bbc89298c4ece8f89286469b991da44732))
+* **readme:** 更新截图链接并简化功能展示 ([218dd46](https://github.com/lydanne/i18n-ally-next/commit/218dd469ba440eceea6d1a5af960eff30990b3ca))
+* **readme:** 重构 README 文件,简化结构并更新内容布局 ([05eee35](https://github.com/lydanne/i18n-ally-next/commit/05eee35dbe9b54114383262c6380dd6f5b3026c2))
+
+
+### ⚗ Tests
+
+* **e2e:** 在快照测试中添加 fullMatchStart 和 fullMatchEnd 字段 ([ddd097f](https://github.com/lydanne/i18n-ally-next/commit/ddd097ff2a7762fe70a7b1e2b6b4b64ede10d51b))
+* **e2e:** 将 VS Code 测试版本从 1.77.3 升级到 1.106.0 ([95f15e4](https://github.com/lydanne/i18n-ally-next/commit/95f15e4ac2f87ca841dfd321aeaec10945213cc0))
+
 ## [3.0.0](https://github.com/lydanne/i18n-ally-next/compare/v2.13.1...v3.0.0) (2026-02-13)
 
 ### ⚡ Features
