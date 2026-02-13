@@ -9,7 +9,7 @@ import i18n from '~/i18n'
 import { Translator as TranslateEngine } from '~/translators'
 import { Log } from '~/utils'
 import { Config } from '.'
-import { AllyError, ErrorType } from './Errors'
+
 import { Global } from './Global'
 
 interface TranslatorChangeEvent {
