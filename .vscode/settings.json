@@ -26,7 +26,6 @@
   ],
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "editor.formatOnSave": false,
-  "i18n-ally-next.localesPaths": "./locales",
   "i18n-ally-next.sourceLanguage": "en",
   "i18n-ally-next.keystyle": "flat",
   "i18n-ally-next.preferredDelimiter": "_",
@@ -35,8 +34,8 @@
   "i18n-ally-next.keepFulfilled": true,
   "i18n-ally-next.translate.promptSource": true,
   "i18n-ally-next.pathMatcher": "{locale}.json",
-  "i18n-ally-next.translate.engines": ["ollama"],
-  "i18n-ally-next.translate.editor-llm.model": "",
+  "i18n-ally-next.translate.engines": ["editor-llm"],
+  "i18n-ally-next.translate.editor-llm.model": "grok-code-fast-1",
   "i18n-ally-next.translate.saveAsCandidates": true,
   "i18n-ally-next.annotationInPlace": true,
   "i18n-ally-next.annotationInPlaceFullMatch": true,
@@ -46,17 +45,11 @@
     "view.progress_submenu.missing_keys",
     "view.progress_submenu.empty_keys"
   ],
-  "i18n-ally-next.usage.scanningIgnore": [
-    "examples"
-  ],
+  "i18n-ally-next.usage.scanningIgnore": ["examples"],
   "i18n-ally-next.regex.usageMatchAppend": [
     "/\\*\\s*i18n\\s*\\*/\\s*['\"`]({key})['\"`]"
   ],
-  "i18n-ally-next.enabledFrameworks": [
-    "vscode",
-    "vue",
-    "general"
-  ],
+  "i18n-ally-next.enabledFrameworks": ["vscode", "vue", "general"],
   "i18n-ally-next.theme.annotationMissingBorder": "#d37070",
   "i18n-ally-next.theme.annotationMissing": "#d37070",
   "eslint.validate": [
@@ -68,7 +61,7 @@
     "html"
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
-  "i18n-ally.localesPaths": [
+  "i18n-ally-next.localesPaths": [
     "locales",
     "examples/by-frameworks/custom/locales",
     "examples/by-frameworks/ember/locales",
