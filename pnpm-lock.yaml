@@ -151,7 +151,7 @@ importers:
         specifier: ^7.3.8
         version: 7.7.1
       '@types/vscode':
-        specifier: ^1.109.0
+        specifier: ^1.106.0
         version: 1.109.0
       '@types/webpack':
         specifier: ^5.28.5
