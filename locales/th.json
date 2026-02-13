@@ -37,6 +37,7 @@
   "command.translate_all_missing": "แปลคีย์ที่ขาดหายทั้งหมด",
   "command.translate_key": "แปล",
   "command.translate_key_from": "แปลจาก \"{0}\"",
+  "config.annotation_brackets": "วงเล็บสำหรับครอบข้อความคำอธิบาย เช่น [\"[\", \"]\"] จะแสดงเป็น [text]",
   "config.annotation_delimiter": "ตัวคั่นสำหรับคำอธิบายประกอบ",
   "config.annotation_in_place": "แสดงคำอธิบายประกอบแทนการต่อท้าย",
   "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",

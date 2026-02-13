@@ -37,6 +37,7 @@
   "command.translate_all_missing": "Перекласти всі відсутні ключі",
   "command.translate_key": "Перекласти",
   "command.translate_key_from": "Перекласти з \"{0}\"",
+  "config.annotation_brackets": "Дужки для обгортання тексту анотації, наприклад [\"[\", \"]\"] відображатиметься як [text]",
   "config.annotation_delimiter": "Роздільник анотацій",
   "config.annotation_in_place": "Показувати анотацію на місці замість додавання в кінець",
   "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",

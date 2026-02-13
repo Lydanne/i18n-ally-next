@@ -37,6 +37,7 @@
   "command.translate_all_missing": "Traduire toutes les clés manquantes",
   "command.translate_key": "Traduire",
   "command.translate_key_from": "Traduire depuis « {0} »",
+  "config.annotation_brackets": "Crochets pour envelopper le texte d'annotation, par exemple [\"[\", \"]\"] s'affichera comme [texte]",
   "config.annotation_delimiter": "Délimiteur d'annotations",
   "config.annotation_in_place": "Montrer une annotation sur place au lieu d'ajouter dans la queue",
   "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",

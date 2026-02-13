@@ -37,6 +37,7 @@
   "command.translate_all_missing": "Minden hiányzó kulcs fordítása",
   "command.translate_key": "Fordítás",
   "command.translate_key_from": "Fordítás a következő nyelvről: {0}",
+  "config.annotation_brackets": "Zárójelek az annotációs szöveg köré, pl. [\"[\", \"]\"] megjelenik [text]ként",
   "config.annotation_delimiter": "Az annotáció határolója",
   "config.annotation_in_place": "Az annotáció helyben történik, nem a végére kerül.",
   "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",

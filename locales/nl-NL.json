@@ -37,6 +37,7 @@
   "command.translate_all_missing": "Alle ontbrekende sleutels vertalen",
   "command.translate_key": "Vertalen",
   "command.translate_key_from": "Vertaal van \"{0}\"",
+  "config.annotation_brackets": "Haakjes om annotatietekst te omhullen, bijv. [\"[\", \"]\"] wordt weergegeven als [tekst]",
   "config.annotation_delimiter": "Scheidingsteken van annotaties",
   "config.annotation_in_place": "Annotatie ter plekke tonen in plaats van toevoegen aan het einde",
   "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",

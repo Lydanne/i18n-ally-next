@@ -37,6 +37,7 @@
   "command.translate_all_missing": "Översätt alla saknade nycklar",
   "command.translate_key": "Översätt",
   "command.translate_key_from": "Översätt från \"{0}\"",
+  "config.annotation_brackets": "Hakparenteser för att omsluta annoteringstext, t.ex. [\"[\", \"]\"] kommer att visas som [text]",
   "config.annotation_delimiter": "Avskiljare för anteckningar",
   "config.annotation_in_place": "Visa anteckningar på plats istället för att vidhänga på slutet",
   "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",

@@ -37,6 +37,7 @@
   "command.translate_all_missing": "Oversett alle manglende nøkler",
   "command.translate_key": "Oversett",
   "command.translate_key_from": "Oversett fra \"{0}\"",
+  "config.annotation_brackets": "Klammer for å pakke inn annotasjonstekst, f.eks. [\"[\", \"]\"] vil vises som [tekst]",
   "config.annotation_delimiter": "Avgrenseren for annotasjoner",
   "config.annotation_in_place": "Vis annotasjon på stedet i stedet for å legge til på halen",
   "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",

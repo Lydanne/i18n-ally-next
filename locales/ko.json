@@ -37,6 +37,7 @@
   "command.translate_all_missing": "누락된 모든 키 번역",
   "command.translate_key": "번역",
   "command.translate_key_from": "\"{0}\"에서 번역",
+  "config.annotation_brackets": "주석 텍스트를 감싸는 괄호, 예: [\"[\", \"]\"]는 [text]로 표시됩니다.",
   "config.annotation_delimiter": "주석의 구분 기호",
   "config.annotation_in_place": "꼬리에 추가하는 대신 제자리에 주석 표시",
   "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",

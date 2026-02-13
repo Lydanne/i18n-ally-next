@@ -37,6 +37,7 @@
   "command.translate_all_missing": "すべての欠落キーを翻訳",
   "command.translate_key": "翻訳",
   "command.translate_key_from": "\"{0}\"から翻訳する",
+  "config.annotation_brackets": "注釈テキストを囲む括弧、例: [\"[\", \"]\"] は [text] として表示されます",
   "config.annotation_delimiter": "デリミタアノテーション",
   "config.annotation_in_place": "末尾に追加する代わりに、注釈をその場で表示",
   "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",

@@ -37,6 +37,7 @@
   "command.translate_all_missing": "Tüm eksik anahtarları çevir",
   "command.translate_key": "Çevir",
   "command.translate_key_from": "\"{0}\" dilinden çevir",
+  "config.annotation_brackets": "Açıklama metnini sarmak için kullanılan parantezler, örneğin [\"[\", \"]\"] [metin] olarak görüntülenecektir.",
   "config.annotation_delimiter": "Ek açıklamalar için sınırlayıcı",
   "config.annotation_in_place": "Ek açıklamaları kuyruğa eklemek yerine olduğu yerde göster",
   "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",
