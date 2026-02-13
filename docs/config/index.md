@@ -302,6 +302,25 @@ The delimiter character shown before annotation text (only used when `annotation
 { "i18n-ally-next.annotationDelimiter": " → " }
 ```
 
+### `annotationBrackets`
+
+- **Type**: `[string, string]` — **Default**: `[]`
+
+Brackets to wrap annotation text. The first element is the left bracket, the second is the right bracket.
+
+**When to use:** Add visual boundaries around translation text to make it easier to distinguish from surrounding code. For example, `` ["`", "`"] `` will display as `` `Hello World` ``.
+
+```jsonc
+// Wrap with backticks
+{ "i18n-ally-next.annotationBrackets": ["`", "`"] }
+
+// Wrap with square brackets
+{ "i18n-ally-next.annotationBrackets": ["[", "]"] }
+
+// Wrap with CJK brackets
+{ "i18n-ally-next.annotationBrackets": ["「", "」"] }
+```
+
 ## Theme
 
 Customize the colors of inline annotations. All values are CSS color strings.

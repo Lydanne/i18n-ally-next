@@ -37,6 +37,7 @@
   "command.translate_all_missing": "翻译所有缺失的文案",
   "command.translate_key": "翻译文案",
   "command.translate_key_from": "从 \"{0}\" 翻译",
+  "config.annotation_brackets": "包裹注释文本的括号符号，例如 [\"[\", \"]\"] 将显示为 [文本]",
   "config.annotation_delimiter": "内联注释的分隔符",
   "config.annotation_in_place": "在路径原位显示翻译文案，而不是附加在末尾",
   "config.annotation_in_place_full_match": "隐藏整个函数调用（如 t(\"key\")），仅在原位显示翻译文本",

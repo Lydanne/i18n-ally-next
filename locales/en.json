@@ -37,6 +37,7 @@
   "command.review_apply_all_translations": "Apply all translation candidates",
   "command.translate_key": "Translate",
   "command.translate_key_from": "Translate from \"{0}\"",
+  "config.annotation_brackets": "Brackets to wrap annotation text, e.g. [\"[\", \"]\"] will display as [text]",
   "config.annotation_delimiter": "The delimiter for annotations",
   "config.annotation_in_place": "Show annotation in place instead of appending to the tail",
   "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",

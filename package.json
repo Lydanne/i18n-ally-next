@@ -737,6 +737,16 @@
           "default": "·",
           "description": "%config.annotation_delimiter%"
         },
+        "i18n-ally-next.annotationBrackets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "default": [],
+          "description": "%config.annotation_brackets%"
+        },
         "i18n-ally-next.includeSubfolders": {
           "type": "boolean",
           "default": true,

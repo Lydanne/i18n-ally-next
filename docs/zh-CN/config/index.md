@@ -302,6 +302,25 @@ locale 文件在磁盘上的组织方式。
 { "i18n-ally-next.annotationDelimiter": " → " }
 ```
 
+### `annotationBrackets`
+
+- **类型**：`[string, string]` — **默认值**：`[]`
+
+包裹注解文本的括号符号。第一个元素为左括号，第二个为右括号。
+
+**使用场景：** 为翻译文本添加视觉边界，使其更容易与周围代码区分。例如 `` ["`", "`"] `` 将显示为 `` `你好世界` ``。
+
+```jsonc
+// 使用反引号包裹
+{ "i18n-ally-next.annotationBrackets": ["`", "`"] }
+
+// 使用方括号包裹
+{ "i18n-ally-next.annotationBrackets": ["[", "]"] }
+
+// 使用中文括号包裹
+{ "i18n-ally-next.annotationBrackets": ["「", "」"] }
+```
+
 ## 主题
 
 自定义内联注解的颜色。所有值为 CSS 颜色字符串。

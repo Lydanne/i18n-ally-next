@@ -87,6 +87,7 @@ const annotation: ExtensionModule = (ctx) => {
     const { keys, locale, namespace, type: usageType } = _current_usages
 
     const annotationDelimiter = Config.annotationDelimiter
+    const annotationBrackets = Config.annotationBrackets
     const annotations: DecorationOptionsWithGutter[] = []
     const underlines: DecorationOptions[] = []
     const inplaces: DecorationOptions[] = []
@@ -169,6 +170,8 @@ const annotation: ExtensionModule = (ctx) => {
 
       if (text) {
         text = text.replace(/\r?\n/g, ' ')
+        if (annotationBrackets)
+          text = `${annotationBrackets[0]}${text}${annotationBrackets[1]}`
         if (!inplace)
           text = `${annotationDelimiter}${text}`
       }

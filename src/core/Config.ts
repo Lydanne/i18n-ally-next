@@ -136,6 +136,13 @@ export class Config {
     return this.getConfig<string>('annotationDelimiter') || ''
   }
 
+  static get annotationBrackets(): readonly [string, string] | undefined {
+    const value = this.getConfig<string[]>('annotationBrackets')
+    if (value && value.length === 2)
+      return value as [string, string]
+    return undefined
+  }
+
   static get annotationInPlace(): boolean {
     return this.getConfig<boolean>('annotationInPlace') ?? true
   }
