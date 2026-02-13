@@ -46,11 +46,12 @@ export class NodeHelper {
     return keypath.replace(/\[(.*?)\]/g, '.$1').split('.')
   }
 
-  static getPathWithoutNamespace(keypath: string, node?: Node, namespace?: string, delimiter = '.') {
+  static getPathWithoutNamespace(keypath: string, node?: Node, namespace?: string, delimiter?: string) {
     if (Global.namespaceEnabled) {
       namespace = node?.meta?.namespace || namespace
-      if (namespace && keypath.startsWith(namespace + delimiter))
-        return keypath.slice(namespace.length + 1)
+      const d = delimiter || Global.getNamespaceDelimiter()
+      if (namespace && keypath.startsWith(namespace + d))
+        return keypath.slice(namespace.length + d.length)
     }
     return keypath
   }

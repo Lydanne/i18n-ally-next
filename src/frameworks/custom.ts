@@ -1,5 +1,6 @@
 import type { FileSystemWatcher, TextDocument } from 'vscode'
 import type { ScopeRange } from './base'
+import type { RewriteKeyContext, RewriteKeySource } from '~/core'
 import type { LanguageId } from '~/utils'
 import fs from 'fs'
 import path from 'path'
@@ -101,6 +102,21 @@ class CustomFramework extends Framework {
   refactorTemplates(keypath: string) {
     return (this.data?.refactorTemplates || ['$1'])
       .map(i => i.replace(/\$1/g, keypath))
+  }
+
+  rewriteKeys(key: string, source: RewriteKeySource, context: RewriteKeyContext = {}) {
+    const delimiter = this.namespaceDelimiter
+    if (!delimiter || delimiter === '.')
+      return key
+    const dottedKey = key.split(delimiter).join('.')
+    if (
+      key.includes(delimiter)
+      && context.namespace
+      && dottedKey.startsWith(context.namespace.split(delimiter).join('.'))
+    ) {
+      key = key.slice(context.namespace.length + 1)
+    }
+    return dottedKey
   }
 
   getScopeRange(document: TextDocument): ScopeRange[] | undefined {
