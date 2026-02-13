@@ -70,8 +70,6 @@ async function run() {
     process.exit(1)
 }
 
-let vscodeExecutablePath: string | undefined
-
 async function testFixture(fixture: FixtureInfo) {
   const root = resolve(__dirname, '../..')
   const path = await prepareFixture(fixture)
@@ -80,7 +78,7 @@ async function testFixture(fixture: FixtureInfo) {
     await runTests({
       extensionDevelopmentPath: root,
       extensionTestsPath: join(__dirname, 'runner.js'),
-      vscodeExecutablePath,
+      version: '1.106.0',
       launchArgs: [path, '--disable-extensions'],
     })
   }

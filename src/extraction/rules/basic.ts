@@ -65,7 +65,9 @@ export class BasicExtrationRule extends ExtractionRule {
     if (!s.match(/\p{Letter}/u))
       return ExtractionScore.MustExclude
     // ✅ has a space, and any meaningful letters (not just technical tokens)
-    if (s.includes(' ') && s.match(/[a-z]{2,}/i))
+    // 当原始字符串包含模板表达式时，用原始字符串检查空格（替换可能移除空格）
+    const hasTemplateExpr = /\$\{.*?\}|\{\{.*?\}\}/.test(str)
+    if ((s.includes(' ') || (hasTemplateExpr && str.includes(' '))) && s.match(/[a-z]{2,}/i))
       return ExtractionScore.ShouldInclude
     // ✅ all words (at least 2 chars to avoid single-letter false positives)
     if (s.length >= 2 && s.match(/^[A-Z][a-z]+$/))
