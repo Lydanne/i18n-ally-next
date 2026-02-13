@@ -2,6 +2,7 @@ import type { TranslateOptions } from './engines/base'
 import BaiduTranslate from './engines/baidu'
 import TranslateEngine from './engines/base'
 import DeepLTranslateEngine from './engines/deepl'
+import EditorLLMTranslateEngine from './engines/editor-llm'
 import GoogleTranslateEngine from './engines/google'
 import GoogleTranslateCnEngine from './engines/google-cn'
 import LibreTranslateEngine from './engines/libretranslate'
@@ -15,6 +16,7 @@ export class Translator {
     'libretranslate': new LibreTranslateEngine(),
     'baidu': new BaiduTranslate(),
     'openai': new OpenAITranslateEngine(),
+    'editor-llm': new EditorLLMTranslateEngine(),
   }
 
   async translate(options: TranslateOptions & { engine: string }) {
@@ -26,6 +28,7 @@ export class Translator {
 export {
   BaiduTranslate,
   DeepLTranslateEngine,
+  EditorLLMTranslateEngine,
   GoogleTranslateCnEngine,
   GoogleTranslateEngine,
   LibreTranslateEngine,

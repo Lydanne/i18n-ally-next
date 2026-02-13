@@ -976,7 +976,8 @@
               "deepl",
               "libretranslate",
               "baidu",
-              "openai"
+              "openai",
+              "editor-llm"
             ]
           },
           "default": [
