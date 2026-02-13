@@ -238,6 +238,5 @@
   "view.usage_keys_in_use": "{0} kulcs használatban van",
   "view.usage_keys_missing": "{0} kulcs hiányzik",
   "view.usage_keys_not_in_use": "{0} kulcs NEM használatban van",
-  "view.usage_report_none": "Az elemzés megkezdéséhez nyomja meg a frissítés gombot",
-  "นามสกุล": ""
+  "view.usage_report_none": "Az elemzés megkezdéséhez nyomja meg a frissítés gombot"
 }

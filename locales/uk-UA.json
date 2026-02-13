@@ -238,6 +238,5 @@
   "view.usage_keys_in_use": "{0} ключі використовуються",
   "view.usage_keys_missing": "{0} ключі відсутні",
   "view.usage_keys_not_in_use": "{0} ключі НЕ використовуються",
-  "view.usage_report_none": "Оновіть, щоб почати аналіз використання ключа",
-  "นามสกุล": ""
+  "view.usage_report_none": "Оновіть, щоб почати аналіз використання ключа"
 }

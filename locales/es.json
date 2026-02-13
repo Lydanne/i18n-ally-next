@@ -238,6 +238,5 @@
   "view.usage_keys_in_use": "{0} claves en uso",
   "view.usage_keys_missing": "Faltan las claves {0}",
   "view.usage_keys_not_in_use": "Las claves {0} NO están en uso",
-  "view.usage_report_none": "Presione actualizar para comenzar a analizar el uso de las teclas",
-  "นามสกุล": ""
+  "view.usage_report_none": "Presione actualizar para comenzar a analizar el uso de las teclas"
 }

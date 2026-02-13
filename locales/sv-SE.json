@@ -238,6 +238,5 @@
   "view.usage_keys_in_use": "{0} nycklar används",
   "view.usage_keys_missing": "{0} nycklar saknas",
   "view.usage_keys_not_in_use": "{0} nycklar används INTE",
-  "view.usage_report_none": "Tryck på uppdatera för att starta analysering av nyckelanvändning",
-  "นามสกุล": ""
+  "view.usage_report_none": "Tryck på uppdatera för att starta analysering av nyckelanvändning"
 }

@@ -263,6 +263,5 @@
   "view.usage_keys_in_use": "{0} 条文案使用中",
   "view.usage_keys_missing": "{0} 条文案缺失",
   "view.usage_keys_not_in_use": "{0} 条文案未被使用",
-  "view.usage_report_none": "点击刷新开始使用分析",
-  "นามสกุล": ""
+  "view.usage_report_none": "点击刷新开始使用分析"
 }
