@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import llmstxt from 'vitepress-plugin-llms'
 
 export default defineConfig({
   title: 'i18n Ally Next',
@@ -6,6 +7,10 @@ export default defineConfig({
   base: '/i18n-ally-next/',
   lastUpdated: true,
   cleanUrls: true,
+
+  vite: {
+    plugins: [llmstxt() as any],
+  },
 
   head: [
     ['link', { rel: 'icon', type: 'image/png', href: '/logo.png' }],
