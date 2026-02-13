@@ -659,6 +659,11 @@
           "default": true,
           "description": "%config.annotation_in_place%"
         },
+        "i18n-ally-next.annotationInPlaceFullMatch": {
+          "type": "boolean",
+          "default": false,
+          "description": "%config.annotation_in_place_full_match%"
+        },
         "i18n-ally-next.annotationMaxLength": {
           "type": "number",
           "default": 40,
@@ -844,6 +849,11 @@
         "i18n-ally-next.theme.annotationMissingBorder": {
           "type": "string",
           "default": "rgba(153, 153, 153, .2)"
+        },
+        "i18n-ally-next.theme.annotationInPlaceFullMatch": {
+          "type": "string",
+          "default": "#ce9178",
+          "description": "%config.theme_annotation_in_place_full_match%"
         },
         "i18n-ally-next.regex.key": {
           "type": "string",

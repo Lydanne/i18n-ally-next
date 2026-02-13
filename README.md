@@ -81,6 +81,36 @@ English | <a href="https://github.com/lydanne/i18n-ally-next/blob/main/README.zh
 | **Tools** | VS Code Extension, Chrome Extension, Jekyll |
 | **Custom** | [Define your own framework](https://lydanne.github.io/i18n-ally-next/guide/custom-framework) |
 
+## Inline Annotation Mode
+
+By default, translations are shown as inline annotations after the key. You can customize this behavior:
+
+```jsonc
+// .vscode/settings.json
+{
+  "i18n-ally-next.annotationInPlace": true,
+  "i18n-ally-next.annotationInPlaceFullMatch": true
+}
+```
+
+| Setting | Effect |
+| --- | --- |
+| `annotationInPlace: false` | `t('key')` · translated text |
+| `annotationInPlace: true` | `t(`translated text`)` — hides the key only |
+| `annotationInPlaceFullMatch: true` | translated text — hides the entire function call |
+
+> **Note:** When `annotationInPlaceFullMatch` is enabled, moving the cursor to the line will restore the original code for editing.
+
+The translated text color in full match mode defaults to `#ce9178` (string color in Dark+ theme). You can customize it:
+
+```jsonc
+// .vscode/settings.json
+{
+  "i18n-ally-next.theme.annotationInPlaceFullMatch": "#ce9178" // Dark theme
+  // "i18n-ally-next.theme.annotationInPlaceFullMatch": "#a31515" // Light theme
+}
+```
+
 ## Optional Dependencies
 
 Some advanced features require additional packages to be installed **in your project**:

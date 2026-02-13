@@ -234,5 +234,7 @@
   "view.usage_keys_in_use": "{0} çeviri kullanımda",
   "view.usage_keys_missing": "{0} çeviri eksik",
   "view.usage_keys_not_in_use": "{0} çeviri kullanımda DEĞİL",
-  "view.usage_report_none": "Çeviri kullanımını incelemek için yenileye basın"
+  "view.usage_report_none": "Çeviri kullanımını incelemek için yenileye basın",
+  "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",
+  "config.theme_annotation_in_place_full_match": "Text color for inline annotation in full match mode"
 }

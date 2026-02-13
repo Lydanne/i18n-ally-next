@@ -36,6 +36,9 @@
   "i18n-ally-next.translate.promptSource": true,
   "i18n-ally-next.pathMatcher": "{locale}.json",
   "i18n-ally-next.translate.saveAsCandidates": true,
+  "i18n-ally-next.annotationInPlace": true,
+  "i18n-ally-next.annotationInPlaceFullMatch": true,
+  // "i18n-ally-next.theme.annotationInPlaceFullMatch": "#a31515",
   "i18n-ally-next.keysInUse": [
     "view.progress_submenu.translated_keys",
     "view.progress_submenu.missing_keys",

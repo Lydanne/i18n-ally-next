@@ -140,6 +140,10 @@ export class Config {
     return this.getConfig<boolean>('annotationInPlace') ?? true
   }
 
+  static get annotationInPlaceFullMatch(): boolean {
+    return this.getConfig<boolean>('annotationInPlaceFullMatch') ?? false
+  }
+
   static get namespace(): boolean | undefined {
     return this.getConfig<boolean>('namespace')
   }
@@ -319,6 +323,10 @@ export class Config {
 
   static get themeAnnotationMissingBorder(): string {
     return this.getConfig<string>('theme.annotationMissingBorder')!
+  }
+
+  static get themeAnnotationInPlaceFullMatch(): string {
+    return this.getConfig<string>('theme.annotationInPlaceFullMatch') || '#ce9178'
   }
 
   static get extension() {

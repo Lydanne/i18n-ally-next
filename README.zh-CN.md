@@ -81,6 +81,36 @@
 | **工具** | VS Code 扩展, Chrome 扩展, Jekyll |
 | **自定义** | [定义你自己的框架](https://lydanne.github.io/i18n-ally-next/zh-CN/guide/custom-framework) |
 
+## 内联注解模式
+
+默认情况下，翻译文本以内联注解的形式显示在 key 后面。你可以自定义显示方式：
+
+```jsonc
+// .vscode/settings.json
+{
+  "i18n-ally-next.annotationInPlace": true,
+  "i18n-ally-next.annotationInPlaceFullMatch": true
+}
+```
+
+| 配置 | 效果 |
+| --- | --- |
+| `annotationInPlace: false` | `t('key')` · 翻译文本 |
+| `annotationInPlace: true` | `t(`翻译文本`)` — 仅隐藏 key |
+| `annotationInPlaceFullMatch: true` | 翻译文本 — 隐藏整个函数调用 |
+
+> **提示：** 开启 `annotationInPlaceFullMatch` 后，将光标移到该行会自动恢复显示原始代码，方便编辑。
+
+全量替换模式下翻译文本默认使用 `#ce9178`（Dark+ 主题的字符串颜色）。你可以自定义颜色：
+
+```jsonc
+// .vscode/settings.json
+{
+  "i18n-ally-next.theme.annotationInPlaceFullMatch": "#ce9178" // 深色主题
+  // "i18n-ally-next.theme.annotationInPlaceFullMatch": "#a31515" // 浅色主题
+}
+```
+
 ## 可选依赖
 
 部分高级功能需要在**你的项目中**额外安装依赖：

@@ -234,5 +234,7 @@
   "view.usage_keys_in_use": "{0} ключей используется",
   "view.usage_keys_missing": "{0} ключей отсутствует",
   "view.usage_keys_not_in_use": "{0} ключей НЕ используется",
-  "view.usage_report_none": "Обновите, чтобы начать анализ использования ключа"
+  "view.usage_report_none": "Обновите, чтобы начать анализ использования ключа",
+  "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",
+  "config.theme_annotation_in_place_full_match": "Text color for inline annotation in full match mode"
 }

@@ -115,6 +115,8 @@ export interface KeyInDocument {
   end: number
   key: string
   quoted: boolean
+  fullMatchStart?: number
+  fullMatchEnd?: number
 }
 
 export interface KeyOccurrence {

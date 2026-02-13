@@ -234,5 +234,7 @@
   "view.usage_keys_in_use": "{0} 条文案使用中",
   "view.usage_keys_missing": "{0} 条文案缺失",
   "view.usage_keys_not_in_use": "{0} 条文案未被使用",
-  "view.usage_report_none": "点击刷新开始使用分析"
+  "view.usage_report_none": "点击刷新开始使用分析",
+  "config.annotation_in_place_full_match": "隐藏整个函数调用（如 t(\"key\")），仅在原位显示翻译文本",
+  "config.theme_annotation_in_place_full_match": "全量替换模式下内联注解的文本颜色"
 }

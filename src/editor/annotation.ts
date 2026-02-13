@@ -95,10 +95,12 @@ const annotation: ExtensionModule = (ctx) => {
     const sourceLanguage = Config.sourceLanguage
     const showAnnotations = Config.annotations
     const annotationInPlace = Config.annotationInPlace
+    const annotationInPlaceFullMatch = Config.annotationInPlaceFullMatch
     const themeAnnotationMissing = Config.themeAnnotationMissing
     const themeAnnotation = Config.themeAnnotation
     const themeAnnotationBorder = Config.themeAnnotationBorder
     const themeAnnotationMissingBorder = Config.themeAnnotationMissingBorder
+    const themeAnnotationFullMatch = Config.themeAnnotationInPlaceFullMatch
 
     const total = keys.length
     for (let i = 0; i < total; i++) {
@@ -117,6 +119,12 @@ const annotation: ExtensionModule = (ctx) => {
             range.end.with(undefined, range.end.character + 1),
           )
         : range
+      const fullMatchRange = (key.fullMatchStart != null && key.fullMatchEnd != null)
+        ? new Range(
+            document.positionAt(key.fullMatchStart),
+            document.positionAt(key.fullMatchEnd),
+          )
+        : rangeWithQuotes
 
       let text: string | undefined
       let missing = false
@@ -161,9 +169,10 @@ const annotation: ExtensionModule = (ctx) => {
       if (editing)
         text = ''
 
+      const isFullMatch = inplace && annotationInPlaceFullMatch
       const color = missing
         ? themeAnnotationMissing
-        : themeAnnotation
+        : isFullMatch ? themeAnnotationFullMatch : themeAnnotation
 
       const borderColor = missing
         ? themeAnnotationMissingBorder
@@ -180,7 +189,7 @@ const annotation: ExtensionModule = (ctx) => {
 
       if (inplace) {
         inplaces.push({
-          range: rangeWithQuotes,
+          range: annotationInPlaceFullMatch ? fullMatchRange : rangeWithQuotes,
         })
       }
       else if (usageType === 'code') {
@@ -189,8 +198,9 @@ const annotation: ExtensionModule = (ctx) => {
         })
       }
 
+      const decorationRange = (inplace && annotationInPlaceFullMatch) ? fullMatchRange : rangeWithQuotes
       annotations.push({
-        range: rangeWithQuotes,
+        range: decorationRange,
         renderOptions: {
           after: {
             color,
