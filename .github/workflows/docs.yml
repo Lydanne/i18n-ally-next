@@ -25,6 +25,12 @@ jobs:
         with:
           node-version: 20
       - uses: pnpm/action-setup@v4
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/pnpm/store/v3
+          key: pnpm-docs-${{ hashFiles('docs/pnpm-lock.yaml') }}
+          restore-keys: pnpm-docs-
       - run: pnpm install --frozen-lockfile
         working-directory: docs
       - run: pnpm run build

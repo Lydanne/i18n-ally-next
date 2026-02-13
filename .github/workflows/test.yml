@@ -7,7 +7,24 @@ on:
     branches: [main]
 
 jobs:
-  test:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: pnpm/action-setup@v4
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/pnpm/store/v3
+          key: pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test:unit
+
+  e2e:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -25,6 +42,19 @@ jobs:
         with:
           node-version: 20
       - uses: pnpm/action-setup@v4
+
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/pnpm/store/v3
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-${{ runner.os }}-
+
+      - name: Cache VSCode binary
+        uses: actions/cache@v4
+        with:
+          path: .vscode-test
+          key: vscode-test-${{ runner.os }}-1.106.0
 
       # The vue I18next framework fixture tests rely on the documents getting recognized as `vue` documents by VSCode.
       # We set the `file.association` in the tests' .vscode/settings.json. However, `vue` is not a language identifier
@@ -53,9 +83,6 @@ jobs:
 
       - name: Build
         run: pnpm build
-
-      - name: Unit Tests
-        run: pnpm test:unit
 
       - name: E2E Tests
         if: runner.os != 'Linux'
