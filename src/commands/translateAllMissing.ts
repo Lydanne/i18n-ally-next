@@ -63,7 +63,8 @@ export async function TranslateAllMissing(item?: ProgressRootItem) {
     const cov = loader.getCoverage(locale)
     if (!cov)
       continue
-    for (const key of cov.missingKeys) {
+    const untranslatedKeys = [...cov.missingKeys, ...cov.emptyKeys]
+    for (const key of untranslatedKeys) {
       const id = `${locale}::${key}`
       if (!nodeSet.has(id)) {
         nodeSet.add(id)
