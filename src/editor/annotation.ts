@@ -164,7 +164,6 @@ const annotation: ExtensionModule = (ctx) => {
         if (!text) {
           text = keypath
           missing = true
-          inplace = false
         }
       }
 
