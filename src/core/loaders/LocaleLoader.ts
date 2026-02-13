@@ -180,6 +180,11 @@ export class LocaleLoader extends Loader {
       })
     }
 
+    if (Config.targetPickingStrategy === TargetPickingStrategy.Auto) {
+      const resolved = this.resolveFilePathFromSourceKey(keypath, locale)
+      return resolved ?? paths[0]
+    }
+
     if (Config.targetPickingStrategy === TargetPickingStrategy.MostSimilar && pending.textFromPath)
       return this.findBestMatchFile(pending.textFromPath, paths)
 
@@ -254,6 +259,34 @@ export class LocaleLoader extends Loader {
     setCache(cacheKey, newPath)
 
     return newPath
+  }
+
+  /**
+   * 通过源语言中同一个 key 所在文件的 matcher 推断目标 locale 的文件路径，
+   * 同时兼容 namespace 模式：优先通过 namespace 定位源文件，再通过 keypath 兜底
+   */
+  private resolveFilePathFromSourceKey(keypath: string, locale: string): string | undefined {
+    const sourceLocale = Config.sourceLanguage
+    let sourceFile: ParsedFile | undefined
+    if (Global.namespaceEnabled) {
+      const namespace = this.getNodeByKey(keypath)?.meta?.namespace
+      if (namespace) {
+        sourceFile = Object.values(this._files)
+          .find(f => f.namespace === namespace && f.locale === sourceLocale)
+      }
+    }
+    if (!sourceFile) {
+      const sourceFilepath = this.getFilepathByKey(keypath, sourceLocale)
+      if (sourceFilepath)
+        sourceFile = this._files[sourceFilepath]
+    }
+    if (!sourceFile?.matcher)
+      return undefined
+    const relative = path.relative(sourceFile.dirpath, sourceFile.filepath)
+    const targetRelative = ReplaceLocale(relative, sourceFile.matcher, locale, Global.enabledParserExts)
+    if (targetRelative === relative)
+      return undefined
+    return path.join(sourceFile.dirpath, targetRelative)
   }
 
   findBestMatchFile(fromPath: string, paths: string[]): string {

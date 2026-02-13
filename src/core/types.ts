@@ -159,6 +159,7 @@ export interface DataProcessContext {
 
 export enum TargetPickingStrategy {
   None = 'none',
+  Auto = 'auto',
   MostSimilar = 'most-similar',
   FilePrevious = 'file-previous',
   GlobalPrevious = 'global-previous',

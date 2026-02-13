@@ -1181,6 +1181,7 @@
           "default": "none",
           "enum": [
             "none",
+            "auto",
             "most-similar",
             "most-similar-by-key",
             "file-previous",
@@ -1188,6 +1189,7 @@
           ],
           "enumDescriptions": [
             "%config.target_picking_strategy.none%",
+            "%config.target_picking_strategy.auto%",
             "%config.target_picking_strategy.most-similar%",
             "%config.target_picking_strategy.file-previous%",
             "%config.target_picking_strategy.global-previous%",
