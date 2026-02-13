@@ -81,6 +81,17 @@
 | **工具** | VS Code 扩展, Chrome 扩展, Jekyll |
 | **自定义** | [定义你自己的框架](https://lydanne.github.io/i18n-ally-next/zh-CN/guide/custom-framework) |
 
+## 可选依赖
+
+部分高级功能需要在**你的项目中**额外安装依赖：
+
+| 功能 | 使用场景 | 安装命令 |
+| --- | --- | --- |
+| **Vue SFC `<i18n>` 块** | 在 `.vue` 文件中使用内联 `<i18n>` 翻译块 | `npm i -D vue-template-compiler vue-i18n-locale-message` |
+| **Fluent Vue SFC** | 在 `.vue` SFC 文件中使用 Fluent 语法 | `npm i -D fluent-vue-cli` |
+
+> **提示：** 如果你使用独立的翻译文件（如 `locales/en.json`），则无需安装任何额外依赖。以上依赖仅在使用 SFC 内联翻译块时需要。
+
 ## 文档
 
 📖 **[完整文档](https://lydanne.github.io/i18n-ally-next/zh-CN/)** — 快速开始、配置项、命名空间、自定义框架等。

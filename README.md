@@ -81,6 +81,17 @@ English | <a href="https://github.com/lydanne/i18n-ally-next/blob/main/README.zh
 | **Tools** | VS Code Extension, Chrome Extension, Jekyll |
 | **Custom** | [Define your own framework](https://lydanne.github.io/i18n-ally-next/guide/custom-framework) |
 
+## Optional Dependencies
+
+Some advanced features require additional packages to be installed **in your project**:
+
+| Feature | When needed | Install |
+| --- | --- | --- |
+| **Vue SFC `<i18n>` block** | Using inline `<i18n>` blocks in `.vue` files | `npm i -D vue-template-compiler vue-i18n-locale-message` |
+| **Fluent Vue SFC** | Using Fluent syntax in `.vue` SFC files | `npm i -D fluent-vue-cli` |
+
+> **Note:** If you use standalone locale files (e.g. `locales/en.json`), no extra dependencies are needed. The above packages are only required for SFC inline translation blocks.
+
 ## Documentation
 
 📖 **[Full Documentation](https://lydanne.github.io/i18n-ally-next/)** — Getting started, configuration, namespace, custom framework, and more.

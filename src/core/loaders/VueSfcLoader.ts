@@ -1,13 +1,17 @@
 import type { TextDocument, Uri } from 'vscode'
-import type { MetaLocaleMessage, SFCI18nBlock } from 'vue-i18n-locale-message'
 import type { NodeOptions, PendingWrite } from '../types'
 import { Range, workspace, WorkspaceEdit } from 'vscode'
-import { infuse, squeeze } from 'vue-i18n-locale-message'
 import { applyPendingToObject, File, Log, unflatten } from '~/utils'
 import { Config } from '../Config'
 import { Global } from '../Global'
 import { LocaleTree } from '../Nodes'
 import { Loader } from './Loader'
+
+const _vueSfcMsg: typeof import('vue-i18n-locale-message') | undefined = (() => {
+  // eslint-disable-next-line ts/no-require-imports
+  try { return require('vue-i18n-locale-message') }
+  catch { return undefined }
+})()
 
 export class VueSfcLoader extends Loader {
   constructor(
@@ -18,8 +22,8 @@ export class VueSfcLoader extends Loader {
     this.load()
   }
 
-  _parsedSections: SFCI18nBlock[] = []
-  _meta: MetaLocaleMessage | undefined
+  _parsedSections: any[] = []
+  _meta: any | undefined
 
   get filepath() {
     return this.uri.fsPath
@@ -33,14 +37,16 @@ export class VueSfcLoader extends Loader {
     const filepath = this.filepath
     Log.info(`📑 Loading sfc ${filepath}`)
     const doc = await workspace.openTextDocument(this.uri)
-    const meta = this._meta = squeeze(Global.rootpath, this.getSFCFileInfo(doc))
+    if (!_vueSfcMsg)
+      throw new Error('vue-i18n-locale-message is not installed')
+    const meta = this._meta = _vueSfcMsg.squeeze(Global.rootpath, this.getSFCFileInfo(doc))
     this._parsedSections = meta.components[filepath]
 
     this.updateLocalesTree()
     this._onDidChange.fire(this.name)
   }
 
-  private getOptions(section: SFCI18nBlock, locale: string, index: number): NodeOptions {
+  private getOptions(section: any, locale: string, index: number): NodeOptions {
     return {
       filepath: section.src || this.uri.fsPath,
       locale: Config.normalizeLocale(locale),
@@ -112,7 +118,9 @@ export class VueSfcLoader extends Loader {
     }
 
     const doc = await workspace.openTextDocument(this.uri)
-    const [file] = infuse(Global.rootpath, this.getSFCFileInfo(doc), this._meta)
+    if (!_vueSfcMsg)
+      throw new Error('vue-i18n-locale-message is not installed')
+    const [file] = _vueSfcMsg.infuse(Global.rootpath, this.getSFCFileInfo(doc), this._meta)
 
     if (doc.isDirty) {
       const edit = new WorkspaceEdit()
