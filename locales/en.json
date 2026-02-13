@@ -116,7 +116,7 @@
   "errors.translating_unknown_error": "Unknown error occured on translating.",
   "errors.unsupported_file_type": "Unsupported file type: \"{0}\"",
   "errors.write_in_readonly_mode": "Writing in readonly mode is disabled.",
-  "extname": "i18n Ally",
+  "extname": "i18n Ally Next",
   "feedback.document": "Read Documentation",
   "feedback.github": "Star on GitHub",
   "feedback.report_issues": "Report Issues",

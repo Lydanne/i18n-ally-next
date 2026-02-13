@@ -114,7 +114,7 @@
   "errors.translating_unknown_error": "Erreur inconnue produite lors de la traduction.",
   "errors.unsupported_file_type": "Type de fichier non supporté : {0}",
   "errors.write_in_readonly_mode": "L'écriture en mode lecture seule est désactivée.",
-  "extname": "i18n Ally",
+  "extname": "i18n Ally Next",
   "feedback.document": "Lire la Documentation",
   "feedback.github": "Mettre une étoile sur Github",
   "feedback.report_issues": "Rapport d'issues",

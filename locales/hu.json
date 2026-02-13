@@ -111,7 +111,7 @@
   "errors.translating_unknown_error": "Ismeretlen hiba történt a fordítás során.",
   "errors.unsupported_file_type": "Nem támogatott fájltípus: \"{0}\"",
   "errors.write_in_readonly_mode": "Írás a csak olvasható módban történő mentés letiltva.",
-  "extname": "i18n Ally",
+  "extname": "i18n Ally Next",
   "feedback.document": "Dokumentáció olvasása",
   "feedback.github": "Csillagozás a GitHub-on",
   "feedback.report_issues": "Problémák jelentése",

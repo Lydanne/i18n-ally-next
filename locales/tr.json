@@ -114,7 +114,7 @@
   "errors.translating_unknown_error": "Çeviri esnasında bilinmeyen bir hataya rastlandı.",
   "errors.unsupported_file_type": "Desteklenmeyen dosya türü: \"{0}\"",
   "errors.write_in_readonly_mode": "Sadece oku modundayken yazmak devre dışı.",
-  "extname": "i18n Ally",
+  "extname": "i18n Ally Next",
   "feedback.document": "Dokümantasyonu Okuyun",
   "feedback.github": "GitHub'da Starlayın",
   "feedback.report_issues": "Sorunları Bildirin",

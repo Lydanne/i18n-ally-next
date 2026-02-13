@@ -114,7 +114,7 @@
   "errors.translating_unknown_error": "Unbekannter Fehler bei der Übersetzung aufgetreten",
   "errors.unsupported_file_type": "Nicht unterstützter Dateityp: \"{0}\"",
   "errors.write_in_readonly_mode": "Das Schreiben im Lesemodus ist deaktiviert.",
-  "extname": "i18n Ally",
+  "extname": "i18n Ally Next",
   "feedback.document": "Dokumentation lesen",
   "feedback.github": "GitHub Stern",
   "feedback.report_issues": "Fehler melden",

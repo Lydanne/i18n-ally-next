@@ -114,7 +114,7 @@
   "errors.translating_unknown_error": "При переводе произошла неизвестная ошибка.",
   "errors.unsupported_file_type": "Неподдерживаемый тип файла: \"{0}\"",
   "errors.write_in_readonly_mode": "Запись в режиме только для чтения отключена.",
-  "extname": "i18n Ally",
+  "extname": "i18n Ally Next",
   "feedback.document": "Читать документацию",
   "feedback.github": "Star on GitHub",
   "feedback.report_issues": "Сообщить о проблемах",

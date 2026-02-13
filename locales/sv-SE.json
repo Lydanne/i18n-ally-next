@@ -114,7 +114,7 @@
   "errors.translating_unknown_error": "Okänt fel hände vid översättning.",
   "errors.unsupported_file_type": "Stödjer ej filtyp: \"{0}\"",
   "errors.write_in_readonly_mode": "Skriva i skrivskyddat läge är inaktiverat.",
-  "extname": "i18n Ally",
+  "extname": "i18n Ally Next",
   "feedback.document": "Läs Dokumentation",
   "feedback.github": "\"Stjärna\" på GitHub",
   "feedback.report_issues": "Rapportera Problem",

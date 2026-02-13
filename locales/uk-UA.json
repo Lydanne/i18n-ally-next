@@ -114,7 +114,7 @@
   "errors.translating_unknown_error": "При перекладі сталася невідома помилка.",
   "errors.unsupported_file_type": "Непідтримуваний тип файлу: \"{0}\"",
   "errors.write_in_readonly_mode": "Запис в режимі тільки для читання відключена.",
-  "extname": "i18n Ally",
+  "extname": "i18n Ally Next",
   "feedback.document": "Читати документацію",
   "feedback.github": "Star on GitHub",
   "feedback.report_issues": "Повідомити про проблеми",
