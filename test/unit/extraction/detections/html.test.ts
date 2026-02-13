@@ -24,7 +24,8 @@ describe('detections', () => {
     it('vue-favored attrs', () => {
       expect(html.detect(
         // eslint-disable-next-line no-template-curly-in-string
-        '<input v-bind:placeholder="\'Placeholder \' + input_name" :title="`${input_name} title`" name="email">'),
+        '<input v-bind:placeholder="\'Placeholder \' + input_name" :title="`${input_name} title`" name="email">',
+      ),
       ).to.matchSnapshot()
     })
   })

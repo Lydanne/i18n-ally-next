@@ -1,22 +1,22 @@
-import { join } from 'path'
 import { deepStrictEqual as is, notStrictEqual as not } from 'assert'
-import { extensions, Uri, window, workspace } from 'vscode'
+import { join } from 'path'
 import Chai from 'chai'
 // @ts-ignore
 import Snapshot from 'chai-jest-snapshot'
+import { extensions, Uri, window, workspace } from 'vscode'
 
 Chai.use(Snapshot)
 
 export const expect = Chai.expect
 export { is, not }
-export { Global, Config, Log, CurrentFile, KeyDetector, Commands } from '../../dist/extension'
+export { Commands, Config, CurrentFile, Global, KeyDetector, Log } from '../../dist/extension'
 
 export function timeout(ms = 1000) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 export function getExt() {
-  return extensions.getExtension('lokalise.i18n-ally')!
+  return extensions.getExtension('lydanne.i18n-ally-next')!
 }
 
 export async function openFile(name: string) {
@@ -30,7 +30,7 @@ export function setupTest(name: string, fn: () => void) {
       Snapshot.resetSnapshotRegistry()
     })
 
-    beforeEach(function() {
+    beforeEach(function () {
       const { currentTest } = this
       Snapshot.setFilename(`${currentTest!.file!.replace('e2e-out', 'e2e')}.snap`)
       Snapshot.setTestName(currentTest!.fullTitle())

@@ -1,5 +1,5 @@
+import type { DirStructure, KeyStyle } from '~/core'
 import ReactI18nextFramework from './react-i18next'
-import { DirStructure, KeyStyle } from '~/core'
 
 class ShopifyI18nextFramework extends ReactI18nextFramework {
   id = 'i18next-shopify'

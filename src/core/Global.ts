@@ -1,25 +1,26 @@
+import type { ConfigurationChangeEvent, Event, ExtensionContext, TextDocument, WorkspaceFolder } from 'vscode'
+import type { Framework } from '../frameworks/base'
+import type { DirStructure, KeyStyle, OptionalFeatures } from './types'
+import type { DetectionResult } from '~/core/types'
 import { extname, resolve } from 'path'
-import { workspace, commands, window, EventEmitter, Event, ExtensionContext, ConfigurationChangeEvent, TextDocument, WorkspaceFolder } from 'vscode'
-import { uniq } from 'lodash'
 import { slash } from '@antfu/utils'
+import { uniq } from 'lodash'
 import { isMatch } from 'micromatch'
-import { ParsePathMatcher } from '../utils/PathMatcher'
-import { EXT_NAMESPACE } from '../meta'
-import { ConfigLocalesGuide } from '../commands/configLocalePaths'
-import { AvailableParsers, DefaultEnabledParsers } from '../parsers'
-import { Framework } from '../frameworks/base'
-import { getEnabledFrameworks, getEnabledFrameworksByIds, getPackageDependencies } from '../frameworks'
-import { checkNotification } from '../update-notification'
-import { Reviews } from './Review'
-import { CurrentFile } from './CurrentFile'
-import { Config } from './Config'
-import { DirStructure, OptionalFeatures, KeyStyle } from './types'
-import { LocaleLoader } from './loaders/LocaleLoader'
-import { Analyst } from './Analyst'
-import { Telemetry, TelemetryKey } from './Telemetry'
+import { commands, EventEmitter, window, workspace } from 'vscode'
 import i18n from '~/i18n'
-import { Log, getExtOfLanguageId, normalizeUsageMatchRegex } from '~/utils'
-import { DetectionResult } from '~/core/types'
+import { getExtOfLanguageId, Log, normalizeUsageMatchRegex } from '~/utils'
+import { ConfigLocalesGuide } from '../commands/configLocalePaths'
+import { getEnabledFrameworks, getEnabledFrameworksByIds, getPackageDependencies } from '../frameworks'
+import { EXT_NAMESPACE } from '../meta'
+import { AvailableParsers, DefaultEnabledParsers } from '../parsers'
+import { checkNotification } from '../update-notification'
+import { ParsePathMatcher } from '../utils/PathMatcher'
+import { Analyst } from './Analyst'
+import { Config } from './Config'
+import { CurrentFile } from './CurrentFile'
+import { LocaleLoader } from './loaders/LocaleLoader'
+import { Reviews } from './Review'
+import { Telemetry, TelemetryKey } from './Telemetry'
 
 export class Global {
   private static _loaders: Record<string, LocaleLoader> = {}
@@ -134,8 +135,8 @@ export class Global {
     const customReplacers = customTemplates
       .flatMap(i => i.templates)
       .map(i => i
-        .replace(/{key}/, keypath)
-        .replace(/{args}/, argsString),
+        .replace(/\{key\}/, keypath)
+        .replace(/\{args\}/, argsString),
       )
 
     const frameworkReplacers = this.enabledFrameworks
@@ -179,13 +180,13 @@ export class Global {
     const rules = Config.usageDerivedKeyRules
       ? Config.usageDerivedKeyRules
       : this.enabledFrameworks
-        .flatMap(f => f.derivedKeyRules || [])
+          .flatMap(f => f.derivedKeyRules || [])
 
     return uniq(rules)
       .map((rule) => {
         const reg = rule
           .replace(/\./g, '\\.')
-          .replace(/{key}/, '(.+)')
+          .replace(/\{key\}/, '(.+)')
 
         return new RegExp(`^${reg}$`)
       })
@@ -223,7 +224,7 @@ export class Global {
     const rules = Config._pathMatcher
       ? [Config._pathMatcher]
       : this.enabledFrameworks
-        .flatMap(f => f.pathMatcher(dirStructure))
+          .flatMap(f => f.pathMatcher(dirStructure))
 
     return uniq(rules)
       .map(matcher => ({
@@ -376,7 +377,7 @@ export class Global {
       Log.info(`🧩 Enabled frameworks: ${this.enabledFrameworks.map(i => i.display).join(', ')}`)
       Log.info(`🧬 Enabled parsers: ${this.enabledParsers.map(i => i.id).join(', ')}`)
       Log.info('')
-      commands.executeCommand('setContext', 'i18n-ally.extract.autoDetect', Config.extractAutoDetect)
+      commands.executeCommand('setContext', 'i18n-ally-next.extract.autoDetect', Config.extractAutoDetect)
 
       Telemetry.track(TelemetryKey.Enabled)
 
@@ -410,7 +411,7 @@ export class Global {
     let ids = Config.enabledParsers?.length
       ? Config.enabledParsers
       : this.enabledFrameworks
-        .flatMap(f => f.enabledParsers || [])
+          .flatMap(f => f.enabledParsers || [])
 
     if (!ids.length)
       ids = DefaultEnabledParsers

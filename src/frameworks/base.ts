@@ -1,17 +1,18 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { TextDocument } from 'vscode'
-import { LanguageId } from '~/utils'
-import { DirStructure, OptionalFeatures, RewriteKeySource, RewriteKeyContext, DataProcessContext, KeyStyle, Config } from '~/core'
-import { DetectionResult } from '~/core/types'
+/* eslint-disable unused-imports/no-unused-vars */
+import type { TextDocument } from 'vscode'
+import type { DataProcessContext, DirStructure, KeyStyle, OptionalFeatures, RewriteKeyContext, RewriteKeySource } from '~/core'
+import type { DetectionResult } from '~/core/types'
+import type { LanguageId } from '~/utils'
+import { Config } from '~/core'
 
-export type FrameworkDetectionDefine = string[] | { none?: string[]; every?: string[]; any?: string[] } | ((packages: string[], root: string) => boolean)
+export type FrameworkDetectionDefine = string[] | { none?: string[], every?: string[], any?: string[] } | ((packages: string[], root: string) => boolean)
 
 export type PackageFileType
-= 'packageJSON'
-| 'pubspecYAML'
-| 'composerJSON'
-| 'gemfile'
-| 'none'
+  = 'packageJSON'
+    | 'pubspecYAML'
+    | 'composerJSON'
+    | 'gemfile'
+    | 'none'
 
 export interface ScopeRange {
   start: number
@@ -46,7 +47,7 @@ export abstract class Framework {
   /**
    * Return possible choices of replacement for messages extracted from code
    */
-  abstract refactorTemplates (keypath: string, args?: string[], document?: TextDocument, detection?: DetectionResult): string[]
+  abstract refactorTemplates(keypath: string, args?: string[], document?: TextDocument, detection?: DetectionResult): string[]
 
   /**
    * Analysis the file and get hard strings
@@ -68,7 +69,7 @@ export abstract class Framework {
   pathMatcher(dirStructure?: DirStructure): string {
     if (dirStructure === 'file')
       return '{locale}.{ext}'
-    else if (Config.namespace)
+    else if (Config.namespace || this.enableFeatures?.namespace)
       return '{locale}/**/{namespace}.{ext}'
     else
       return '{locale}/**/*.{ext}'

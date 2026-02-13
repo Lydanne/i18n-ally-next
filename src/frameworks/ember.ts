@@ -1,11 +1,11 @@
+import type { LanguageId } from '~/utils'
 import { Framework } from './base'
-import { LanguageId } from '~/utils'
 
 class EmberFramework extends Framework {
   id = 'ember'
-  display= 'ember'
+  display = 'ember'
 
-  detection= {
+  detection = {
     packageJSON: [
       'ember-intl',
     ],

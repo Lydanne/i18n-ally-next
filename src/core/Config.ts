@@ -1,14 +1,16 @@
-import path from 'path'
+import type { ConfigurationScope, ExtensionContext, WorkspaceFolder } from 'vscode'
+import type { DirStructureAuto, KeyStyle, SortCompare } from '.'
+import type { ExtractionBabelOptions, ExtractionHTMLOptions } from '~/extraction/parsers/options'
+import type { CaseStyles } from '~/utils/changeCase'
 import { execSync } from 'child_process'
-import { workspace, extensions, ExtensionContext, commands, ConfigurationScope, WorkspaceFolder } from 'vscode'
+import path from 'path'
 import { trimEnd, uniq } from 'lodash'
-import { TagSystems } from '../tagSystems'
-import { EXT_NAMESPACE, EXT_ID, EXT_LEGACY_NAMESPACE, KEY_REG_DEFAULT, KEY_REG_ALL, DEFAULT_LOCALE_COUNTRY_MAP } from '../meta'
-import { KeyStyle, DirStructureAuto, SortCompare, TargetPickingStrategy } from '.'
+import { commands, extensions, workspace } from 'vscode'
 import i18n from '~/i18n'
-import { CaseStyles } from '~/utils/changeCase'
-import { ExtractionBabelOptions, ExtractionHTMLOptions } from '~/extraction/parsers/options'
 import { resolveRefactorTemplate } from '~/utils/resolveRefactorTemplate'
+import { TargetPickingStrategy } from '.'
+import { DEFAULT_LOCALE_COUNTRY_MAP, EXT_ID, EXT_LEGACY_NAMESPACE, EXT_NAMESPACE, KEY_REG_ALL, KEY_REG_DEFAULT } from '../meta'
+import { TagSystems } from '../tagSystems'
 
 export class Config {
   static readonly reloadConfigs = [
@@ -138,6 +140,10 @@ export class Config {
     return this.getConfig<boolean>('annotationInPlace') ?? true
   }
 
+  static get annotationInPlaceFullMatch(): boolean {
+    return this.getConfig<boolean>('annotationInPlaceFullMatch') ?? false
+  }
+
   static get namespace(): boolean | undefined {
     return this.getConfig<boolean>('namespace')
   }
@@ -180,7 +186,7 @@ export class Config {
     return this.getConfig<SortCompare>('sortCompare') || 'binary'
   }
 
-  static get sortLocale(): string | undefined{
+  static get sortLocale(): string | undefined {
     return this.getConfig<string>('sortLocale')
   }
 
@@ -319,6 +325,10 @@ export class Config {
     return this.getConfig<string>('theme.annotationMissingBorder')!
   }
 
+  static get themeAnnotationInPlaceFullMatch(): string {
+    return this.getConfig<string>('theme.annotationInPlaceFullMatch') || '#ce9178'
+  }
+
   static get extension() {
     return extensions.getExtension(EXT_ID)
   }
@@ -373,8 +383,8 @@ export class Config {
 
   static get usageDerivedKeyRules() {
     return this.getConfig<string[]>('usage.derivedKeyRules')
-    ?? this.getConfig<string[]>('derivedKeyRules') // back compatible, deprecated.
-    ?? undefined
+      ?? this.getConfig<string[]>('derivedKeyRules') // back compatible, deprecated.
+      ?? undefined
   }
 
   static get usageScanningIgnore() {
@@ -465,7 +475,7 @@ export class Config {
 
   static set extractAutoDetect(v: boolean) {
     this.setConfig('extract.autoDetect', v, false)
-    commands.executeCommand('setContext', 'i18n-ally.extract.autoDetect', v)
+    commands.executeCommand('setContext', 'i18n-ally-next.extract.autoDetect', v)
   }
 
   static get extractParserHTMLOptions() {
@@ -474,6 +484,14 @@ export class Config {
 
   static get extractParserBabelOptions() {
     return this.getConfig<ExtractionBabelOptions>('extract.parsers.babel') ?? {}
+  }
+
+  static get extractScanningInclude() {
+    return this.getConfig<string[]>('extract.scanningInclude') ?? []
+  }
+
+  static get extractScanningIgnore() {
+    return this.getConfig<string[]>('extract.scanningIgnore') ?? []
   }
 
   static get extractIgnored() {
@@ -518,7 +536,7 @@ export class Config {
       .getConfiguration(EXT_NAMESPACE, scope)
       .get<T>(key)
 
-    // compatible to vue-i18n-ally
+    // compatible to vue-i18n-ally-next
     if (config === undefined) {
       config = workspace
         .getConfiguration(EXT_LEGACY_NAMESPACE)
@@ -532,8 +550,7 @@ export class Config {
     // transfer legacy config
     if (workspace
       .getConfiguration(EXT_LEGACY_NAMESPACE)
-      .get<any>(key)
-    ) {
+      .get<any>(key)) {
       await workspace.getConfiguration(EXT_LEGACY_NAMESPACE)
         .update(key, undefined, isGlobal)
     }
@@ -572,6 +589,10 @@ export class Config {
     return this.getConfig<string | null | undefined>('translate.libre.apiRoot')
   }
 
+  static get editorLLMModel() {
+    return this.getConfig<string | null | undefined>('translate.editor-llm.model')
+  }
+
   static get openaiApiKey() {
     return this.getConfig<string | null | undefined>('translate.openai.apiKey')
   }
@@ -582,6 +603,14 @@ export class Config {
 
   static get openaiApiModel() {
     return this.getConfig<string>('translate.openai.apiModel') ?? 'gpt-3.5-turbo'
+  }
+
+  static get ollamaApiRoot() {
+    return this.getConfig<string | null | undefined>('translate.ollama.apiRoot')
+  }
+
+  static get ollamaModel() {
+    return this.getConfig<string | null | undefined>('translate.ollama.model')
   }
 
   static get telemetry(): boolean {

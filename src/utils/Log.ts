@@ -1,6 +1,7 @@
-import { OutputChannel, window } from 'vscode'
-import { EXT_NAME } from '../meta'
+import type { OutputChannel } from 'vscode'
+import { window } from 'vscode'
 import i18n from '~/i18n'
+import { EXT_NAME } from '../meta'
 
 export class Log {
   private static _channel: OutputChannel
@@ -33,7 +34,8 @@ export class Log {
         err.stack,
         err.toJSON?.(),
       ]
-        .filter(Boolean).join('\n')
+        .filter(Boolean)
+        .join('\n')
       Log.info(`🐛 ERROR: ${err.name}: ${messages}`, indent)
     }
 

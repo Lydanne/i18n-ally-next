@@ -1,6 +1,6 @@
 import { BasicExtrationRule } from './basic'
-import { NonAsciiExtractionRule } from './non-ascii-characters'
 import { DynamicExtractionRule } from './dynamic'
+import { NonAsciiExtractionRule } from './non-ascii-characters'
 
 export * from './base'
 export * from './basic'

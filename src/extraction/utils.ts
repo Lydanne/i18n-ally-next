@@ -1,7 +1,7 @@
-import { DetectionResult } from '~/core/types'
+import type { DetectionResult } from '~/core/types'
 
-const regexLeading = /^[\s\n]*/mg
-const regexTailing = /[\s\n]+$/mg
+const regexLeading = /^\s*/gm
+const regexTailing = /\s+$/gm
 
 export function trimDetection(detection: DetectionResult): DetectionResult | undefined {
   const leadingSpace = detection.text.match(regexLeading)?.[0] || ''

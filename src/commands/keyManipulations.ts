@@ -1,8 +1,8 @@
+import type { ExtensionModule } from '~/modules'
 import { commands } from 'vscode'
 import { Commands } from './commands'
-import { TranslateKeys, GoToKey, CopyKey, RenameKey, DeleteKey, NewKey, FulfillKeys, DuplicateKey, EditKey, markKeyInUse, InsertKey } from './manipulations'
+import { CopyKey, DeleteKey, DuplicateKey, EditKey, FulfillKeys, GoToKey, InsertKey, markKeyInUse, NewKey, RenameKey, TranslateKeys } from './manipulations'
 import { ReplaceText } from './manipulations/replaceText'
-import { ExtensionModule } from '~/modules'
 
 const m: ExtensionModule = () => {
   return [

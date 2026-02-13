@@ -1,16 +1,17 @@
-import { commands, TextDocument, Uri, window, workspace } from 'vscode'
+import type { TextDocument } from 'vscode'
+import type { ExtensionModule } from '~/modules'
 import { notNullish } from '@antfu/utils'
 import fs from 'fs-extra'
-import { DetectHardStrings } from './detectHardStrings'
-import { ExtensionModule } from '~/modules'
+import { commands, Uri, window, workspace } from 'vscode'
 import { Commands } from '~/commands'
-import { extractHardStrings, generateKeyFromText } from '~/core/Extract'
 import { Config, Global } from '~/core'
-import { parseHardString } from '~/extraction/parseHardString'
+import { extractHardStrings, generateKeyFromText } from '~/core/Extract'
+import { ActionSource, Telemetry, TelemetryKey } from '~/core/Telemetry'
 import { DetectionResultToExtraction } from '~/editor/extract'
+import { parseHardString } from '~/extraction/parseHardString'
 import { Log } from '~/utils'
 import { gitignoredGlob } from '~/utils/glob'
-import { ActionSource, Telemetry, TelemetryKey } from '~/core/Telemetry'
+import { DetectHardStrings } from './detectHardStrings'
 
 export async function BatchHardStringExtraction(...args: any[]) {
   const documents: (TextDocument | undefined)[] = []

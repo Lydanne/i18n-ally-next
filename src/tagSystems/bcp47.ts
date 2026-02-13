@@ -1,6 +1,6 @@
 import * as bcp47 from 'bcp-47'
-import { BaseTagSystem } from './base'
 import { Config } from '~/core'
+import { BaseTagSystem } from './base'
 
 // https://tools.ietf.org/html/bcp47
 export class BCP47 extends BaseTagSystem {

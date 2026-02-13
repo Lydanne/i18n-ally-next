@@ -1,7 +1,9 @@
-import { ExtensionContext, TreeItemCollapsibleState } from 'vscode'
+import type { ExtensionContext } from 'vscode'
+import type { KeyUsage } from '~/core'
+import { TreeItemCollapsibleState } from 'vscode'
+import { CurrentFile, LocaleNode } from '~/core'
 import { NodeHelper } from '~/utils'
 import { LocaleTreeItem } from '.'
-import { KeyUsage, LocaleNode, CurrentFile } from '~/core'
 
 export class UsageReportTreeItem extends LocaleTreeItem {
   constructor(ctx: ExtensionContext, public readonly usage: KeyUsage, public readonly type: string) {

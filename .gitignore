@@ -7,9 +7,10 @@ web_modules
 *.zip
 .DS_Store
 .cache
+res/editor/
 
 examples/**/package-lock.json
-examples/**/i18n-ally-reviews.yml
+examples/**/i18n-ally-next-reviews.yml
 package.nls.*
 stats.json
 

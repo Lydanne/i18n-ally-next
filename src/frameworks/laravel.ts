@@ -1,7 +1,7 @@
+import type { LanguageId } from '~/utils'
 // import { Range, TextDocument } from 'vscode'
 // import Parser, { Node } from 'php-parser'
 import { Framework } from './base'
-import { LanguageId } from '~/utils'
 
 class LaravelFramework extends Framework {
   id = 'laravel'

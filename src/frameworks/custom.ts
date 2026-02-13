@@ -1,12 +1,15 @@
-import path from 'path'
+import type { FileSystemWatcher, TextDocument } from 'vscode'
+import type { ScopeRange } from './base'
+import type { LanguageId } from '~/utils'
 import fs from 'fs'
-import { workspace, FileSystemWatcher, TextDocument } from 'vscode'
+import path from 'path'
 import YAML from 'js-yaml'
-import { Framework, ScopeRange } from './base'
+import { workspace } from 'vscode'
 import { Global } from '~/core'
-import { LanguageId, File, Log } from '~/utils'
+import { File, Log } from '~/utils'
+import { Framework } from './base'
 
-const CustomFrameworkConfigFilename = './.vscode/i18n-ally-custom-framework.yml'
+const CustomFrameworkConfigFilename = './.vscode/i18n-ally-next-custom-framework.yml'
 
 interface CustomFrameworkConfig {
   languageIds?: LanguageId[] | LanguageId
@@ -14,6 +17,8 @@ interface CustomFrameworkConfig {
   scopeRangeRegex?: string
   refactorTemplates?: string[]
   monopoly?: boolean
+  namespace?: boolean
+  namespaceDelimiter?: string
 
   keyMatchReg?: string[] | string // deprecated. use "usageMatchRegex" instead
 }
@@ -76,6 +81,22 @@ class CustomFramework extends Framework {
   }
 
   set monopoly(_) {}
+
+  // @ts-expect-error
+  get enableFeatures() {
+    if (this.data?.namespace)
+      return { namespace: true }
+    return undefined
+  }
+
+  set enableFeatures(_) {}
+
+  // @ts-expect-error
+  get namespaceDelimiter() {
+    return this.data?.namespaceDelimiter
+  }
+
+  set namespaceDelimiter(_) {}
 
   refactorTemplates(keypath: string) {
     return (this.data?.refactorTemplates || ['$1'])

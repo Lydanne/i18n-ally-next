@@ -1,6 +1,10 @@
 name: Test
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   test:
@@ -19,7 +23,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
+      - uses: pnpm/action-setup@v4
 
       # The vue I18next framework fixture tests rely on the documents getting recognized as `vue` documents by VSCode.
       # We set the `file.association` in the tests' .vscode/settings.json. However, `vue` is not a language identifier
@@ -32,42 +37,35 @@ jobs:
         if: runner.os != 'Windows'
         run: 'contents="$(jq ''.contributes.languages += [{"id": "vue"}]'' package.json)" && echo -E "${contents}" > package.json'
 
-      - name: Install jq (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          Invoke-WebRequest -Uri "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-win64.exe" -OutFile "C:\jq.exe"
-          $env:Path += ";C:\"
-
       - name: Register `vue` as a VSCode language identifier (Windows)
         if: runner.os == 'Windows'
         run: |
-          jq --ascii-output '.contributes.languages += [{\"id\": \"vue\"}]' package.json | Out-File -Encoding ascii "package.json.tmp"
-          Move-Item -Path package.json.tmp -Destination package.json -Force
-        shell: powershell
+          $content = Get-Content package.json -Raw | ConvertFrom-Json
+          $content.contributes.languages += @(@{id = "vue"})
+          $content | ConvertTo-Json -Depth 100 | Set-Content package.json -Encoding UTF8
+        shell: pwsh
 
       - name: Install
-        run: yarn install --frozen-lockfile
-        env:
-          CI: true
+        run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: yarn build
-        env:
-          CI: true
+        run: pnpm build
 
       - name: Unit Tests
-        run: yarn test:unit
-        env:
-          CI: true
+        run: pnpm test:unit
 
       - name: E2E Tests
-        run: yarn run test:e2e && yarn run test:fixture
         if: runner.os != 'Linux'
-        env:
-          CI: true
+        run: pnpm run test:e2e
 
       - name: E2E Tests (Linux)
-        run: xvfb-run -a yarn run test:e2e && xvfb-run -a yarn run test:fixture
         if: runner.os == 'Linux'
-        env:
-          CI: true
+        run: xvfb-run -a pnpm run test:e2e
+
+      - name: Fixture Tests
+        if: runner.os != 'Linux'
+        run: pnpm run test:fixture
+
+      - name: Fixture Tests (Linux)
+        if: runner.os == 'Linux'
+        run: xvfb-run -a pnpm run test:fixture

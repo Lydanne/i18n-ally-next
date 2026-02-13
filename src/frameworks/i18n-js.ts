@@ -1,8 +1,8 @@
+import type { LanguageId } from '~/utils'
 import { Framework } from './base'
-import { LanguageId } from '~/utils'
 
 class I18js extends Framework {
-  id ='i18n-js'
+  id = 'i18n-js'
   display = 'i18n.js'
   namespaceDelimiter = '.'
 
@@ -32,7 +32,6 @@ class I18js extends Framework {
       keypath,
     ]
   }
-
 }
 
 export default I18js

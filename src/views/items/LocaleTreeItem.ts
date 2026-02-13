@@ -1,10 +1,12 @@
-import { ExtensionContext, TreeItemCollapsibleState, Command } from 'vscode'
+import type { Command, ExtensionContext } from 'vscode'
+import type { Node } from '~/core'
+import { TreeItemCollapsibleState } from 'vscode'
+import { Commands } from '~/commands'
+import { Config, CurrentFile, Translator } from '~/core'
+import i18n from '~/i18n'
+import { decorateLocale, NodeHelper, resolveFlattenRoot, resolveFlattenRootKeypath, ROOT_KEY } from '~/utils'
 import { EditorPanel } from '../../webview/panel'
 import { BaseTreeItem } from './Base'
-import { decorateLocale, NodeHelper, resolveFlattenRootKeypath, ROOT_KEY, resolveFlattenRoot } from '~/utils'
-import i18n from '~/i18n'
-import { Node, Translator, CurrentFile, Config } from '~/core'
-import { Commands } from '~/commands'
 
 export class LocaleTreeItem extends BaseTreeItem {
   public readonly node: Node

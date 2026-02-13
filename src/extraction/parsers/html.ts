@@ -1,9 +1,10 @@
+import type { ExtractionRule } from '../rules'
+import type { ExtractionHTMLOptions } from './options'
+import type { DetectionResult } from '~/core/types'
 import { Parser } from 'htmlparser2'
-import { DefaultDynamicExtractionsRules, DefaultExtractionRules, ExtractionRule } from '../rules'
+import { DefaultDynamicExtractionsRules, DefaultExtractionRules } from '../rules'
 import { shouldExtract } from '../shouldExtract'
-import { ExtractionHTMLOptions } from './options'
 import { shiftDetectionPosition } from './utils'
-import { DetectionResult } from '~/core/types'
 
 const defaultOptions: Required<ExtractionHTMLOptions> = {
   attributes: ['title', 'alt', 'placeholder', 'label', 'aria-label'],
@@ -28,7 +29,7 @@ export function detect(
   const detections: DetectionResult[] = []
 
   // replace svelte inline function, #624
-  input = input.replace(/<(.*?)={(.*?)}(.*?)>/g, '<$1="$2"$3>')
+  input = input.replace(/<(.*?)=\{(.*?)\}(.*?)>/g, '<$1="$2"$3>')
 
   let lastTag = ''
   let lastScriptIndex: number | null = null
@@ -43,18 +44,19 @@ export function detect(
 
       const attrNames = Object.keys(attrs).map((name) => {
         // static
-        if (ATTRS.includes(name) && shouldExtract(attrs[name], rules))
+        if (ATTRS.includes(name) && shouldExtract(attrs[name], rules)) {
           return [name, false]
+        }
         // dynamic
         else if (
           V_BIND
           && ATTRS.some(n => name === `:${n}` || name === `v-bind:${n}`)
           && shouldExtract(attrs[name], dynamicRules)
-        )
+        ) {
           return [name, true]
+        }
         return null
-      })
-        .filter(Boolean) as [string, boolean][]
+      }).filter(Boolean) as [string, boolean][]
       if (!attrNames.length)
         return
 

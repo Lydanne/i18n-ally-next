@@ -1,10 +1,9 @@
-/* eslint-disable no-use-before-define */
-import { linkKeyMatcher, linkKeyPrefixMatcher, linkedKeyModifiers } from '../meta'
-import { Global } from './Global'
+import type { NodeMeta, OptionalFeatures } from './types'
+import { getKeyname, Log } from '~/utils'
+import { linkedKeyModifiers, linkKeyMatcher, linkKeyPrefixMatcher } from '../meta'
 import { Config } from './Config'
 import { CurrentFile } from './CurrentFile'
-import { OptionalFeatures, NodeMeta } from './types'
-import { getKeyname, Log } from '~/utils'
+import { Global } from './Global'
 
 export interface INode {
   keypath: string
@@ -37,7 +36,7 @@ abstract class BaseNode implements INode {
 }
 
 export class LocaleRecord extends BaseNode implements ILocaleRecord {
-  readonly type: 'record' = 'record'
+  readonly type = 'record' as const
 
   readonly locale: string
   readonly value: string
@@ -50,7 +49,7 @@ export class LocaleRecord extends BaseNode implements ILocaleRecord {
 }
 
 export class LocaleNode extends BaseNode implements ILocaleNode {
-  readonly type: 'node' = 'node'
+  readonly type = 'node' as const
   readonly locales: Record<string, LocaleRecord>
 
   constructor(data: ILocaleNode) {
@@ -69,7 +68,7 @@ export class LocaleNode extends BaseNode implements ILocaleNode {
       if (matches) {
         for (const link of matches) {
           const linkKeyPrefixMatches: any = link.match(linkKeyPrefixMatcher)
-          const [linkPrefix, formatterName] = linkKeyPrefixMatches as (string|undefined)[]
+          const [linkPrefix, formatterName] = linkKeyPrefixMatches as (string | undefined)[]
           const keypath = link.replace(linkPrefix || '', '')
 
           if (visitedStack.includes(keypath)) {
@@ -98,9 +97,9 @@ export class LocaleNode extends BaseNode implements ILocaleNode {
 }
 
 export class LocaleTree extends BaseNode implements ILocaleTree {
-  readonly type: 'tree' = 'tree'
+  readonly type = 'tree' as const
 
-  readonly children: Record<string | number, LocaleTree|LocaleNode>
+  readonly children: Record<string | number, LocaleTree | LocaleNode>
   readonly values: Record<string, object>
   readonly isCollection: boolean
 
@@ -114,16 +113,16 @@ export class LocaleTree extends BaseNode implements ILocaleTree {
   getChild(key: string) {
     let child = this.children[key]
     if (this.isCollection && !child) {
-      const index = parseInt(key)
-      if (!isNaN(index))
+      const index = Number.parseInt(key)
+      if (!Number.isNaN(index))
         child = this.children[index]
     }
     return child
   }
 
   setChild(key: string, value: LocaleTree | LocaleNode) {
-    const index = parseInt(key)
-    if (this.isCollection && !isNaN(index))
+    const index = Number.parseInt(key)
+    if (this.isCollection && !Number.isNaN(index))
       this.children[index] = value
     else
       this.children[key] = value

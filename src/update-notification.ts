@@ -1,5 +1,6 @@
-import { ExtensionContext, window, Uri, env } from 'vscode'
+import type { ExtensionContext } from 'vscode'
 import semver from 'semver'
+import { env, Uri, window } from 'vscode'
 import { version } from '../package.json'
 // import i18n from './i18n'
 
@@ -21,7 +22,7 @@ export function checkNotification(ctx: ExtensionContext) {
     //   message: i18n.t('notification.v2-update'),
     //   buttons: [{
     //     text: i18n.t('notification.migrate'),
-    //     url: 'https://github.com/lokalise/i18n-ally/wiki/Migration-v1.x',
+    //     url: 'https://github.com/lydanne/i18n-ally-next/wiki/Migration-v1.x',
     //   }],
     // },
   ]

@@ -1,8 +1,9 @@
-import { TextDocument } from 'vscode'
-import { Framework } from './base'
-import { LanguageId } from '~/utils'
+import type { TextDocument } from 'vscode'
+import type { DetectionResult } from '~/core'
+import type { LanguageId } from '~/utils'
+import { Config } from '~/core'
 import { DefaultDynamicExtractionsRules, DefaultExtractionRules, extractionsParsers } from '~/extraction'
-import { Config, DetectionResult } from '~/core'
+import { Framework } from './base'
 
 class VueFramework extends Framework {
   id = 'vue'
@@ -31,7 +32,7 @@ class VueFramework extends Framework {
 
   // for visualize the regex, you can use https://regexper.com/
   usageMatchRegex = [
-    '(?:i18n(?:-\\w+)?[ \\n]\\s*(?:\\w+=[\'"][^\'"]*[\'"][ \\n]\\s*)?(?:key)?path=|v-t=[\'"`{]|(?:this\\.|\\$|i18n\\.|[^\\w\\d])(?:t|tc|te)\\()\\s*[\'"`]({key})[\'"`]'
+    '(?:i18n(?:-\\w+)?[ \\n]\\s*(?:\\w+=[\'"][^\'"]*[\'"][ \\n]\\s*)?(?:key)?path=|v-t=[\'"`{]|(?:this\\.|\\$|i18n\\.|[^\\w\\d])(?:t|tc|te)\\()\\s*[\'"`]({key})[\'"`]',
   ]
 
   refactorTemplates(keypath: string, args: string[] = [], doc?: TextDocument, detection?: DetectionResult) {

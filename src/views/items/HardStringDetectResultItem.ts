@@ -1,8 +1,9 @@
-import { ExtensionContext, Range, TextDocument, TreeItemCollapsibleState } from 'vscode'
-import { BaseTreeItem } from './Base'
-import { DetectionResult } from '~/core/types'
+import type { ExtensionContext, TextDocument } from 'vscode'
+import type { ExtractTextOptions } from '~/commands/extractString'
+import type { DetectionResult } from '~/core/types'
+import { Range, TreeItemCollapsibleState } from 'vscode'
 import { Commands } from '~/commands'
-import { ExtractTextOptions } from '~/commands/extractString'
+import { BaseTreeItem } from './Base'
 
 export class HardStringDetectResultItem extends BaseTreeItem implements ExtractTextOptions {
   collapsibleState = TreeItemCollapsibleState.None
@@ -27,7 +28,7 @@ export class HardStringDetectResultItem extends BaseTreeItem implements ExtractT
     this.isInsert = false
     this.isDynamic = detection.isDynamic
 
-    this.contextValue = 'i18n-ally-hard-string-item'
+    this.contextValue = 'i18n-ally-next-hard-string-item'
     this.label = this.detection.text.trim()
 
     this.range = new Range(

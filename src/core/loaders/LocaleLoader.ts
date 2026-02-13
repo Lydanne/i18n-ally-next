@@ -1,24 +1,24 @@
+import type { DirStructure, ParsedFile, PendingWrite } from '../types'
 import path from 'path'
-import { workspace, window, WorkspaceEdit, RelativePattern } from 'vscode'
 import fg from 'fast-glob'
-import _, { uniq, throttle, set } from 'lodash'
 import fs from 'fs-extra'
-import { findBestMatch } from 'string-similarity'
-import { FILEWATCHER_TIMEOUT } from '../../meta'
-import { ParsedFile, PendingWrite, DirStructure, TargetPickingStrategy } from '../types'
-import { LocaleTree } from '../Nodes'
-import { AllyError, ErrorType } from '../Errors'
-import { Analyst, Global, Config } from '..'
-import { Telemetry, TelemetryKey } from '../Telemetry'
-import { Loader } from './Loader'
-import { ReplaceLocale, Log, applyPendingToObject, unflatten, NodeHelper, getCache, setCache, getLocaleCompare } from '~/utils'
+import _, { set, throttle, uniq } from 'lodash'
+import { RelativePattern, window, workspace, WorkspaceEdit } from 'vscode'
 import i18n from '~/i18n'
+import { applyPendingToObject, getCache, getLocaleCompare, Log, NodeHelper, ReplaceLocale, setCache, unflatten } from '~/utils'
+import { Analyst, Config, Global } from '..'
+import { FILEWATCHER_TIMEOUT } from '../../meta'
+import { AllyError, ErrorType } from '../Errors'
+import { LocaleTree } from '../Nodes'
+import { Telemetry, TelemetryKey } from '../Telemetry'
+import { TargetPickingStrategy } from '../types'
+import { Loader } from './Loader'
 
 const THROTTLE_DELAY = 1500
 
 export class LocaleLoader extends Loader {
   private _files: Record<string, ParsedFile> = {}
-  private _path_matchers: {regex: RegExp; matcher: string}[] = []
+  private _path_matchers: { regex: RegExp, matcher: string }[] = []
   private _dir_structure: DirStructure = 'file'
   private _locale_dirs: string[] = []
 
@@ -75,7 +75,7 @@ export class LocaleLoader extends Loader {
   }
 
   // #region throttled functions
-  private throttledFullReload = throttle(async() => {
+  private throttledFullReload = throttle(async () => {
     Log.info('🔄 Perfroming a full reload', 2)
     await this.loadAll(false)
     this.update()
@@ -87,7 +87,7 @@ export class LocaleLoader extends Loader {
 
   private throttledLoadFileWaitingList: [string, string][] = []
 
-  private throttledLoadFileExecutor = throttle(async() => {
+  private throttledLoadFileExecutor = throttle(async () => {
     const list = this.throttledLoadFileWaitingList
     this.throttledLoadFileWaitingList = []
     if (list.length) {
@@ -151,7 +151,7 @@ export class LocaleLoader extends Loader {
     const { locale, keypath } = pending
 
     // try to match namespaces
-    if (Config.namespace) {
+    if (Global.namespaceEnabled) {
       const namespace = pending.namespace || this.getNodeByKey(keypath)?.meta?.namespace
 
       const filesSameLocale = this.files.find(f => f.namespace === namespace && f.locale === locale)
@@ -180,11 +180,16 @@ export class LocaleLoader extends Loader {
       })
     }
 
+    if (Config.targetPickingStrategy === TargetPickingStrategy.Auto) {
+      const resolved = this.resolveFilePathFromSourceKey(keypath, locale)
+      return resolved ?? paths[0]
+    }
+
     if (Config.targetPickingStrategy === TargetPickingStrategy.MostSimilar && pending.textFromPath)
       return this.findBestMatchFile(pending.textFromPath, paths)
 
     if (Config.targetPickingStrategy === TargetPickingStrategy.MostSimilarByKey && keypath) {
-      const splitSymbol = Config.namespace ? Global.getNamespaceDelimiter() : '.'
+      const splitSymbol = Global.namespaceEnabled ? Global.getNamespaceDelimiter() : '.'
       const prefixKey = keypath.split(splitSymbol)[0]
       const matched = this.findBestMatchFile(`${this._locale_dirs}/${prefixKey}`, paths)
       if (matched.includes(prefixKey))
@@ -210,7 +215,8 @@ export class LocaleLoader extends Loader {
       {
         placeHolder: i18n.t('prompt.select_file_to_store_key', keypath),
         ignoreFocusOut: true,
-      })
+      },
+    )
 
     return result?.path
   }
@@ -255,11 +261,70 @@ export class LocaleLoader extends Loader {
     return newPath
   }
 
-  findBestMatchFile(fromPath: string, paths: string[]): string {
-    return findBestMatch(fromPath, paths).bestMatch.target
+  /**
+   * 通过源语言中同一个 key 所在文件的 matcher 推断目标 locale 的文件路径，
+   * 同时兼容 namespace 模式：优先通过 namespace 定位源文件，再通过 keypath 兜底
+   */
+  private resolveFilePathFromSourceKey(keypath: string, locale: string): string | undefined {
+    const sourceLocale = Config.sourceLanguage
+    let sourceFile: ParsedFile | undefined
+    if (Global.namespaceEnabled) {
+      const namespace = this.getNodeByKey(keypath)?.meta?.namespace
+      if (namespace) {
+        sourceFile = Object.values(this._files)
+          .find(f => f.namespace === namespace && f.locale === sourceLocale)
+      }
+    }
+    if (!sourceFile) {
+      const sourceFilepath = this.getFilepathByKey(keypath, sourceLocale)
+      if (sourceFilepath)
+        sourceFile = this._files[sourceFilepath]
+    }
+    if (!sourceFile?.matcher)
+      return undefined
+    const relative = path.relative(sourceFile.dirpath, sourceFile.filepath)
+    const targetRelative = ReplaceLocale(relative, sourceFile.matcher, locale, Global.enabledParserExts)
+    if (targetRelative === relative)
+      return undefined
+    return path.join(sourceFile.dirpath, targetRelative)
   }
 
-  async write(pendings: PendingWrite|PendingWrite[]) {
+  findBestMatchFile(fromPath: string, paths: string[]): string {
+    let bestTarget = paths[0]
+    let bestRating = 0
+    for (const target of paths) {
+      const rating = this.compareTwoStrings(fromPath, target)
+      if (rating > bestRating) {
+        bestRating = rating
+        bestTarget = target
+      }
+    }
+    return bestTarget
+  }
+
+  private compareTwoStrings(a: string, b: string): number {
+    if (a === b)
+      return 1
+    if (a.length < 2 || b.length < 2)
+      return 0
+    const bigramsA = new Map<string, number>()
+    for (let i = 0; i < a.length - 1; i++) {
+      const bigram = a.substring(i, i + 2)
+      bigramsA.set(bigram, (bigramsA.get(bigram) || 0) + 1)
+    }
+    let intersect = 0
+    for (let i = 0; i < b.length - 1; i++) {
+      const bigram = b.substring(i, i + 2)
+      const count = bigramsA.get(bigram) || 0
+      if (count > 0) {
+        bigramsA.set(bigram, count - 1)
+        intersect++
+      }
+    }
+    return (2.0 * intersect) / (a.length + b.length - 2)
+  }
+
+  async write(pendings: PendingWrite | PendingWrite[]) {
     if (!Array.isArray(pendings))
       pendings = [pendings]
 
@@ -275,7 +340,7 @@ export class LocaleLoader extends Loader {
         continue
       }
 
-      if (Config.namespace)
+      if (Global.namespaceEnabled)
         pending.namespace = pending.namespace || this._files[filepath]?.namespace
 
       if (!distributed[filepath])
@@ -480,7 +545,7 @@ export class LocaleLoader extends Loader {
     catch (e) {
       this.unsetFile(relativePath)
       Log.info(`🐛 Failed to load ${e}`, 2)
-      // eslint-disable-next-line no-console
+
       console.error(e)
     }
   }

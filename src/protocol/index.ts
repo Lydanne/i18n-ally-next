@@ -2,12 +2,12 @@
 
 // Protocol for exchanging data between webview/client/devtools
 import { commands } from 'vscode'
-import { TranslateKeys, RenameKey } from '../commands/manipulations'
-import { EXT_ID } from '~/meta'
 import { Commands } from '~/commands'
-import { CurrentFile, Global, Config, ActionSource, Telemetry, TelemetryKey } from '~/core'
-import i18n from '~/i18n'
+import { ActionSource, Config, CurrentFile, Global, Telemetry, TelemetryKey } from '~/core'
 import { isDev } from '~/env'
+import i18n from '~/i18n'
+import { EXT_ID } from '~/meta'
+import { RenameKey, TranslateKeys } from '../commands/manipulations'
 
 export interface Message {
   type: string

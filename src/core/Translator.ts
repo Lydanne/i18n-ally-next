@@ -1,12 +1,16 @@
-import { EventEmitter, CancellationToken, window, ProgressLocation, commands } from 'vscode'
-import { AllyError, ErrorType } from './Errors'
-import { PendingWrite } from './types'
-import { Global } from './Global'
-import { LocaleTree, LocaleNode, LocaleRecord, Config, Loader } from '.'
+import type { CancellationToken } from 'vscode'
+import type { Loader, LocaleNode, LocaleRecord, LocaleTree } from '.'
+import type { PendingWrite } from './types'
+import type { TranslateResult } from '~/translators'
+import type EditorLLMTranslateEngine from '~/translators/engines/editor-llm'
+import { commands, EventEmitter, ProgressLocation, window } from 'vscode'
 import { Commands } from '~/commands'
 import i18n from '~/i18n'
+import { Translator as TranslateEngine } from '~/translators'
 import { Log } from '~/utils'
-import { Translator as TranslateEngine, TranslateResult } from '~/translators'
+import { Config } from '.'
+
+import { Global } from './Global'
 
 interface TranslatorChangeEvent {
   keypath: string
@@ -23,13 +27,13 @@ export interface TranslateJob {
   token?: CancellationToken
 }
 
-export type AccaptableTranslateItem =
-  | LocaleNode
-  | LocaleRecord
-  | {locale: string; keypath: string; type: undefined }
+export type AccaptableTranslateItem
+  = | LocaleNode
+    | LocaleRecord
+    | { locale: string, keypath: string, type: undefined }
 
 export class Translator {
-  private static translatingKeys: {keypath: string; locale: string}[] = []
+  private static translatingKeys: { keypath: string, locale: string }[] = []
   private static _onDidChange = new EventEmitter<TranslatorChangeEvent>()
   static readonly onDidChange = Translator._onDidChange.event
   private static _translator = new TranslateEngine()
@@ -48,7 +52,7 @@ export class Translator {
       this._onDidChange.fire({ keypath, locale, action: 'end' })
   }
 
-  static isTranslating(node: LocaleNode| LocaleRecord | LocaleTree) {
+  static isTranslating(node: LocaleNode | LocaleRecord | LocaleTree) {
     if (node.type === 'record')
       return !!this.translatingKeys.find(i => i.keypath === node.keypath && i.locale === node.locale)
     if (node.type === 'node')
@@ -110,8 +114,7 @@ export class Translator {
       location: ProgressLocation.Notification,
       title: i18n.t('prompt.translate_in_progress'),
       cancellable: true,
-    },
-    async(progress, token) => {
+    }, async (progress, token) => {
       jobs.forEach(job => job.token = token)
 
       const successJobs: TranslateJob[] = []
@@ -122,7 +125,7 @@ export class Translator {
 
       const increment = 1 / total * 100
 
-      const doJob = async(job: TranslateJob) => {
+      const doJob = async (job: TranslateJob) => {
         let result: PendingWrite | undefined
         const message = `"${job.keypath}" (${job.source}->${job.locale}) ${finished + 1}/${total}`
         progress.report({ increment: 0, message })
@@ -134,7 +137,6 @@ export class Translator {
             cancelledJobs.push(job)
         }
         catch (err) {
-          // eslint-disable-next-line no-console
           console.error(err)
           failedJobs.push([job, err])
         }
@@ -143,21 +145,41 @@ export class Translator {
         return { result, job }
       }
 
-      // do translating in batch
-      const parallels = Config.translateParallels
-      const slices = Math.ceil(jobs.length / parallels)
-      for (let i = 0; i < slices; i++) {
-        const results = await Promise.all(
-          jobs
-            .slice(i * parallels, (i + 1) * parallels)
-            .map(job => doJob(job)),
-        )
-        this.saveTranslations(loader, results)
+      // 尝试使用 editor-llm 批量翻译
+      const engines = Config.translateEngines
+      const editorLLMEngine = engines.includes('editor-llm')
+        ? this._translator.engines['editor-llm'] as EditorLLMTranslateEngine
+        : undefined
+      if (editorLLMEngine && jobs.length > 1) {
+        await this.doBatchTranslate(editorLLMEngine, loader, jobs, {
+          progress,
+          token,
+          successJobs,
+          failedJobs,
+          cancelledJobs,
+          onFinish: () => { finished += 1 },
+          getFinished: () => finished,
+          total,
+          increment,
+        })
+      }
+      else {
+        // do translating in batch (parallel single requests)
+        const parallels = Config.translateParallels
+        const slices = Math.ceil(jobs.length / parallels)
+        for (let i = 0; i < slices; i++) {
+          const results = await Promise.all(
+            jobs
+              .slice(i * parallels, (i + 1) * parallels)
+              .map(job => doJob(job)),
+          )
+          this.saveTranslations(loader, results)
+        }
       }
 
       // translating done
       if (successJobs.length === 1) {
-        (async() => {
+        (async () => {
           const job = successJobs[0]
 
           const editButton = i18n.t('prompt.translate_edit_translated')
@@ -218,6 +240,8 @@ export class Translator {
 
     for (const node of nodes) {
       if (!node.type) {
+        if (node.locale === sourceLanguage)
+          continue
         jobs.push({
           loader,
           locale: node.locale,
@@ -249,7 +273,7 @@ export class Translator {
       return
 
     if (locale === source)
-      throw new AllyError(ErrorType.translating_same_locale)
+      return
 
     const value = this.getValueOfKey(loader, keypath, source)
 
@@ -279,10 +303,10 @@ export class Translator {
 
   private static async saveTranslations(
     loader: Loader,
-    results: ({result: PendingWrite | undefined; job: TranslateJob})[],
+    results: ({ result: PendingWrite | undefined, job: TranslateJob })[],
   ) {
     const now = new Date().toISOString()
-    const r = results.filter(i => i.result) as ({result: PendingWrite; job: TranslateJob})[]
+    const r = results.filter(i => i.result) as ({ result: PendingWrite, job: TranslateJob })[]
 
     if (Config.translateSaveAsCandidates) {
       await Global.reviews.setTranslationCandidates(r.map(i => ({
@@ -297,6 +321,86 @@ export class Translator {
     }
     else {
       await loader.write(r.map(i => i.result))
+    }
+  }
+
+  /**
+   * 使用 editor-llm 引擎批量翻译，按语言对分组，每组一次请求翻译多条
+   */
+  private static async doBatchTranslate(
+    engine: EditorLLMTranslateEngine,
+    loader: Loader,
+    jobs: TranslateJob[],
+    ctx: {
+      progress: { report: (v: { increment?: number, message?: string }) => void }
+      token: CancellationToken
+      successJobs: TranslateJob[]
+      failedJobs: [TranslateJob, Error][]
+      cancelledJobs: TranslateJob[]
+      onFinish: () => void
+      getFinished: () => number
+      total: number
+      increment: number
+    },
+  ): Promise<void> {
+    const { progress, token, successJobs, failedJobs, increment } = ctx
+    const groupMap = new Map<string, TranslateJob[]>()
+    for (const job of jobs) {
+      const groupKey = `${job.source}->${job.locale}`
+      const group = groupMap.get(groupKey) ?? []
+      group.push(job)
+      groupMap.set(groupKey, group)
+    }
+    for (const [groupKey, groupJobs] of groupMap) {
+      if (token.isCancellationRequested)
+        break
+      progress.report({ message: `🤖 Batch translating ${groupJobs.length} keys (${groupKey})` })
+      const items = groupJobs.map((job) => {
+        const text = this.getValueOfKey(loader, job.keypath, job.source)
+        return { key: job.keypath, text }
+      }).filter(i => i.text)
+      if (!items.length)
+        continue
+      try {
+        const batchResult = await engine.translateBatch(
+          items,
+          groupJobs[0].source,
+          groupJobs[0].locale,
+        )
+        const results: { result: PendingWrite | undefined, job: TranslateJob }[] = []
+        for (const job of groupJobs) {
+          const translated = batchResult[job.keypath]
+          if (translated) {
+            this.start(job.keypath, job.locale, false)
+            this.end(job.keypath, job.locale, false)
+            successJobs.push(job)
+            results.push({
+              result: {
+                locale: job.locale,
+                value: translated,
+                filepath: job.filepath,
+                keypath: job.keypath,
+              },
+              job,
+            })
+          }
+          else {
+            failedJobs.push([job, new Error(`No translation returned for "${job.keypath}"`)])
+          }
+          ctx.onFinish()
+          progress.report({ increment, message: `"${job.keypath}" ${ctx.getFinished()}/${ctx.total}` })
+        }
+        this.saveTranslations(loader, results)
+      }
+      catch (err) {
+        Log.error(`🤖 Batch translate failed for group ${groupKey}`)
+        Log.error(err, false)
+        for (const job of groupJobs) {
+          failedJobs.push([job, err as Error])
+          ctx.onFinish()
+          progress.report({ increment })
+        }
+      }
     }
   }
 

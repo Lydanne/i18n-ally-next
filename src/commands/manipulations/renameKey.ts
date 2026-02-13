@@ -1,9 +1,10 @@
+import type { Node } from '~/core'
 import { window, workspace } from 'vscode'
-import { overrideConfirm } from '../overrideConfirm'
-import { LocaleTreeItem } from '~/views'
-import { Log, keypathValidate } from '~/utils'
+import { ActionSource, CurrentFile, Global, Telemetry, TelemetryKey } from '~/core'
 import i18n from '~/i18n'
-import { Node, CurrentFile, Global, Telemetry, TelemetryKey, ActionSource } from '~/core'
+import { keypathValidate, Log } from '~/utils'
+import { LocaleTreeItem } from '~/views'
+import { overrideConfirm } from '../overrideConfirm'
 
 export async function RenameKey(item?: LocaleTreeItem | string) {
   if (!item)

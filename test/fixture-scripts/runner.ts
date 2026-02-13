@@ -1,6 +1,5 @@
-/* eslint-disable no-console */
-import { join } from 'path'
 import fs from 'fs'
+import { join } from 'path'
 import { commands, Uri, window, workspace } from 'vscode'
 
 function timeout(ms: number) {
@@ -15,7 +14,7 @@ const entries = [
   'source.jsx',
 ]
 
-export const run = async() => {
+export async function run() {
   const root = workspace.workspaceFolders![0]!.uri.fsPath
   const entry = entries.find(i => fs.existsSync(join(root, i)))
   if (!entry)
@@ -26,7 +25,7 @@ export const run = async() => {
     await window.showTextDocument(doc)
     await timeout(1000)
 
-    await commands.executeCommand('i18n-ally.extract-hard-strings-batch')
+    await commands.executeCommand('i18n-ally-next.extract-hard-strings-batch')
     await doc.save()
 
     await timeout(500)

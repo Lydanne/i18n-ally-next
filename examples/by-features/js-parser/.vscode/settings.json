@@ -1,10 +1,10 @@
 {
-  "i18n-ally.localesPaths": "locales",
-  "i18n-ally.enabledParsers": [
+  "i18n-ally-next.localesPaths": "locales",
+  "i18n-ally-next.enabledParsers": [
     "ts",
     "js"
   ],
-  "i18n-ally.sourceLanguage": "en",
-  "i18n-ally.theme.annotationMissingBorder": "#d37070",
-  "i18n-ally.theme.annotationMissing": "#d37070"
+  "i18n-ally-next.sourceLanguage": "en",
+  "i18n-ally-next.theme.annotationMissingBorder": "#d37070",
+  "i18n-ally-next.theme.annotationMissing": "#d37070"
 }

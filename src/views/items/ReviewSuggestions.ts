@@ -1,8 +1,9 @@
-import { ExtensionContext, TreeItemCollapsibleState } from 'vscode'
-import { ReviewSuggestionsItem } from './ReviewSuggestionsItem'
-import { BaseTreeItem } from '.'
+import type { ExtensionContext } from 'vscode'
+import type { ReviewCommentWithMeta } from '~/core'
+import { TreeItemCollapsibleState } from 'vscode'
 import i18n from '~/i18n'
-import { ReviewCommentWithMeta } from '~/core'
+import { BaseTreeItem } from '.'
+import { ReviewSuggestionsItem } from './ReviewSuggestionsItem'
 
 export class ReviewSuggestions extends BaseTreeItem {
   constructor(

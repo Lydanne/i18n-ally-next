@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 // @ts-check
 'use strict'
 
 const path = require('path')
-const FilterWarningsPlugin = require('webpack-filter-warnings-plugin')
 const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin')
 const { createUnplugin } = require('unplugin')
 
@@ -18,7 +16,9 @@ const config = {
     hashFunction: 'sha256',
     path: path.resolve(__dirname, 'dist'),
     filename: 'extension.js',
-    libraryTarget: 'commonjs2',
+    library: {
+      type: 'commonjs2',
+    },
     devtoolModuleFilenameTemplate: '../[resource-path]',
   },
   devtool: 'source-map',
@@ -28,6 +28,9 @@ const config = {
     'esm': 'esm',
     'ts-node': 'ts-node',
     'consolidate': 'consolidate',
+    'vue-i18n-locale-message': 'vue-i18n-locale-message',
+    'vue-template-compiler': 'vue-template-compiler',
+    'fluent-vue-cli': 'fluent-vue-cli',
     'less': '_',
     'sass': '_',
     'stylus': '_',
@@ -58,11 +61,10 @@ const config = {
       },
     ],
   },
+  ignoreWarnings: [
+    /Critical dependency: the request of a dependency is an expression/,
+  ],
   plugins: [
-    // @ts-ignore
-    new FilterWarningsPlugin({
-      exclude: /Critical dependency: the request of a dependency is an expression/,
-    }),
     createUnplugin(() => {
       return {
         name: 'replace',

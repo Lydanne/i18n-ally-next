@@ -1,9 +1,10 @@
-import { ExtensionContext, Uri } from 'vscode'
-import { BaseTreeItem } from '.'
-import { getAvatarFromEmail } from '~/utils'
-import { ReviewCommentWithMeta } from '~/core'
-import i18n from '~/i18n'
+import type { ExtensionContext } from 'vscode'
+import type { ReviewCommentWithMeta } from '~/core'
+import { Uri } from 'vscode'
 import { Commands } from '~/commands'
+import i18n from '~/i18n'
+import { getAvatarFromEmail } from '~/utils'
+import { BaseTreeItem } from '.'
 
 export class ReviewRequestChangesItem extends BaseTreeItem {
   constructor(

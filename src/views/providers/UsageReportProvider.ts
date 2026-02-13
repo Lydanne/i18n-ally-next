@@ -1,7 +1,9 @@
-import { TreeDataProvider, EventEmitter, ExtensionContext, TreeItem, commands, TreeView } from 'vscode'
-import { UsageReportTreeItem, UsageReportRootItem, LocationTreeItem } from '../items'
-import { Analyst, UsageReport } from '~/core'
+import type { ExtensionContext, TreeDataProvider, TreeView } from 'vscode'
+import type { UsageReport } from '~/core'
+import { commands, EventEmitter, TreeItem } from 'vscode'
+import { Analyst } from '~/core'
 import i18n from '~/i18n'
+import { LocationTreeItem, UsageReportRootItem, UsageReportTreeItem } from '../items'
 
 export class UsageReportProvider implements TreeDataProvider<TreeItem> {
   private _onDidChangeTreeData = new EventEmitter<TreeItem | undefined>()
@@ -22,7 +24,7 @@ export class UsageReportProvider implements TreeDataProvider<TreeItem> {
     this.usages = usages
     const enabled = !!(this.usages.active.length || this.usages.idle.length)
 
-    commands.executeCommand('setContext', 'i18n-ally-has-report', enabled)
+    commands.executeCommand('setContext', 'i18n-ally-next-has-report', enabled)
     this.refresh()
     if (enabled && this.rootItems.length)
       this.view?.reveal(this.rootItems[0])
@@ -53,7 +55,7 @@ export class UsageReportProvider implements TreeDataProvider<TreeItem> {
         .map(usage => new UsageReportTreeItem(this.ctx, usage, element.key))
     }
     else if (element instanceof UsageReportTreeItem) {
-      this.rootItems = await Promise.all(element.usage.occurrences.map(async(o) => {
+      this.rootItems = await Promise.all(element.usage.occurrences.map(async (o) => {
         const location = await Analyst.getLocationOf(o)
         return new LocationTreeItem(this.ctx, location)
       }))

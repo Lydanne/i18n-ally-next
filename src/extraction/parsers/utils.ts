@@ -1,4 +1,4 @@
-import { DetectionResult } from '~/core/types'
+import type { DetectionResult } from '~/core/types'
 
 const keys = ['start', 'end', 'fullStart', 'fullEnd'] as const
 

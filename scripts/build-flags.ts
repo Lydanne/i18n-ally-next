@@ -2,7 +2,9 @@ import path from 'path'
 import fg from 'fast-glob'
 import fs from 'fs-extra'
 
-;(async() => {
+;
+
+(async () => {
   const files = await fg('./res/flags/*.svg')
   const flags = files.map(file => path.basename(file, '.svg'))
   const output = path.resolve('./src/utils/flags.ts')

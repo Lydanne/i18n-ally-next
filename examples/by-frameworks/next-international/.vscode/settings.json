@@ -1,7 +1,7 @@
 {
-  "i18n-ally.localesPaths": "src/locales",
-  "i18n-ally.enabledFrameworks": ["next-international"],
+  "i18n-ally-next.localesPaths": "src/locales",
+  "i18n-ally-next.enabledFrameworks": ["next-international"],
   "eslint.enable": false,
-  "i18n-ally.enabledParsers": ["ts"],
-  "i18n-ally.keystyle": "flat"
+  "i18n-ally-next.enabledParsers": ["ts"],
+  "i18n-ally-next.keystyle": "flat"
 }

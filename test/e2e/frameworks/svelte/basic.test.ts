@@ -1,7 +1,7 @@
-import { getExt, openFile, Global, is, not, setupTest } from '../../ctx'
+import { getExt, Global, is, not, openFile, setupTest } from '../../ctx'
 
 setupTest('Svelte', () => {
-  it('opens entry file', async() => {
+  it('opens entry file', async () => {
     await openFile('package.json')
   })
 
@@ -10,7 +10,7 @@ setupTest('Svelte', () => {
     is(ext?.isActive, true)
   })
 
-  it('enables correct frameworks', async() => {
+  it('enables correct frameworks', async () => {
     not(Global, undefined)
     is(Global.enabled, true)
     is(Global.enabledFrameworks.length, 2)

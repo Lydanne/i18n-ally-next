@@ -1,4 +1,5 @@
-import { ExtensionContext, TreeItem, Location, Command } from 'vscode'
+import type { Command, ExtensionContext, Location } from 'vscode'
+import { TreeItem } from 'vscode'
 
 export class LocationTreeItem extends TreeItem {
   constructor(ctx: ExtensionContext, public readonly location: Location) {

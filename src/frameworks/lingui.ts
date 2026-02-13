@@ -1,11 +1,11 @@
+import type { LanguageId } from '~/utils'
 import { Framework } from './base'
-import { LanguageId } from '~/utils'
 
 class LinguiFramework extends Framework {
-  id= 'lingui'
-  display= 'Lingui'
+  id = 'lingui'
+  display = 'Lingui'
 
-  detection= {
+  detection = {
     packageJSON: [
       '@lingui/core',
     ],

@@ -1,7 +1,9 @@
-import { TextDocument, window } from 'vscode'
-import { decorateLocale } from '.'
+import type { TextDocument } from 'vscode'
+import type { DetectionResult } from '~/core'
+import { window } from 'vscode'
+import { Config, CurrentFile, Global } from '~/core'
 import i18n from '~/i18n'
-import { CurrentFile, Config, Global, DetectionResult } from '~/core'
+import { decorateLocale } from '.'
 
 export async function promptEdit(keypath: string, locale: string, value?: string) {
   const result = await window.showInputBox({
@@ -21,7 +23,8 @@ export async function promptKeys(text: string, locale = Config.displayLanguage) 
     {
       matchOnDescription: true,
       placeHolder: text,
-    })
+    },
+  )
   return result?.label
 }
 

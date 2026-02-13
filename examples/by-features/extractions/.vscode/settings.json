@@ -1,11 +1,11 @@
 {
-  "i18n-ally.localesPaths": "locales",
-  "i18n-ally.sourceLanguage": "en",
-  "i18n-ally.keystyle": "nested",
-  "i18n-ally.extract.autoDetect": true,
-  "i18n-ally.editor.preferEditor": true,
-  "i18n-ally.translate.saveAsCandidates": true,
-  "i18n-ally.refactor.templates": [
+  "i18n-ally-next.localesPaths": "locales",
+  "i18n-ally-next.sourceLanguage": "en",
+  "i18n-ally-next.keystyle": "nested",
+  "i18n-ally-next.extract.autoDetect": true,
+  "i18n-ally-next.editor.preferEditor": true,
+  "i18n-ally-next.translate.saveAsCandidates": true,
+  "i18n-ally-next.refactor.templates": [
     {
       "source": "html-attribute",
       "template": "z('{key}'{args})"
@@ -17,10 +17,10 @@
       ]
     }
   ],
-  "i18n-ally.extract.ignored": [
+  "i18n-ally-next.extract.ignored": [
     "Hello"
   ],
-  "i18n-ally.extract.ignoredByFiles": {
+  "i18n-ally-next.extract.ignoredByFiles": {
     "Demo.vue": [
       "Demo"
     ],

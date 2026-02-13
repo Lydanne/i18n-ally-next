@@ -1,6 +1,6 @@
 import path from 'path'
-import Mocha from 'mocha'
 import fg from 'fast-glob'
+import Mocha from 'mocha'
 import { window } from 'vscode'
 
 export function createRunner(dir: string) {
@@ -26,7 +26,6 @@ export function createRunner(dir: string) {
       })
     }
     catch (err) {
-      // eslint-disable-next-line no-console
       console.error(err)
       setTimeout(() => process.exit(1), 2000)
     }

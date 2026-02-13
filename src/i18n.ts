@@ -15,7 +15,7 @@ export default class i18n {
   }
 
   static format(str: string, args: any[]) {
-    return str.replace(/{(\d+)}/g, (match, number) => {
+    return str.replace(/\{(\d+)\}/g, (match, number) => {
       return typeof args[number] !== 'undefined'
         ? args[number].toString()
         : match

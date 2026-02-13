@@ -1,161 +1,160 @@
 <p align="center">
-<img src="https://github.com/lokalise/i18n-ally/blob/main/screenshots/full-logo-new.png?raw=true" alt="logo" width="450"/>
+<img src="https://github.com/lydanne/i18n-ally-next/blob/main/res/logo.png?raw=true" alt="i18n Ally Next" width="128"/>
 </p>
 
-<p align='center'>
-English | <a href="https://github.com/lokalise/i18n-ally/blob/main/README.zh-CN.md">简体中文</a>
+<h1 align="center">i18n Ally Next</h1>
+
+<p align="center">
+<b>All in one i18n extension for VS Code</b>
 </p>
 
 <p align="center">
-<a href="https://marketplace.visualstudio.com/items?itemName=lokalise.i18n-ally" target="__blank"><img src="https://img.shields.io/visual-studio-marketplace/v/lokalise.i18n-ally?color=blue&amp;label=VS%20Code%20Marketplace&logo=visual-studio-code" alt="Visual Studio Marketplace Version" /></a>
-<a href="https://marketplace.visualstudio.com/items?itemName=lokalise.i18n-ally" target="__blank"><img src="https://img.shields.io/visual-studio-marketplace/d/lokalise.i18n-ally?color=4bdbe3" alt="Visual Studio Marketplace Downloads" /></a>
-<a href="https://marketplace.visualstudio.com/items?itemName=lokalise.i18n-ally" target="__blank"><img src="https://img.shields.io/visual-studio-marketplace/i/lokalise.i18n-ally?color=63ba83" alt="Visual Studio Marketplace Installs" /></a>
-<br/>
-<a href="https://github.com/lokalise/i18n-ally/wiki" target="__blank"><img alt="Wiki" src="https://img.shields.io/static/v1?label=docs&message=wiki&color=e3897b"></a>
-<a href="https://github.com/lokalise/i18n-ally" target="__blank"><img src="https://img.shields.io/github/last-commit/lokalise/i18n-ally?color=c977be" alt="GitHub last commit" /></a>
-<a href="https://github.com/lokalise/i18n-ally/issues" target="__blank"><img src="https://img.shields.io/github/issues/lokalise/i18n-ally?color=a38eed" alt="GitHub issues" /></a>
-<a href="https://github.com/lokalise/i18n-ally" target="__blank"><img alt="GitHub stars" src="https://img.shields.io/github/stars/lokalise/i18n-ally?style=social"></a>
+English | <a href="https://github.com/lydanne/i18n-ally-next/blob/main/README.zh-CN.md">简体中文</a>
 </p>
-
-<p align='center'>
-<b>v2.0</b> is released with new <a href='https://github.com/lokalise/i18n-ally/wiki/Editor-UI'>Editor UI</a> and <a href='https://github.com/lokalise/i18n-ally/wiki/Review-&-Collaboration-System'>Review System</a> 🎉
-</p>
-
-<p align='center'><i>
-<a href="https://github.com/lokalise/i18n-ally/wiki/Migration-v1.x">Migrate from v1.x</a>
-</i></p>
-<br>
 
 <p align="center">
-<a href='https://github.com/lokalise/i18n-ally/wiki/Supported-Frameworks' target="__blank">
-<img src="https://github.com/lokalise/i18n-ally/blob/screenshots/supported-frameworks.png?raw=true" alt="Supported Frameworks" width="550"/>
-</a>
+<a href="https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next"><img src="https://img.shields.io/visual-studio-marketplace/v/lydanne.i18n-ally-next?color=6366f1&amp;label=Marketplace&logo=visual-studio-code" alt="VS Code Marketplace" /></a>
+<a href="https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next"><img src="https://img.shields.io/visual-studio-marketplace/d/lydanne.i18n-ally-next?color=06b6d4" alt="Downloads" /></a>
+<a href="https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next"><img src="https://img.shields.io/visual-studio-marketplace/i/lydanne.i18n-ally-next?color=10b981" alt="Installs" /></a>
+<a href="https://github.com/lydanne/i18n-ally-next"><img alt="GitHub stars" src="https://img.shields.io/github/stars/lydanne/i18n-ally-next?style=social"></a>
 </p>
 
-<h3 align="center">Maintained by</h3>
-<p align="center">
-<a title="Lokalise: accelerate localization from code to delivery" href="https://lokalise.com/?utm_source=vscmarket&amp;utm_campaign=i18nally&amp;utm_medium=banner"><img src="https://github.com/lokalise/i18n-ally/raw/screenshots/lokalise-logo.png?raw=true" alt="Lokalise logo" width="275px"></a><br>
-<sup>Lokalise is the fastest growing language cloud technology made by developers, for developers.<br>
-As a collaborative productivity platform, it helps structure and automate the translation and localization process for any company in the world.<br>
-<a title="Lokalise: accelerate localization from code to delivery" href="https://lokalise.com/?utm_source=vscmarket&amp;utm_campaign=i18nally&amp;utm_medium=banner">Learn more</a></sup>
-</p>
+---
 
-<br>
+## Features
 
-<br>
+- **🌍 Inline Annotations** — See translations directly in your code
+- **🔍 Hover Preview** — Preview all translations with hover, edit in one click
+- **📦 Extract Hard Strings** — Detect and extract hard-coded strings to locale files
+- **🤖 Machine Translation** — Google, DeepL, Baidu, OpenAI, and Editor built-in LLM (Cursor/Windsurf/VSCode Copilot)
+- **🗂 Namespace** — Organize translations with `t("ns:key")` style
+- **📝 Review System** — Built-in translation review and collaboration
+- **🧩 30+ Frameworks** — Vue, React, Angular, Svelte, Flutter, and more
+- **🎨 Custom Framework** — Define your own framework via YAML config
+- **⚡ Translate All Missing** — One-click translate all missing and stale keys for any locale
+- **🕐 Stale Translation Detection** — Detect outdated translations when source text changes, re-translate one by one or all at once
+- **🔎 Scan & Extract All** — Scan entire project for hard-coded strings and batch extract them into i18n keys
+- **🧠 Editor LLM Translation** — Auto-detect Cursor/Windsurf/VSCode and use the built-in LLM for translation with batch support
 
-<h4 align="center">
-<a href="https://github.com/lokalise/i18n-ally/wiki">📖 Docs</a>
-&nbsp;|&nbsp;
-<a href="https://github.com/lokalise/i18n-ally/wiki/FAQ">💭 FAQ</a>
-&nbsp;|&nbsp;
-<a href="https://github.com/lokalise/i18n-ally/wiki/Configurations">⚙️ Configs</a>
-&nbsp;|&nbsp;
-<a href="https://github.com/lokalise/i18n-ally/wiki/Locale-Formats#supported-locale-formats">📜 Supported Formats</a>
-&nbsp;|&nbsp;
-<a href="https://github.com/lokalise/i18n-ally/wiki/Contribute">🧱 Contribute</a>
-</h4>
+## Quick Start
 
-<br>
-<br>
+```jsonc
+// .vscode/settings.json
+{
+  "i18n-ally-next.localesPaths": ["src/locales"],
+  "i18n-ally-next.sourceLanguage": "en",
+  "i18n-ally-next.displayLanguage": "zh-CN"
+}
+```
 
-<h3 align='center'>Demo</h3>
+> The framework is auto-detected from your `package.json`. See [Supported Frameworks](#supported-frameworks) for the full list.
 
-<div align="center">
+## Screenshots
 
-[![i18n-ally on VS code demo](https://img.youtube.com/vi/kowM-MoGVns/0.jpg)](https://youtu.be/kowM-MoGVns)
+<h4 align="center">Inline Annotations</h4>
 
-</div>
+![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/annotation-animated.gif?raw=true)
 
-<br>
-<br>
+<h4 align="center">Hover and Direct Actions</h4>
 
-<h3 align='center'>Inline Annotations</h3>
+![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/hover.png?raw=true)
 
-![](https://github.com/lokalise/i18n-ally/blob/screenshots/annotation-animated.gif?raw=true)
+<h4 align="center">Editor UI & Review System</h4>
 
-<h3 align='center'>Hover and Direct Actions</h3>
+![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/review-editor.png?raw=true)
 
-![](https://github.com/lokalise/i18n-ally/blob/screenshots/hover.png?raw=true)
+<h4 align="center">Extract Translations from Code</h4>
 
-<h3 align='center'>Manage All Translations in One Place</h3>
+![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/extract.png?raw=true)
 
-![](https://github.com/lokalise/i18n-ally/blob/screenshots/review-sidebar.png?raw=true)
+<h4 align="center">Machine Translation</h4>
 
-<h3 align='center'><a href='https://github.com/lokalise/i18n-ally/wiki/Editor-UI'>Editor UI</a> & <a href='https://github.com/lokalise/i18n-ally/wiki/Review-&-Collaboration-System'>Review System</a></h3>
+![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/quick-actions.png?raw=true)
 
-![](https://github.com/lokalise/i18n-ally/blob/screenshots/review-editor.png?raw=true)
+## Supported Frameworks
 
-<h3 align='center'>Extract Translations from Code</h3>
+| Category | Frameworks |
+| --- | --- |
+| **Vue** | Vue I18n, Vue SFC, Fluent Vue |
+| **React** | React I18next, React Intl, Lingui |
+| **Next.js** | next-intl, next-i18next, next-translate, next-international |
+| **Angular** | ngx-translate, Transloco |
+| **Others** | Svelte, Ember, i18n-tag, Polyglot, Globalize, UI5 |
+| **Mobile** | Flutter |
+| **Backend** | Laravel, Ruby on Rails, PHP Gettext |
+| **Tools** | VS Code Extension, Chrome Extension, Jekyll |
+| **Custom** | [Define your own framework](https://lydanne.github.io/i18n-ally-next/guide/custom-framework) |
 
-![](https://github.com/lokalise/i18n-ally/blob/screenshots/extract.png?raw=true)
+## Inline Annotation Mode
 
-<h3 align='center'>Report Missing Translations</h3>
+By default, translations are shown as inline annotations after the key. You can customize this behavior:
 
-![](https://github.com/lokalise/i18n-ally/blob/screenshots/problems.png?raw=true)
+```jsonc
+// .vscode/settings.json
+{
+  "i18n-ally-next.annotationInPlace": true,
+  "i18n-ally-next.annotationInPlaceFullMatch": true
+}
+```
 
-<h3 align='center'>Machine Translation</h3>
+| Setting | Effect |
+| --- | --- |
+| `annotationInPlace: false` | `t('key')` · translated text |
+| `annotationInPlace: true` | `t(`translated text`)` — hides the key only |
+| `annotationInPlaceFullMatch: true` | translated text — hides the entire function call |
 
-![](https://github.com/lokalise/i18n-ally/blob/screenshots/quick-actions.png?raw=true)
+![Annotation Full Match Mode](./res/annotation-full-match.png)
 
-<h3 align='center'>Annotations for JSON and YAML</h3>
+> **Note:** When `annotationInPlaceFullMatch` is enabled, moving the cursor to the line will restore the original code for editing. The `annotationMaxLength` limit is automatically disabled in this mode, so translations are shown in full without truncation.
 
-![](https://github.com/lokalise/i18n-ally/blob/screenshots/annotation-locale.png?raw=true)
+The translated text color in full match mode defaults to `#ce9178` (string color in Dark+ theme). You can customize it:
 
-<h3 align="center">General Features</h3>
+```jsonc
+// .vscode/settings.json
+{
+  "i18n-ally-next.theme.annotationInPlaceFullMatch": "#ce9178" // Dark theme
+  // "i18n-ally-next.theme.annotationInPlaceFullMatch": "#a31515" // Light theme
+}
+```
 
-- Supports multi-root workspaces
-- Supports remote development
-- Supports numerous popular frameworks
-- Supports [linked locale messages](https://kazupon.github.io/vue-i18n/guide/messages.html#linked-locale-messages)
-- Uses i18n for the extension itself, of course. [Translation List](https://github.com/lokalise/i18n-ally#-multilingual-support)
+## Optional Dependencies
 
+Some advanced features require additional packages to be installed **in your project**:
+
+| Feature | When needed | Install |
+| --- | --- | --- |
+| **Vue SFC `<i18n>` block** | Using inline `<i18n>` blocks in `.vue` files | `npm i -D vue-template-compiler vue-i18n-locale-message` |
+| **Fluent Vue SFC** | Using Fluent syntax in `.vue` SFC files | `npm i -D fluent-vue-cli` |
+
+> **Note:** If you use standalone locale files (e.g. `locales/en.json`), no extra dependencies are needed. The above packages are only required for SFC inline translation blocks.
+
+## Documentation
+
+📖 **[Full Documentation](https://lydanne.github.io/i18n-ally-next/)** — Getting started, configuration, namespace, custom framework, and more.
 
 ## 🌍 Multilingual Support
 
-This extension itself supports i18n as well. It will be auto-matched to the display language you use in your VS Code editor. We currently support the following languages.
+This extension itself supports i18n. It auto-matches your VS Code display language.
 
-| Language | Maintainer | Contributors |
+| Language | Language | Language |
 | --- | --- | --- |
-| English    | [@antfu](https://github.com/antfu)          | [@rubjo](https://github.com/rubjo), [@EdRands](https://github.com/EdRands) |
-| Simplified Chinese (简体中文)  | [@antfu](https://github.com/antfu)           |       |
-| Traditional Chinese (繁體中文)  | [@antfu](https://github.com/antfu)           |       |
-| Norwegian (Norsk)  |  | [@rubjo](https://github.com/rubjo)       |
-| Spanish (Español) |  | [@Baltimer](https://github.com/Baltimer) |
-| Japanese (日本語) |  | [@isdh](https://github.com/isdh) |
-| Dutch (Nederlands) |  | [@Niekvdm](https://github.com/Niekvdm), [@Excalibaard](https://github.com/Excalibaard) |
-| Portuguese (Brazilian)  |  | [@Ibcs16](https://github.com/Ibcs16) |
-| French (Français) |  | [@Nicoxx45](https://github.com/Nicoxx45), [@eri](https://github.com/eri), [@Frank](https://github.com/FrankSAURET) |
-| Swedish (Svenska) | [@vladdeSV](https://github.com/vladdeSV) |  |
-| Ukrainian (Українська) |  | [@uhodav](https://github.com/uhodav) |
-| Russian (Русский) |  | [@uhodav](https://github.com/uhodav) |
-| German (Deutsch) | [@alexanderniebuhr](https://github.com/alexanderniebuhr) | |
-| Thai (ภาษาไทย) | [@watchakorn-18k](https://github.com/watchakorn-18k) |  |
-| Turkish (Türkçe) |  | [@eri](https://github.com/eri), [@dilekerkut](https://github.com/dilekerkut) |
-| Korean (한국어) |  | [@moka-ayumu](https://github.com/moka-ayumu) |
-| Hungarian (Magyar)  | [@Cs4K1Sr4C](https://github.com/Cs4K1Sr4C)  | [@Cs4K1Sr4C](https://github.com/Cs4K1Sr4C)  |
+| English | 简体中文 | 繁體中文 |
+| 日本語 | 한국어 | Deutsch |
+| Français | Español | Português (BR) |
+| Русский | Українська | Türkçe |
+| Nederlands | Svenska | Norsk |
+| Magyar | ภาษาไทย | |
 
-[**Help Translate**](https://github.com/lokalise/i18n-ally/wiki/Contribute#working-on-translations)
+> Want to help translate? See [Contributing](https://lydanne.github.io/i18n-ally-next/guide/faq).
 
-> 👨‍💻 If you would like to help a language's translation up to date, feel free to put your name in the **Maintainers** field. I will @mention you when needed. Much appreciated.
+## ❤️ Credits
 
-## ❤️ Thanks
+This extension was originally inspired by [think2011/vscode-vue-i18n](https://github.com/think2011/vscode-vue-i18n). Vue SFC support is powered by [kazupon/vue-i18n-locale-message](https://github.com/kazupon/vue-i18n-locale-message).
 
-This extension was inspired by [think2011/vscode-vue-i18n](https://github.com/think2011/vscode-vue-i18n), it wouldn't exist without [@think2011](https://github.com/think2011)'s great work.
+### Contributors
 
-Support for Vue Single File Component (SFC) is powered by [kazupon/vue-i18n-locale-message](https://github.com/kazupon/vue-i18n-locale-message), which is created by the author of vue-i18n. Thanks for making this!
-
-
-### Code Contributors
-
-My great thanks to all the awesome contributors:
-
-<a href="https://github.com/lokalise/i18n-ally/graphs/contributors"><img src="https://contrib.rocks/image?repo=lokalise/i18n-ally" /></a>
+<a href="https://github.com/lydanne/i18n-ally-next/graphs/contributors"><img src="https://contrib.rocks/image?repo=lydanne/i18n-ally-next" /></a>
 
 ## 📄 License
 
-[MIT License](https://github.com/lokalise/i18n-ally/blob/master/LICENSE) © 2021-PRESENT [Lokalise](https://github.com/lokalise)
-
-MIT License © 2019-2020 [Anthony Fu](https://github.com/antfu)
-
-MIT License © 2018-2019 [think2011](https://github.com/think2011)
+[MIT](./LICENSE) © 2025-PRESENT [Lydanne](https://github.com/lydanne) | MIT © 2021-2024 [Lokalise](https://github.com/lokalise) | MIT © 2019-2020 [Anthony Fu](https://github.com/antfu) | MIT © 2018-2019 [think2011](https://github.com/think2011)

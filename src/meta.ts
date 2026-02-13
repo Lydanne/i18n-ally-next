@@ -1,8 +1,8 @@
-export const EXT_NAMESPACE = 'i18n-ally'
-export const EXT_ID = 'lokalise.i18n-ally'
-export const EXT_NAME = 'i18n Ally'
-export const EXT_EDITOR_ID = 'i18n-ally-editor'
-export const EXT_REVIEW_ID = 'i18n-ally-review'
+export const EXT_NAMESPACE = 'i18n-ally-next'
+export const EXT_ID = 'lydanne.i18n-ally-next'
+export const EXT_NAME = 'i18n Ally Next'
+export const EXT_EDITOR_ID = 'i18n-ally-next-editor'
+export const EXT_REVIEW_ID = 'i18n-ally-next-review'
 
 export const EXT_LEGACY_NAMESPACE = 'vue-i18n-ally'
 
@@ -14,7 +14,7 @@ export const QUOTE_SYMBOLS = '\'"`'
 export const THROTTLE_DELAY = 800
 export const FILEWATCHER_TIMEOUT = 100
 
-export const linkKeyMatcher = /(?:@(?:\.[a-z]+)?:(?:[\w\-_|.]+|\([\w\-_|.]+\)))/g
+export const linkKeyMatcher = /(?:@(?:\.[a-z]+)?:(?:[\w\-|.]+|\([\w\-|.]+\)))/g
 export const linkKeyPrefixMatcher = /^@(?:\.([a-z]+))?:/
 export const bracketsMatcher = /[()]/g
 export const linkedKeyModifiers = {
@@ -30,5 +30,5 @@ export const DEFAULT_LOCALE_COUNTRY_MAP = {
   ja: 'ja',
   es: 'es',
   vi: 'vn',
-  lb: 'lu'
+  lb: 'lu',
 }

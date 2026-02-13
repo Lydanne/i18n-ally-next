@@ -1,6 +1,6 @@
-import { ProgressRootItem } from './ProgressRootItem'
-import { ProgressSubmenuItem } from './ProgressSubmenuItem'
+import type { ProgressRootItem } from './ProgressRootItem'
 import { Config } from '~/core'
+import { ProgressSubmenuItem } from './ProgressSubmenuItem'
 
 export class ProgressEmptyListItem extends ProgressSubmenuItem {
   constructor(protected root: ProgressRootItem) {

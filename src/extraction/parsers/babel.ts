@@ -1,10 +1,11 @@
+import type { ExtractionRule } from '../rules'
+import type { ExtractionBabelOptions } from './options'
+import type { DetectionResult } from '~/core/types'
 import { parse } from '@babel/parser'
 // @ts-ignore
 import traverse from '@babel/traverse'
-import { DefaultDynamicExtractionsRules, DefaultExtractionRules, ExtractionRule } from '../rules'
+import { DefaultDynamicExtractionsRules, DefaultExtractionRules } from '../rules'
 import { shouldExtract } from '../shouldExtract'
-import { ExtractionBabelOptions } from './options'
-import { DetectionResult } from '~/core/types'
 
 const defaultOptions: Required<ExtractionBabelOptions> = {
   ignoredJSXAttributes: ['class', 'className', 'key', 'style', 'ref', 'onClick'],
@@ -98,13 +99,46 @@ export function detect(
           recordIgnore(i)
       })
     },
-    // ignore `console.xxx`
+    // ignore import/export declarations
+    ImportDeclaration(path: any) {
+      recordIgnore(path)
+    },
+    ExportNamedDeclaration(path: any) {
+      if (path.node.source)
+        recordIgnore(path.node.source)
+    },
+    ExportAllDeclaration(path: any) {
+      recordIgnore(path)
+    },
+    // ignore require('...')
     CallExpression(path: any) {
-      if (customCallExpression) customCallExpression(path, recordIgnore)
+      if (customCallExpression)
+        customCallExpression(path, recordIgnore)
       const callee = path.get('callee')
-      if (!callee.isMemberExpression()) return
+      if (callee.isIdentifier({ name: 'require' })) {
+        recordIgnore(path)
+        return
+      }
+      if (!callee.isMemberExpression())
+        return
       if (isGlobalConsoleId(callee.get('object')))
         recordIgnore(path)
+    },
+    // ignore object property keys (e.g. { key: value })
+    ObjectProperty(path: any) {
+      if (path.node.key)
+        recordIgnore(path.node.key)
+    },
+    // ignore type annotations (TypeScript)
+    TSTypeReference(path: any) {
+      recordIgnore(path)
+    },
+    TSLiteralType(path: any) {
+      recordIgnore(path)
+    },
+    // ignore enum members
+    TSEnumMember(path: any) {
+      recordIgnore(path.node.id)
     },
   })
 

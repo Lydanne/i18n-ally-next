@@ -1,10 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable unused-imports/no-unused-vars */
+import type { FlattenLocaleTree } from '../Nodes'
+import type { Coverage, DataProcessContext, FileInfo, NodeOptions, PendingWrite, RewriteKeyContext, RewriteKeySource } from '../types'
+import { isObject, uniq } from 'lodash'
 import { Disposable, EventEmitter } from 'vscode'
-import { uniq, isObject } from 'lodash'
-import { LocaleTree, LocaleNode, LocaleRecord, FlattenLocaleTree } from '../Nodes'
-import { Coverage, FileInfo, PendingWrite, NodeOptions, RewriteKeySource, RewriteKeyContext, DataProcessContext } from '../types'
+import { NodeHelper, resolveFlattenRoot, resolveFlattenRootKeypath } from '~/utils'
 import { Config, Global } from '..'
-import { resolveFlattenRootKeypath, resolveFlattenRoot, NodeHelper } from '~/utils'
+import { LocaleNode, LocaleRecord, LocaleTree } from '../Nodes'
 
 const NESTED_PLURALIZATION_KEYS = ['one', 'other', 'zero', 'two', 'few', 'many']
 export abstract class Loader extends Disposable {
@@ -76,17 +77,17 @@ export abstract class Loader extends Disposable {
 
       const newKeyPath = keypath
         ? (isCollection
-          ? `${keypath}[${key}]`
-          : `${keypath}.${key}`)
+            ? `${keypath}[${key}]`
+            : `${keypath}.${key}`)
         : (isCollection
-          ? `[${key}]`
-          : key)
+            ? `[${key}]`
+            : key)
 
       let node = tree.getChild(key)
 
       // should go nested
       if (Array.isArray(value)) {
-        let subtree: LocaleTree|undefined
+        let subtree: LocaleTree | undefined
         if (node && node.type === 'tree')
           subtree = node as LocaleTree
 
@@ -95,7 +96,7 @@ export abstract class Loader extends Disposable {
       }
 
       if (isObject(value)) {
-        let subtree: LocaleTree|undefined
+        let subtree: LocaleTree | undefined
         if (node && node.type === 'tree')
           subtree = node as LocaleTree
 
@@ -239,8 +240,8 @@ export abstract class Loader extends Disposable {
 
       let text = JSON
         .stringify(value, null, stringifySpace)
-        .replace(/"(\w+?)":/g, ' $1:')
-        .replace(/}/, ' }')
+        .replace(/"(\w+)":/g, ' $1:')
+        .replace(/\}/, ' }')
 
       if (maxlength && text.length > maxlength) {
         if (node.isCollection)
@@ -322,7 +323,7 @@ export abstract class Loader extends Disposable {
     return locales
   }
 
-  abstract write (pendings: PendingWrite | PendingWrite[]): Promise<void>
+  abstract write(pendings: PendingWrite | PendingWrite[]): Promise<void>
 
   canHandleWrites(pending: PendingWrite) {
     return false

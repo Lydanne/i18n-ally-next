@@ -1,14 +1,14 @@
+import type { ExtensionModule } from '~/modules'
 import { flatten } from 'lodash'
 import annotation from './annotation'
 import completion from './completion'
-import extract from './extract'
 import definition from './definition'
-import refactor from './refactor'
+import extract from './extract'
 import problems from './problems'
+import refactor from './refactor'
 import reference from './reference'
-import statusbar from './statusbar'
 import reviewComments from './reviewComments'
-import { ExtensionModule } from '~/modules'
+import statusbar from './statusbar'
 
 const m: ExtensionModule = (ctx) => {
   return flatten([

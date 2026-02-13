@@ -1,8 +1,8 @@
-import { ExtensionContext } from 'vscode'
-import { BaseTreeItem } from '.'
-import i18n from '~/i18n'
-import { TranslationCandidateWithMeta } from '~/core'
+import type { ExtensionContext } from 'vscode'
+import type { TranslationCandidateWithMeta } from '~/core'
 import { Commands } from '~/commands'
+import i18n from '~/i18n'
+import { BaseTreeItem } from '.'
 
 export class ReviewTranslationCandidatesItem extends BaseTreeItem {
   constructor(

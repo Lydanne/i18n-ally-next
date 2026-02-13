@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
-import { resolve, join } from 'path'
+import { join, resolve } from 'path'
 import { runTests } from '@vscode/test-electron'
+import chalk from 'chalk'
 import fg from 'fast-glob'
 import fs from 'fs-extra'
-import chalk from 'chalk'
 
 const args = process.argv.slice(2)
 

@@ -1,12 +1,12 @@
+import type { CommandOptions } from '~/commands/manipulations/common'
 import { randomUUID } from 'crypto'
 import * as amplitude from '@amplitude/analytics-node'
-import { version } from '../../package.json'
-import { Config } from './Config'
-import { Log } from '~/utils'
 import { isDev, isProd, isTest } from '~/env'
 import { Global } from '~/extension'
+import { Log } from '~/utils'
 import { LocaleTreeItem, ProgressSubmenuItem } from '~/views'
-import { CommandOptions } from '~/commands/manipulations/common'
+import { version } from '../../package.json'
+import { Config } from './Config'
 
 const AMPLITUDE_API = isProd
   ? '710028b04f0f9274085eec6885e94ceb' // Prod
@@ -40,7 +40,7 @@ export enum TelemetryKey {
   TranslateKey = 'translate_key',
   Updated = 'updated',
   ReviewEditComment = 'review_edit_comment',
-  ReviewResolveComment = 'review_resolve_comment'
+  ReviewResolveComment = 'review_resolve_comment',
 }
 
 export enum ActionSource {
@@ -50,12 +50,12 @@ export enum ActionSource {
   Hover = 'hover',
   ContextMenu = 'context_menu',
   UiEditor = 'ui_editor',
-  Review = 'review'
+  Review = 'review',
 }
 
 export class Telemetry {
   private static _userProperties: object
-  private static _amplitude: amplitude.Types.NodeClient
+  private static _amplitude: ReturnType<typeof amplitude.createInstance>
 
   static async track(key: TelemetryKey, properties?: Record<string, any>, immediate = false) {
     const isEnabled = Config.telemetry && !isTest
@@ -101,10 +101,10 @@ export class Telemetry {
   }
 
   private static _getUserId() {
-    let userId = Config.ctx.globalState.get('i18n-ally.telemetry-user-id') ?? ''
+    let userId = Config.ctx.globalState.get('i18n-ally-next.telemetry-user-id') ?? ''
     if (!userId) {
       userId = randomUUID()
-      Config.ctx.globalState.update('i18n-ally.telemetry-user-id', userId)
+      Config.ctx.globalState.update('i18n-ally-next.telemetry-user-id', userId)
     }
     Log.info(`📈 Telemetry id: ${userId}`)
     return userId

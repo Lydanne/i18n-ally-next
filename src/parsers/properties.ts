@@ -1,4 +1,3 @@
-
 // @ts-ignore
 import properties from 'properties'
 import { Parser } from './base'

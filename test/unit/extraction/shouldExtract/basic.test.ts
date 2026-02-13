@@ -7,7 +7,6 @@ const rules = [
 
 const includes = [
   'Created',
-  '✅',
   'Follow this link: https://lokalise.com/features/in-context-editing',
   '<a href="mailto:some@example.com">some@example.com</a>',
   'Our region is us-east-1.',

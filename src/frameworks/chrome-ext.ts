@@ -1,6 +1,6 @@
-import { RewriteKeySource } from '../core/types'
+import type { RewriteKeySource } from '../core/types'
+import type { LanguageId } from '~/utils'
 import { Framework } from './base'
-import { LanguageId } from '~/utils'
 
 class ChromeExtensionFramework extends Framework {
   id = 'chrome-ext'

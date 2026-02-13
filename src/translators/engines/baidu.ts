@@ -1,8 +1,9 @@
+import type { TranslateOptions, TranslateResult } from './base'
 import crypto from 'crypto'
 import axios from 'axios'
 import qs from 'qs'
-import TranslateEngine, { TranslateOptions, TranslateResult } from './base'
 import { Config } from '~/core'
+import TranslateEngine from './base'
 
 interface BaiduSignOptions {
   appid: string | null | undefined
@@ -77,7 +78,8 @@ export default class BaiduTranslate extends TranslateEngine {
     }
     catch (e) {}
 
-    if (!r.result) r.error = new Error((`[${response.error_code}] ${response.error_msg}`) || 'No result')
+    if (!r.result)
+      r.error = new Error((`[${response.error_code}] ${response.error_msg}`) || 'No result')
 
     return r
   }

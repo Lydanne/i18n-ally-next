@@ -1,18 +1,22 @@
+import type { ExtensionModule } from '~/modules'
 import { flatten } from 'lodash'
-import configLocales from './configLocalePaths'
+import checkStaleTranslations from './checkStaleTranslations'
 import configLanguages from './configLanguages'
-import keyManipulations from './keyManipulations'
-import extractText from './extractString'
-import detectHardStrings from './detectHardStrings'
-import help from './help'
-import refreshUsageReport from './refreshUsageReport'
-import editor from './openEditor'
-import review from './review'
+import configLocales from './configLocalePaths'
 import deepl from './deepl'
-import gotoRange from './gotoRange'
-import gotoNextUsage from './gotoNextUsage'
+import detectHardStrings from './detectHardStrings'
+import extractText from './extractString'
 import batchHardStringsExtract from './extractStringBulk'
-import { ExtensionModule } from '~/modules'
+import gotoNextUsage from './gotoNextUsage'
+import gotoRange from './gotoRange'
+import help from './help'
+import keyManipulations from './keyManipulations'
+import editor from './openEditor'
+import refreshUsageReport from './refreshUsageReport'
+import review from './review'
+import scanAndExtractAll from './scanAndExtractAll'
+import selectEditorLLMModel from './selectEditorLLMModel'
+import translateAllMissing from './translateAllMissing'
 
 const m: ExtensionModule = (ctx) => {
   return flatten([
@@ -29,6 +33,10 @@ const m: ExtensionModule = (ctx) => {
     deepl(ctx),
     gotoRange(ctx),
     gotoNextUsage(ctx),
+    translateAllMissing(ctx),
+    scanAndExtractAll(ctx),
+    checkStaleTranslations(ctx),
+    selectEditorLLMModel(ctx),
   ])
 }
 

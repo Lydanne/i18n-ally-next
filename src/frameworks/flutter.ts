@@ -1,9 +1,9 @@
+import type { LanguageId } from '~/utils'
 import { Framework } from './base'
-import { LanguageId } from '~/utils'
 
 class FlutterFramework extends Framework {
-  id= 'flutter'
-  display= 'Flutter'
+  id = 'flutter'
+  display = 'Flutter'
 
   detection = {
     pubspecYAML: [

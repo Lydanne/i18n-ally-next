@@ -1,4 +1,4 @@
-import { Range, TextDocument } from 'vscode'
+import type { Range, TextDocument } from 'vscode'
 
 export interface OptionalFeatures {
   VueSfc?: boolean
@@ -52,9 +52,15 @@ export interface TranslationCandidateWithMeta extends TranslationCandidate {
   locale: string
 }
 
+export interface SourceSnapshot {
+  text: string
+  time: string
+}
+
 export interface ReviewData {
   reviews: Record<string, {
     description?: string
+    source_snapshot?: SourceSnapshot
     locales?: Record<string, {
       translation_candidate?: TranslationCandidate
       comments?: ReviewComment[]
@@ -115,6 +121,8 @@ export interface KeyInDocument {
   end: number
   key: string
   quoted: boolean
+  fullMatchStart?: number
+  fullMatchEnd?: number
 }
 
 export interface KeyOccurrence {
@@ -151,8 +159,9 @@ export interface DataProcessContext {
 
 export enum TargetPickingStrategy {
   None = 'none',
+  Auto = 'auto',
   MostSimilar = 'most-similar',
-  FilePrevious ='file-previous',
+  FilePrevious = 'file-previous',
   GlobalPrevious = 'global-previous',
   MostSimilarByKey = 'most-similar-by-key',
 }

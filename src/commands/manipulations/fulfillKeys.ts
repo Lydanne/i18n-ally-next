@@ -1,8 +1,10 @@
+import type { CommandOptions } from './common'
+import type { PendingWrite } from '~/core'
+import type { LocaleTreeItem } from '~/views'
 import { window } from 'vscode'
-import { CommandOptions } from './common'
-import { ProgressSubmenuItem, LocaleTreeItem } from '~/views'
-import { Global, PendingWrite, CurrentFile } from '~/core'
+import { CurrentFile, Global } from '~/core'
 import i18n from '~/i18n'
+import { ProgressSubmenuItem } from '~/views'
 
 const FULFILL_VALUE = ''
 

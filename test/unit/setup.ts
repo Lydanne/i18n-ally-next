@@ -8,7 +8,7 @@ before(() => {
   Snapshot.resetSnapshotRegistry()
 })
 
-beforeEach(function() {
+beforeEach(function () {
   const { currentTest } = this
   const file = currentTest!.file!
   const path = join(dirname(file), '__snapshots__', `${basename(file)}.snap`)

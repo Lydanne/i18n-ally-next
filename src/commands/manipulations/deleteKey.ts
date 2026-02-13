@@ -1,9 +1,10 @@
+import type { LocaleRecord } from '~/core'
 import { window } from 'vscode'
+import { Analyst, CurrentFile } from '~/core'
+import { Telemetry, TelemetryKey } from '~/core/Telemetry'
+import i18n from '~/i18n'
 import { Log } from '~/utils'
 import { LocaleTreeItem, UsageReportRootItem } from '~/views'
-import i18n from '~/i18n'
-import { LocaleRecord, CurrentFile, Analyst } from '~/core'
-import { Telemetry, TelemetryKey } from '~/core/Telemetry'
 
 export async function DeleteRecords(records: LocaleRecord[]) {
   try {
@@ -44,16 +45,18 @@ export async function DeleteKey(item: LocaleTreeItem | UsageReportRootItem) {
       i18n.t('prompt.delete_key', node.keypath),
       { modal: true },
       Yes,
-    ))
+    )) {
       return
+    }
   }
   else if (item instanceof UsageReportRootItem && item.key === 'idle') {
     if (Yes !== await window.showInformationMessage(
       i18n.t('prompt.delete_keys_not_in_use', item.keys.length),
       { modal: true },
       Yes,
-    ))
+    )) {
       return
+    }
 
     for (const usage of item.keys) {
       const node = CurrentFile.loader.getNodeByKey(usage.keypath)

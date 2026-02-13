@@ -1,5 +1,4 @@
-
-import { set, get, isObject } from 'lodash'
+import { get, isObject, set } from 'lodash'
 
 export const ROOT_KEY = '__i18n_ally_root__'
 
@@ -13,7 +12,7 @@ export function flatten(data: any) {
       const type = Object.prototype.toString.call(value)
       const isobject
         = type === '[object Object]'
-        || type === '[object Array]'
+          || type === '[object Array]'
 
       const newKey = key === ROOT_KEY
         ? prev || ''

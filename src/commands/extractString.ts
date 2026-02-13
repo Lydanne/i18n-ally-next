@@ -1,14 +1,16 @@
+import type { QuickPickItem, Range, TextDocument } from 'vscode'
+import type { DetectionResult } from '~/core'
+import type { ExtensionModule } from '~/modules'
 import { relative } from 'path'
-import { commands, window, QuickPickItem, Range, TextDocument } from 'vscode'
 import { trim } from 'lodash'
-import { overrideConfirm } from './overrideConfirm'
-import { Commands } from './commands'
-import { keypathValidate, Log, promptTemplates } from '~/utils'
-import { ExtensionModule } from '~/modules'
-import { extractHardStrings, generateKeyFromText, Config, CurrentFile, DetectionResult, Telemetry, TelemetryKey } from '~/core'
-import i18n from '~/i18n'
-
+import { commands, window } from 'vscode'
+import { Config, CurrentFile, extractHardStrings, generateKeyFromText, Telemetry, TelemetryKey } from '~/core'
 import { parseHardString } from '~/extraction/parseHardString'
+import i18n from '~/i18n'
+import { keypathValidate, Log, promptTemplates } from '~/utils'
+import { Commands } from './commands'
+
+import { overrideConfirm } from './overrideConfirm'
 
 interface QuickPickItemWithKey extends QuickPickItem {
   keypath: string
@@ -67,18 +69,18 @@ async function ExtractOrInsertCommnad(options?: ExtractTextOptions, detection?: 
     = isInsert
       ? []
       : loader.keys
-        .map(key => ({
-          description: loader.getValueByKey(key, Config.sourceLanguage, 0),
-          keypath: key,
-        }))
-        .filter(item => item.description === text)
-        .map(i => ({
-          ...i,
-          label: `$(replace-all) ${i.keypath}`,
-          type: 'existed' as const,
-          alwaysShow: true,
-          detail: i18n.t('prompt.existing_translation'),
-        }))
+          .map(key => ({
+            description: loader.getValueByKey(key, Config.sourceLanguage, 0),
+            keypath: key,
+          }))
+          .filter(item => item.description === text)
+          .map(i => ({
+            ...i,
+            label: `$(replace-all) ${i.keypath}`,
+            type: 'existed' as const,
+            alwaysShow: true,
+            detail: i18n.t('prompt.existing_translation'),
+          }))
 
   const getPickItems = (input?: string) => {
     const path = input?.split('.').slice(0, -1).join('.')
@@ -127,7 +129,7 @@ async function ExtractOrInsertCommnad(options?: ExtractTextOptions, detection?: 
     return items
   }
 
-  const extract = async(keypath: string, checkOverride = true) => {
+  const extract = async (keypath: string, checkOverride = true) => {
     if (!keypath) {
       window.showWarningMessage(i18n.t('prompt.extraction_canceled'))
       return

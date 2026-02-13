@@ -1,10 +1,16 @@
-import { workspace, Uri, WorkspaceEdit, Range } from 'vscode'
-import { getVueMessages, mergeVue, MessagesWithLocale } from 'fluent-vue-cli'
-import { PendingWrite, NodeOptions } from '../types'
-import { LocaleTree } from '../Nodes'
-import { Config } from '../Config'
-import { Loader } from './Loader'
+import type { Uri } from 'vscode'
+import type { NodeOptions, PendingWrite } from '../types'
+import { Range, workspace, WorkspaceEdit } from 'vscode'
 import { File, Log } from '~/utils'
+import { Config } from '../Config'
+import { LocaleTree } from '../Nodes'
+import { Loader } from './Loader'
+
+const _fluent: typeof import('fluent-vue-cli') | undefined = (() => {
+  // eslint-disable-next-line ts/no-require-imports
+  try { return require('fluent-vue-cli') }
+  catch { return undefined }
+})()
 
 export class FluentVueSfcLoader extends Loader {
   constructor(
@@ -27,7 +33,9 @@ export class FluentVueSfcLoader extends Loader {
     const filepath = this.filepath
     Log.info(`📑 Loading fluent-vue sfc ${filepath}`)
     const doc = await workspace.openTextDocument(this.uri)
-    const blocks = getVueMessages(doc.getText())
+    if (!_fluent)
+      throw new Error('fluent-vue-cli is not installed')
+    const blocks = _fluent.getVueMessages(doc.getText())
 
     this.updateLocalesTree(blocks)
     this._onDidChange.fire(this.name)
@@ -45,7 +53,7 @@ export class FluentVueSfcLoader extends Loader {
 
   _locales = new Set<string>()
 
-  private updateLocalesTree(blocks: MessagesWithLocale[]) {
+  private updateLocalesTree(blocks: { locale: string, messages: Record<string, string> }[]) {
     this._flattenLocaleTree = {}
     this._locales = new Set()
 
@@ -81,7 +89,9 @@ export class FluentVueSfcLoader extends Loader {
 
       const newTranslation = { [pending.keypath]: pending.value! }
 
-      const newContent = mergeVue(content, pending.locale, newTranslation)
+      if (!_fluent)
+        throw new Error('fluent-vue-cli is not installed')
+      const newContent = _fluent.mergeVue(content, pending.locale, newTranslation)
 
       if (doc.isDirty) {
         const edit = new WorkspaceEdit()

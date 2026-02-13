@@ -1,8 +1,8 @@
 {
-  "i18n-ally.localesPaths": "locales",
-  "i18n-ally.languageTagSystem": "bcp47",
-  "i18n-ally.sourceLanguage": "en",
-  "i18n-ally.keystyle": "nested",
-  "i18n-ally.translate.saveAsCandidates": true,
-  "i18n-ally.enabledFrameworks": ["vue", "react"]
+  "i18n-ally-next.localesPaths": "locales",
+  "i18n-ally-next.languageTagSystem": "bcp47",
+  "i18n-ally-next.sourceLanguage": "en",
+  "i18n-ally-next.keystyle": "nested",
+  "i18n-ally-next.translate.saveAsCandidates": true,
+  "i18n-ally-next.enabledFrameworks": ["vue", "react"]
 }

@@ -1,9 +1,10 @@
+import type { KeyInDocument } from '~/core'
+import type { ExtensionModule } from '~/modules'
 import { commands, Range, window } from 'vscode'
-import { GoToRange } from './gotoRange'
-import { CurrentFile, KeyDetector, KeyInDocument } from '~/core'
+import { CurrentFile, KeyDetector } from '~/core'
 import { Commands } from '~/extension'
-import { ExtensionModule } from '~/modules'
 import { EditorPanel } from '~/webview/panel'
+import { GoToRange } from './gotoRange'
 
 export function getCurrentUsagePos() {
   const editor = window.activeTextEditor
@@ -86,7 +87,7 @@ export function GoToPrevUsage() {
   }
 }
 
-export default <ExtensionModule> function() {
+export default <ExtensionModule> function () {
   return [
     commands.registerCommand(Commands.go_to_next_usage, GoToNextUsage),
     commands.registerCommand(Commands.go_to_prev_usage, GoToPrevUsage),

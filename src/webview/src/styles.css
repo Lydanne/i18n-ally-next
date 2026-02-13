@@ -1,0 +1,174 @@
+:root {
+  --i18n-ally-margin: 0.8rem;
+  --review-approve: #768741;
+  --review-request-change: #d8583e;
+  --review-comment: #efc73d;
+}
+
+body {
+  padding: 0;
+}
+
+body,
+html,
+#app {
+  font-family: var(--vscode-font-family);
+}
+
+.monospace {
+  font-family: var(--vscode-editor-font-family);
+}
+
+/* ── Panel ── */
+.panel {
+  padding: 0.4em;
+  position: relative;
+  display: grid;
+}
+
+.panel::before,
+.panel::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 4px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.panel::before {
+  background: var(--vscode-foreground);
+  opacity: 0.07;
+}
+
+.panel::after {
+  border: 1px solid transparent;
+}
+
+.panel.active::after {
+  border-color: var(--vscode-foreground);
+  opacity: 0.7;
+}
+
+.panel.shadow::before {
+  background: var(--vscode-foreground);
+  opacity: 0.04;
+}
+
+.panel.top-stacked::before,
+.panel.top-stacked::after {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.panel.bottom-stacked::before,
+.panel.bottom-stacked::after {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.panel label {
+  display: block;
+  font-size: 0.8em;
+  margin-left: 0.1em;
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+  opacity: 0.8;
+}
+
+.panel label:not(:first-child) {
+  margin-top: 0.8em;
+}
+
+/* ── Button ── */
+.button {
+  cursor: pointer;
+  position: relative;
+  padding: 0.4em 0.8em;
+  font-size: 0.8em;
+  display: inline-block;
+}
+
+.button .material-design-icon {
+  font-size: 1.2em;
+  margin: -0.1em 0.2em -0.1em -0.2em;
+}
+
+.button .material-design-icon:last-child {
+  margin: -0.1em -0.2em -0.1em -0.2em;
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 3px;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--vscode-foreground);
+  opacity: 0.1;
+}
+
+.button:hover::before {
+  opacity: 0.3;
+}
+
+.button[disabled] {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.button.flat {
+  opacity: 0.5;
+}
+
+.button.flat::before {
+  opacity: 0;
+}
+
+.button.flat:hover {
+  opacity: 1;
+}
+
+.button.flat:hover::before {
+  opacity: 0.2;
+}
+
+.button.request-change:hover::before {
+  background: var(--review-request-change);
+}
+
+.button.approve:hover::before {
+  background: var(--review-approve);
+}
+
+.button.comment:hover::before {
+  background: var(--review-comment);
+}
+
+.buttons .button {
+  margin: 0.3em 0.6em 0.3em 0;
+}
+
+.buttons .button:last-child {
+  margin: 0.3em 0.3em 0.3em 0;
+}
+
+/* ── Focus reset ── */
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+/* ── Loading ── */
+p.loading {
+  padding: var(--i18n-ally-margin);
+}

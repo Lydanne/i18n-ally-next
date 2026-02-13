@@ -1,12 +1,12 @@
+import type { DataProcessContext, RewriteKeyContext, RewriteKeySource } from '../core/types'
+import type { LanguageId } from '~/utils'
 import path from 'path'
-import { RewriteKeySource, DataProcessContext, RewriteKeyContext } from '../core/types'
-import { Framework } from './base'
-import { LanguageId } from '~/utils'
 import { Config, Global } from '~/core'
+import { Framework } from './base'
 
 class RubyRailsFramework extends Framework {
-  id= 'ruby-rails'
-  display= 'Ruby on Rails'
+  id = 'ruby-rails'
+  display = 'Ruby on Rails'
 
   detection = {
     gemfile: [
@@ -56,7 +56,7 @@ class RubyRailsFramework extends Framework {
         // remove file extensions
         .replace(/(?:\.html\.erb|\.html\.haml|\.html\.slim|\.haml)$/, '')
         // map path delimiter to dots
-        .replace(/(?:\/|\\)/g, '.')
+        .replace(/\/|\\/g, '.')
         // omit the starting underscore on each file
         .replace(/\._/g, '.')
         // remove the very starting underscore

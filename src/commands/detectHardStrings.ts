@@ -1,8 +1,9 @@
+import type { DetectionResult } from '~/core'
+import type { ExtensionModule } from '~/modules'
 import { relative } from 'path'
 import { commands, window } from 'vscode'
-import { ExtensionModule } from '~/modules'
-import { Global, DetectionResult, Config } from '~/core'
 import { Commands } from '~/commands'
+import { Config, Global } from '~/core'
 import { trimDetection } from '~/extraction'
 import i18n from '~/i18n'
 

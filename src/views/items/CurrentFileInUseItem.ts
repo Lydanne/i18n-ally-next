@@ -1,9 +1,9 @@
+import type { CurrentFileLocalesTreeProvider } from '../providers'
 import { TreeItemCollapsibleState } from 'vscode'
-import { CurrentFileLocalesTreeProvider } from '../providers'
-import { BaseTreeItem } from './Base'
-import { LocaleTreeItem } from '.'
 import { CurrentFile } from '~/core'
 import i18n from '~/i18n'
+import { LocaleTreeItem } from '.'
+import { BaseTreeItem } from './Base'
 
 export class CurrentFileInUseItem extends BaseTreeItem {
   constructor(readonly provider: CurrentFileLocalesTreeProvider) {

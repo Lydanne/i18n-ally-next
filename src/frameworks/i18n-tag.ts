@@ -1,8 +1,8 @@
+import type { LanguageId } from '~/utils'
 import { Framework } from './base'
-import { LanguageId } from '~/utils'
 
 class I18nTagFramework extends Framework {
-  id ='i18n-tag'
+  id = 'i18n-tag'
   display = 'i18n Tag'
 
   detection = {

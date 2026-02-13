@@ -50,8 +50,4 @@ Array [
 ]
 `;
 
-exports[`detections - babel v3-tsx.tsx 1`] = `
-Array [
-  "AComment",
-]
-`;
+exports[`detections - babel v3-tsx.tsx 1`] = `Array []`;

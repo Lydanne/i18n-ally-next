@@ -1,9 +1,12 @@
-import { CodeActionProvider, CodeActionKind, TextDocument, Range, CodeAction, languages, CodeActionContext } from 'vscode'
-import { DiagnosticWithKey, PROBLEM_KEY_MISSING, PROBLEM_TRANSLATION_MISSING } from './problems'
-import { ExtensionModule } from '~/modules'
+import type { CodeActionContext, CodeActionProvider, Range, TextDocument } from 'vscode'
+import type { DiagnosticWithKey } from './problems'
+import type { Loader } from '~/core'
+import type { ExtensionModule } from '~/modules'
+import { CodeAction, CodeActionKind, languages } from 'vscode'
 import { Commands } from '~/commands'
+import { Config, CurrentFile } from '~/core'
 import i18n from '~/i18n'
-import { Config, Loader, CurrentFile } from '~/core'
+import { PROBLEM_KEY_MISSING, PROBLEM_TRANSLATION_MISSING } from './problems'
 
 export class Refactor implements CodeActionProvider {
   public provideCodeActions(

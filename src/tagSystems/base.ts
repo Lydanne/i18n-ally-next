@@ -13,7 +13,7 @@ export abstract class BaseTagSystem {
     return bcp47
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line unused-imports/no-unused-vars
   toFlagname(locale: string): string | undefined {
     return undefined
   }
@@ -25,7 +25,7 @@ export abstract class BaseTagSystem {
     return flag
   }
 
-  lookup(locale: string): string|undefined {
+  lookup(locale: string): string | undefined {
     return locale
   }
 }

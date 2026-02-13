@@ -1,10 +1,12 @@
-import { window, DecorationOptions, Range, Disposable, TextEditorDecorationType, TextEditor, workspace, TextDocument, languages, Hover } from 'vscode'
+import type { DecorationOptions, Disposable, TextDocument, TextEditor, TextEditorDecorationType } from 'vscode'
+import type { KeyUsages, Loader } from '~/core'
+import type { ExtensionModule } from '~/modules'
 import throttle from 'lodash/throttle'
-import { getCommentState } from '../utils/shared'
+import { Hover, languages, Range, window, workspace } from 'vscode'
+import { Config, CurrentFile, Global, KeyDetector } from '~/core'
 import { THROTTLE_DELAY } from '../meta'
+import { getCommentState } from '../utils/shared'
 import { createHover } from './hover'
-import { ExtensionModule } from '~/modules'
-import { Global, KeyDetector, Config, Loader, CurrentFile, KeyUsages } from '~/core'
 
 const underlineDecorationType = window.createTextEditorDecorationType({
   textDecoration: 'underline',
@@ -14,7 +16,7 @@ const disappearDecorationType = window.createTextEditorDecorationType({
   textDecoration: 'none; display: none;', // a hack to inject custom style
 })
 
-export type DecorationOptionsWithGutter = DecorationOptions & {gutterType: string}
+export type DecorationOptionsWithGutter = DecorationOptions & { gutterType: string }
 
 const annotation: ExtensionModule = (ctx) => {
   const gutterTypes: Record<string, TextEditorDecorationType> = {
@@ -93,10 +95,12 @@ const annotation: ExtensionModule = (ctx) => {
     const sourceLanguage = Config.sourceLanguage
     const showAnnotations = Config.annotations
     const annotationInPlace = Config.annotationInPlace
+    const annotationInPlaceFullMatch = Config.annotationInPlaceFullMatch
     const themeAnnotationMissing = Config.themeAnnotationMissing
     const themeAnnotation = Config.themeAnnotation
     const themeAnnotationBorder = Config.themeAnnotationBorder
     const themeAnnotationMissingBorder = Config.themeAnnotationMissingBorder
+    const themeAnnotationFullMatch = Config.themeAnnotationInPlaceFullMatch
 
     const total = keys.length
     for (let i = 0; i < total; i++) {
@@ -111,10 +115,16 @@ const annotation: ExtensionModule = (ctx) => {
       )
       const rangeWithQuotes = key.quoted
         ? new Range(
-          range.start.with(undefined, range.start.character - 1),
-          range.end.with(undefined, range.end.character + 1),
-        )
+            range.start.with(undefined, range.start.character - 1),
+            range.end.with(undefined, range.end.character + 1),
+          )
         : range
+      const fullMatchRange = (key.fullMatchStart != null && key.fullMatchEnd != null)
+        ? new Range(
+            document.positionAt(key.fullMatchStart),
+            document.positionAt(key.fullMatchEnd),
+          )
+        : rangeWithQuotes
 
       let text: string | undefined
       let missing = false
@@ -135,16 +145,17 @@ const annotation: ExtensionModule = (ctx) => {
         if (
           Config.annotationInPlace && (
             (selection.start.line <= range.start.line && range.start.line <= selection.end.line)
-          || (selection.start.line <= range.end.line && range.end.line <= selection.end.line))
+            || (selection.start.line <= range.end.line && range.end.line <= selection.end.line))
         ) {
           editing = true
           inplace = false
         }
 
-        text = loader.getValueByKey(keypath, locale, maxLength)
+        const effectiveMaxLength = annotationInPlaceFullMatch ? 0 : maxLength
+        text = loader.getValueByKey(keypath, locale, effectiveMaxLength)
         // fallback to source
         if (!text && locale !== sourceLanguage) {
-          text = loader.getValueByKey(keypath, sourceLanguage, maxLength)
+          text = loader.getValueByKey(keypath, sourceLanguage, effectiveMaxLength)
           missing = true
         }
 
@@ -159,9 +170,10 @@ const annotation: ExtensionModule = (ctx) => {
       if (editing)
         text = ''
 
+      const isFullMatch = inplace && annotationInPlaceFullMatch
       const color = missing
         ? themeAnnotationMissing
-        : themeAnnotation
+        : isFullMatch ? themeAnnotationFullMatch : themeAnnotation
 
       const borderColor = missing
         ? themeAnnotationMissingBorder
@@ -178,7 +190,7 @@ const annotation: ExtensionModule = (ctx) => {
 
       if (inplace) {
         inplaces.push({
-          range: rangeWithQuotes,
+          range: annotationInPlaceFullMatch ? fullMatchRange : rangeWithQuotes,
         })
       }
       else if (usageType === 'code') {
@@ -187,8 +199,9 @@ const annotation: ExtensionModule = (ctx) => {
         })
       }
 
+      const decorationRange = (inplace && annotationInPlaceFullMatch) ? fullMatchRange : rangeWithQuotes
       annotations.push({
-        range: rangeWithQuotes,
+        range: decorationRange,
         renderOptions: {
           after: {
             color,
@@ -266,7 +279,8 @@ const annotation: ExtensionModule = (ctx) => {
         new Range(
           document.positionAt(key.start),
           document.positionAt(key.end),
-        ))
+        ),
+      )
     },
   })
 

@@ -1,28 +1,34 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "target": "es2019",
     "lib": ["ESNext", "ESNext.AsyncIterable", "ESNext.Array"],
+    "baseUrl": ".",
     "module": "esnext",
-    "outDir": "dist",
-    "sourceMap": true,
-    "strict": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "declaration": true,
     "moduleResolution": "node",
-    "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true,
-    "noUnusedLocals": true,
     "paths": {
       "~/*": ["src/*"]
-    }
+    },
+    "resolveJsonModule": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "useUnknownInCatchVariables": false,
+    "declaration": true,
+    "outDir": "dist",
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
   },
+  "references": [
+    { "path": "./src/webview" }
+  ],
   "include": [
     "./src/**/*.ts",
     "./package.nls.*.json"
   ],
   "exclude": [
-    "./test/fixtures/**/*"
+    "./test/fixtures/**/*",
+    "./src/webview/src/**/*",
+    "./src/webview/vite.config.ts"
   ]
 }

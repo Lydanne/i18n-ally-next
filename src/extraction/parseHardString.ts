@@ -1,4 +1,3 @@
-
 /**
  * 'foo' + bar() + ' is cool' -> `foo${bar()} is cool`
  */
@@ -24,7 +23,7 @@ export function stringConcatenationToTemplate(text: string) {
 }
 
 export function parseHardString(text = '', languageId?: string, isDynamic = false) {
-  const trimmed = text.trim().replace(/\s*\r?\n\s*/g, ' ')
+  const trimmed = text.trim().replace(/\s*\n\s*/g, ' ')
   let processed = trimmed
   const args: string[] = []
   if (!trimmed)
@@ -33,7 +32,7 @@ export function parseHardString(text = '', languageId?: string, isDynamic = fals
   if (isDynamic && ['vue', 'js'].includes(languageId || ''))
     processed = stringConcatenationToTemplate(processed).slice(1, -1)
 
-  processed = processed.replace(/(?:\{\{(.*?)\}\}|\$\{(.*?)\})/g, (full, content, content2) => {
+  processed = processed.replace(/\{\{(.*?)\}\}|\$\{(.*?)\}/g, (full, content, content2) => {
     args.push((content ?? content2 ?? '').trim())
     return `{${args.length - 1}}`
   })

@@ -1,8 +1,10 @@
-import { TextDocument } from 'vscode'
-import { Framework, ScopeRange } from './base'
-import { LanguageId } from '~/utils'
-import { RewriteKeySource, RewriteKeyContext, KeyStyle, Config } from '~/core'
-import { extractionsParsers, DefaultExtractionRules, DefaultDynamicExtractionsRules } from '~/extraction'
+import type { TextDocument } from 'vscode'
+import type { ScopeRange } from './base'
+import type { KeyStyle, RewriteKeyContext, RewriteKeySource } from '~/core'
+import type { LanguageId } from '~/utils'
+import { Config } from '~/core'
+import { DefaultDynamicExtractionsRules, DefaultExtractionRules, extractionsParsers } from '~/extraction'
+import { Framework } from './base'
 
 class NextInternationalFramework extends Framework {
   id = 'next-international'
@@ -11,7 +13,7 @@ class NextInternationalFramework extends Framework {
   perferredKeystyle?: KeyStyle = 'flat'
 
   namespaceDelimiters = ['.']
-  namespaceDelimitersRegex = /[\.]/g
+  namespaceDelimitersRegex = /\./g
 
   detection = {
     packageJSON: [
@@ -124,7 +126,7 @@ class NextInternationalFramework extends Framework {
       const scopedText = text.slice(currentNamespaceMatch.index, nextNamespaceMatch?.index)
 
       const namespace = currentNamespaceMatch[2]
-      const scopedTRegex = /scopedT\([\n\s]*['"`](.*?)['"`]/g
+      const scopedTRegex = /scopedT\(\s*['"`](.*?)['"`]/g
       for (const match of scopedText.matchAll(scopedTRegex)) {
         if (typeof match.index !== 'number')
           continue
