@@ -49,6 +49,18 @@ export default defineConfig({
               ],
             },
             {
+              text: 'Best Practices',
+              items: [
+                { text: 'Overview', link: '/guide/best-practices' },
+                { text: 'Vue I18n', link: '/guide/frameworks/vue' },
+                { text: 'React & Next.js', link: '/guide/frameworks/react' },
+                { text: 'Angular', link: '/guide/frameworks/angular' },
+                { text: 'Svelte, Laravel & Rails', link: '/guide/frameworks/others' },
+                { text: 'Custom Framework', link: '/guide/frameworks/custom' },
+                { text: 'Monorepo', link: '/guide/monorepo' },
+              ],
+            },
+            {
               text: 'Advanced',
               items: [
                 { text: 'Path Matcher', link: '/guide/path-matcher' },
@@ -102,6 +114,18 @@ export default defineConfig({
                 { text: '文案提取', link: '/zh-CN/guide/extraction' },
                 { text: '审阅系统', link: '/zh-CN/guide/review' },
                 { text: '机器翻译', link: '/zh-CN/guide/translation' },
+              ],
+            },
+            {
+              text: '最佳实践',
+              items: [
+                { text: '总览', link: '/zh-CN/guide/best-practices' },
+                { text: 'Vue I18n', link: '/zh-CN/guide/frameworks/vue' },
+                { text: 'React & Next.js', link: '/zh-CN/guide/frameworks/react' },
+                { text: 'Angular', link: '/zh-CN/guide/frameworks/angular' },
+                { text: 'Svelte、Laravel 与 Rails', link: '/zh-CN/guide/frameworks/others' },
+                { text: '自定义框架', link: '/zh-CN/guide/frameworks/custom' },
+                { text: 'Monorepo', link: '/zh-CN/guide/monorepo' },
               ],
             },
             {
