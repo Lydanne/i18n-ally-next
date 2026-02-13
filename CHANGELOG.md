@@ -9,6 +9,9 @@ All notable changes to this project will be documented in this file. See [standa
 * **translate-all-missing:** one-click translate all missing and stale keys for any locale, accessible from the Progress view header (globe icon) and inline button on each locale item
 * **check-stale-translations:** detect outdated translations when source text has changed since last snapshot; supports re-translate all at once, review one by one, or update snapshots only; adds "Stale" submenu under each non-source locale in the Progress view
 * **scan-and-extract-all:** scan entire project for hard-coded strings and batch extract them into i18n keys with auto-generated keypaths; accessible from the Progress view header (search icon)
+* **editor-llm:** new translation engine that auto-detects Cursor/Windsurf/VSCode and uses the editor's built-in LLM (via VS Code Language Model API) for translation; supports batch translation (multiple keys per request grouped by language pair) for significantly faster performance
+* **smart-detection:** improved hard-coded string detection with 100+ technical keyword exclusions, file path/URL/CSS pattern filtering, and enhanced AST-level ignoring (import/export, require, object keys, TypeScript types, enum members)
+* **extract-scanning-config:** new `extract.scanningInclude` and `extract.scanningIgnore` settings to control which files are scanned for hard-coded strings via glob patterns
 
 ### [2.13.1](https://github.com/lokalise/i18n-ally/compare/v2.13.0...v2.13.1) (2024-11-01)
 

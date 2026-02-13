@@ -16,17 +16,17 @@ interface BatchTranslateItem {
 type BatchTranslateResult = Record<string, string>
 
 /** 检测当前 IDE 环境 */
-function detectIDEType(): IDEType {
-  const appName = vscode.env.appName.toLowerCase()
-  if (appName.includes('cursor'))
+export function detectIDEType(appName: string): IDEType {
+  const name = appName.toLowerCase()
+  if (name.includes('cursor'))
     return 'cursor'
-  if (appName.includes('windsurf'))
+  if (name.includes('windsurf'))
     return 'windsurf'
   return 'vscode'
 }
 
 /** 根据 IDE 类型获取 vendor */
-function getVendorByIDE(ide: IDEType): string | undefined {
+export function getVendorByIDE(ide: IDEType): string | undefined {
   switch (ide) {
     case 'cursor':
       return 'copilot'
@@ -34,6 +34,31 @@ function getVendorByIDE(ide: IDEType): string | undefined {
       return 'copilot'
     case 'vscode':
       return 'copilot'
+  }
+}
+
+/**
+ * 解析批量翻译的 JSON 响应（纯函数，方便测试）
+ */
+export function parseBatchResponse(
+  raw: string,
+  items: { readonly key: string, readonly text: string }[],
+): Record<string, string> {
+  try {
+    const jsonMatch = raw.match(/\{[\s\S]*\}/)
+    if (!jsonMatch)
+      throw new Error('No JSON found in response')
+    const parsed = JSON.parse(jsonMatch[0]) as Record<string, string>
+    return parsed
+  }
+  catch {
+    const result: Record<string, string> = {}
+    const lines = raw.split('\n').filter(l => l.trim())
+    items.forEach((item, idx) => {
+      if (idx < lines.length)
+        result[item.key] = lines[idx].replace(/^["']|["']$/g, '').trim()
+    })
+    return result
   }
 }
 
@@ -46,7 +71,7 @@ const BATCH_SIZE = 20
  */
 export default class EditorLLMTranslate extends TranslateEngine {
   private cachedModel: vscode.LanguageModelChat | undefined
-  private ideType: IDEType = detectIDEType()
+  private ideType: IDEType = detectIDEType(vscode.env.appName)
 
   /**
    * 获取可用的语言模型
@@ -176,24 +201,7 @@ export default class EditorLLMTranslate extends TranslateEngine {
    * 解析批量翻译的 JSON 响应
    */
   private parseBatchResponse(raw: string, items: BatchTranslateItem[]): BatchTranslateResult {
-    try {
-      const jsonMatch = raw.match(/\{[\s\S]*\}/)
-      if (!jsonMatch)
-        throw new Error('No JSON found in response')
-      const parsed = JSON.parse(jsonMatch[0]) as Record<string, string>
-      return parsed
-    }
-    catch {
-      Log.warn(`⚠️ Failed to parse batch response, falling back to line-by-line parsing`)
-      Log.warn(`Raw response: ${raw}`)
-      const result: BatchTranslateResult = {}
-      const lines = raw.split('\n').filter(l => l.trim())
-      items.forEach((item, idx) => {
-        if (idx < lines.length)
-          result[item.key] = lines[idx].replace(/^["']|["']$/g, '').trim()
-      })
-      return result
-    }
+    return parseBatchResponse(raw, items)
   }
 
   /**

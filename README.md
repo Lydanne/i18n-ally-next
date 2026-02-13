@@ -26,7 +26,7 @@ English | <a href="https://github.com/lydanne/i18n-ally-next/blob/main/README.zh
 - **🌍 Inline Annotations** — See translations directly in your code
 - **🔍 Hover Preview** — Preview all translations with hover, edit in one click
 - **📦 Extract Hard Strings** — Detect and extract hard-coded strings to locale files
-- **🤖 Machine Translation** — Google, DeepL, Baidu, OpenAI and more
+- **🤖 Machine Translation** — Google, DeepL, Baidu, OpenAI, and Editor built-in LLM (Cursor/Windsurf/VSCode Copilot)
 - **🗂 Namespace** — Organize translations with `t("ns:key")` style
 - **📝 Review System** — Built-in translation review and collaboration
 - **🧩 30+ Frameworks** — Vue, React, Angular, Svelte, Flutter, and more
@@ -34,6 +34,7 @@ English | <a href="https://github.com/lydanne/i18n-ally-next/blob/main/README.zh
 - **⚡ Translate All Missing** — One-click translate all missing and stale keys for any locale
 - **🕐 Stale Translation Detection** — Detect outdated translations when source text changes, re-translate one by one or all at once
 - **🔎 Scan & Extract All** — Scan entire project for hard-coded strings and batch extract them into i18n keys
+- **🧠 Editor LLM Translation** — Auto-detect Cursor/Windsurf/VSCode and use the built-in LLM for translation with batch support
 
 ## Quick Start
 
