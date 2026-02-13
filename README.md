@@ -99,7 +99,9 @@ By default, translations are shown as inline annotations after the key. You can 
 | `annotationInPlace: true` | `t(`translated text`)` — hides the key only |
 | `annotationInPlaceFullMatch: true` | translated text — hides the entire function call |
 
-> **Note:** When `annotationInPlaceFullMatch` is enabled, moving the cursor to the line will restore the original code for editing.
+![Annotation Full Match Mode](./res/annotation-full-match.png)
+
+> **Note:** When `annotationInPlaceFullMatch` is enabled, moving the cursor to the line will restore the original code for editing. The `annotationMaxLength` limit is automatically disabled in this mode, so translations are shown in full without truncation.
 
 The translated text color in full match mode defaults to `#ce9178` (string color in Dark+ theme). You can customize it:
 

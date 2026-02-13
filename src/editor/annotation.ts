@@ -151,10 +151,11 @@ const annotation: ExtensionModule = (ctx) => {
           inplace = false
         }
 
-        text = loader.getValueByKey(keypath, locale, maxLength)
+        const effectiveMaxLength = annotationInPlaceFullMatch ? 0 : maxLength
+        text = loader.getValueByKey(keypath, locale, effectiveMaxLength)
         // fallback to source
         if (!text && locale !== sourceLanguage) {
-          text = loader.getValueByKey(keypath, sourceLanguage, maxLength)
+          text = loader.getValueByKey(keypath, sourceLanguage, effectiveMaxLength)
           missing = true
         }
 

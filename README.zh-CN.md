@@ -99,7 +99,9 @@
 | `annotationInPlace: true` | `t(`翻译文本`)` — 仅隐藏 key |
 | `annotationInPlaceFullMatch: true` | 翻译文本 — 隐藏整个函数调用 |
 
-> **提示：** 开启 `annotationInPlaceFullMatch` 后，将光标移到该行会自动恢复显示原始代码，方便编辑。
+![内联注解全量替换模式](./res/annotation-full-match.png)
+
+> **提示：** 开启 `annotationInPlaceFullMatch` 后，将光标移到该行会自动恢复显示原始代码，方便编辑。该模式下 `annotationMaxLength` 限制会自动取消，翻译文本完整显示，不会被截断。
 
 全量替换模式下翻译文本默认使用 `#ce9178`（Dark+ 主题的字符串颜色）。你可以自定义颜色：
 
