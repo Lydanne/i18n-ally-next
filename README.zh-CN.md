@@ -53,23 +53,17 @@
 
 <h4 align="center">内联注解</h4>
 
-![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/annotation-animated.gif?raw=true)
+![](https://github.com/Lydanne/i18n-ally-next/blob/main/screenshots/annotation.png?raw=true)
 
 <h4 align="center">悬浮预览与快捷操作</h4>
 
-![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/hover.png?raw=true)
+![](https://github.com/Lydanne/i18n-ally-next/blob/main/screenshots/hover.png?raw=true)
 
-<h4 align="center">可视化编辑器与审阅系统</h4>
-
-![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/review-editor.png?raw=true)
 
 <h4 align="center">从代码中提取文案</h4>
 
-![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/extract.png?raw=true)
+![](https://github.com/Lydanne/i18n-ally-next/blob/main/screenshots/extract.png?raw=true)
 
-<h4 align="center">机器翻译</h4>
-
-![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/quick-actions.png?raw=true)
 
 ## 支持的框架
 

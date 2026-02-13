@@ -53,23 +53,17 @@ English | <a href="https://github.com/lydanne/i18n-ally-next/blob/main/README.zh
 
 <h4 align="center">Inline Annotations</h4>
 
-![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/annotation-animated.gif?raw=true)
+![](https://github.com/Lydanne/i18n-ally-next/blob/main/screenshots/annotation.png?raw=true)
 
 <h4 align="center">Hover and Direct Actions</h4>
 
-![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/hover.png?raw=true)
+![](https://github.com/Lydanne/i18n-ally-next/blob/main/screenshots/hover.png?raw=true)
 
-<h4 align="center">Editor UI & Review System</h4>
-
-![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/review-editor.png?raw=true)
 
 <h4 align="center">Extract Translations from Code</h4>
 
-![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/extract.png?raw=true)
+![](https://github.com/Lydanne/i18n-ally-next/blob/main/screenshots/extract.png?raw=true)
 
-<h4 align="center">Machine Translation</h4>
-
-![](https://github.com/lydanne/i18n-ally-next/blob/screenshots/quick-actions.png?raw=true)
 
 ## Supported Frameworks
 
