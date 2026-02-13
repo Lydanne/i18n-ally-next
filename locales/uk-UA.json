@@ -34,6 +34,7 @@
   "command.translate_key_from": "Перекласти з \"{0}\"",
   "config.annotation_delimiter": "Роздільник анотацій",
   "config.annotation_in_place": "Показувати анотацію на місці замість додавання в кінець",
+  "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",
   "config.annotation_max_length": "Максимальна кількість символів, що відображаються у вбудованих анотаціях. Зайві символи будуть відображатися у вигляді трьох крапок (...)",
   "config.annotations": "Включити вбудовані анотації.",
   "config.auto_detection": "",
@@ -88,7 +89,9 @@
   "config.review_remove_on_resolved": "Видаляти оброблені коментарі, а не позначати їх як оброблені",
   "config.review_username": "Ім'я користувача для аудиту",
   "config.show_flags": "Показувати прапори разом з кодами мов",
+  "config.sort_compare": "",
   "config.sort_keys": "Сортування ключів при збереженні в  JSON/YAML",
+  "config.sort_locale": "",
   "config.source_language": "Мова оригіналу для машинного перекладу",
   "config.tab_style": "Стиль вкладки для файлів перекладів",
   "config.target_picking_strategy": "Стратегія вибору файлу перекладу при виявленні декількох файлів",
@@ -97,6 +100,7 @@
   "config.target_picking_strategy.most-similar": "Автоматично заповнювати витягнуту копію в файл перекладу, який найкраще відповідає поточному шляху до файлу",
   "config.target_picking_strategy.most-similar-by-key": "Автоматично заповнюйте витягнуту копію в мовний файл, який найкраще відповідає поточному ключу i18n",
   "config.target_picking_strategy.none": "Користувач вручну обирає файл для вилучення тексту",
+  "config.theme_annotation_in_place_full_match": "Text color for inline annotation in full match mode",
   "config.translate.engines": "Сервіс для перекладу.",
   "config.translate.fallbackToKey": "Використовувати сам ключ для перекладу, якщо для цього ключа нема переводу",
   "config.translate.parallels": "Максимальна кількість перекладань одночасно.",
@@ -235,6 +239,5 @@
   "view.usage_keys_missing": "{0} ключі відсутні",
   "view.usage_keys_not_in_use": "{0} ключі НЕ використовуються",
   "view.usage_report_none": "Оновіть, щоб почати аналіз використання ключа",
-  "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",
-  "config.theme_annotation_in_place_full_match": "Text color for inline annotation in full match mode"
+  "นามสกุล": ""
 }

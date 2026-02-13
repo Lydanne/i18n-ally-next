@@ -89,8 +89,8 @@
   "config.review_remove_on_resolved": "Remove the comment instead of marking it as resolved.",
   "config.review_username": "Username for reviewing",
   "config.show_flags": "Show flags along with locale codes",
-  "config.sort_keys": "Sort keys when saving to JSON/YAML",
   "config.sort_compare": "Strategy for sorting keys.",
+  "config.sort_keys": "Sort keys when saving to JSON/YAML",
   "config.sort_locale": "Locale to with if locale sort is used (will use the file's own locale if not specified)",
   "config.source_language": "Source language for machine translation",
   "config.tab_style": "Tab style for locale files",
@@ -100,6 +100,7 @@
   "config.target_picking_strategy.most-similar": "Automatically extract text to the file which path most matches to current file's path",
   "config.target_picking_strategy.most-similar-by-key": "Automatically fill the extracted copy into the language file that best matches the current i18n key",
   "config.target_picking_strategy.none": "User manually select which file to extract text to",
+  "config.theme_annotation_in_place_full_match": "Text color for inline annotation in full match mode",
   "config.translate.engines": "Translation services.",
   "config.translate.fallbackToKey": "Use key itself to translate when there is no source translation for that key.",
   "config.translate.parallels": "Maximum amount of translating workers at the same time.",
@@ -238,5 +239,5 @@
   "view.usage_keys_missing": "{0} keys are missing",
   "view.usage_keys_not_in_use": "{0} keys are NOT in use",
   "view.usage_report_none": "Press refresh to start analysing key usage",
-  "config.theme_annotation_in_place_full_match": "Text color for inline annotation in full match mode"
+  "นามสกุล": ""
 }

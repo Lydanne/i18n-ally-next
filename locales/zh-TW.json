@@ -34,6 +34,7 @@
   "command.translate_key_from": "從 \"{0}\" 翻譯",
   "config.annotation_delimiter": "內聯註釋的分隔符",
   "config.annotation_in_place": "在路徑原位顯示翻譯文案，而不是附加在末尾",
+  "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",
   "config.annotation_max_length": "內聯註釋顯示的最大文字數。超出的部分將顯示為省略號（...）",
   "config.annotations": "啟用內聯註釋",
   "config.auto_detection": "",
@@ -88,7 +89,9 @@
   "config.review_remove_on_resolved": "刪除已處理的審核留言，而不是只將其標記為已處理。",
   "config.review_username": "使用者名稱",
   "config.show_flags": "顯示國旗圖示",
+  "config.sort_compare": "",
   "config.sort_keys": "儲存已排序的JSON/YAML",
+  "config.sort_locale": "",
   "config.source_language": "翻譯源語言",
   "config.tab_style": "文案檔案的縮排樣式",
   "config.target_picking_strategy": "如果找到多個語言文件時的語言文件選擇策略",
@@ -97,6 +100,7 @@
   "config.target_picking_strategy.most-similar": "自動將抽取的文案填入與當前文件路徑最匹配的語言文件中",
   "config.target_picking_strategy.most-similar-by-key": "自動將抽取的文案填入與當前i18n key最匹配的語言文件中",
   "config.target_picking_strategy.none": "用戶手動選擇將文本抽取到哪個語言文件",
+  "config.theme_annotation_in_place_full_match": "Text color for inline annotation in full match mode",
   "config.translate.engines": "翻譯服務供應商",
   "config.translate.fallbackToKey": "當對應路徑沒有翻譯時，使用路徑本身進行翻譯",
   "config.translate.parallels": "同時翻譯的最大數量",
@@ -235,6 +239,5 @@
   "view.usage_keys_missing": "{0}個文案缺失",
   "view.usage_keys_not_in_use": "{0}個文案未被使用",
   "view.usage_report_none": "點擊更新開始使用分析",
-  "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",
-  "config.theme_annotation_in_place_full_match": "Text color for inline annotation in full match mode"
+  "นามสกุล": ""
 }

@@ -34,6 +34,7 @@
   "command.translate_key_from": "Перевести с \"{0}\"",
   "config.annotation_delimiter": "Разделитель аннотаций",
   "config.annotation_in_place": "Показывать аннотацию на месте вместо добавления в конец",
+  "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",
   "config.annotation_max_length": "Максимальное количество символов, отображаемых во встроенных аннотациях. Лишние символы будут отображаться в виде многоточия (...)",
   "config.annotations": "Включить встроенные аннотации.",
   "config.auto_detection": "Включить автоматическое определение переводов для проектов",
@@ -88,7 +89,9 @@
   "config.review_remove_on_resolved": "Удалять обработанные комментарии, а не помечать их как обработанные.",
   "config.review_username": "Имя пользователя для рецензирования",
   "config.show_flags": "Показывать флаги вместе с кодами переводов",
+  "config.sort_compare": "",
   "config.sort_keys": "Сортировка ключей при сохранении в JSON/YAML",
+  "config.sort_locale": "",
   "config.source_language": "Исходный язык для машинного перевода",
   "config.tab_style": "Стиль вкладки для файлов переводов",
   "config.target_picking_strategy": "Стратегия выбора файла перевода при обнаружении нескольких файлов перевода",
@@ -97,6 +100,7 @@
   "config.target_picking_strategy.most-similar": "Автоматически заполнять извлеченную копию в файл перевода, который лучше всего соответствует текущему пути к файлу",
   "config.target_picking_strategy.most-similar-by-key": "Автоматически заполнять извлеченную копию языковым файлом, который лучше всего соответствует текущему ключу i18n.",
   "config.target_picking_strategy.none": "Пользователь вручную выбирает файл для извлечения текста",
+  "config.theme_annotation_in_place_full_match": "Text color for inline annotation in full match mode",
   "config.translate.engines": "Сервисы перевода.",
   "config.translate.fallbackToKey": "Использовать сам ключ для перевода, если для этого ключа нет перевода",
   "config.translate.parallels": "Максимальное количество переводчиков одновременно.",
@@ -235,6 +239,5 @@
   "view.usage_keys_missing": "{0} ключей отсутствует",
   "view.usage_keys_not_in_use": "{0} ключей НЕ используется",
   "view.usage_report_none": "Обновите, чтобы начать анализ использования ключа",
-  "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",
-  "config.theme_annotation_in_place_full_match": "Text color for inline annotation in full match mode"
+  "นามสกุล": ""
 }

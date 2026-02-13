@@ -34,6 +34,7 @@
   "command.translate_key_from": "Översätt från \"{0}\"",
   "config.annotation_delimiter": "Avskiljare för anteckningar",
   "config.annotation_in_place": "Visa anteckningar på plats istället för att vidhänga på slutet",
+  "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",
   "config.annotation_max_length": "Max antal bokstävers som visas i insatta anteckningen. Överflödiga bokstäver kommer visas som en ellips (…)",
   "config.annotations": "Aktivera insatta anteckningar.",
   "config.auto_detection": "",
@@ -88,7 +89,9 @@
   "config.review_remove_on_resolved": "Ta bort kommentaren istället för att markera den som löst.",
   "config.review_username": "Användarnamn för granskning",
   "config.show_flags": "Visa flaggor med locale-koder",
+  "config.sort_compare": "",
   "config.sort_keys": "Sortera nycklar vid sparning till JSON/YAML",
+  "config.sort_locale": "",
   "config.source_language": "Källspråk för maskinöversättning",
   "config.tab_style": "Tab-stil för locale-filer",
   "config.target_picking_strategy": "Strategi att använda när flera locale-filer hittats.",
@@ -97,6 +100,7 @@
   "config.target_picking_strategy.most-similar": "Extrahera text automatiskt till den fil vars sökväg mest stämmer överens med nuvarande filens sökväg",
   "config.target_picking_strategy.most-similar-by-key": "Fyll automatiskt i den extraherade kopian i den språkfil som bäst matchar den aktuella i18n-nyckeln",
   "config.target_picking_strategy.none": "Välj själv vilken fil att extrahera text till",
+  "config.theme_annotation_in_place_full_match": "Text color for inline annotation in full match mode",
   "config.translate.engines": "Översättningstjänster.",
   "config.translate.fallbackToKey": "Använd nyckeln själv för att översätta när det inte finns någon källspråksöversättning för den nyckeln.",
   "config.translate.parallels": "Max antal översättningsarbetare samtidigt.",
@@ -235,6 +239,5 @@
   "view.usage_keys_missing": "{0} nycklar saknas",
   "view.usage_keys_not_in_use": "{0} nycklar används INTE",
   "view.usage_report_none": "Tryck på uppdatera för att starta analysering av nyckelanvändning",
-  "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",
-  "config.theme_annotation_in_place_full_match": "Text color for inline annotation in full match mode"
+  "นามสกุล": ""
 }

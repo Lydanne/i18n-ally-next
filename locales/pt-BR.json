@@ -34,6 +34,7 @@
   "command.translate_key_from": "Traduzir do \"{0}\"",
   "config.annotation_delimiter": "O delimitador de anotação",
   "config.annotation_in_place": "",
+  "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",
   "config.annotation_max_length": "Número máximo de caracteres exibidos nas anotações inline. O restante será exibido em forma de reticências (...)",
   "config.annotations": "Habilitar anotações inline",
   "config.auto_detection": "",
@@ -88,7 +89,9 @@
   "config.review_remove_on_resolved": "",
   "config.review_username": "",
   "config.show_flags": "",
+  "config.sort_compare": "",
   "config.sort_keys": "Salvar com json/yaml seperados",
+  "config.sort_locale": "",
   "config.source_language": "Idioma de origem para tradução de máquina",
   "config.tab_style": "Estilo da aba para arquivos de lozalização (locales)",
   "config.target_picking_strategy": "",
@@ -97,6 +100,7 @@
   "config.target_picking_strategy.most-similar": "",
   "config.target_picking_strategy.most-similar-by-key": "Preencha automaticamente a cópia extraída no arquivo de idioma que melhor corresponde à chave i18n atual",
   "config.target_picking_strategy.none": "",
+  "config.theme_annotation_in_place_full_match": "Text color for inline annotation in full match mode",
   "config.translate.engines": "",
   "config.translate.fallbackToKey": "",
   "config.translate.parallels": "",
@@ -126,7 +130,7 @@
   "notification.v2-update": "",
   "prompt.applying_suggestion": "",
   "prompt.applying_translation_candidate": "",
-  "prompt.applying_translation_candidate_multiple": "",
+  "prompt.applying_translation_candidate_multiple": "Tem certeza de que deseja aplicar todas as {0} traduções?",
   "prompt.button_apply": "",
   "prompt.button_cancel": "Cancelar",
   "prompt.button_discard": "",
@@ -235,6 +239,5 @@
   "view.usage_keys_missing": "{0} chaves faltantes",
   "view.usage_keys_not_in_use": "{0} chaves não estão em uso",
   "view.usage_report_none": "",
-  "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",
-  "config.theme_annotation_in_place_full_match": "Text color for inline annotation in full match mode"
+  "นามสกุล": ""
 }

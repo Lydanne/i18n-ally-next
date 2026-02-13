@@ -34,6 +34,7 @@
   "command.translate_key_from": "\"{0}\" dilinden çevir",
   "config.annotation_delimiter": "Ek açıklamalar için sınırlayıcı",
   "config.annotation_in_place": "Ek açıklamaları kuyruğa eklemek yerine olduğu yerde göster",
+  "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",
   "config.annotation_max_length": "Satır aralığında gösterilen ek açıklamaların maksimum karakter uzunluğu. Fazladan karakterler noktalı şekilde görüntülenecektir (...)",
   "config.annotations": "Satır aralığında ek açıklamaları etkinleştir",
   "config.auto_detection": "Projeler için otomatik çeviri algılamasını etkinleştir",
@@ -88,7 +89,9 @@
   "config.review_remove_on_resolved": "İncelendi olarak işaretlemek yerine yorumu sil.",
   "config.review_username": "İncelemeler için kullanıcı adınız",
   "config.show_flags": "Çeviri kodlarıyla beraber eşleşen bayrağı göster",
+  "config.sort_compare": "",
   "config.sort_keys": "JSON/YAML dosyasına kaydederken çeviri anahtarlarını diz",
+  "config.sort_locale": "",
   "config.source_language": "Makine çevirisi için kaynak dil",
   "config.tab_style": "Dil dosyaları için Tab stili",
   "config.target_picking_strategy": "Birden fazla dil dosyası bulunduğunda uygulanacak strateji",
@@ -97,6 +100,7 @@
   "config.target_picking_strategy.most-similar": "Geçerli dosyanın bulunduğu alana en çok uyan yolu dosyaya otomatik olarak ayıklayın",
   "config.target_picking_strategy.most-similar-by-key": "Çıkarılan kopyayı, geçerli i18n anahtarıyla en iyi eşleşen dil dosyasına otomatik olarak doldurun",
   "config.target_picking_strategy.none": "Kullanıcı metnin çıkarılacağı dosyayı el ile seçer",
+  "config.theme_annotation_in_place_full_match": "Text color for inline annotation in full match mode",
   "config.translate.engines": "Çeviri hizmetleri.",
   "config.translate.fallbackToKey": "Bu anahtar için kaynak çevirisi olmadığında çeviri yapmak için anahtarın kendisini kullanın.",
   "config.translate.parallels": "Aynı anda çalışabilecek maksimum çevirmen sayısı.",
@@ -235,6 +239,5 @@
   "view.usage_keys_missing": "{0} çeviri eksik",
   "view.usage_keys_not_in_use": "{0} çeviri kullanımda DEĞİL",
   "view.usage_report_none": "Çeviri kullanımını incelemek için yenileye basın",
-  "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",
-  "config.theme_annotation_in_place_full_match": "Text color for inline annotation in full match mode"
+  "นามสกุล": ""
 }

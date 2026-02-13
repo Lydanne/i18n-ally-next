@@ -34,6 +34,7 @@
   "command.translate_key_from": "从 \"{0}\" 翻译",
   "config.annotation_delimiter": "内联注释的分隔符",
   "config.annotation_in_place": "在路径原位显示翻译文案，而不是附加在末尾",
+  "config.annotation_in_place_full_match": "隐藏整个函数调用（如 t(\"key\")），仅在原位显示翻译文本",
   "config.annotation_max_length": "内联注释显示的最大字符数。超出的部分将显示为省略号（...）",
   "config.annotations": "启用内联注释",
   "config.auto_detection": "",
@@ -88,7 +89,9 @@
   "config.review_remove_on_resolved": "删除已处理的审批留言，而不是只将其标记为已处理。",
   "config.review_username": "使用者名称",
   "config.show_flags": "显示国旗图标",
+  "config.sort_compare": "",
   "config.sort_keys": "保存排序后的JSON/YAML",
+  "config.sort_locale": "",
   "config.source_language": "翻译源语言",
   "config.tab_style": "文案文件的缩进样式",
   "config.target_picking_strategy": "如果找到多个语言文件时的语言文件选择策略",
@@ -97,6 +100,7 @@
   "config.target_picking_strategy.most-similar": "自动将抽取的文案填入与当前文件路径最匹配的语言文件中",
   "config.target_picking_strategy.most-similar-by-key": "自动将抽取的文案填入与当前i18n key最匹配的语言文件中",
   "config.target_picking_strategy.none": "用户手动选择将文本抽取到哪个语言文件",
+  "config.theme_annotation_in_place_full_match": "全量替换模式下内联注解的文本颜色",
   "config.translate.engines": "翻译服务提供商",
   "config.translate.fallbackToKey": "当对应路径没有翻译时，使用路径本身进行翻译",
   "config.translate.parallels": "同时翻译的最大数量",
@@ -235,6 +239,5 @@
   "view.usage_keys_missing": "{0} 条文案缺失",
   "view.usage_keys_not_in_use": "{0} 条文案未被使用",
   "view.usage_report_none": "点击刷新开始使用分析",
-  "config.annotation_in_place_full_match": "隐藏整个函数调用（如 t(\"key\")），仅在原位显示翻译文本",
-  "config.theme_annotation_in_place_full_match": "全量替换模式下内联注解的文本颜色"
+  "นามสกุล": ""
 }

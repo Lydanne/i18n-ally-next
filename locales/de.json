@@ -34,6 +34,7 @@
   "command.translate_key_from": "\"{0}\" übersetzen",
   "config.annotation_delimiter": "Trennzeichen",
   "config.annotation_in_place": "Zeige Hinweise im Text",
+  "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",
   "config.annotation_max_length": "Maximale Zeichenlänge für Hinweise die im Text angezeigt werden. Abgeschnitte Zeichen werden als (...) angezeigt",
   "config.annotations": "Hinweise im Text aktivieren",
   "config.auto_detection": "Automatische Erkennung von Übersetzung aktivieren",
@@ -88,7 +89,9 @@
   "config.review_remove_on_resolved": "Kommentar löschen, anstatt ihn als behoben zu markieren. ",
   "config.review_username": "Nutzername zum Überprüfen",
   "config.show_flags": "Flaggen zusammen mit Lokalisierungscodes anzeigen",
+  "config.sort_compare": "",
   "config.sort_keys": "Schlüssel beim speichern von JSON/YAML sortierne",
+  "config.sort_locale": "",
   "config.source_language": "Quellsprache für machinelle Übersetzung",
   "config.tab_style": "Tabulatorstil",
   "config.target_picking_strategy": "Es wurde eine Strategie gefunden, die mit mehr als einer Lokalisierungsdatei arbeitet.",
@@ -97,6 +100,7 @@
   "config.target_picking_strategy.most-similar": "Automatisches Extrahieren von Text in die Datei, deren Pfad am meisten mit dem Pfad der aktuellen Datei übereinstimmt",
   "config.target_picking_strategy.most-similar-by-key": "Füllen Sie die extrahierte Kopie automatisch in die Sprachdatei ein, die am besten zum aktuellen i18n-Schlüssel passt",
   "config.target_picking_strategy.none": "Benutzer wählt manuell aus, in welche Datei der Text extrahiert werden soll",
+  "config.theme_annotation_in_place_full_match": "Text color for inline annotation in full match mode",
   "config.translate.engines": "Übersetzungsdienste.",
   "config.translate.fallbackToKey": "Schlüssel selbst zum Übersetzen verwenden, wenn es keine Quellübersetzung für diesen Schlüssel gibt.",
   "config.translate.parallels": "Maximale Anzahl von Übersetzern zur gleichen Zeit.",
@@ -235,6 +239,5 @@
   "view.usage_keys_missing": "{0} Schlüssel fehlen",
   "view.usage_keys_not_in_use": "{0} Schlüssel nicht in Verwendung",
   "view.usage_report_none": "Neulanden um Schlüssel Benutzng zu analysieren",
-  "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",
-  "config.theme_annotation_in_place_full_match": "Text color for inline annotation in full match mode"
+  "นามสกุล": ""
 }

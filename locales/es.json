@@ -34,6 +34,7 @@
   "command.translate_key_from": "Traducir de \"{0}\"",
   "config.annotation_delimiter": "Delimintador de anotaciones",
   "config.annotation_in_place": "Mostrar la anotación en su lugar en vez de agregar a la cola",
+  "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",
   "config.annotation_max_length": "Máximo número de caracteres que se mostrarán en las anotaciones en línea. Los restantes se mostrarán como elipses (...)",
   "config.annotations": "Habilitar las anotaciones en línea.",
   "config.auto_detection": "",
@@ -88,7 +89,9 @@
   "config.review_remove_on_resolved": "Elimina el comentario en lugar de marcarlo como resuelto.",
   "config.review_username": "Nombre de usuario para la revisión",
   "config.show_flags": "Mostrar banderas junto a códigos regionales",
+  "config.sort_compare": "",
   "config.sort_keys": "Guardar con json/yaml ordenado",
+  "config.sort_locale": "",
   "config.source_language": "Código fuente para la traducción automática",
   "config.tab_style": "Estilo de pestañas para los archivos de localización",
   "config.target_picking_strategy": "Estrategias que tratan con más de un archivo de localización.",
@@ -97,6 +100,7 @@
   "config.target_picking_strategy.most-similar": "Extraer automáticamente el texto al archivo cuya ruta coincida más con la ruta del archivo actual",
   "config.target_picking_strategy.most-similar-by-key": "Rellene automáticamente la copia extraída en el archivo de idioma que mejor coincida con la clave i18n actual",
   "config.target_picking_strategy.none": "El usuario selecciona manualmente a qué archivo extraer el texto",
+  "config.theme_annotation_in_place_full_match": "Text color for inline annotation in full match mode",
   "config.translate.engines": "Servicios de traducción.",
   "config.translate.fallbackToKey": "Usar la llave en sí para traducir cuando no hay una traducción de origen para esa llave.",
   "config.translate.parallels": "Cantidad máxima de javascript workers para traducción al mismo tiempo.",
@@ -235,6 +239,5 @@
   "view.usage_keys_missing": "Faltan las claves {0}",
   "view.usage_keys_not_in_use": "Las claves {0} NO están en uso",
   "view.usage_report_none": "Presione actualizar para comenzar a analizar el uso de las teclas",
-  "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",
-  "config.theme_annotation_in_place_full_match": "Text color for inline annotation in full match mode"
+  "นามสกุล": ""
 }

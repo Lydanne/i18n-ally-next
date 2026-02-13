@@ -34,6 +34,7 @@
   "command.translate_key_from": "Oversett fra \"{0}\"",
   "config.annotation_delimiter": "",
   "config.annotation_in_place": "",
+  "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",
   "config.annotation_max_length": "Maksimalt antall tegn vist i hjelpevindu. Resterende del vil bli vist som (...)",
   "config.annotations": "Slå på hjelpevindu",
   "config.auto_detection": "",
@@ -88,7 +89,9 @@
   "config.review_remove_on_resolved": "",
   "config.review_username": "",
   "config.show_flags": "",
+  "config.sort_compare": "",
   "config.sort_keys": "Lagre med sortert json/yaml",
+  "config.sort_locale": "",
   "config.source_language": "Kildespråk for maskinoversettelse",
   "config.tab_style": "",
   "config.target_picking_strategy": "",
@@ -97,6 +100,7 @@
   "config.target_picking_strategy.most-similar": "",
   "config.target_picking_strategy.most-similar-by-key": "Fyll automatisk den utpakkede kopien inn i språkfilen som passer best til gjeldende i18n-nøkkel",
   "config.target_picking_strategy.none": "",
+  "config.theme_annotation_in_place_full_match": "Text color for inline annotation in full match mode",
   "config.translate.engines": "",
   "config.translate.fallbackToKey": "",
   "config.translate.parallels": "",
@@ -126,7 +130,7 @@
   "notification.v2-update": "",
   "prompt.applying_suggestion": "",
   "prompt.applying_translation_candidate": "",
-  "prompt.applying_translation_candidate_multiple": "",
+  "prompt.applying_translation_candidate_multiple": "Er du sikker på at du vil bruke alle {0} oversettelser?",
   "prompt.button_apply": "",
   "prompt.button_cancel": "",
   "prompt.button_discard": "",
@@ -235,6 +239,5 @@
   "view.usage_keys_missing": "",
   "view.usage_keys_not_in_use": "",
   "view.usage_report_none": "",
-  "config.annotation_in_place_full_match": "Hide the entire function call (e.g. t('key')) and show only the translated text in place",
-  "config.theme_annotation_in_place_full_match": "Text color for inline annotation in full match mode"
+  "นามสกุล": ""
 }
