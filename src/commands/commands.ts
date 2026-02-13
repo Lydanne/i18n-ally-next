@@ -44,6 +44,7 @@ export const enum Commands {
   review_refresh_thread = 'i18n-ally-next.review.refresh-thread',
   review_apply_translation = 'i18n-ally-next.review.apply-translation',
   review_apply_suggestion = 'i18n-ally-next.review.apply-suggestion',
+  review_apply_all_translations = 'i18n-ally-next.review.apply-all-translations',
   deepl_usage = 'i18n-ally-next.deepl-usage',
   translate_all_missing = 'i18n-ally-next.translate-all-missing',
   scan_and_extract_all = 'i18n-ally-next.scan-and-extract-all',

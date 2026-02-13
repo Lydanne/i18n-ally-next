@@ -301,6 +301,12 @@
         "command": "i18n-ally-next.select-editor-llm-model",
         "category": "%extname%",
         "title": "%command.select_editor_llm_model%"
+      },
+      {
+        "command": "i18n-ally-next.review.apply-all-translations",
+        "category": "%extname%",
+        "title": "%command.review_apply_all_translations%",
+        "icon": "$(check-all)"
       }
     ],
     "menus": {
@@ -375,6 +381,10 @@
         },
         {
           "command": "i18n-ally-next.review.apply-translation",
+          "when": "false"
+        },
+        {
+          "command": "i18n-ally-next.review.apply-all-translations",
           "when": "false"
         },
         {
@@ -529,6 +539,11 @@
         },
         {
           "command": "i18n-ally-next.translate-all-missing",
+          "group": "navigation",
+          "when": "view =~ /i18n-ally-next-locales-progress/"
+        },
+        {
+          "command": "i18n-ally-next.review.apply-all-translations",
           "group": "navigation",
           "when": "view =~ /i18n-ally-next-locales-progress/"
         },

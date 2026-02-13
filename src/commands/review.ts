@@ -56,6 +56,25 @@ export default <ExtensionModule> function () {
         await Global.reviews.discardTranslationCandidate(candidate.keypath, candidate.locale)
     }),
 
+    commands.registerCommand(Commands.review_apply_all_translations, async () => {
+      Telemetry.track(TelemetryKey.ReviewApplyTranslation)
+      const allCandidates: TranslationCandidateWithMeta[] = []
+      for (const locale of Global.visibleLocales)
+        allCandidates.push(...Global.reviews.getTranslationCandidatesLocale(locale))
+      if (!allCandidates.length) {
+        window.showInformationMessage(i18n.t('prompt.translate_no_jobs'))
+        return
+      }
+      const Yes = i18n.t('prompt.button_yes')
+      const result = await window.showWarningMessage(
+        i18n.t('prompt.applying_translation_candidate_all', allCandidates.length),
+        { modal: true },
+        Yes,
+      )
+      if (result === Yes)
+        await Global.reviews.applyTranslationCandidates(allCandidates)
+    }),
+
     commands.registerCommand(Commands.review_apply_suggestion, async (comment: ReviewCommentWithMeta) => {
       Telemetry.track(TelemetryKey.ReviewApplySuggestion)
 
