@@ -77,7 +77,7 @@ All settings are prefixed with `i18n-ally-next.` in your `.vscode/settings.json`
 | `extract.keygenStyle` | `string` | `"default"` | Key name casing style |
 | `extract.keyMaxLength` | `number` | `Infinity` | Max generated key length |
 | `extract.keyPrefix` | `string` | `""` | Prefix for generated keys |
-| `extract.targetPickingStrategy` | `string` | `"none"` | How to pick target locale file |
+| `extract.targetPickingStrategy` | `string` | `"none"` | How to pick target locale file (`none`, `auto`, `most-similar`, `most-similar-by-key`, `file-previous`, `global-previous`) |
 | `extract.ignored` | `string[]` | `[]` | Strings to ignore during extraction |
 | `extract.ignoredByFiles` | `object` | `{}` | Per-file ignored strings |
 | `refactor.templates` | `object[]` | `[]` | Custom refactor templates |

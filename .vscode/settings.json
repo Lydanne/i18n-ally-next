@@ -37,6 +37,7 @@
   "i18n-ally-next.translate.engines": ["editor-llm"],
   "i18n-ally-next.translate.editor-llm.model": "grok-code-fast-1",
   "i18n-ally-next.translate.saveAsCandidates": true,
+  "i18n-ally-next.extract.targetPickingStrategy": "auto",
   "i18n-ally-next.annotationInPlace": true,
   "i18n-ally-next.annotationInPlaceFullMatch": true,
   // "i18n-ally-next.theme.annotationInPlaceFullMatch": "#a31515",

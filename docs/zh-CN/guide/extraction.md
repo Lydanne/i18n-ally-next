@@ -55,6 +55,7 @@ i18n Ally Next 可以检测代码中的硬编码字符串，并帮助你将它�
 ```jsonc
 {
   // "none" — 每次都提示选择
+  // "auto" — 根据源语言文件结构自动推断目标文件（支持 namespace）
   // "most-similar" — 选择与当前文件路径最相似的文件
   // "most-similar-by-key" — 按键前缀匹配
   // "file-previous" — 记住每个文件的上次选择

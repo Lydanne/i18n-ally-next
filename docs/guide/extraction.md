@@ -55,6 +55,7 @@ When multiple locale files exist, control how the target file is selected:
 ```jsonc
 {
   // "none" — always prompt
+  // "auto" — automatically resolve from source language file structure (supports namespace)
   // "most-similar" — pick the file most similar to the current file path
   // "most-similar-by-key" — pick by key prefix match
   // "file-previous" — remember per-file selection

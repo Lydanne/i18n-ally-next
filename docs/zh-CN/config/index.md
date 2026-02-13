@@ -77,7 +77,7 @@
 | `extract.keygenStyle` | `string` | `"default"` | 键名命名风格 |
 | `extract.keyMaxLength` | `number` | `Infinity` | 生成键名的最大长度 |
 | `extract.keyPrefix` | `string` | `""` | 生成键名的前缀 |
-| `extract.targetPickingStrategy` | `string` | `"none"` | 目标语言文件选择策略 |
+| `extract.targetPickingStrategy` | `string` | `"none"` | 目标语言文件选择策略（`none`、`auto`、`most-similar`、`most-similar-by-key`、`file-previous`、`global-previous`） |
 | `extract.ignored` | `string[]` | `[]` | 提取时忽略的字符串 |
 | `extract.ignoredByFiles` | `object` | `{}` | 按文件忽略的字符串 |
 | `refactor.templates` | `object[]` | `[]` | 自定义重构模板 |
