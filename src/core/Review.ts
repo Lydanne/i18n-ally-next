@@ -1,5 +1,5 @@
 import type { FileSystemWatcher } from 'vscode'
-import type { PendingWrite, ReviewComment, ReviewCommentWithMeta, ReviewData, TranslationCandidate, TranslationCandidateWithMeta } from './types'
+import type { PendingWrite, ReviewComment, ReviewCommentWithMeta, ReviewData, SourceSnapshot, TranslationCandidate, TranslationCandidateWithMeta } from './types'
 import path from 'path'
 import fs from 'fs-extra'
 import YAML from 'js-yaml'
@@ -202,6 +202,21 @@ export class Reviews {
       })
       await this.resolveComment(key, locale, id)
     }
+  }
+
+  getSourceSnapshot(key: string): SourceSnapshot | undefined {
+    return this.get(key, 'source_snapshot')
+  }
+
+  setSourceSnapshot(key: string, snapshot: SourceSnapshot) {
+    return this.set(key, 'source_snapshot', snapshot)
+  }
+
+  async updateSourceSnapshots(snapshots: { key: string, text: string }[]) {
+    const now = new Date().toISOString()
+    for (const { key, text } of snapshots)
+      await this.set(key, 'source_snapshot', { text, time: now }, undefined, false)
+    await this.save()
   }
 
   async promptEditDescription(keypath: string) {

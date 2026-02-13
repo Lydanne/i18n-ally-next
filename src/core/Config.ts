@@ -486,6 +486,14 @@ export class Config {
     return this.getConfig<ExtractionBabelOptions>('extract.parsers.babel') ?? {}
   }
 
+  static get extractScanningInclude() {
+    return this.getConfig<string[]>('extract.scanningInclude') ?? []
+  }
+
+  static get extractScanningIgnore() {
+    return this.getConfig<string[]>('extract.scanningIgnore') ?? []
+  }
+
   static get extractIgnored() {
     return this.getConfig<string[]>('extract.ignored') ?? []
   }

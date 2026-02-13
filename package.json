@@ -278,6 +278,24 @@
         "command": "i18n-ally-next.extract-enable-auto-detect",
         "category": "%extname%",
         "title": "%command.extract.enable-auto-detect%"
+      },
+      {
+        "command": "i18n-ally-next.translate-all-missing",
+        "category": "%extname%",
+        "title": "%command.translate_all_missing%",
+        "icon": "$(globe)"
+      },
+      {
+        "command": "i18n-ally-next.scan-and-extract-all",
+        "category": "%extname%",
+        "title": "%command.scan_and_extract_all%",
+        "icon": "$(search)"
+      },
+      {
+        "command": "i18n-ally-next.check-stale-translations",
+        "category": "%extname%",
+        "title": "%command.check_stale_translations%",
+        "icon": "$(history)"
       }
     ],
     "menus": {
@@ -486,6 +504,11 @@
           "command": "i18n-ally-next.extract-enable-auto-detect",
           "when": "viewItem =~ /i18n-ally-next-hard-string-root/ && i18n-ally-next.extract.autoDetect == false",
           "group": "i18nally@2"
+        },
+        {
+          "command": "i18n-ally-next.translate-all-missing",
+          "when": "view =~ /i18n-ally-next-locales-progress/ && viewItem =~ /translate-all/",
+          "group": "inline@5"
         }
       ],
       "view/title": [
@@ -498,6 +521,21 @@
           "command": "i18n-ally-next.new-key",
           "group": "navigation",
           "when": "view =~ /i18n-ally-next-locales-tree/"
+        },
+        {
+          "command": "i18n-ally-next.translate-all-missing",
+          "group": "navigation",
+          "when": "view =~ /i18n-ally-next-locales-progress/"
+        },
+        {
+          "command": "i18n-ally-next.check-stale-translations",
+          "group": "navigation",
+          "when": "view =~ /i18n-ally-next-locales-progress/"
+        },
+        {
+          "command": "i18n-ally-next.scan-and-extract-all",
+          "group": "navigation",
+          "when": "view =~ /i18n-ally-next-hard-strings/"
         }
       ],
       "explorer/context": [
@@ -580,6 +618,11 @@
         {
           "id": "i18n-ally-next-locales-usage",
           "name": "%view.usage%",
+          "when": "i18n-ally-next-enabled"
+        },
+        {
+          "id": "i18n-ally-next-hard-strings",
+          "name": "%view.hard_strings%",
           "when": "i18n-ally-next-enabled"
         },
         {
@@ -1144,6 +1187,22 @@
           "type": "boolean",
           "default": false,
           "description": "Enables hard-coded strings detection automatically whenever opening a supported file"
+        },
+        "i18n-ally-next.extract.scanningInclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "%config.extract.scanning_include%"
+        },
+        "i18n-ally-next.extract.scanningIgnore": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "%config.extract.scanning_ignore%"
         },
         "i18n-ally-next.extract.ignored": {
           "type": "array",

@@ -5,4 +5,5 @@ export enum ViewIds {
   usage = 'i18n-ally-next-locales-usage',
   file = 'i18n-ally-next-locales-sidebar-file',
   file_in_explorer = 'i18n-ally-next-locales-file-explorer',
+  hard_strings = 'i18n-ally-next-hard-strings',
 }

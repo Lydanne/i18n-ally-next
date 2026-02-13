@@ -52,9 +52,15 @@ export interface TranslationCandidateWithMeta extends TranslationCandidate {
   locale: string
 }
 
+export interface SourceSnapshot {
+  text: string
+  time: string
+}
+
 export interface ReviewData {
   reviews: Record<string, {
     description?: string
+    source_snapshot?: SourceSnapshot
     locales?: Record<string, {
       translation_candidate?: TranslationCandidate
       comments?: ReviewComment[]

@@ -31,6 +31,9 @@ English | <a href="https://github.com/lydanne/i18n-ally-next/blob/main/README.zh
 - **📝 Review System** — Built-in translation review and collaboration
 - **🧩 30+ Frameworks** — Vue, React, Angular, Svelte, Flutter, and more
 - **🎨 Custom Framework** — Define your own framework via YAML config
+- **⚡ Translate All Missing** — One-click translate all missing and stale keys for any locale
+- **🕐 Stale Translation Detection** — Detect outdated translations when source text changes, re-translate one by one or all at once
+- **🔎 Scan & Extract All** — Scan entire project for hard-coded strings and batch extract them into i18n keys
 
 ## Quick Start
 

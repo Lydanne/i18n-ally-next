@@ -3,7 +3,7 @@ import { Config, Global } from '~/core'
 import { unicodeDecorate, unicodeProgressBar } from '~/utils'
 import { ProgressBaseItem } from './ProgressBaseItem'
 import { ProgressEmptyListItem } from './ProgressEmptyListItem'
-import { ProgressMissingListItem } from './ProgressMissingListItem'
+import { ProgressStaleListItem } from './ProgressStaleListItem'
 import { ProgressTranslatedListItem } from './ProgressTranslatedListItem'
 import { ReviewRequestChangesRoot } from './ReviewRequestChanges'
 import { ReviewSuggestions } from './ReviewSuggestions'
@@ -60,6 +60,8 @@ export class ProgressRootItem extends ProgressBaseItem {
     else if (!this.isDisplay) // should not hide if it's displaying
       context.push('hide')
     context.push('openable')
+    if (!this.isSource && this.node.missingKeys.length > 0)
+      context.push('translate-all')
     return context.join('-')
   }
 
@@ -67,7 +69,7 @@ export class ProgressRootItem extends ProgressBaseItem {
     const items: BaseTreeItem[] = [
       new ProgressTranslatedListItem(this),
       new ProgressEmptyListItem(this),
-      new ProgressMissingListItem(this),
+      ...(!this.isSource ? [new ProgressStaleListItem(this)] : []),
     ]
     const reviewItems: BaseTreeItem[] = []
 

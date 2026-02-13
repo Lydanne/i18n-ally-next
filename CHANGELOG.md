@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/lydanne/i18n-ally-next/compare/v2.13.1...v3.0.0) (2026-02-13)
+
+### ⚡ Features
+
+* **translate-all-missing:** one-click translate all missing and stale keys for any locale, accessible from the Progress view header (globe icon) and inline button on each locale item
+* **check-stale-translations:** detect outdated translations when source text has changed since last snapshot; supports re-translate all at once, review one by one, or update snapshots only; adds "Stale" submenu under each non-source locale in the Progress view
+* **scan-and-extract-all:** scan entire project for hard-coded strings and batch extract them into i18n keys with auto-generated keypaths; accessible from the Progress view header (search icon)
+
 ### [2.13.1](https://github.com/lokalise/i18n-ally/compare/v2.13.0...v2.13.1) (2024-11-01)
 
 ## [2.13.0](https://github.com/lokalise/i18n-ally/compare/v2.12.0...v2.13.0) (2024-11-01)

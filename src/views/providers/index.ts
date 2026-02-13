@@ -1,4 +1,5 @@
 export * from './CurrentFileLocalesTreeProvider'
+export * from './HardStringProvider'
 export * from './HelpFeedbackProvider'
 export * from './LocalesTreeProvider'
 export * from './ProgressProvider'
