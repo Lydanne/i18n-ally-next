@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.3](https://github.com/lydanne/i18n-ally-next/compare/v3.0.2...v3.0.3) (2026-02-13)
+
+
+### 📚 Documentations
+
+* **guide:** 添加最佳实践和框架集成指南 ([ec809b4](https://github.com/lydanne/i18n-ally-next/commit/ec809b415ce59d2da06cb6fa92ac5b30a92ba8eb))
+
+
+### 🔮 Refactor
+
+* **custom:** 添加 rewriteKeys 方法并优化命名空间分隔符处理 ([25bc2cb](https://github.com/lydanne/i18n-ally-next/commit/25bc2cbd3d4e34e1b45de31432dc1c3582aa41b4))
+
 ### [3.0.2](https://github.com/lydanne/i18n-ally-next/compare/v3.0.1...v3.0.2) (2026-02-13)
 
 
