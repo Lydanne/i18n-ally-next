@@ -1,9 +1,9 @@
-import type { QuickPickItem, Range, TextDocument } from 'vscode'
+import type { QuickPickItem, TextDocument } from 'vscode'
 import type { DetectionResult } from '~/core'
 import type { ExtensionModule } from '~/modules'
 import { relative } from 'path'
 import { trim } from 'lodash'
-import { commands, window } from 'vscode'
+import { commands, Range, window } from 'vscode'
 import { Config, CurrentFile, extractHardStrings, generateKeyFromText, Global, Telemetry, TelemetryKey } from '~/core'
 import { parseHardString } from '~/extraction/parseHardString'
 import i18n from '~/i18n'
@@ -42,10 +42,21 @@ async function ExtractOrInsertCommnad(options?: ExtractTextOptions, detection?: 
     if (!editor || !currentDoc)
       return
 
+    let selRange: Range = editor.selection
+    const selText = currentDoc.getText(editor.selection)
+    const trimmed = trim(selText, '\'"` ')
+    const quoteChars = `'"\``
+    const charBefore = selRange.start.character > 0
+      ? currentDoc.getText(new Range(selRange.start.translate(0, -1), selRange.start))
+      : ''
+    const charAfter = currentDoc.getText(new Range(selRange.end, selRange.end.translate(0, 1)))
+    if (quoteChars.includes(charBefore) && charBefore === charAfter)
+      selRange = new Range(selRange.start.translate(0, -1), selRange.end.translate(0, 1))
+
     options = {
       text: '',
-      rawText: trim(currentDoc.getText(editor.selection), '\'"` '),
-      range: editor.selection,
+      rawText: trimmed,
+      range: selRange,
       document: currentDoc,
       isInsert: editor.selection.start.isEqual(editor.selection.end),
     }
