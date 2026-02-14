@@ -24,6 +24,7 @@ export default defineConfig({
         nav: [
           { text: 'Guide', link: '/guide/getting-started' },
           { text: 'Config', link: '/config/' },
+          { text: 'Blog', link: '/blog/' },
           {
             text: 'Links',
             items: [
@@ -85,6 +86,15 @@ export default defineConfig({
               ],
             },
           ],
+          '/blog/': [
+            {
+              text: 'Blog',
+              items: [
+                { text: 'All Posts', link: '/blog/' },
+                { text: 'Introducing i18n Ally Next', link: '/blog/introducing-i18n-ally-next' },
+              ],
+            },
+          ],
         },
       },
     },
@@ -95,6 +105,7 @@ export default defineConfig({
         nav: [
           { text: '指南', link: '/zh-CN/guide/getting-started' },
           { text: '配置', link: '/zh-CN/config/' },
+          { text: '博客', link: '/zh-CN/blog/' },
           {
             text: '链接',
             items: [
@@ -153,6 +164,15 @@ export default defineConfig({
                 { text: '总览', link: '/zh-CN/config/' },
                 { text: '.vscode/settings.json', link: '/zh-CN/config/settings' },
                 { text: '.vscode/i18n-ally-next-custom-framework.yml', link: '/zh-CN/config/custom-framework' },
+              ],
+            },
+          ],
+          '/zh-CN/blog/': [
+            {
+              text: '博客',
+              items: [
+                { text: '全部文章', link: '/zh-CN/blog/' },
+                { text: 'i18n Ally Next 介绍', link: '/zh-CN/blog/introducing-i18n-ally-next' },
               ],
             },
           ],
