@@ -24,6 +24,7 @@ export default defineConfig({
         nav: [
           { text: 'Guide', link: '/guide/getting-started' },
           { text: 'Config', link: '/config/' },
+          { text: 'Dev Guide', link: '/dev-guide/' },
           { text: 'Blog', link: '/blog/' },
           {
             text: 'Links',
@@ -88,6 +89,25 @@ export default defineConfig({
               ],
             },
           ],
+          '/dev-guide/': [
+            {
+              text: 'Development Guide',
+              items: [
+                { text: 'Overview', link: '/dev-guide/' },
+                { text: 'Project Overview', link: '/dev-guide/project-overview' },
+                { text: 'Scripts & Workflow', link: '/dev-guide/scripts-and-workflow' },
+                { text: 'Core Architecture', link: '/dev-guide/core-architecture' },
+              ],
+            },
+            {
+              text: 'Advanced',
+              items: [
+                { text: 'Namespace Refactoring', link: '/dev-guide/namespace-refactor' },
+                { text: 'Testing System', link: '/dev-guide/testing' },
+                { text: 'Debugging & FAQ', link: '/dev-guide/debugging-and-faq' },
+              ],
+            },
+          ],
           '/blog/': [
             {
               text: 'Blog',
@@ -107,6 +127,7 @@ export default defineConfig({
         nav: [
           { text: '指南', link: '/zh-CN/guide/getting-started' },
           { text: '配置', link: '/zh-CN/config/' },
+          { text: '开发指南', link: '/zh-CN/dev-guide/' },
           { text: '博客', link: '/zh-CN/blog/' },
           {
             text: '链接',
@@ -168,6 +189,25 @@ export default defineConfig({
                 { text: '总览', link: '/zh-CN/config/' },
                 { text: '.vscode/settings.json', link: '/zh-CN/config/settings' },
                 { text: '.vscode/i18n-ally-next-custom-framework.yml', link: '/zh-CN/config/custom-framework' },
+              ],
+            },
+          ],
+          '/zh-CN/dev-guide/': [
+            {
+              text: '开发指南',
+              items: [
+                { text: '概览', link: '/zh-CN/dev-guide/' },
+                { text: '项目概览', link: '/zh-CN/dev-guide/project-overview' },
+                { text: 'Scripts 与工作流', link: '/zh-CN/dev-guide/scripts-and-workflow' },
+                { text: '核心架构', link: '/zh-CN/dev-guide/core-architecture' },
+              ],
+            },
+            {
+              text: '进阶',
+              items: [
+                { text: 'Namespace 重构经验', link: '/zh-CN/dev-guide/namespace-refactor' },
+                { text: '测试体系', link: '/zh-CN/dev-guide/testing' },
+                { text: '调试与 FAQ', link: '/zh-CN/dev-guide/debugging-and-faq' },
               ],
             },
           ],
