@@ -278,6 +278,18 @@ Replace the key text with the translation value in the editor display.
 - `true` (default) — The key string `t("hello")` is visually replaced with the translation value, e.g. `t("Hello World")`.
 - `false` — The translation is shown as a suffix after the key: `t("hello") · Hello World`.
 
+### `annotationInPlaceFullMatch`
+
+- **Type**: `boolean` — **Default**: `false`
+
+Enable full-match mode for in-place annotations. When the entire string literal is a translation key, use a distinct color (`theme.annotationInPlaceFullMatch`) instead of the normal annotation color.
+
+**When to use:** Enable to visually distinguish strings that are entirely translation keys from strings that only contain a key as part of a larger expression.
+
+```jsonc
+{ "i18n-ally-next.annotationInPlaceFullMatch": true }
+```
+
 ### `annotationMaxLength`
 
 - **Type**: `number` — **Default**: `40`
@@ -407,6 +419,55 @@ Map custom file extensions to existing parsers.
 }
 ```
 
+### `parsers.typescript.tsNodePath`
+
+- **Type**: `string` — **Default**: `"node_modules/ts-node/dist/bin.js"`
+
+Path to the ts-node binary, used for parsing TypeScript locale files.
+
+**When to use:** Change if your ts-node is installed in a non-standard location, or set to `"ts-node"` to use the globally installed version.
+
+```jsonc
+{ "i18n-ally-next.parsers.typescript.tsNodePath": "ts-node" }
+```
+
+### `parsers.typescript.compilerOptions`
+
+- **Type**: `object` — **Default**: `{}`
+
+TypeScript compiler options passed to ts-node when parsing TypeScript locale files.
+
+**When to use:** When your TypeScript locale files require specific compiler settings (e.g. custom paths, decorators).
+
+```jsonc
+{
+  "i18n-ally-next.parsers.typescript.compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true
+  }
+}
+```
+
+### `parserOptions`
+
+- **Type**: `object` — **Default**: `{}`
+
+General parser options passed to all file parsers.
+
+**When to use:** When you need to customize parser behavior globally. Specific parser options (e.g. `parsers.typescript.compilerOptions`) take precedence.
+
+### `frameworks.ruby-rails.scopeRoot`
+
+- **Type**: `string` — **Default**: `"app/views"`
+
+Root directory for Ruby on Rails scope resolution.
+
+**When to use:** When your Rails views are in a non-standard directory. The extension uses this to resolve `t(".key")` relative scoped keys.
+
+```jsonc
+{ "i18n-ally-next.frameworks.ruby-rails.scopeRoot": "app/views" }
+```
+
 ## Regex
 
 ### `regex.key`
@@ -467,6 +528,55 @@ Append extra usage match patterns to the framework's built-in patterns.
 Automatically detect hard-coded strings when opening a supported file.
 
 **When to use:** Enable to get automatic highlighting of strings that should be extracted to i18n. Useful during initial i18n migration of a project.
+
+### `extract.parsers.html`
+
+- **Type**: `object` — **Default**: `{}`
+
+Parser options for extracting hard-coded strings from HTML files.
+
+**When to use:** When you need to customize how the extension detects extractable strings in HTML/Vue templates. See [parser options source](https://github.com/lydanne/i18n-ally-next/blob/master/src/extraction/parsers/options.ts) for available options.
+
+### `extract.parsers.babel`
+
+- **Type**: `object` — **Default**: `{}`
+
+Parser options for extracting hard-coded strings from JS/TS/JSX/TSX files.
+
+**When to use:** When you need to customize how the extension detects extractable strings in JavaScript/TypeScript files. See [parser options source](https://github.com/lydanne/i18n-ally-next/blob/master/src/extraction/parsers/options.ts) for available options.
+
+### `extract.scanningInclude`
+
+- **Type**: `string[]` — **Default**: `[]`
+
+Glob patterns for files to include when batch scanning for hard-coded strings.
+
+**When to use:** Limit the scope of the "Scan and Extract All" command to specific directories or file types.
+
+```jsonc
+{
+  "i18n-ally-next.extract.scanningInclude": [
+    "src/**/*.{ts,tsx,vue}"
+  ]
+}
+```
+
+### `extract.scanningIgnore`
+
+- **Type**: `string[]` — **Default**: `[]`
+
+Glob patterns for files to ignore when batch scanning for hard-coded strings.
+
+**When to use:** Exclude directories or files from the "Scan and Extract All" command.
+
+```jsonc
+{
+  "i18n-ally-next.extract.scanningIgnore": [
+    "src/generated/**",
+    "**/*.test.ts"
+  ]
+}
+```
 
 ### `extract.keygenStrategy`
 

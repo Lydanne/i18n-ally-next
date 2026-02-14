@@ -278,6 +278,18 @@ locale 文件在磁盘上的组织方式。
 - `true`（默认）— 键字符串 `t("hello")` 被视觉替换为翻译值，如 `t("你好世界")`。
 - `false` — 翻译显示为键后面的后缀：`t("hello") · 你好世界`。
 
+### `annotationInPlaceFullMatch`
+
+- **类型**：`boolean` — **默认值**：`false`
+
+启用原位注解的全匹配模式。当整个字符串字面量是翻译键时，使用独特的颜色（`theme.annotationInPlaceFullMatch`）而非普通注解颜色。
+
+**使用场景：** 启用后可以在视觉上区分完全是翻译键的字符串和仅包含键作为较大表达式一部分的字符串。
+
+```jsonc
+{ "i18n-ally-next.annotationInPlaceFullMatch": true }
+```
+
 ### `annotationMaxLength`
 
 - **类型**：`number` — **默认值**：`40`
@@ -407,6 +419,55 @@ locale 文件在磁盘上的组织方式。
 }
 ```
 
+### `parsers.typescript.tsNodePath`
+
+- **类型**：`string` — **默认值**：`"node_modules/ts-node/dist/bin.js"`
+
+ts-node 二进制文件的路径，用于解析 TypeScript locale 文件。
+
+**使用场景：** 当 ts-node 安装在非标准位置时修改，或设为 `"ts-node"` 以使用全局安装的版本。
+
+```jsonc
+{ "i18n-ally-next.parsers.typescript.tsNodePath": "ts-node" }
+```
+
+### `parsers.typescript.compilerOptions`
+
+- **类型**：`object` — **默认值**：`{}`
+
+解析 TypeScript locale 文件时传递给 ts-node 的 TypeScript 编译器选项。
+
+**使用场景：** 当 TypeScript locale 文件需要特定的编译器设置时（如自定义路径、装饰器）。
+
+```jsonc
+{
+  "i18n-ally-next.parsers.typescript.compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true
+  }
+}
+```
+
+### `parserOptions`
+
+- **类型**：`object` — **默认值**：`{}`
+
+传递给所有文件解析器的通用解析器选项。
+
+**使用场景：** 当需要全局自定义解析器行为时。特定解析器选项（如 `parsers.typescript.compilerOptions`）优先级更高。
+
+### `frameworks.ruby-rails.scopeRoot`
+
+- **类型**：`string` — **默认值**：`"app/views"`
+
+Ruby on Rails 作用域解析的根目录。
+
+**使用场景：** 当 Rails 视图在非标准目录时。插件使用此设置来解析 `t(".key")` 相对作用域键。
+
+```jsonc
+{ "i18n-ally-next.frameworks.ruby-rails.scopeRoot": "app/views" }
+```
+
 ## 正则
 
 ### `regex.key`
@@ -467,6 +528,55 @@ locale 文件在磁盘上的组织方式。
 打开支持的文件时自动检测硬编码字符串。
 
 **使用场景：** 启用后可自动高亮应提取为 i18n 的字符串。在项目初始 i18n 迁移时非常有用。
+
+### `extract.parsers.html`
+
+- **类型**：`object` — **默认值**：`{}`
+
+从 HTML 文件中提取硬编码字符串的解析器选项。
+
+**使用场景：** 当需要自定义插件如何在 HTML/Vue 模板中检测可提取的字符串时。参见[解析器选项源码](https://github.com/lydanne/i18n-ally-next/blob/master/src/extraction/parsers/options.ts)。
+
+### `extract.parsers.babel`
+
+- **类型**：`object` — **默认值**：`{}`
+
+从 JS/TS/JSX/TSX 文件中提取硬编码字符串的解析器选项。
+
+**使用场景：** 当需要自定义插件如何在 JavaScript/TypeScript 文件中检测可提取的字符串时。参见[解析器选项源码](https://github.com/lydanne/i18n-ally-next/blob/master/src/extraction/parsers/options.ts)。
+
+### `extract.scanningInclude`
+
+- **类型**：`string[]` — **默认值**：`[]`
+
+批量扫描硬编码字符串时包含的文件 glob 模式。
+
+**使用场景：** 限制“扫描并提取全部”命令的范围到特定目录或文件类型。
+
+```jsonc
+{
+  "i18n-ally-next.extract.scanningInclude": [
+    "src/**/*.{ts,tsx,vue}"
+  ]
+}
+```
+
+### `extract.scanningIgnore`
+
+- **类型**：`string[]` — **默认值**：`[]`
+
+批量扫描硬编码字符串时忽略的文件 glob 模式。
+
+**使用场景：** 排除“扫描并提取全部”命令中的目录或文件。
+
+```jsonc
+{
+  "i18n-ally-next.extract.scanningIgnore": [
+    "src/generated/**",
+    "**/*.test.ts"
+  ]
+}
+```
 
 ### `extract.keygenStrategy`
 
