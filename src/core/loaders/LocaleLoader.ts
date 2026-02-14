@@ -156,7 +156,7 @@ export class LocaleLoader extends Loader {
       const nsFromKeypath = delimiter !== '.'
         ? (keypath.includes(delimiter) ? keypath.slice(0, keypath.indexOf(delimiter)) : undefined)
         : undefined
-      const namespace = pending.namespace || this.getNodeByKey(keypath)?.meta?.namespace || nsFromKeypath
+      const namespace = pending.namespace || this.getNodeByKey(keypath)?.meta?.namespace || nsFromKeypath || Config.defaultNamespace
 
       const filesSameLocale = this.files.find(f => f.namespace === namespace && f.locale === locale)
 
@@ -277,7 +277,7 @@ export class LocaleLoader extends Loader {
       const nsFromKeypath = delimiter !== '.'
         ? (keypath.includes(delimiter) ? keypath.slice(0, keypath.indexOf(delimiter)) : undefined)
         : undefined
-      const namespace = this.getNodeByKey(keypath)?.meta?.namespace || nsFromKeypath
+      const namespace = this.getNodeByKey(keypath)?.meta?.namespace || nsFromKeypath || Config.defaultNamespace
       if (namespace) {
         sourceFile = Object.values(this._files)
           .find(f => f.namespace === namespace && f.locale === sourceLocale)
