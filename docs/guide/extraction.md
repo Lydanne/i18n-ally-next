@@ -64,6 +64,8 @@ When `keygenStrategy` is set to `"template"`, keys are generated from a customiz
 
 #### Available Variables
 
+<div v-pre>
+
 | Variable | Description | Example |
 | --- | --- | --- |
 | `{{dirname}}` | Current file's parent directory name | `setup` |
@@ -71,7 +73,11 @@ When `keygenStrategy` is set to `"template"`, keys are generated from a customiz
 | `{{package.name}}` | `name` field from the nearest `package.json` | `@spaceflow/cli` |
 | `{{package_dirname}}` | Directory name where the nearest `package.json` is located | `cli` |
 
+</div>
+
 #### Example
+
+<div v-pre>
 
 For a file at `src/commands/setup/setup.command.ts` with template `{{dirname}}:{{filename}}`:
 
@@ -81,8 +87,10 @@ For a file at `src/commands/setup/setup.command.ts` with template `{{dirname}}:{
 
 The final key will be `setup:setup.command` + the text you enter in the key input box.
 
+</div>
+
 ::: tip
-Template mode works well with namespace-enabled projects. For example, `{{dirname}}:` generates keys that automatically map to the correct namespace file.
+Template mode works well with namespace-enabled projects. For example, <code v-pre>{{dirname}}:</code> generates keys that automatically map to the correct namespace file.
 :::
 
 ## Target File Picking Strategy

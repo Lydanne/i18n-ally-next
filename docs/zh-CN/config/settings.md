@@ -606,12 +606,16 @@ Ruby on Rails 作用域解析的根目录。
 
 **可用变量：**
 
+<div v-pre>
+
 | 变量 | 说明 | 示例 |
 | --- | --- | --- |
 | `{{dirname}}` | 当前文件所在目录名 | `setup` |
 | `{{filename}}` | 当前文件名（不含扩展名） | `setup.command` |
 | `{{package.name}}` | 最近的 `package.json` 的 `name` 字段 | `@spaceflow/cli` |
 | `{{package_dirname}}` | 最近的 `package.json` 所在目录名 | `cli` |
+
+</div>
 
 ```jsonc
 {

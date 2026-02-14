@@ -64,6 +64,8 @@ i18n Ally Next 可以检测代码中的硬编码字符串，并帮助你将它�
 
 #### 可用变量
 
+<div v-pre>
+
 | 变量 | 说明 | 示例 |
 | --- | --- | --- |
 | `{{dirname}}` | 当前文件所在目录名 | `setup` |
@@ -71,7 +73,11 @@ i18n Ally Next 可以检测代码中的硬编码字符串，并帮助你将它�
 | `{{package.name}}` | 最近的 `package.json` 的 `name` 字段 | `@spaceflow/cli` |
 | `{{package_dirname}}` | 最近的 `package.json` 所在目录名 | `cli` |
 
+</div>
+
 #### 示例
+
+<div v-pre>
 
 对于文件 `src/commands/setup/setup.command.ts`，使用模板 `{{dirname}}:{{filename}}`：
 
@@ -81,8 +87,10 @@ i18n Ally Next 可以检测代码中的硬编码字符串，并帮助你将它�
 
 最终键名为 `setup:setup.command` + 你在输入框中输入的文本。
 
+</div>
+
 ::: tip
-模板模式非常适合启用了命名空间的项目。例如 `{{dirname}}:` 可以自动生成映射到正确命名空间文件的键名。
+模板模式非常适合启用了命名空间的项目。例如 <code v-pre>{{dirname}}:</code> 可以自动生成映射到正确命名空间文件的键名。
 :::
 
 ## 目标文件选择策略

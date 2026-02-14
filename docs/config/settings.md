@@ -606,12 +606,16 @@ Template string for generating key names when `keygenStrategy` is `"template"`.
 
 **Available variables:**
 
+<div v-pre>
+
 | Variable | Description | Example |
 | --- | --- | --- |
 | `{{dirname}}` | Current file's parent directory name | `setup` |
 | `{{filename}}` | Current file name (without extension) | `setup.command` |
 | `{{package.name}}` | `name` field from the nearest `package.json` | `@spaceflow/cli` |
 | `{{package_dirname}}` | Directory name where the nearest `package.json` is located | `cli` |
+
+</div>
 
 ```jsonc
 {
