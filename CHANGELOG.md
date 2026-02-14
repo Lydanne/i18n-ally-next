@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.7](https://github.com/lydanne/i18n-ally-next/compare/v3.0.6...v3.0.7) (2026-02-14)
+
+
+### 🔮 Refactor
+
+* **extract:** 优化字符串提取时的引号处理逻辑 ([138282d](https://github.com/lydanne/i18n-ally-next/commit/138282dedd005fc256e13780d5f146f7c74f0ccd))
+
+
+### 🐞 Bug Fixes
+
+* **extract:** 修复字符串提取功能中的 namespace 分隔符处理逻辑 ([5bb4a11](https://github.com/lydanne/i18n-ally-next/commit/5bb4a112a59ed112117636f7b36beed8d25be031))
+* **loader:** 在键路径解析时添加默认 namespace 回退逻辑 ([fdd24f6](https://github.com/lydanne/i18n-ally-next/commit/fdd24f6baec132ec6c5dfdc19726401fcd4cbd0e))
+
+
+### 📚 Documentations
+
+* **extract:** 添加模板模式键名生成功能文档和配置 ([145b990](https://github.com/lydanne/i18n-ally-next/commit/145b990e08b983efb8074584633ab5493312580f))
+
 ### [3.0.6](https://github.com/lydanne/i18n-ally-next/compare/v3.0.5...v3.0.6) (2026-02-14)
 
 
