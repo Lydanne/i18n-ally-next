@@ -2,7 +2,10 @@
 
 ## Installation
 
-Search for **i18n Ally Next** in the VS Code Extensions panel, or install it from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next).
+Search for **i18n Ally Next** in the VS Code Extensions panel, or install from:
+
+- [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next)
+- [Open VSX Registry](https://open-vsx.org/extension/lydanne/i18n-ally-next)
 
 ## Basic Setup
 

@@ -28,6 +28,7 @@ export default defineConfig({
             text: 'Links',
             items: [
               { text: 'VS Code Marketplace', link: 'https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next' },
+              { text: 'Open VSX Registry', link: 'https://open-vsx.org/extension/lydanne/i18n-ally-next' },
               { text: 'GitHub', link: 'https://github.com/lydanne/i18n-ally-next' },
               { text: 'Changelog', link: 'https://github.com/lydanne/i18n-ally-next/blob/main/changelog.md' },
             ],
@@ -79,6 +80,8 @@ export default defineConfig({
               text: 'Configuration',
               items: [
                 { text: 'Overview', link: '/config/' },
+                { text: '.vscode/settings.json', link: '/config/settings' },
+                { text: '.vscode/i18n-ally-next-custom-framework.yml', link: '/config/custom-framework' },
               ],
             },
           ],
@@ -96,6 +99,7 @@ export default defineConfig({
             text: '链接',
             items: [
               { text: 'VS Code 插件市场', link: 'https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next' },
+              { text: 'Open VSX Registry', link: 'https://open-vsx.org/extension/lydanne/i18n-ally-next' },
               { text: 'GitHub', link: 'https://github.com/lydanne/i18n-ally-next' },
               { text: '更新日志', link: 'https://github.com/lydanne/i18n-ally-next/blob/main/changelog.md' },
             ],
@@ -147,6 +151,8 @@ export default defineConfig({
               text: '配置项',
               items: [
                 { text: '总览', link: '/zh-CN/config/' },
+                { text: '.vscode/settings.json', link: '/zh-CN/config/settings' },
+                { text: '.vscode/i18n-ally-next-custom-framework.yml', link: '/zh-CN/config/custom-framework' },
               ],
             },
           ],

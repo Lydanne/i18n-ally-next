@@ -2,7 +2,10 @@
 
 ## 安装
 
-在 VS Code 扩展面板中搜索 **i18n Ally Next**，或从 [VS Code 插件市场](https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next) 安装。
+在 VS Code 扩展面板中搜索 **i18n Ally Next**，或从以下渠道安装：
+
+- [VS Code 插件市场](https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next)
+- [Open VSX Registry](https://open-vsx.org/extension/lydanne/i18n-ally-next)
 
 ## 基本配置
 
