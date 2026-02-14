@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.6](https://github.com/lydanne/i18n-ally-next/compare/v3.0.5...v3.0.6) (2026-02-14)
+
+
+### ⚡ Features
+
+* **locales:** 添加注释文本括号配置项的翻译 ([3ba38e8](https://github.com/lydanne/i18n-ally-next/commit/3ba38e88681fbee84f5bdadc0466f898b7d9e867))
+
+
+### 🐞 Bug Fixes
+
+* **namespace:** 修复 namespace 分隔符处理和键路径解析逻辑 ([2cad14b](https://github.com/lydanne/i18n-ally-next/commit/2cad14bd70f0c06c457177a07ff16351ae697be8))
+
+
+### ⚗ Tests
+
+* **e2e:** 更新 i18next 和 react-i18next 框架测试快照中的键名分隔符 ([b7d803d](https://github.com/lydanne/i18n-ally-next/commit/b7d803db0ed8fc9f61b86d2df30cd44bf58ed80f))
+
+
+### 📚 Documentations
+
+* **blog:** 添加博客功能和 i18n Ally Next 介绍文章 ([ab5a659](https://github.com/lydanne/i18n-ally-next/commit/ab5a659a61ff2b0d7ee0785f7c5339ca68891922))
+* **config:** 补充 settings.json 配置文档中缺失的配置项 ([07a4f89](https://github.com/lydanne/i18n-ally-next/commit/07a4f899da752a63e2b3689a84dff65ff776a493))
+* **config:** 重构配置文档结构,拆分为独立页面并添加 Open VSX Registry 链接 ([b0367a4](https://github.com/lydanne/i18n-ally-next/commit/b0367a493ecdffca1d16d9e4668714a93e155bf8))
+* **dev-guide:** 添加开发指南文档,包含项目结构、核心架构、测试和调试指南 ([c14ffa1](https://github.com/lydanne/i18n-ally-next/commit/c14ffa1f3a1637b3a7825149cbe6ba651184ac02))
+* 添加 i18n Ally Next 项目推广文档 ([d46e8e3](https://github.com/lydanne/i18n-ally-next/commit/d46e8e3d44251979ba3d76a28f040e7b8cc6c2ce))
+* 添加可视化编辑器、使用报告和批量翻译功能文档 ([04e6f3f](https://github.com/lydanne/i18n-ally-next/commit/04e6f3fcd468048de33588c1de2213edadbb68ce))
+* 调整徽章显示位置并移除 Cursor/Windsurf 编辑器引用 ([2732ccf](https://github.com/lydanne/i18n-ally-next/commit/2732ccf53db8742cfa2a334cee10e719c6977a24))
+
 ### [3.0.5](https://github.com/lydanne/i18n-ally-next/compare/v3.0.4...v3.0.5) (2026-02-13)
 
 
