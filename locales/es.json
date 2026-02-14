@@ -74,6 +74,7 @@
   "config.key_prefix": "Cadena a anteponer a la ",
   "config.keygen_strategy": "Estrategia para la generación de claves",
   "config.keygen_style": "Estilo de mayúsculas y minúsculas para generar clave.",
+  "config.keygen_template": "Plantilla para generar clave cuando keygenStrategy es 'template'. Variables disponibles: {{dirname}} (nombre del directorio del archivo actual), {{filename}} (nombre del archivo actual sin extensión), {{package.name}} (nombre del package.json más cercano), {{package_dirname}} (nombre del directorio donde se encuentra el package.json más cercano). Ejemplo: {{dirname}}:{{filename}}",
   "config.keys_in_use": "Claves a marcar para rellenar incluso sin aparecer en el código",
   "config.keystyle": "Estilo de la clave de configuración regional",
   "config.language_tag_system": "Sistema de etiquetado de lenguaje se está usando",

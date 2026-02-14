@@ -74,6 +74,7 @@
   "config.key_prefix": "Ayıklama anahtarının başına eklenecek dize. Dosya için {fileName} ve {fileNameWithoutExt} ile dosya isminde bulunan ilk noktadan önce ki bölüm için kullanabilirsiniz.",
   "config.keygen_strategy": "Anahtar oluşturma yöntemi.",
   "config.keygen_style": "Anahtarın oluşturulacağı alanın stili.",
+  "config.keygen_template": "keygenStrategy 'template' olduğunda anahtar oluşturmak için şablon. Kullanılabilir değişkenler: {{dirname}} (geçerli dosya dizin adı), {{filename}} (uzantısız geçerli dosya adı), {{package.name}} (en yakın package.json adı), {{package_dirname}} (en yakın package.json'ın bulunduğu dizin adı). Örnek: {{dirname}}:{{filename}}",
   "config.keys_in_use": "Kod içerisinde belirtilmeyen ama kullanımda olarak işaretlenecek çeviriler",
   "config.keystyle": "Çeviri anahtarı görünümü",
   "config.language_tag_system": "Kullandığınız dil eki sistemi",

@@ -1174,9 +1174,15 @@
             "slug",
             "random",
             "empty",
-            "source"
+            "source",
+            "template"
           ],
           "description": "%config.keygen_strategy%"
+        },
+        "i18n-ally-next.extract.keygenTemplate": {
+          "type": "string",
+          "default": "",
+          "description": "%config.keygen_template%"
         },
         "i18n-ally-next.extract.keygenStyle": {
           "type": "string",

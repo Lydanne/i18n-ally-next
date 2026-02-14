@@ -35,6 +35,9 @@ Control how keys are auto-generated:
 {
   // "slug" (default) — generates slug-like keys: "hello-world"
   // "random" — generates random keys
+  // "empty" — generates empty keys (for manual input)
+  // "source" — uses the source text as key
+  // "template" — generates keys from a template (see below)
   "i18n-ally-next.extract.keygenStrategy": "slug",
 
   // Key name style: "default", "camelCase", "PascalCase", "snake_case", "kebab-case"
@@ -47,6 +50,40 @@ Control how keys are auto-generated:
   "i18n-ally-next.extract.keyPrefix": ""
 }
 ```
+
+### Template Mode
+
+When `keygenStrategy` is set to `"template"`, keys are generated from a customizable template string with variable placeholders:
+
+```jsonc
+{
+  "i18n-ally-next.extract.keygenStrategy": "template",
+  "i18n-ally-next.extract.keygenTemplate": "{{dirname}}:{{filename}}"
+}
+```
+
+#### Available Variables
+
+| Variable | Description | Example |
+| --- | --- | --- |
+| `{{dirname}}` | Current file's parent directory name | `setup` |
+| `{{filename}}` | Current file name (without extension) | `setup.command` |
+| `{{package.name}}` | `name` field from the nearest `package.json` | `@spaceflow/cli` |
+| `{{package_dirname}}` | Directory name where the nearest `package.json` is located | `cli` |
+
+#### Example
+
+For a file at `src/commands/setup/setup.command.ts` with template `{{dirname}}:{{filename}}`:
+
+- `{{dirname}}` → `setup`
+- `{{filename}}` → `setup.command`
+- Generated key prefix: `setup:setup.command`
+
+The final key will be `setup:setup.command` + the text you enter in the key input box.
+
+::: tip
+Template mode works well with namespace-enabled projects. For example, `{{dirname}}:` generates keys that automatically map to the correct namespace file.
+:::
 
 ## Target File Picking Strategy
 

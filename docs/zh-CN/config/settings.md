@@ -580,7 +580,7 @@ Ruby on Rails 作用域解析的根目录。
 
 ### `extract.keygenStrategy`
 
-- **类型**：`"slug" | "random" | "empty" | "source"` — **默认值**：`"slug"`
+- **类型**：`"slug" | "random" | "empty" | "source" | "template"` — **默认值**：`"slug"`
 
 提取字符串时生成键名的策略。
 
@@ -590,9 +590,35 @@ Ruby on Rails 作用域解析的根目录。
 - `random` — 生成随机键：`"Hello World"` → `a3f2b1c4`。
 - `empty` — 留空键名，手动输入。
 - `source` — 使用源字符串作为键：`"Hello World"` → `Hello World`。
+- `template` — 通过模板字符串生成键名（参见下方 `extract.keygenTemplate`）。
 
 ```jsonc
 { "i18n-ally-next.extract.keygenStrategy": "slug" }
+```
+
+### `extract.keygenTemplate`
+
+- **类型**：`string` — **默认值**：`""`
+
+当 `keygenStrategy` 为 `"template"` 时，用于生成键名的模板字符串。
+
+**使用场景：** 当你希望键名基于文件上下文（目录名、文件名、包名）而非字符串内容来生成时使用。特别适合启用了命名空间的项目。
+
+**可用变量：**
+
+| 变量 | 说明 | 示例 |
+| --- | --- | --- |
+| `{{dirname}}` | 当前文件所在目录名 | `setup` |
+| `{{filename}}` | 当前文件名（不含扩展名） | `setup.command` |
+| `{{package.name}}` | 最近的 `package.json` 的 `name` 字段 | `@spaceflow/cli` |
+| `{{package_dirname}}` | 最近的 `package.json` 所在目录名 | `cli` |
+
+```jsonc
+{
+  "i18n-ally-next.extract.keygenStrategy": "template",
+  // 对于 src/commands/setup/setup.command.ts → 生成 "setup:setup.command"
+  "i18n-ally-next.extract.keygenTemplate": "{{dirname}}:{{filename}}"
+}
 ```
 
 ### `extract.keygenStyle`

@@ -35,6 +35,9 @@ i18n Ally Next 可以检测代码中的硬编码字符串，并帮助你将它�
 {
   // "slug"（默认）— 生成 slug 风格的键名: "hello-world"
   // "random" — 生成随机键名
+  // "empty" — 留空键名，手动输入
+  // "source" — 使用源字符串作为键名
+  // "template" — 通过模板字符串生成键名（见下方）
   "i18n-ally-next.extract.keygenStrategy": "slug",
 
   // 键名风格: "default", "camelCase", "PascalCase", "snake_case", "kebab-case"
@@ -47,6 +50,40 @@ i18n Ally Next 可以检测代码中的硬编码字符串，并帮助你将它�
   "i18n-ally-next.extract.keyPrefix": ""
 }
 ```
+
+### 模板模式
+
+当 `keygenStrategy` 设置为 `"template"` 时，键名将根据自定义模板字符串和变量占位符生成：
+
+```jsonc
+{
+  "i18n-ally-next.extract.keygenStrategy": "template",
+  "i18n-ally-next.extract.keygenTemplate": "{{dirname}}:{{filename}}"
+}
+```
+
+#### 可用变量
+
+| 变量 | 说明 | 示例 |
+| --- | --- | --- |
+| `{{dirname}}` | 当前文件所在目录名 | `setup` |
+| `{{filename}}` | 当前文件名（不含扩展名） | `setup.command` |
+| `{{package.name}}` | 最近的 `package.json` 的 `name` 字段 | `@spaceflow/cli` |
+| `{{package_dirname}}` | 最近的 `package.json` 所在目录名 | `cli` |
+
+#### 示例
+
+对于文件 `src/commands/setup/setup.command.ts`，使用模板 `{{dirname}}:{{filename}}`：
+
+- `{{dirname}}` → `setup`
+- `{{filename}}` → `setup.command`
+- 生成的键名前缀：`setup:setup.command`
+
+最终键名为 `setup:setup.command` + 你在输入框中输入的文本。
+
+::: tip
+模板模式非常适合启用了命名空间的项目。例如 `{{dirname}}:` 可以自动生成映射到正确命名空间文件的键名。
+:::
 
 ## 目标文件选择策略
 

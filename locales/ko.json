@@ -74,6 +74,7 @@
   "config.key_prefix": "추출 키 앞에 추가할 문자열. \n파일 이름에는 {fileName}을, 첫 번째 점 앞의 파일 이름 부분에는 {fileNameWithoutExt}를 사용할 수 있습니다.",
   "config.keygen_strategy": "키 생성 전략.",
   "config.keygen_style": "키 생성을 위한 케이스 스타일.",
+  "config.keygen_template": "keygenStrategy가 'template'일 때 키를 생성하기 위한 템플릿. 사용 가능한 변수: {{dirname}} (현재 파일 디렉터리 이름), {{filename}} (확장자 없는 현재 파일 이름), {{package.name}} (가장 가까운 package.json 이름), {{package_dirname}} (가장 가까운 package.json이 위치한 디렉터리 이름). 예시: {{dirname}}:{{filename}}",
   "config.keys_in_use": "코드에 나타나지 않아도 사용 중으로 표시하는 키",
   "config.keystyle": "로케일 키 스타일",
   "config.language_tag_system": "언어 태그 시스템을 사용하고 있습니다.",

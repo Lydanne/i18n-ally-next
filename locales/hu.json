@@ -74,6 +74,7 @@
   "config.key_prefix": "Egy string a kinyerendő kulcshoz. használhatja a {fileName} -t a fájlnévért és a {fileNameWithoutExt} -t a fájlnév legelső pontja előtti részéért.",
   "config.keygen_strategy": "A kulcs generálási stratégiája",
   "config.keygen_style": "Az esetstílus a kulcs generálásához.",
+  "config.keygen_template": "Sablon a kulcs generálásához, amikor a keygenStrategy 'template'. Elérhető változók: {{dirname}} (aktuális fájl könyvtárának neve), {{filename}} (aktuális fájl neve kiterjesztés nélkül), {{package.name}} (legközelebbi package.json neve), {{package_dirname}} (a könyvtár neve, ahol a legközelebbi package.json található). Példa: {{dirname}}:{{filename}}",
   "config.keys_in_use": "A kulcsok jelölése használatban, még akkor is, ha nem jelennek meg a kódban.",
   "config.keystyle": "A kulcs stílusa",
   "config.language_tag_system": "A nyelvi címke rendszerének használata.",

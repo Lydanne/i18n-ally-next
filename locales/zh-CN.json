@@ -73,6 +73,7 @@
   "config.key_max_length": "如果指定，提取时生成的密钥将被截断为此字符数（不包括 keyPrefix）。默认为无限制。",
   "config.key_prefix": "提取出的文案路径前缀",
   "config.keygen_strategy": "提取文案路径的生成策略",
+  "config.keygen_template": "当 keygenStrategy 为 'template' 时的模板。可用变量：{{dirname}}（当前文件所在目录名）、{{filename}}（当前文件名，不含扩展名）、{{package.name}}（最近的 package.json 的 name）、{{package_dirname}}（最近的 package.json 所在目录名）。示例：{{dirname}}:{{filename}}",
   "config.keygen_style": "生成密钥的大小写样式。",
   "config.keys_in_use": "尽管代码中没有出现，但仍标记为正在使用的键",
   "config.keystyle": "翻译路径格式",

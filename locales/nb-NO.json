@@ -74,6 +74,7 @@
   "config.key_prefix": "Streng som skal legges til foran ekstraksjonsnøkkelen. Du kan bruke {fileName} for filnavnet, og {fileNameWithoutExt} for delen av filnavnet før første punktum.",
   "config.keygen_strategy": "Strategi for generering av nøkkel.",
   "config.keygen_style": "Sakstil for generering av nøkkel.",
+  "config.keygen_template": "Mal for å generere nøkkel når keygenStrategy er 'template'. Tilgjengelige variabler: {{dirname}} (gjeldende filkatalogens navn), {{filename}} (gjeldende filnavn uten utvidelse), {{package.name}} (nærmeste package.json navn), {{package_dirname}} (katalognavn hvor den nærmeste package.json er plassert). Eksempel: {{dirname}}:{{filename}}",
   "config.keys_in_use": "Nøkler som skal merkes som i bruk til tross for at de ikke vises i koden",
   "config.keystyle": "Oversettelseskodestil",
   "config.language_tag_system": "Språktag-system du bruker.",

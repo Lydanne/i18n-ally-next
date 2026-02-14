@@ -1,6 +1,7 @@
 import type { TextDocument } from 'vscode'
 import type { ExtractInfo } from './types'
-import { basename, extname } from 'path'
+import { existsSync, readFileSync } from 'fs'
+import { basename, dirname, extname, resolve } from 'path'
 import limax from 'limax'
 import { nanoid } from 'nanoid'
 import { window } from 'vscode'
@@ -29,6 +30,9 @@ export function generateKeyFromText(text: string, filepath?: string, reuseExisti
   }
   else if (keygenStrategy === 'source') {
     key = text
+  }
+  else if (keygenStrategy === 'template') {
+    key = resolveTemplate(Config.keygenTemplate, filepath)
   }
   else {
     text = text.replace(/\$/g, '')
@@ -66,6 +70,47 @@ export function generateKeyFromText(text: string, filepath?: string, reuseExisti
   }
 
   return key
+}
+
+function findNearestPackageJson(startDir: string): { data: Record<string, unknown>, dir: string } | undefined {
+  let dir = startDir
+  while (true) {
+    const pkgPath = resolve(dir, 'package.json')
+    if (existsSync(pkgPath)) {
+      try {
+        return { data: JSON.parse(readFileSync(pkgPath, 'utf-8')), dir }
+      }
+      catch {
+        return undefined
+      }
+    }
+    const parent = dirname(dir)
+    if (parent === dir)
+      return undefined
+    dir = parent
+  }
+}
+
+function resolveTemplate(template: string, filepath?: string): string {
+  if (!template || !filepath)
+    return ''
+  const dir = dirname(filepath)
+  const variables: Record<string, () => string> = {
+    'dirname': () => basename(dir),
+    'filename': () => basename(filepath, extname(filepath)),
+    'package.name': () => {
+      const pkg = findNearestPackageJson(dir)
+      return (pkg?.data.name as string) ?? ''
+    },
+    'package_dirname': () => {
+      const pkg = findNearestPackageJson(dir)
+      return pkg ? basename(pkg.dir) : ''
+    },
+  }
+  return template.replace(/\{\{(\w+(?:\.\w+)*)\}\}/g, (_, varName: string) => {
+    const resolver = variables[varName]
+    return resolver ? resolver() : ''
+  })
 }
 
 export async function extractHardStrings(document: TextDocument, extracts: ExtractInfo[], saveFile = false) {

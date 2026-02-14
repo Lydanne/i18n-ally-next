@@ -580,7 +580,7 @@ Glob patterns for files to ignore when batch scanning for hard-coded strings.
 
 ### `extract.keygenStrategy`
 
-- **Type**: `"slug" | "random" | "empty" | "source"` — **Default**: `"slug"`
+- **Type**: `"slug" | "random" | "empty" | "source" | "template"` — **Default**: `"slug"`
 
 Strategy for generating key names when extracting strings.
 
@@ -590,9 +590,35 @@ Strategy for generating key names when extracting strings.
 - `random` — Generate a random key: `"Hello World"` → `a3f2b1c4`.
 - `empty` — Leave the key empty for manual input.
 - `source` — Use the source string as the key: `"Hello World"` → `Hello World`.
+- `template` — Generate keys from a template string (see `extract.keygenTemplate` below).
 
 ```jsonc
 { "i18n-ally-next.extract.keygenStrategy": "slug" }
+```
+
+### `extract.keygenTemplate`
+
+- **Type**: `string` — **Default**: `""`
+
+Template string for generating key names when `keygenStrategy` is `"template"`.
+
+**When to use:** When you want keys to be generated based on file context (directory name, file name, package name) rather than the string content. This is especially useful with namespace-enabled projects.
+
+**Available variables:**
+
+| Variable | Description | Example |
+| --- | --- | --- |
+| `{{dirname}}` | Current file's parent directory name | `setup` |
+| `{{filename}}` | Current file name (without extension) | `setup.command` |
+| `{{package.name}}` | `name` field from the nearest `package.json` | `@spaceflow/cli` |
+| `{{package_dirname}}` | Directory name where the nearest `package.json` is located | `cli` |
+
+```jsonc
+{
+  "i18n-ally-next.extract.keygenStrategy": "template",
+  // For file at src/commands/setup/setup.command.ts → generates "setup:setup.command"
+  "i18n-ally-next.extract.keygenTemplate": "{{dirname}}:{{filename}}"
+}
 ```
 
 ### `extract.keygenStyle`

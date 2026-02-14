@@ -74,6 +74,7 @@
   "config.key_prefix": "Tekenreeks om voor de extraherende sleutel te plaatsen. U kunt {fileName} gebruiken voor de bestandsnaam, en {fileNameWithoutExt} voor het deel van de bestandsnaam voor de eerste punt.",
   "config.keygen_strategy": "Strategie voor het genereren van sleutel.",
   "config.keygen_style": "Hoofdletterstijl voor het genereren van sleutel.",
+  "config.keygen_template": "Sjabloon voor het genereren van sleutel wanneer keygenStrategy 'template' is. Beschikbare variabelen: {{dirname}} (naam van huidige bestandmap), {{filename}} (huidige bestandsnaam zonder extensie), {{package.name}} (naam van dichtstbijzijnde package.json), {{package_dirname}} (mapnaam waar de dichtstbijzijnde package.json zich bevindt). Voorbeeld: {{dirname}}:{{filename}}",
   "config.keys_in_use": "Sleutels om als in gebruik te markeren, ondanks dat ze niet in de code verschijnen",
   "config.keystyle": "Locale sleutel stijl",
   "config.language_tag_system": "Taal-tag systeem dat u gebruikt.",

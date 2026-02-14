@@ -74,6 +74,7 @@
   "config.key_prefix": "สตริงที่ต่อท้ายคีย์การของการแตกไฟล์ คุณสามารถใช้ {fileName} สำหรับชื่อไฟล์ และ {fileNameWithoutExt} สำหรับส่วนของชื่อไฟล์ก่อนจุดแรก",
   "config.keygen_strategy": "กลยุทธ์ในการสร้างคีย์",
   "config.keygen_style": "รูปแบบตัวพิมพ์สำหรับสร้างรหัส",
+  "config.keygen_template": "เทมเพลตสำหรับสร้างคีย์เมื่อ keygenStrategy เป็น 'template' ตัวแปรที่ใช้ได้: {{dirname}} (ชื่อไดเรกทอรีของไฟล์ปัจจุบัน), {{filename}} (ชื่อไฟล์ปัจจุบันโดยไม่รวมนามสกุล), {{package.name}} (ชื่อของ package.json ที่ใกล้ที่สุด), {{package_dirname}} (ชื่อไดเรกทอรีที่ package.json ที่ใกล้ที่สุดอยู่) ตัวอย่าง: {{dirname}}:{{filename}}",
   "config.keys_in_use": "คีย์ที่ใช้ทำเครื่องหมายว่าใช้งานอยู่แม้ว่าจะไม่ปรากฏในรหัส",
   "config.keystyle": "รูปแบบคีย์ภาษา",
   "config.language_tag_system": "กำลังใช้ระบบแท็กภาษาอยู่",

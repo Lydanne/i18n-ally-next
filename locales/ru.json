@@ -74,6 +74,7 @@
   "config.key_prefix": "Строка перед ключом извлечения. Вы можете использовать {fileName} для имени файла и {fileNameWithoutExt} для части имени файла перед первой точкой.",
   "config.keygen_strategy": "Стратегия генерации ключа.",
   "config.keygen_style": "Стиль написания для генерации ключа.",
+  "config.keygen_template": "Шаблон для генерации ключа, когда keygenStrategy равен 'template'. Доступные переменные: {{dirname}} (имя каталога текущего файла), {{filename}} (имя текущего файла без расширения), {{package.name}} (имя ближайшего package.json), {{package_dirname}} (имя каталога, где находится ближайший package.json). Пример: {{dirname}}:{{filename}}",
   "config.keys_in_use": "Ключи, которые нужно отметить как используемые, несмотря на то, что они не отображаются в коде",
   "config.keystyle": "Стиль ключа перевода",
   "config.language_tag_system": "Используемая языковая система тегов.",

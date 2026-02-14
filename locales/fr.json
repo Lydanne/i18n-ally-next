@@ -74,6 +74,7 @@
   "config.key_prefix": "Texte à ajouter à la clé d'extraction. Vous pouvez utiliser {fileName} pour le nom de fichier et {fileNameWithoutExt} pour la partie du nom de fichier avant le premier point.",
   "config.keygen_strategy": "Stratégie de génération de clé",
   "config.keygen_style": "Style de casse pour la génération de clé.",
+  "config.keygen_template": "Modèle pour générer la clé lorsque keygenStrategy est 'template'. Variables disponibles : {{dirname}} (nom du répertoire du fichier actuel), {{filename}} (nom du fichier actuel sans extension), {{package.name}} (nom du package.json le plus proche), {{package_dirname}} (nom du répertoire où se trouve le package.json le plus proche). Exemple : {{dirname}}:{{filename}}",
   "config.keys_in_use": "Clés à marquer comme étant utilisées bien qu'elles n'apparaissent pas dans le code",
   "config.keystyle": "Style de clé locale.",
   "config.language_tag_system": "Utilisation du système de balise pour la langue utilisée.",

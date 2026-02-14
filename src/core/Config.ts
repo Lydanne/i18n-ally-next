@@ -464,6 +464,10 @@ export class Config {
     return this.getConfig<string>('extract.keygenStrategy') ?? 'slug'
   }
 
+  static get keygenTemplate() {
+    return this.getConfig<string>('extract.keygenTemplate') ?? ''
+  }
+
   static get keygenStyle(): CaseStyles {
     return this.getConfig<CaseStyles>('extract.keygenStyle') ?? 'default'
   }

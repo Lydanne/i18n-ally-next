@@ -74,6 +74,7 @@
   "config.key_prefix": "String para prefixar à chave de extração. Você pode usar {fileName} para o nome do arquivo e {fileNameWithoutExt} para a parte do nome do arquivo antes do primeiro ponto.",
   "config.keygen_strategy": "Estratégia de geração de chave.",
   "config.keygen_style": "Estilo de maiúsculas e minúsculas para geração de chave.",
+  "config.keygen_template": "Modelo para gerar chave quando keygenStrategy é 'template'. Variáveis disponíveis: {{dirname}} (nome do diretório do arquivo atual), {{filename}} (nome do arquivo atual sem extensão), {{package.name}} (nome do package.json mais próximo), {{package_dirname}} (nome do diretório onde o package.json mais próximo está localizado). Exemplo: {{dirname}}:{{filename}}",
   "config.keys_in_use": "Chaves para marcar como em uso apesar de não aparecerem no código",
   "config.keystyle": "Estilo de chave de tradução",
   "config.language_tag_system": "Sistema de tag de idioma que você está usando.",

@@ -74,6 +74,7 @@
   "config.key_prefix": "文案 key 的前綴",
   "config.keygen_strategy": "文案 key 的生成策略, slug 默認策略, random 生成隨機字串",
   "config.keygen_style": "產生金鑰的大小寫樣式。",
+  "config.keygen_template": "當 keygenStrategy 為 'template' 時，用於產生金鑰的範本。可用變數：{{dirname}} (目前檔案目錄名稱)，{{filename}} (目前檔案名稱，不含副檔名)，{{package.name}} (最近的 package.json 名稱)，{{package_dirname}} (最近的 package.json 所在目錄名稱)。範例：{{dirname}}:{{filename}}",
   "config.keys_in_use": "儘管程式碼中沒有出現，但仍標記為正在使用的鍵",
   "config.keystyle": "翻譯路徑格式",
   "config.language_tag_system": "語言標籤系統",

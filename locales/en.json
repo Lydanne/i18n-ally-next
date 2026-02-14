@@ -72,6 +72,7 @@
   "config.key_max_length": "If specified, the generated key on extracting will be truncated to this number of characters (excluding the keyPrefix). Defaults to unlimited.",
   "config.key_prefix": "String to prepend to the extracting key. You can use {fileName} for the file name, and {fileNameWithoutExt} for the part of the file name before the first dot.",
   "config.keygen_strategy": "Strategy of generating key.",
+  "config.keygen_template": "Template for generating key when keygenStrategy is 'template'. Available variables: {{dirname}} (current file directory name), {{filename}} (current file name without extension), {{package.name}} (nearest package.json name), {{package_dirname}} (directory name where the nearest package.json is located). Example: {{dirname}}:{{filename}}",
   "config.keygen_style": "Case style for generating key.",
   "config.keys_in_use": "Keys to mark as in use despite not appearing in the code",
   "config.keystyle": "Locale key style",

@@ -74,6 +74,7 @@
   "config.key_prefix": "抽出キーの前に付加する文字列。ファイル名には {fileName} を、最初のドット前のファイル名部分には {fileNameWithoutExt} を使用できます。",
   "config.keygen_strategy": "キーを生成する戦略。",
   "config.keygen_style": "キーを生成する際の大文字小文字スタイル。",
+  "config.keygen_template": "keygenStrategy が 'template' の場合のキー生成テンプレート。利用可能な変数: {{dirname}} (現在のファイルのディレクトリ名), {{filename}} (拡張子なしの現在のファイル名), {{package.name}} (最も近い package.json の名前), {{package_dirname}} (最も近い package.json が配置されているディレクトリの名前)。例: {{dirname}}:{{filename}}",
   "config.keys_in_use": "コードに現れないにもかかわらず、使用中としてマークするキー",
   "config.keystyle": "ロケールキースタイル",
   "config.language_tag_system": "使用している言語タグシステム。",
