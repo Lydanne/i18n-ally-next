@@ -7,6 +7,8 @@
 - [VS Code 插件市场](https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next)
 - [Open VSX Registry](https://open-vsx.org/extension/lydanne/i18n-ally-next)
 
+<p style="display:flex;gap:2px"><a href="https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next" target="_blank"><img src="https://img.shields.io/visual-studio-marketplace/v/lydanne.i18n-ally-next?label=Marketplace&logo=visual-studio-code&color=007ACC" alt="Marketplace"></a> <a href="https://open-vsx.org/extension/lydanne/i18n-ally-next" target="_blank"><img src="https://img.shields.io/open-vsx/v/lydanne/i18n-ally-next?label=Open%20VSX&color=c160ef" alt="Open VSX"></a> <a href="https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next" target="_blank"><img src="https://img.shields.io/visual-studio-marketplace/i/lydanne.i18n-ally-next?color=4CAF50" alt="Installs"></a> <a href="https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next" target="_blank"><img src="https://img.shields.io/visual-studio-marketplace/r/lydanne.i18n-ally-next?color=FFB400" alt="Rating"></a> <a href="https://github.com/lydanne/i18n-ally-next/blob/main/LICENSE" target="_blank"><img src="https://img.shields.io/github/license/lydanne/i18n-ally-next?color=blue" alt="License"></a></p>
+
 ## 基本配置
 
 ### 1. 框架检测
