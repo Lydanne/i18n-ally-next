@@ -4,7 +4,7 @@ import type { ExtensionModule } from '~/modules'
 import { relative } from 'path'
 import { trim } from 'lodash'
 import { commands, window } from 'vscode'
-import { Config, CurrentFile, extractHardStrings, generateKeyFromText, Telemetry, TelemetryKey } from '~/core'
+import { Config, CurrentFile, extractHardStrings, generateKeyFromText, Global, Telemetry, TelemetryKey } from '~/core'
 import { parseHardString } from '~/extraction/parseHardString'
 import i18n from '~/i18n'
 import { keypathValidate, Log, promptTemplates } from '~/utils'
@@ -82,8 +82,28 @@ async function ExtractOrInsertCommnad(options?: ExtractTextOptions, detection?: 
             detail: i18n.t('prompt.existing_translation'),
           }))
 
+  const nsDelimiter = Global.namespaceEnabled ? Global.getNamespaceDelimiter() : undefined
+
   const getPickItems = (input?: string) => {
-    const path = input?.split('.').slice(0, -1).join('.')
+    let path: string | undefined
+    if (input) {
+      const nsIdx = nsDelimiter && nsDelimiter !== '.' ? input.indexOf(nsDelimiter) : -1
+      if (nsIdx >= 0) {
+        const ns = input.slice(0, nsIdx)
+        const rest = input.slice(nsIdx + nsDelimiter!.length)
+        const restParts = rest.split('.')
+        if (restParts.length > 1) {
+          path = `${ns}${nsDelimiter}${restParts.slice(0, -1).join('.')}`
+        }
+        else {
+          path = ns
+        }
+      }
+      else {
+        const parts = input.split('.')
+        path = parts.length > 1 ? parts.slice(0, -1).join('.') : undefined
+      }
+    }
 
     const node = path
       ? (loader.getTreeNodeByKey(path))
@@ -116,7 +136,8 @@ async function ExtractOrInsertCommnad(options?: ExtractTextOptions, detection?: 
       items = [...existingItems, ...items]
 
     // create new item if value not exists
-    if (!isInsert && input && !input.endsWith('.') && !items.find(i => i.keypath === input)) {
+    const endsWithSeparator = input?.endsWith('.') || (nsDelimiter && input?.endsWith(nsDelimiter))
+    if (!isInsert && input && !endsWithSeparator && !items.find(i => i.keypath === input)) {
       items.unshift({
         label: `$(add) ${input}`,
         description: i18n.t('prompt.create_new_path'),
@@ -189,7 +210,9 @@ async function ExtractOrInsertCommnad(options?: ExtractTextOptions, detection?: 
       extract(selection.keypath, false)
     }
     else {
-      const value = `${selection.keypath}.`
+      const isNsNode = nsDelimiter && selection.keypath && !selection.keypath.includes(nsDelimiter) && !selection.keypath.includes('.')
+      const sep = isNsNode ? nsDelimiter : '.'
+      const value = `${selection.keypath}${sep}`
       picker.value = value
       picker.items = getPickItems(value)
       picker.show()
