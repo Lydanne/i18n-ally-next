@@ -150,6 +150,108 @@ i18n Ally Next 的陈旧翻译检测（Stale Translation Check）解决了这个
 
 这意味着翻译质量不再是黑盒——每一条翻译都有迹可循。
 
+### 🚀 一键翻译所有缺失
+
+项目新增了一种语言？不用逐个键翻译。「翻译所有缺失」命令可以：
+
+1. 选择一个或多个目标语言（显示当前翻译进度百分比）
+2. 自动收集所有**缺失键**和**空值键**
+3. 同时检测**过期翻译**（结合陈旧翻译检测）
+4. 一键发送到翻译引擎，批量完成
+
+配合翻译并行控制，大项目也能快速完成：
+
+```jsonc
+{
+  "i18n-ally-next.translate.parallels": 5,
+  "i18n-ally-next.translate.overrideExisting": false
+}
+```
+
+### 🖥️ 可视化翻译编辑器
+
+i18n Ally Next 内置了一个 Webview 翻译编辑面板，提供比 JSON 文件更直观的编辑体验：
+
+- 通过命令面板或悬停菜单打开
+- 支持**当前文件模式**（只显示当前文件中用到的键）和**独立模式**（浏览所有键）
+- 实时显示所有语言的翻译值，直接编辑
+- 与审阅系统联动，显示评论和候选翻译
+- 配置变更时自动刷新
+
+```jsonc
+// 悬停时优先打开编辑器而非内联编辑
+{ "i18n-ally-next.editor.preferEditor": true }
+```
+
+### 🧭 键名导航
+
+在代码中快速跳转翻译键的使用位置：
+
+- **下一个用法** (`Ctrl+Alt+→`) — 跳转到当前文件中的下一个翻译键
+- **上一个用法** (`Ctrl+Alt+←`) — 跳转到上一个翻译键
+- 与 Webview 编辑器联动，跳转时自动同步编辑面板
+
+### 📊 使用报告与键管理
+
+插件会分析项目中所有翻译键的使用情况，生成三类报告：
+
+- **活跃键** — 代码中正在使用的键
+- **闲置键** — 已定义但代码中未使用的键（可能是废弃的）
+- **缺失键** — 代码中引用但 locale 文件中不存在的键
+
+围绕这些报告，提供了一系列键管理操作：
+
+| 操作 | 说明 |
+| --- | --- |
+| **复制键** | 将一个键的所有语言翻译复制到新的键路径 |
+| **补全缺失键** | 为所有语言批量创建缺失的空键（方便后续翻译） |
+| **标记为使用中** | 手动标记某个键为「使用中」，避免被误报为闲置（支持 glob 模式） |
+| **刷新使用报告** | 重新扫描代码，更新键的使用状态 |
+
+### 🔑 智能键名生成
+
+从硬编码字符串提取为 i18n 键时，键名的生成策略高度可配置：
+
+| 配置 | 说明 | 示例 |
+| --- | --- | --- |
+| `extract.keygenStrategy` | 生成策略：`slug`（默认）、`random`、`empty`、`source` | `"hello-world"` / `"aB3kX9"` |
+| `extract.keygenStyle` | 命名风格：`default`、`camelCase`、`PascalCase`、`snake_case` 等 | `"helloWorld"` |
+| `extract.keyPrefix` | 键名前缀，支持 `{fileName}` 占位符 | `"home.helloWorld"` |
+| `extract.keyMaxLength` | 键名最大长度 | 截断过长的 slug |
+
+```jsonc
+{
+  "i18n-ally-next.extract.keygenStrategy": "slug",
+  "i18n-ally-next.extract.keygenStyle": "camelCase",
+  "i18n-ally-next.extract.keyPrefix": "{fileNameWithoutExt}.",
+  "i18n-ally-next.extract.keyMaxLength": 50
+}
+```
+
+### 📂 批量提取（右键菜单）
+
+除了全项目扫描，你还可以从**文件资源管理器的右键菜单**对选中的文件或文件夹进行批量提取：
+
+- 选中多个文件/文件夹，右键 → 「Extract Hard Strings (Batch)」
+- 文件夹会自动递归扫描所有文件
+- 自动跳过 `.gitignore` 中的文件
+- 每个文件独立检测和提取
+
+### 🔧 DeepL 用量查询
+
+使用 DeepL 翻译引擎时，可以随时查看 API 用量：
+
+- 命令面板运行 `i18n Ally Next: DeepL Usage`
+- 显示已用字符数和总配额
+
+### 🤖 交互式选择 LLM 模型
+
+使用 Editor LLM 引擎时，可以通过命令交互式选择模型：
+
+- 命令面板运行 `i18n Ally Next: Select Editor LLM Model`
+- 列出所有可用模型（名称、ID、vendor、family）
+- 选择后自动写入配置，并将 `editor-llm` 加入翻译引擎列表
+
 ## 自定义框架：支持任意 i18n 方案
 
 这是 i18n Ally Next 最灵活的功能之一。无论你使用什么 i18n 库，甚至是团队自研的方案，都可以通过一个 YAML 配置文件让插件完美支持。

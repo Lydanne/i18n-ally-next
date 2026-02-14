@@ -100,3 +100,43 @@ i18n Ally Next 可以检测代码中的硬编码字符串，并帮助你将它�
 ```
 
 可用的 source 类型：`html-attribute`、`html-inline`、`js-string`、`js-template`、`jsx-text`。
+
+## 全项目扫描与提取
+
+除了单文件和批量提取，i18n Ally Next 还支持**扫描整个项目**的硬编码字符串并一次性全部提取。
+
+### 运行扫描
+
+运行命令面板中的 `i18n Ally Next: Scan and Extract All`。
+
+处理流程：
+
+1. 扫描项目中所有支持的文件（遵循 `.gitignore`）
+2. 检测每个文件中的硬编码字符串
+3. 显示摘要：发现 **N 个文件**中有 **M 个硬编码字符串**
+4. 确认后自动提取所有字符串——生成键名并写入 locale 文件
+
+### 扫描配置
+
+控制哪些文件被纳入或排除在扫描范围之外：
+
+```jsonc
+{
+  // 扫描包含的文件 glob 模式
+  // 如果为空，使用默认的支持语言 glob
+  "i18n-ally-next.extract.scanningInclude": [
+    "src/**/*.{ts,tsx,vue,js,jsx}"
+  ],
+
+  // 扫描时忽略的文件 glob 模式
+  "i18n-ally-next.extract.scanningIgnore": [
+    "src/generated/**",
+    "src/**/*.test.*",
+    "src/**/*.spec.*"
+  ]
+}
+```
+
+::: tip
+对于大型项目，通过 `scanningInclude` 缩小扫描范围，避免扫描无关文件，加快处理速度。
+:::

@@ -150,6 +150,108 @@ Translation is a team effort. i18n Ally Next includes a built-in Review System t
 
 This means translation quality is no longer a black box — every translation has a traceable history.
 
+### 🚀 Translate All Missing Keys
+
+Added a new language to your project? No need to translate keys one by one. The "Translate All Missing" command can:
+
+1. Select one or more target languages (shows current translation progress percentage)
+2. Automatically collect all **missing keys** and **empty-value keys**
+3. Simultaneously detect **stale translations** (combined with stale translation check)
+4. Send everything to the translation engine in one click
+
+Combined with parallel translation control, even large projects finish quickly:
+
+```jsonc
+{
+  "i18n-ally-next.translate.parallels": 5,
+  "i18n-ally-next.translate.overrideExisting": false
+}
+```
+
+### 🖥️ Visual Translation Editor
+
+i18n Ally Next includes a built-in Webview translation editor panel, providing a more intuitive editing experience than JSON files:
+
+- Open via command palette or hover menu
+- Supports **current file mode** (only shows keys used in the current file) and **standalone mode** (browse all keys)
+- Real-time display of translations in all languages, edit directly
+- Integrates with the review system, showing comments and translation candidates
+- Auto-refreshes on configuration changes
+
+```jsonc
+// Prefer opening the editor over inline editing on hover
+{ "i18n-ally-next.editor.preferEditor": true }
+```
+
+### 🧭 Key Navigation
+
+Quickly jump between translation key usages in your code:
+
+- **Next usage** (`Ctrl+Alt+→`) — Jump to the next translation key in the current file
+- **Previous usage** (`Ctrl+Alt+←`) — Jump to the previous translation key
+- Syncs with the Webview editor — navigation automatically updates the editor panel
+
+### 📊 Usage Report & Key Management
+
+The extension analyzes the usage of all translation keys in your project, generating three categories:
+
+- **Active keys** — Keys currently used in code
+- **Idle keys** — Keys defined but not used in code (possibly deprecated)
+- **Missing keys** — Keys referenced in code but not present in locale files
+
+Built around these reports, a series of key management operations are available:
+
+| Operation | Description |
+| --- | --- |
+| **Duplicate Key** | Copy all language translations of a key to a new key path |
+| **Fulfill Missing Keys** | Batch-create missing empty keys for all languages (for later translation) |
+| **Mark as In Use** | Manually mark a key as "in use" to prevent false idle reports (supports glob patterns) |
+| **Refresh Usage Report** | Re-scan code to update key usage status |
+
+### 🔑 Smart Key Generation
+
+When extracting hard-coded strings to i18n keys, the key name generation strategy is highly configurable:
+
+| Config | Description | Example |
+| --- | --- | --- |
+| `extract.keygenStrategy` | Strategy: `slug` (default), `random`, `empty`, `source` | `"hello-world"` / `"aB3kX9"` |
+| `extract.keygenStyle` | Naming style: `default`, `camelCase`, `PascalCase`, `snake_case`, etc. | `"helloWorld"` |
+| `extract.keyPrefix` | Key prefix, supports `{fileName}` placeholder | `"home.helloWorld"` |
+| `extract.keyMaxLength` | Maximum key length | Truncates long slugs |
+
+```jsonc
+{
+  "i18n-ally-next.extract.keygenStrategy": "slug",
+  "i18n-ally-next.extract.keygenStyle": "camelCase",
+  "i18n-ally-next.extract.keyPrefix": "{fileNameWithoutExt}.",
+  "i18n-ally-next.extract.keyMaxLength": 50
+}
+```
+
+### 📂 Batch Extract (Context Menu)
+
+Beyond project-wide scanning, you can also batch extract from the **file explorer context menu** on selected files or folders:
+
+- Select multiple files/folders, right-click → "Extract Hard Strings (Batch)"
+- Folders are automatically scanned recursively
+- Files in `.gitignore` are automatically skipped
+- Each file is detected and extracted independently
+
+### 🔧 DeepL Usage Query
+
+When using the DeepL translation engine, you can check your API usage at any time:
+
+- Run `i18n Ally Next: DeepL Usage` from the command palette
+- Shows used character count and total quota
+
+### 🤖 Interactive LLM Model Selection
+
+When using the Editor LLM engine, you can interactively select a model via command:
+
+- Run `i18n Ally Next: Select Editor LLM Model` from the command palette
+- Lists all available models (name, ID, vendor, family)
+- After selection, automatically writes to config and adds `editor-llm` to the translation engine list
+
 ## Custom Framework: Support Any i18n Solution
 
 This is one of the most flexible features of i18n Ally Next. No matter what i18n library you use — even a team-built proprietary solution — you can make the extension fully support it through a single YAML configuration file.

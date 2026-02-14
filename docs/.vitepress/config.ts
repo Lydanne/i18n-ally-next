@@ -53,6 +53,8 @@ export default defineConfig({
                 { text: 'Extraction', link: '/guide/extraction' },
                 { text: 'Review System', link: '/guide/review' },
                 { text: 'Machine Translation', link: '/guide/translation' },
+                { text: 'Visual Editor', link: '/guide/editor' },
+                { text: 'Usage Report', link: '/guide/usage-report' },
               ],
             },
             {
@@ -134,6 +136,8 @@ export default defineConfig({
                 { text: '文案提取', link: '/zh-CN/guide/extraction' },
                 { text: '审阅系统', link: '/zh-CN/guide/review' },
                 { text: '机器翻译', link: '/zh-CN/guide/translation' },
+                { text: '可视化编辑器', link: '/zh-CN/guide/editor' },
+                { text: '使用报告', link: '/zh-CN/guide/usage-report' },
               ],
             },
             {

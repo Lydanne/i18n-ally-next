@@ -79,6 +79,32 @@ Store API keys in **User Settings** (not Workspace Settings) to avoid committing
 1. Open the i18n Ally sidebar
 2. Click the **Fulfill** button on a locale to translate all missing keys
 
+### Translate All Missing Keys
+
+When you add a new language or need to catch up on translations, use the **Translate All Missing** command:
+
+1. Run `i18n Ally Next: Translate All Missing Keys` from the Command Palette
+2. Select one or more target languages (each shows its current translation progress percentage)
+3. The extension automatically collects all **missing keys**, **empty-value keys**, and **stale translations**
+4. All collected keys are sent to the translation engine in one batch
+
+You can also trigger this from the sidebar — right-click a locale in the progress view and select **Translate All Missing**.
+
+### DeepL Usage Query
+
+When using the DeepL engine, you can check your API usage at any time:
+
+- Run `i18n Ally Next: DeepL Usage` from the Command Palette
+- Shows your used character count and total quota
+
+### Editor LLM Model Selection
+
+When using the Editor LLM engine, interactively select which model to use:
+
+- Run `i18n Ally Next: Select Editor LLM Model` from the Command Palette
+- Lists all available models with name, ID, vendor, and family
+- After selection, the model is automatically written to your config
+
 ### Options
 
 ```jsonc
@@ -99,3 +125,29 @@ Store API keys in **User Settings** (not Workspace Settings) to avoid committing
   "i18n-ally-next.translate.fallbackToKey": false
 }
 ```
+
+## Stale Translation Detection
+
+When the source language text changes, existing translations in other languages may become outdated. i18n Ally Next can detect these stale translations.
+
+### How It Works
+
+1. The extension maintains a **source language snapshot** for each key (stored in the review data file)
+2. When you run the check command, it compares the snapshot with the current source value
+3. Keys whose source text has changed since the last snapshot are flagged as stale
+
+### Running the Check
+
+Run `i18n Ally Next: Check Stale Translations` from the Command Palette.
+
+If stale translations are found, you'll be prompted with three options:
+
+- **Retranslate All** — Send all stale keys to the translation engine for re-translation across all target languages
+- **Review One by One** — Step through each stale key, seeing the old and new source text, and decide whether to retranslate or skip
+- **Update Snapshot Only** — If the translations are still valid despite the source change, update the baseline without retranslating
+
+If no stale translations are found, you'll be offered to **initialize snapshots** for all keys — this sets the baseline for future detection.
+
+::: tip
+Run stale translation checks as part of your release workflow to ensure all translations are up to date before shipping.
+:::
