@@ -1,7 +1,7 @@
 import type { KeyInDocument, RewriteKeyContext } from '../core/types'
 import type { ScopeRange } from '../frameworks/base'
 import { sortBy } from 'lodash'
-import { Config, CurrentFile } from '~/core'
+import { Config, CurrentFile, Global } from '~/core'
 import i18n from '~/i18n'
 import { Log } from '.'
 import { QUOTE_SYMBOLS } from '../meta'
@@ -43,12 +43,13 @@ export function handleRegexMatch(
   const hasExplicitNamespace = namespaceDelimiters.some(delimiter => key.includes(delimiter))
 
   if (!hasExplicitNamespace && namespace)
-    key = `${namespace}.${key}`
+    key = `${namespace}${Global.getNamespaceDelimiter()}${key}`
 
   if (dotEnding || !key.endsWith('.')) {
     key = CurrentFile.loader.rewriteKeys(key, 'reference', {
       ...rewriteContext,
       namespace,
+      hasExplicitNamespace,
     })
     return {
       key,

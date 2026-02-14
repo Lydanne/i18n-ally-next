@@ -171,7 +171,7 @@ class ReviewCommentProvider implements Disposable {
         document.positionAt(start),
         document.positionAt(end),
       )
-      const keypath = namespace ? `${namespace}.${key}` : key
+      const keypath = namespace ? `${namespace}${Global.getNamespaceDelimiter()}${key}` : key
       cache.push([range, { keypath, locale }])
 
       const comments = Global.reviews.getComments(keypath, locale)

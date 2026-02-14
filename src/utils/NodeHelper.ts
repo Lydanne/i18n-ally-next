@@ -43,6 +43,15 @@ export class NodeHelper {
     if (Config.disablePathParsing)
       return [keypath]
 
+    const delimiter = Global.namespaceEnabled ? Global.getNamespaceDelimiter() : undefined
+    if (delimiter && delimiter !== '.') {
+      const delimiterIndex = keypath.indexOf(delimiter)
+      if (delimiterIndex >= 0) {
+        const ns = keypath.slice(0, delimiterIndex)
+        const rest = keypath.slice(delimiterIndex + delimiter.length)
+        return [ns, ...rest.replace(/\[(.*?)\]/g, '.$1').split('.')]
+      }
+    }
     return keypath.replace(/\[(.*?)\]/g, '.$1').split('.')
   }
 

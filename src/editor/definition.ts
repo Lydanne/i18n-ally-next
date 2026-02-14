@@ -2,13 +2,17 @@ import type { Definition, DefinitionLink, Position, TextDocument } from 'vscode'
 import type { ExtensionModule } from '~/modules'
 import { languages, Location, Range, Uri, workspace } from 'vscode'
 import { CurrentFile, Global, KeyDetector } from '~/core'
+import { NodeHelper } from '~/utils'
 
 class DefinitionProvider {
   async provideDefinition(document: TextDocument, position: Position): Promise<Definition | DefinitionLink[]> {
-    const key = KeyDetector.getKey(document, position)
-    if (!key)
+    const offset = document.offsetAt(position)
+    const keys = KeyDetector.getKeys(document)
+    const keyItem = keys.find(k => k.start <= offset && k.end >= offset)
+    if (!keyItem)
       return []
 
+    const key = keyItem.key
     const filepath = CurrentFile.loader.getFilepathByKey(key)
     if (!filepath)
       return []
@@ -21,7 +25,9 @@ class DefinitionProvider {
     if (!parser)
       return []
 
-    const range = parser.navigateToKey(localeDocument.getText(), key, await Global.requestKeyStyle())
+    const node = CurrentFile.loader.getNodeByKey(key)
+    const keypath = NodeHelper.getPathWithoutNamespace(key, node)
+    const range = parser.navigateToKey(localeDocument.getText(), keypath, await Global.requestKeyStyle())
 
     const { start = 0, end = 0 } = range || {}
 

@@ -67,20 +67,20 @@ class I18nextFramework extends Framework {
   }
 
   rewriteKeys(key: string, source: RewriteKeySource, context: RewriteKeyContext = {}) {
-    const dottedKey = key.split(this.namespaceDelimitersRegex).join('.')
+    const delimiter = this.namespaceDelimiter
+    // 把其他 delimiter（/）统一转为主 delimiter（:），保留 namespace 信息
+    const normalizedKey = key.split(this.namespaceDelimitersRegex).join(delimiter)
 
     // when explicitly set the namespace, ignore current namespace scope
     if (
-      this.namespaceDelimiters.some(d => key.includes(d))
+      context.hasExplicitNamespace
       && context.namespace
-      && dottedKey.startsWith(context.namespace.split(this.namespaceDelimitersRegex).join('.'))
+      && normalizedKey.startsWith(context.namespace + delimiter)
     ) {
-      // +1 for the an extra `.`
-      key = key.slice(context.namespace.length + 1)
+      return normalizedKey.slice(context.namespace.length + delimiter.length)
     }
 
-    // replace colons
-    return dottedKey
+    return normalizedKey
   }
 }
 

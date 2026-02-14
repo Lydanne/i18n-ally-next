@@ -108,15 +108,15 @@ class CustomFramework extends Framework {
     const delimiter = this.namespaceDelimiter
     if (!delimiter || delimiter === '.')
       return key
-    const dottedKey = key.split(delimiter).join('.')
+    // 仅当 key 原本就包含显式 namespace 且与 scope namespace 冲突时，去掉重复的 namespace 前缀
     if (
-      key.includes(delimiter)
+      context.hasExplicitNamespace
       && context.namespace
-      && dottedKey.startsWith(context.namespace.split(delimiter).join('.'))
+      && key.startsWith(context.namespace + delimiter)
     ) {
-      key = key.slice(context.namespace.length + 1)
+      key = key.slice(context.namespace.length + delimiter.length)
     }
-    return dottedKey
+    return key
   }
 
   getScopeRange(document: TextDocument): ScopeRange[] | undefined {

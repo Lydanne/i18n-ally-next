@@ -34,8 +34,10 @@ class NextTranslateFramework extends Framework {
     ]
   }
 
+  namespaceDelimiter = ':'
+
   rewriteKeys(key: string) {
-    return key.replace(/:/g, '.')
+    return key
   }
 
   pathMatcher() {

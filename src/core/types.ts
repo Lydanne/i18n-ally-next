@@ -150,6 +150,8 @@ export interface RewriteKeyContext {
   locale?: string
   targetFile?: string
   namespace?: string
+  /** key 中是否包含显式的 namespace 分隔符 */
+  hasExplicitNamespace?: boolean
 }
 
 export interface DataProcessContext {

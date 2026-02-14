@@ -2,7 +2,7 @@ import type { DirStructure, ParsedFile, PendingWrite } from '../types'
 import path from 'path'
 import fg from 'fast-glob'
 import fs from 'fs-extra'
-import _, { set, throttle, uniq } from 'lodash'
+import _, { throttle, uniq } from 'lodash'
 import { RelativePattern, window, workspace, WorkspaceEdit } from 'vscode'
 import i18n from '~/i18n'
 import { applyPendingToObject, getCache, getLocaleCompare, Log, NodeHelper, ReplaceLocale, setCache, unflatten } from '~/utils'
@@ -650,13 +650,23 @@ export class LocaleLoader extends Loader {
     const root = new LocaleTree({ keypath: '' })
 
     if (Global.namespaceEnabled) {
+      const delimiter = Global.getNamespaceDelimiter()
       const namespaces = uniq(this.files.map(f => f.namespace)) as string[]
       for (const ns of namespaces) {
         const files = this.files.filter(f => f.namespace === ns)
 
         for (const file of files) {
-          const value = ns ? set({}, ns, file.value) : file.value
-          this.updateTree(root, value, '', '', { ...file, meta: { namespace: file.namespace } })
+          if (ns) {
+            let nsTree = root.getChild(ns) as LocaleTree | undefined
+            if (!nsTree || nsTree.type !== 'tree') {
+              nsTree = new LocaleTree({ keypath: ns, keyname: ns, meta: { namespace: ns } })
+              root.setChild(ns, nsTree)
+            }
+            this.updateTree(nsTree, file.value, ns, ns, { ...file, meta: { namespace: file.namespace } }, false, delimiter)
+          }
+          else {
+            this.updateTree(root, file.value, '', '', { ...file, meta: { namespace: file.namespace } })
+          }
         }
       }
     }

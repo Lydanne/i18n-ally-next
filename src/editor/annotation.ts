@@ -107,7 +107,7 @@ const annotation: ExtensionModule = (ctx) => {
     for (let i = 0; i < total; i++) {
       const key = keys[i]
       const keypath = namespace
-        ? `${namespace}.${key.key}`
+        ? `${namespace}${Global.getNamespaceDelimiter()}${key.key}`
         : key.key
 
       const range = new Range(

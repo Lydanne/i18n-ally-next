@@ -61,7 +61,7 @@ export abstract class Loader extends Disposable {
     }
   }
 
-  protected updateTree(tree: LocaleTree | undefined, data: any, keypath: string, keyname: string, options: NodeOptions, isCollection = false) {
+  protected updateTree(tree: LocaleTree | undefined, data: any, keypath: string, keyname: string, options: NodeOptions, isCollection = false, separator = '.') {
     tree = tree || new LocaleTree({
       keypath,
       keyname,
@@ -78,7 +78,7 @@ export abstract class Loader extends Disposable {
       const newKeyPath = keypath
         ? (isCollection
             ? `${keypath}[${key}]`
-            : `${keypath}.${key}`)
+            : `${keypath}${separator}${key}`)
         : (isCollection
             ? `[${key}]`
             : key)
@@ -156,15 +156,12 @@ export abstract class Loader extends Disposable {
   }
 
   getTreeNodeByKey(key: string, tree?: LocaleTree): LocaleNode | LocaleTree | undefined {
-    const root = !tree
     tree = tree || this.root
 
     // flatten style
-    if (root || Config.disablePathParsing) {
-      const node = tree.getChild(key)
-      if (node)
-        return node
-    }
+    const flatNode = tree.getChild(key)
+    if (flatNode)
+      return flatNode
 
     if (Config.disablePathParsing)
       return

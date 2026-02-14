@@ -61,19 +61,19 @@ class NextIntlFramework extends Framework {
   }
 
   rewriteKeys(key: string, source: RewriteKeySource, context: RewriteKeyContext = {}) {
-    const dottedKey = key.split(this.namespaceDelimitersRegex).join('.')
+    const delimiter = this.namespaceDelimiter
+    const normalizedKey = key.split(this.namespaceDelimitersRegex).join(delimiter)
 
     // When the namespace is explicitly set, ignore the current namespace scope
     if (
-      this.namespaceDelimiters.some(delimiter => key.includes(delimiter))
+      context.hasExplicitNamespace
       && context.namespace
-      && dottedKey.startsWith(context.namespace.split(this.namespaceDelimitersRegex).join('.'))
+      && normalizedKey.startsWith(context.namespace + delimiter)
     ) {
-      // +1 for the an extra `.`
-      key = key.slice(context.namespace.length + 1)
+      return normalizedKey.slice(context.namespace.length + delimiter.length)
     }
 
-    return dottedKey
+    return normalizedKey
   }
 
   getScopeRange(document: TextDocument): ScopeRange[] | undefined {
