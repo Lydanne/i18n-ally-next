@@ -77,7 +77,18 @@ pnpm vsce:pack
 code --install-extension ./i18n-ally-next-*.vsix --force
 ```
 
-### 4. 发布新版本
+### 4. 提交 Pull Request (PR)
+
+提交 PR 时，请确保使用提供的 PR 模板，并符合以下要求：
+
+1. **AI 辅助比例**：明确说明 AI 生成或辅助编写的代码比例。
+2. **类型**：说明这是一个 `fix`（修复 Bug）还是 `feat`（新功能）。
+3. **示例与测试**：
+   - 如果添加了新框架或功能，请提供相关示例，并编写单元测试或 E2E 测试。
+   - 如果修复 Bug，请在 `examples/by-fixtures/issue-<n>` 添加用于复现的 fixture，并在 `test/e2e/fixtures/issue-<n>` 添加对应的 E2E 测试。
+4. **文档**：如果你的 PR 修改了面向用户的功能或开发者指南，请更新 `docs/` 目录下的相关文档。
+
+### 5. 发布新版本
 
 ```bash
 pnpm release

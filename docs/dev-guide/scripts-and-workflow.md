@@ -77,7 +77,18 @@ pnpm vsce:pack
 code --install-extension ./i18n-ally-next-*.vsix --force
 ```
 
-### 4. Release a New Version
+### 4. Submitting a Pull Request
+
+When submitting a PR, please ensure you use the provided Pull Request template and meet the following requirements:
+
+1. **AI Assistance**: Clearly state the proportion of AI-generated/assisted code.
+2. **Type**: Specify whether the PR is a `fix` (bug fix) or `feat` (new feature).
+3. **Examples & Tests**:
+   - If adding a new framework or feature, provide relevant examples and unit/e2e tests.
+   - If fixing a bug, add a reproducible fixture in `examples/by-fixtures/issue-<n>` and a corresponding E2E test in `test/e2e/fixtures/issue-<n>`.
+4. **Documentation**: Update the relevant documentation in `docs/` if your PR changes any user-facing features or developer guidelines.
+
+### 5. Release a New Version
 
 ```bash
 pnpm release
