@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.8](https://github.com/lydanne/i18n-ally-next/compare/v3.0.7...v3.0.8) (2026-02-20)
+
+
+### 🐞 Bug Fixes
+
+* **issue-3:** 添加 issue-3 测试用例,修复 namespace 分隔符在自动补全和键查找中的处理逻辑 ([108a23f](https://github.com/lydanne/i18n-ally-next/commit/108a23fc4cf129bb882286cf5bca9f7d4dec71d4))
+
+
+### ⚗ Tests
+
+* setup fixtures folder for e2e tests and add issue-3 test ([c1c9f48](https://github.com/lydanne/i18n-ally-next/commit/c1c9f48fc456f3fea075f4dda6482fc2d7045c8a))
+
+
+### 📚 Documentations
+
+* add Copilot review instructions to PR template ([bc3fea8](https://github.com/lydanne/i18n-ally-next/commit/bc3fea82c00226d0f1d9a257550234539c240b84))
+* add GitHub AI agents explanation to developer guides ([b821696](https://github.com/lydanne/i18n-ally-next/commit/b821696d9f60b75398625adfb8286fa54965ea90))
+* add GitHub Copilot PR review documentation ([10fe47d](https://github.com/lydanne/i18n-ally-next/commit/10fe47d572fc5e40507a9654b13a9dcd265e0c2a))
+* add issue linking requirement to PR template ([0cb0290](https://github.com/lydanne/i18n-ally-next/commit/0cb02905ef51d18c44c67147c2bb718d08b14b4f))
+* add PR template and update workflow documentation ([d5c997b](https://github.com/lydanne/i18n-ally-next/commit/d5c997bd22e67d845fd70702dd54c2b188f0d39b))
+* 修复文档中的 CHANGELOG 链接和模板变量渲染问题 ([e81d416](https://github.com/lydanne/i18n-ally-next/commit/e81d4167fcd8047992fdce4e549f0f636e48637c))
+
 ### [3.0.7](https://github.com/lydanne/i18n-ally-next/compare/v3.0.6...v3.0.7) (2026-02-14)
 
 
