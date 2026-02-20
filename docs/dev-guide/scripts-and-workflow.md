@@ -90,10 +90,9 @@ When submitting a PR, please ensure you use the provided Pull Request template a
 
 ### 5. GitHub AI Agents
 
-We use AI agents to automate and assist in the development workflow:
+We use a native GitHub Action AI Reviewer to automate and assist in the development workflow:
 
-- **Sweep AI**: Automatically resolves issues when triggered by `@sweep-ai` or the `sweep` label. It adheres to our PR template checklist, ensuring unit/E2E tests and documentation updates are included.
-- **CodeRabbit**: Automatically reviews all Pull Requests to ensure they meet our contribution guidelines. It checks for AI-assisted code proportion disclosure, PR types, necessary examples, tests, and documentation updates.
+- **AI PR Reviewer**: Powered by `fluxninja/openai-pr-reviewer`, it automatically reviews all Pull Requests to ensure they meet our contribution guidelines. It checks for AI-assisted code proportion disclosure, PR types, necessary examples, tests, and documentation updates. Note: This requires the `OPENAI_API_KEY` repository secret to be configured.
 
 ### 6. Release a New Version
 
