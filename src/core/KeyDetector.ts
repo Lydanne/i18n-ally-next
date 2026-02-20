@@ -42,7 +42,8 @@ export class KeyDetector {
         const key = document.getText(range).replace(regex, '$1')
 
         if (dotEnding) {
-          if (!key || key.endsWith('.'))
+          const delimiter = Global.getNamespaceDelimiter()
+          if (!key || key.endsWith('.') || (delimiter && key.endsWith(delimiter)))
             return { range, key }
         }
         else {

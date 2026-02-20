@@ -1,0 +1,9 @@
+{
+  "name": "issue-3",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "i18next": "^23.0.0",
+    "react-i18next": "^13.0.0"
+  }
+}

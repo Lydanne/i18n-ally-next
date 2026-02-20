@@ -116,7 +116,9 @@ class ReactI18nextFramework extends Framework {
       && context.namespace
       && normalizedKey.startsWith(context.namespace + delimiter)
     ) {
-      return normalizedKey.slice(context.namespace.length + delimiter.length)
+      // In i18next/react-i18next, when explicitly specifying namespace that matches defaultNamespace,
+      // we shouldn't strip it because the key in the locale tree still has the namespace as root
+      // if `namespace` is enabled in config.
     }
 
     return normalizedKey
