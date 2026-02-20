@@ -88,12 +88,11 @@ code --install-extension ./i18n-ally-next-*.vsix --force
    - 如果修复 Bug，请在 `examples/by-fixtures/issue-<n>` 添加用于复现的 fixture，并在 `test/e2e/fixtures/issue-<n>` 添加对应的 E2E 测试。
 4. **文档**：如果你的 PR 修改了面向用户的功能或开发者指南，请更新 `docs/` 目录下的相关文档。
 
-### 5. GitHub AI 助手
+### 5. AI 代码审查 (GitHub Copilot)
 
-我们在开发工作流中使用了 AI 代理来协助自动化：
+我们在开发工作流中推荐使用 GitHub Copilot 来协助 PR 代码审查。
 
-- **Sweep AI**: 当通过 `@sweep-ai` 提及或添加 `sweep` 标签触发时，它将自动根据要求修复 Issue。它严格遵守我们的 PR 模板要求，确保包含单元测试/E2E 测试和文档更新。
-- **CodeRabbit**: 自动对所有 Pull Request 进行代码审查，以确保它们符合我们的贡献指南。它会自动检查 AI 辅助比例说明、PR 类型、必要的示例、测试和相关的文档更新。
+在提交 PR 后，作为维护者，请在 Reviewers 选项中分配 **Copilot** 进行自动化代码审查，以确保 PR 符合规范并检查是否存在潜在问题。
 
 ### 6. 发布新版本
 
