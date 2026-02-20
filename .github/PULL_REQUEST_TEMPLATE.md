@@ -17,3 +17,15 @@ Please make sure you have checked the following before submitting your PR:
 ### Context & Screenshots
 
 <!-- Provide related issue numbers, context, or screenshots to help reviewers understand the PR. -->
+
+---
+
+<!--
+🤖 Copilot Review Instructions:
+When performing a code review on this PR, please ensure the following:
+1. Verify that the PR description specifies whether it is a `fix` or `feat`.
+2. Check that the proportion of AI-generated/assisted code is clearly stated.
+3. If the PR is a `fix`, verify that a corresponding unit/E2E test exists, specifically checking for a new reproducible fixture in `examples/by-fixtures/` and a test in `test/e2e/fixtures/`.
+4. Ensure code style follows the project standard (e.g., TypeScript, arrow functions, early returns, no blank lines within functions).
+5. Ensure relevant documentation in `docs/` is updated if this introduces a new feature or alters user-facing behavior.
+-->
