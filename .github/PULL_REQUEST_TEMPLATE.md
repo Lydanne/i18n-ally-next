@@ -12,6 +12,7 @@ Please make sure you have checked the following before submitting your PR:
 - [ ] **Type**: Is this a `fix` (bug fix) or `feat` (new feature)?
 - [ ] **Examples & Tests**: Have you added/updated relevant examples and tests (unit & e2e) as required? If this is a bug fix, please add a reproducible fixture in `examples/by-fixtures/issue-<n>`.
 - [ ] **Documentation**: Have you updated the relevant documentation (e.g., `docs/`)?
+- [ ] **Issue**: If this is a bug fix, please link to the associated issue.
 
 ### Context & Screenshots
 
