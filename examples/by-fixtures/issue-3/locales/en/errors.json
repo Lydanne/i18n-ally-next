@@ -1,0 +1,10 @@
+{
+  "network": {
+    "timeout": "Network request timed out",
+    "unauthorized": "You are not authorized to perform this action"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalidEmail": "Please enter a valid email address"
+  }
+}

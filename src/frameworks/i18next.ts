@@ -77,7 +77,11 @@ class I18nextFramework extends Framework {
       && context.namespace
       && normalizedKey.startsWith(context.namespace + delimiter)
     ) {
-      return normalizedKey.slice(context.namespace.length + delimiter.length)
+      // If the explicit namespace in the key matches the scope namespace, we don't need to strip it.
+      // Because `i18next` tree structures the keys with the namespace as the first part.
+      // E.g. `errors:network.unauthorized` should be looked up as `errors` namespace and `network.unauthorized` key.
+      // The tree keys are formatted with namespaceDelimiter, e.g. `errors:network.unauthorized`.
+      // So we just return the normalizedKey.
     }
 
     return normalizedKey

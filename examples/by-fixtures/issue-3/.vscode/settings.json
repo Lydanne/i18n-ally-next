@@ -1,0 +1,10 @@
+{
+  "i18n-ally-next.localesPaths": "locales",
+  "i18n-ally-next.enabledFrameworks": [
+    "react-i18next"
+  ],
+  "i18n-ally-next.namespace": true,
+  "i18n-ally-next.defaultNamespace": "errors",
+  "i18n-ally-next.pathMatcher": "{locale}/{namespaces}.json",
+  "i18n-ally-next.keystyle": "nested"
+}

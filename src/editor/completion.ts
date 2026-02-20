@@ -3,6 +3,7 @@ import type { Loader, LocaleNode, LocaleTree } from '~/core'
 import type { ExtensionModule } from '~/modules'
 import { CompletionItem, CompletionItemKind, languages } from 'vscode'
 import { CurrentFile, Global, KeyDetector } from '~/core'
+import { NodeHelper } from '~/utils/NodeHelper'
 
 class CompletionProvider implements CompletionItemProvider {
   public provideCompletionItems(
@@ -36,10 +37,31 @@ class CompletionProvider implements CompletionItemProvider {
 
     let parent = ''
 
-    const parts = key.split(/[.:]/g)
+    const parts = NodeHelper.splitKeypath(key)
 
-    if (parts.length > 1)
-      parent = parts.slice(0, -1).join('.')
+    if (parts.length > 1) {
+      const delimiter = Global.namespaceEnabled ? Global.getNamespaceDelimiter() : '.'
+      // Check if the original key contains the namespace delimiter and it's the first part
+      if (Global.namespaceEnabled && delimiter !== '.' && key.includes(delimiter)) {
+        const delimiterIndex = key.indexOf(delimiter)
+        const ns = key.slice(0, delimiterIndex)
+        if (ns === parts[0]) {
+          const restParts = parts.slice(1)
+          if (restParts.length > 0) {
+            parent = `${ns}${delimiter}${restParts.slice(0, -1).join('.')}`
+          }
+          else {
+            parent = ns
+          }
+        }
+        else {
+          parent = parts.slice(0, -1).join('.')
+        }
+      }
+      else {
+        parent = parts.slice(0, -1).join('.')
+      }
+    }
 
     let node: LocaleTree | LocaleNode | undefined
 
