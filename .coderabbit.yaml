@@ -1,0 +1,15 @@
+language: "en-US"
+early_access: false
+reviews:
+  profile: "standard"
+  request_changes_workflow: false
+  high_level_summary: true
+  poetry_instructions: |
+    - Focus on the project's documentation and coding style.
+    - Verify that AI-assisted code proportion is stated in the PR description.
+    - Check if the PR type (fix or feat) is specified.
+    - For bug fixes, ensure a reproducible fixture exists in `examples/by-fixtures/issue-<n>` and an E2E test exists in `test/e2e/fixtures/issue-<n>`.
+    - For new features, verify that relevant examples and unit/e2e tests are provided.
+    - Check if documentation in `docs/` is updated when necessary.
+chat:
+  auto_reply: true
