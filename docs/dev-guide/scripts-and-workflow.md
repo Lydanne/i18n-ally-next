@@ -88,7 +88,14 @@ When submitting a PR, please ensure you use the provided Pull Request template a
    - If fixing a bug, add a reproducible fixture in `examples/by-fixtures/issue-<n>` and a corresponding E2E test in `test/e2e/fixtures/issue-<n>`.
 4. **Documentation**: Update the relevant documentation in `docs/` if your PR changes any user-facing features or developer guidelines.
 
-### 5. Release a New Version
+### 5. GitHub AI Agents
+
+We use AI agents to automate and assist in the development workflow:
+
+- **Sweep AI**: Automatically resolves issues when triggered by `@sweep-ai` or the `sweep` label. It adheres to our PR template checklist, ensuring unit/E2E tests and documentation updates are included.
+- **CodeRabbit**: Automatically reviews all Pull Requests to ensure they meet our contribution guidelines. It checks for AI-assisted code proportion disclosure, PR types, necessary examples, tests, and documentation updates.
+
+### 6. Release a New Version
 
 ```bash
 pnpm release
