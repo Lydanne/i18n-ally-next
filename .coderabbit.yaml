@@ -5,11 +5,14 @@ reviews:
   request_changes_workflow: false
   high_level_summary: true
   poetry_instructions: |
-    - Focus on the project's documentation and coding style.
-    - Verify that AI-assisted code proportion is stated in the PR description.
-    - Check if the PR type (fix or feat) is specified.
-    - For bug fixes, ensure a reproducible fixture exists in `examples/by-fixtures/issue-<n>` and an E2E test exists in `test/e2e/fixtures/issue-<n>`.
-    - For new features, verify that relevant examples and unit/e2e tests are provided.
-    - Check if documentation in `docs/` is updated when necessary.
+    As an AI PR Reviewer for i18n-ally-next, you must verify the following project requirements:
+    1. The PR description MUST state the proportion of AI-generated/assisted code.
+    2. The PR description MUST specify if this is a `fix` (bug fix) or `feat` (new feature).
+    3. If this is a `fix`, there MUST be a new reproducible fixture in `examples/by-fixtures/issue-<n>` and a corresponding E2E test in `test/e2e/fixtures/issue-<n>`.
+    4. If this is a `feat`, there MUST be relevant examples and unit/e2e tests.
+    5. The PR MUST update relevant documentation in `docs/` if it changes user-facing features or developer guidelines.
+    6. For all code changes, enforce the project's coding style (e.g., using TypeScript, preferring arrow functions, early returns).
+    
+    If any of these requirements are not met, you must politely request changes and explain which requirement is missing.
 chat:
   auto_reply: true
