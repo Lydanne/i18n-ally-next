@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.10](https://github.com/lydanne/i18n-ally-next/compare/v3.0.9...v3.0.10) (2026-02-21)
+
+
+### 🐞 Bug Fixes
+
+* **i18next:** 修复 keyPrefix 格式的命名空间和键的分隔符处理 ([c566f99](https://github.com/lydanne/i18n-ally-next/commit/c566f99ef7f1d1d27f64ceac3a71ba7aea7610c7))
+
 ### [3.0.9](https://github.com/lydanne/i18n-ally-next/compare/v3.0.8...v3.0.9) (2026-02-21)
 
 
