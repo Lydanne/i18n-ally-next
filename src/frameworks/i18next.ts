@@ -68,9 +68,27 @@ class I18nextFramework extends Framework {
 
   rewriteKeys(key: string, source: RewriteKeySource, context: RewriteKeyContext = {}) {
     const delimiter = this.namespaceDelimiter
-    // 把其他 delimiter（/）统一转为主 delimiter（:），保留 namespace 信息
-    const normalizedKey = key.split(this.namespaceDelimitersRegex).join(delimiter)
-
+    // In i18next, `:` separates namespace from key, while `/` is a path separator
+    // within the namespace itself (e.g. `pages/home:title` → ns=`pages/home`, key=`title`).
+    // The tree stores namespace with `/` replaced by `.` (via getFileInfo), so we need to
+    // convert `/` in the namespace part to `.` while keeping `:` as the ns-key delimiter.
+    const colonIndex = key.indexOf(':')
+    const slashIndex = key.indexOf('/')
+    let normalizedKey: string
+    if (colonIndex >= 0) {
+      const nsPart = key.slice(0, colonIndex).replace(/\//g, '.')
+      const keyPart = key.slice(colonIndex + 1)
+      normalizedKey = nsPart + delimiter + keyPart
+    }
+    else if (slashIndex >= 0) {
+      const lastSlash = key.lastIndexOf('/')
+      const nsPart = key.slice(0, lastSlash).replace(/\//g, '.')
+      const keyPart = key.slice(lastSlash + 1)
+      normalizedKey = nsPart + delimiter + keyPart
+    }
+    else {
+      normalizedKey = key
+    }
     // when explicitly set the namespace, ignore current namespace scope
     if (
       context.hasExplicitNamespace
@@ -83,7 +101,6 @@ class I18nextFramework extends Framework {
       // The tree keys are formatted with namespaceDelimiter, e.g. `errors:network.unauthorized`.
       // So we just return the normalizedKey.
     }
-
     return normalizedKey
   }
 }

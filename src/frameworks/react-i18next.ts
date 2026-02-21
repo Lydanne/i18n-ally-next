@@ -108,8 +108,44 @@ class ReactI18nextFramework extends Framework {
 
   rewriteKeys(key: string, source: RewriteKeySource, context: RewriteKeyContext = {}) {
     const delimiter = this.namespaceDelimiter
-    const normalizedKey = key.split(this.namespaceDelimitersRegex).join(delimiter)
-
+    // In react-i18next, `:` separates namespace from key, while `/` is a path separator
+    // within the namespace itself (e.g. `pages/home:title` → ns=`pages/home`, key=`title`).
+    // The tree stores namespace with `/` replaced by `.` (via getFileInfo), so we need to
+    // convert `/` in the namespace part to `.` while keeping `:` as the ns-key delimiter.
+    const colonIndex = key.indexOf(':')
+    const slashIndex = key.indexOf('/')
+    let normalizedKey: string
+    if (colonIndex >= 0) {
+      const rawNsPart = key.slice(0, colonIndex)
+      const nsPart = rawNsPart.replace(/\//g, '.')
+      const keyPart = key.slice(colonIndex + 1)
+      // When the `:` was injected by scope prefixing (not from user code),
+      // and the original nsPart contains `.` (not converted from `/`),
+      // it is `ns.keyPrefix` format (e.g. `translation.foo` from useTranslation(['translation.foo'])).
+      // Convert `translation.foo:bar` → `translation:foo.bar`
+      const isKeyPrefixStyle = !context.hasExplicitNamespace
+        && !rawNsPart.includes('/')
+        && nsPart.includes('.')
+      if (isKeyPrefixStyle) {
+        const dotIndex = nsPart.indexOf('.')
+        const realNs = nsPart.slice(0, dotIndex)
+        const keyPrefix = nsPart.slice(dotIndex + 1)
+        normalizedKey = `${realNs}${delimiter}${keyPrefix}.${keyPart}`
+      }
+      else {
+        normalizedKey = `${nsPart}${delimiter}${keyPart}`
+      }
+    }
+    else if (slashIndex >= 0) {
+      // `pages/home/title` → treat last `/` as ns-key separator (alternative delimiter)
+      const lastSlash = key.lastIndexOf('/')
+      const nsPart = key.slice(0, lastSlash).replace(/\//g, '.')
+      const keyPart = key.slice(lastSlash + 1)
+      normalizedKey = nsPart + delimiter + keyPart
+    }
+    else {
+      normalizedKey = key
+    }
     // when explicitly set the namespace, ignore current namespace scope
     if (
       context.hasExplicitNamespace
@@ -120,7 +156,6 @@ class ReactI18nextFramework extends Framework {
       // we shouldn't strip it because the key in the locale tree still has the namespace as root
       // if `namespace` is enabled in config.
     }
-
     return normalizedKey
   }
 
@@ -137,7 +172,7 @@ class ReactI18nextFramework extends Framework {
     // Namespaced prefixed keys already handled by rewriteKeys
 
     // t('foo', { ns: 'ns1' })
-    const regT = /\Wt\([^)]*?ns:\s*['"`](\w+)['"`]/g
+    const regT = /\Wt\([^)]*?ns:\s*['"`]([^'"`]+)['"`]/g
 
     for (const match of text.matchAll(regT)) {
       if (typeof match.index !== 'number')
@@ -153,7 +188,7 @@ class ReactI18nextFramework extends Framework {
     }
 
     // <Trans i18nKey="foo" ns="ns1" />
-    const regTrans = /\Wi18nKey=(?:(?!\/Trans>|\/>)[\s\S])*?ns=\s*['"`](.+?)['"`]/g
+    const regTrans = /\Wi18nKey=(?:(?!\/Trans>|\/>)[\s\S])*?ns=\s*['"`]([^'"`]+)['"`]/g
 
     for (const match of text.matchAll(regTrans)) {
       if (typeof match.index !== 'number')
@@ -168,26 +203,61 @@ class ReactI18nextFramework extends Framework {
       }
     }
 
+    // withTranslation('ns')
+    // Note: withTranslation doesn't reset the scope like useTranslation, it only applies to the wrapped component
+    const regWithTranslation = /withTranslation\(\s*(?:\[\s*)?(?:['"`](.*?)['"`])?/g
+    for (const match of text.matchAll(regWithTranslation)) {
+      if (typeof match.index !== 'number')
+        continue
+
+      if (match[1]) {
+        // HOC usually wraps the component at the end of the file, so we apply it to the whole file
+        // Or we could apply it from 0 to text.length
+        ranges.push({
+          start: 0,
+          end: text.length,
+          namespace: match[1],
+        })
+      }
+    }
+
     // Add first namespace as a global scope resetting on each occurrence
-    // useTranslation(ns1) and useTranslation(['ns1', ...])
-    const regUse = /useTranslation\(\s*(?:\[\s*)?['"`](.*?)['"`]/g
-    let prevGlobalScope = false
+    // useTranslation() and useTranslation('ns1') and useTranslation(['ns1', ...])
+    const regUse = /useTranslation\(\s*(?:\[\s*)?(?:['"`](.*?)['"`])?/g
+
+    // Check for keyPrefix in the second argument of useTranslation
+    // e.g. useTranslation('ns', { keyPrefix: 'foo.bar' })
+    const regUsePrefix = /useTranslation\([^,]+,\s*\{[^}]*keyPrefix:\s*['"`](.*?)['"`]/g
+
+    let currentGlobalScopeIndex = -1
     for (const match of text.matchAll(regUse)) {
       if (typeof match.index !== 'number')
         continue
 
       // end previous scope
-      if (prevGlobalScope)
-        ranges[ranges.length - 1].end = match.index
+      if (currentGlobalScopeIndex !== -1)
+        ranges[currentGlobalScopeIndex].end = match.index
 
       // start a new scope if namespace is provided
       if (match[1]) {
-        prevGlobalScope = true
+        // Find if this specific useTranslation has a keyPrefix
+        regUsePrefix.lastIndex = match.index
+        const prefixMatch = regUsePrefix.exec(text)
+        let namespace = match[1]
+        // If keyPrefix exists and is close enough to the match index, append it to the namespace
+        if (prefixMatch && prefixMatch.index - match.index < 100) {
+          namespace += this.namespaceDelimiter + prefixMatch[1]
+        }
         ranges.push({
           start: match.index,
           end: text.length,
-          namespace: match[1],
+          namespace,
         })
+        currentGlobalScopeIndex = ranges.length - 1
+      }
+      else {
+        // If it's an empty useTranslation(), it resets the scope, we just ended the previous one
+        currentGlobalScopeIndex = -1
       }
     }
 
