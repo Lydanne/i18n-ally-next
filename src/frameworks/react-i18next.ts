@@ -245,8 +245,10 @@ class ReactI18nextFramework extends Framework {
         const prefixMatch = regUsePrefix.exec(text)
         let namespace = match[1]
         // If keyPrefix exists and is close enough to the match index, append it to the namespace
+        // Use `.` to join so that `translation` + `foo.bar` → `translation.foo.bar`
+        // rewriteKeys will then convert `translation.foo.bar:key` → `translation:foo.bar.key`
         if (prefixMatch && prefixMatch.index - match.index < 100) {
-          namespace += this.namespaceDelimiter + prefixMatch[1]
+          namespace += `.${prefixMatch[1]}`
         }
         ranges.push({
           start: match.index,
