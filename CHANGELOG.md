@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.9](https://github.com/lydanne/i18n-ally-next/compare/v3.0.8...v3.0.9) (2026-02-21)
+
+
+### 🐞 Bug Fixes
+
+* **i18next:** improve namespace and key delimiter handling ([53ee0de](https://github.com/lydanne/i18n-ally-next/commit/53ee0de10d5eb065a73eb093ccc2f7fcf57a651d))
+* **react-i18next:** use dot delimiter for keyPrefix namespace concatenation ([0475480](https://github.com/lydanne/i18n-ally-next/commit/0475480ccccac9b559e686556f907cc3814c9a78))
+
 ### [3.0.8](https://github.com/lydanne/i18n-ally-next/compare/v3.0.7...v3.0.8) (2026-02-20)
 
 
