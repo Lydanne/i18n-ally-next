@@ -76,9 +76,21 @@ class I18nextFramework extends Framework {
     const slashIndex = key.indexOf('/')
     let normalizedKey: string
     if (colonIndex >= 0) {
-      const nsPart = key.slice(0, colonIndex).replace(/\//g, '.')
+      const rawNsPart = key.slice(0, colonIndex)
+      const nsPart = rawNsPart.replace(/\//g, '.')
       const keyPart = key.slice(colonIndex + 1)
-      normalizedKey = nsPart + delimiter + keyPart
+      const isKeyPrefixStyle = !context.hasExplicitNamespace
+        && !rawNsPart.includes('/')
+        && nsPart.includes('.')
+      if (isKeyPrefixStyle) {
+        const dotIndex = nsPart.indexOf('.')
+        const realNs = nsPart.slice(0, dotIndex)
+        const keyPrefix = nsPart.slice(dotIndex + 1)
+        normalizedKey = `${realNs}${delimiter}${keyPrefix}.${keyPart}`
+      }
+      else {
+        normalizedKey = `${nsPart}${delimiter}${keyPart}`
+      }
     }
     else if (slashIndex >= 0) {
       const lastSlash = key.lastIndexOf('/')
