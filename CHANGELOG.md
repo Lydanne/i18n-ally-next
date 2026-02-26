@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.13](https://github.com/lydanne/i18n-ally-next/compare/v3.0.12...v3.0.13) (2026-02-26)
+
+
+### 🔮 Refactor
+
+* **migrate:** 使用文本替换迁移工作区配置以保留注释和格式 ([cffc1aa](https://github.com/lydanne/i18n-ally-next/commit/cffc1aa3fb020db238610c05d6cc2551dc89d0aa))
+
 ### [3.0.12](https://github.com/lydanne/i18n-ally-next/compare/v3.0.11...v3.0.12) (2026-02-26)
 
 
