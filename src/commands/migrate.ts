@@ -34,30 +34,24 @@ interface ConfigMigrationResult {
 }
 
 /**
- * 读取 settings.json 文件内容
+ * 读取 settings.json 文件原始内容
  */
-function readSettingsJson(rootPath: string): Record<string, unknown> {
+function readSettingsJsonRaw(rootPath: string): string {
   const settingsPath = path.join(rootPath, '.vscode/settings.json')
   if (!fs.existsSync(settingsPath))
-    return {}
-  try {
-    const content = fs.readFileSync(settingsPath, 'utf-8')
-    return JSON.parse(content)
-  }
-  catch {
-    return {}
-  }
+    return ''
+  return fs.readFileSync(settingsPath, 'utf-8')
 }
 
 /**
- * 写入 settings.json 文件
+ * 写入 settings.json 文件原始内容
  */
-function writeSettingsJson(rootPath: string, settings: Record<string, unknown>): void {
+function writeSettingsJsonRaw(rootPath: string, content: string): void {
   const vscodeDir = path.join(rootPath, '.vscode')
   const settingsPath = path.join(vscodeDir, 'settings.json')
   if (!fs.existsSync(vscodeDir))
     fs.mkdirSync(vscodeDir, { recursive: true })
-  fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2))
+  fs.writeFileSync(settingsPath, content)
 }
 
 /**
@@ -98,31 +92,23 @@ async function migrateGlobalConfig(): Promise<ConfigMigrationResult> {
 }
 
 /**
- * 迁移工作区配置（直接读写 settings.json 文件）
+ * 迁移工作区配置（使用文本替换，保留注释和格式）
  */
 function migrateWorkspaceConfigFromFile(rootPath: string): ConfigMigrationResult {
-  const settings = readSettingsJson(rootPath)
+  let content = readSettingsJsonRaw(rootPath)
+  if (!content)
+    return { migrated: false, keys: [] }
   const migratedKeys: string[] = []
-  const keysToRemove: string[] = []
   for (const legacyNamespace of LEGACY_NAMESPACES) {
-    const prefix = `${legacyNamespace}.`
-    for (const [key, value] of Object.entries(settings)) {
-      if (key.startsWith(prefix)) {
-        const shortKey = key.slice(prefix.length)
-        const newKey = `${NEW_NAMESPACE}.${shortKey}`
-        if (settings[newKey] === undefined) {
-          settings[newKey] = value
-          migratedKeys.push(shortKey)
-        }
-        keysToRemove.push(key)
-      }
+    const regex = new RegExp(`"${legacyNamespace}\\.`, 'g')
+    const matches = content.match(regex)
+    if (matches) {
+      content = content.replace(regex, `"${NEW_NAMESPACE}.`)
+      migratedKeys.push(...matches.map(m => m.slice(1, -1)))
     }
   }
-  if (keysToRemove.length > 0) {
-    for (const key of keysToRemove)
-      delete settings[key]
-    writeSettingsJson(rootPath, settings)
-  }
+  if (migratedKeys.length > 0)
+    writeSettingsJsonRaw(rootPath, content)
   return { migrated: migratedKeys.length > 0, keys: migratedKeys }
 }
 
@@ -172,15 +158,16 @@ function hasConfigInNamespace(ns: string, scope: 'workspaceValue' | 'globalValue
 }
 
 /**
- * 检测 settings.json 文件中是否存在旧版配置
+ * 检测 settings.json 文件中是否存在旧版配置（使用文本匹配）
  */
 function hasWorkspaceConfigInFile(rootPath: string): { hasConfig: boolean, namespaces: string[] } {
-  const settings = readSettingsJson(rootPath)
+  const content = readSettingsJsonRaw(rootPath)
+  if (!content)
+    return { hasConfig: false, namespaces: [] }
   const namespaces: string[] = []
   for (const ns of LEGACY_NAMESPACES) {
-    const prefix = `${ns}.`
-    const hasKeys = Object.keys(settings).some(key => key.startsWith(prefix))
-    if (hasKeys)
+    const regex = new RegExp(`"${ns}\\.`)
+    if (regex.test(content))
       namespaces.push(ns)
   }
   return { hasConfig: namespaces.length > 0, namespaces }
