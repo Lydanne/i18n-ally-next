@@ -78,7 +78,7 @@ async function testFixture(fixture: FixtureInfo) {
     await runTests({
       extensionDevelopmentPath: root,
       extensionTestsPath: join(__dirname, 'runner.js'),
-      version: '1.106.0',
+      version: '1.104.0',
       launchArgs: [path, '--disable-extensions'],
     })
   }

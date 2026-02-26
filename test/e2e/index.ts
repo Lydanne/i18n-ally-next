@@ -40,7 +40,7 @@ async function main() {
       await runTests({
         extensionDevelopmentPath,
         extensionTestsPath,
-        version: '1.106.0',
+        version: '1.104.0',
         launchArgs: [fixtureTargetPath, '--disable-extensions'],
       })
 
@@ -59,7 +59,7 @@ async function main() {
       await runTests({
         extensionDevelopmentPath,
         extensionTestsPath,
-        version: '1.106.0',
+        version: '1.104.0',
         launchArgs: [fixtureTargetPath, '--disable-extensions'],
       })
 
