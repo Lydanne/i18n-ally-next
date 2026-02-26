@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.11](https://github.com/lydanne/i18n-ally-next/compare/v3.0.10...v3.0.11) (2026-02-26)
+
+
+### 🐞 Bug Fixes
+
+* 降级 VSCode 引擎版本至 1.104.0 ([2ac9991](https://github.com/lydanne/i18n-ally-next/commit/2ac999126a75c84770b83d2dd493cec5b11159e0))
+
+
+### ⚡ Features
+
+* **custom-framework:** 支持旧版配置文件名 `.vscode/i18n-ally-custom-framework.yml` [#6](https://github.com/lydanne/i18n-ally-next/issues/6) ([451be5e](https://github.com/lydanne/i18n-ally-next/commit/451be5e72b9d7e49dc3291610a32574b7dfd35df))
+
 ### [3.0.10](https://github.com/lydanne/i18n-ally-next/compare/v3.0.9...v3.0.10) (2026-02-21)
 
 
