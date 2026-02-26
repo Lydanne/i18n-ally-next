@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.12](https://github.com/lydanne/i18n-ally-next/compare/v3.0.11...v3.0.12) (2026-02-26)
+
+
+### ⚡ Features
+
+* **migration:** 新增 i18n-ally 迁移指南和自动迁移命令 ([e5abf85](https://github.com/lydanne/i18n-ally-next/commit/e5abf851c44e353b42d5affcb6ab1c9d7dde1ac4))
+
 ### [3.0.11](https://github.com/lydanne/i18n-ally-next/compare/v3.0.10...v3.0.11) (2026-02-26)
 
 
