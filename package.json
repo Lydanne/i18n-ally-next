@@ -32,6 +32,7 @@
     "workspaceContains:composer.json",
     "workspaceContains:Gemfile",
     "workspaceContains:.vscode/i18n-ally-next-custom-framework.yml",
+    "workspaceContains:.vscode/i18n-ally-custom-framework.yml",
     "workspaceContains:.vscode/i18n-ally-next-reviews.yml",
     "workspaceContains:*.vue",
     "onWebviewPanel:i18n-ally-next-editor",

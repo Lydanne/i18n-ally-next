@@ -10,7 +10,10 @@ import { Global } from '~/core'
 import { File, Log } from '~/utils'
 import { Framework } from './base'
 
-const CustomFrameworkConfigFilename = './.vscode/i18n-ally-next-custom-framework.yml'
+const CustomFrameworkConfigFilenames = [
+  './.vscode/i18n-ally-next-custom-framework.yml',
+  './.vscode/i18n-ally-custom-framework.yml',
+]
 
 interface CustomFrameworkConfig {
   languageIds?: LanguageId[] | LanguageId
@@ -29,6 +32,7 @@ class CustomFramework extends Framework {
   display = 'Custom'
 
   private watchingFor: string | undefined
+  private activeConfigFilename: string | undefined
   private watcher: FileSystemWatcher | undefined
   private data: CustomFrameworkConfig | undefined
 
@@ -39,18 +43,16 @@ class CustomFramework extends Framework {
   }
 
   load(root: string) {
+    const filename = this.findConfigFile(root)
     this.startWatch(root)
-    const filename = path.resolve(root, CustomFrameworkConfigFilename)
-
-    if (!fs.existsSync(filename)) {
+    if (!filename) {
       this.data = undefined
       return false
     }
-
     try {
       const raw = File.readSync(filename)
       this.data = YAML.load(raw) as any
-      Log.info(`🍱 Custom framework setting loaded. \n${JSON.stringify(this.data, null, 2)}\n`)
+      Log.info(`🍱 Custom framework setting loaded from ${filename}. \n${JSON.stringify(this.data, null, 2)}\n`)
       return true
     }
     catch (e) {
@@ -58,6 +60,18 @@ class CustomFramework extends Framework {
       this.data = undefined
       return false
     }
+  }
+
+  private findConfigFile(root: string): string | undefined {
+    for (const configFilename of CustomFrameworkConfigFilenames) {
+      const filename = path.resolve(root, configFilename)
+      if (fs.existsSync(filename)) {
+        this.activeConfigFilename = configFilename
+        return filename
+      }
+    }
+    this.activeConfigFilename = undefined
+    return undefined
   }
 
   get languageIds(): LanguageId[] {
@@ -158,11 +172,9 @@ class CustomFramework extends Framework {
         this.watcher.dispose()
     }
     this.watchingFor = root
-    if (root) {
-      const filename = path.resolve(root, CustomFrameworkConfigFilename)
-
+    if (root && this.activeConfigFilename) {
+      const filename = path.resolve(root, this.activeConfigFilename)
       this.watcher = workspace.createFileSystemWatcher(filename)
-
       const reload = () => {
         Log.info('\n🍱 Custom framework setting changed. Reloading...')
         this.watchingFor = undefined
@@ -171,7 +183,6 @@ class CustomFramework extends Framework {
           Global.update()
         }
       }
-
       this.watcher.onDidChange(reload)
       this.watcher.onDidCreate(reload)
       this.watcher.onDidDelete(reload)
