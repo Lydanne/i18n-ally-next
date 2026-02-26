@@ -11,6 +11,7 @@ import gotoNextUsage from './gotoNextUsage'
 import gotoRange from './gotoRange'
 import help from './help'
 import keyManipulations from './keyManipulations'
+import migrate from './migrate'
 import editor from './openEditor'
 import refreshUsageReport from './refreshUsageReport'
 import review from './review'
@@ -37,6 +38,7 @@ const m: ExtensionModule = (ctx) => {
     scanAndExtractAll(ctx),
     checkStaleTranslations(ctx),
     selectEditorLLMModel(ctx),
+    migrate(ctx),
   ])
 }
 

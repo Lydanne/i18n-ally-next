@@ -272,5 +272,22 @@
   "view.usage_keys_in_use": "{0} 条文案使用中",
   "view.usage_keys_missing": "{0} 条文案缺失",
   "view.usage_keys_not_in_use": "{0} 条文案未被使用",
-  "view.usage_report_none": "点击刷新开始使用分析"
+  "view.usage_report_none": "点击刷新开始使用分析",
+  "command.migrate_from_i18n_ally": "从 i18n-ally 迁移",
+  "migrate.no_workspace": "未找到工作区文件夹。",
+  "migrate.nothing_to_migrate": "未找到需要迁移的 i18n-ally 配置。",
+  "migrate.will_migrate_config": "• 将工作区设置迁移到 i18n-ally-next.*",
+  "migrate.will_migrate_global_config": "• 将全局（用户级别）设置迁移到 i18n-ally-next.*",
+  "migrate.will_migrate_files": "• 重命名文件：{0}",
+  "migrate.legacy_namespaces": "• 检测到旧版命名空间：{0}",
+  "migrate.confirm_message": "将 i18n-ally 配置迁移到 i18n-ally-next？",
+  "migrate.confirm_yes": "迁移",
+  "migrate.confirm_no": "取消",
+  "migrate.file_exists": "目标文件已存在：{0}",
+  "migrate.file_error": "迁移文件 {0} 失败：{1}",
+  "migrate.config_migrated": "设置已迁移",
+  "migrate.files_migrated": "文件已重命名：{0}",
+  "migrate.completed": "迁移完成：{0}",
+  "migrate.completed_with_errors": "迁移完成，但有错误：{0}",
+  "migrate.reload_window": "重新加载窗口"
 }

@@ -50,4 +50,5 @@ export const enum Commands {
   scan_and_extract_all = 'i18n-ally-next.scan-and-extract-all',
   check_stale_translations = 'i18n-ally-next.check-stale-translations',
   select_editor_llm_model = 'i18n-ally-next.select-editor-llm-model',
+  migrate_from_i18n_ally = 'i18n-ally-next.migrate-from-i18n-ally',
 }

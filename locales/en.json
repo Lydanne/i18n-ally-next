@@ -272,5 +272,22 @@
   "view.usage_keys_in_use": "{0} keys are in use",
   "view.usage_keys_missing": "{0} keys are missing",
   "view.usage_keys_not_in_use": "{0} keys are NOT in use",
-  "view.usage_report_none": "Press refresh to start analysing key usage"
+  "view.usage_report_none": "Press refresh to start analysing key usage",
+  "command.migrate_from_i18n_ally": "Migrate from i18n-ally",
+  "migrate.no_workspace": "No workspace folder found.",
+  "migrate.nothing_to_migrate": "No i18n-ally configuration found to migrate.",
+  "migrate.will_migrate_config": "• Migrate workspace settings to i18n-ally-next.*",
+  "migrate.will_migrate_global_config": "• Migrate global (user-level) settings to i18n-ally-next.*",
+  "migrate.will_migrate_files": "• Rename files: {0}",
+  "migrate.legacy_namespaces": "• Detected legacy namespaces: {0}",
+  "migrate.confirm_message": "Migrate i18n-ally configuration to i18n-ally-next?",
+  "migrate.confirm_yes": "Migrate",
+  "migrate.confirm_no": "Cancel",
+  "migrate.file_exists": "Target file already exists: {0}",
+  "migrate.file_error": "Failed to migrate file {0}: {1}",
+  "migrate.config_migrated": "Settings migrated",
+  "migrate.files_migrated": "Files renamed: {0}",
+  "migrate.completed": "Migration completed: {0}",
+  "migrate.completed_with_errors": "Migration completed with errors: {0}",
+  "migrate.reload_window": "Reload Window"
 }

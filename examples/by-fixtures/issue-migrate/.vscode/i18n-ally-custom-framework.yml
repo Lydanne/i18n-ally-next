@@ -1,0 +1,10 @@
+languageIds:
+  - javascript
+  - typescript
+  - javascriptreact
+  - typescriptreact
+
+usageMatchRegex:
+  - "\\bt\\(['\"]([\\w.-]+)['\"]\\)"
+
+monopoly: true

@@ -42,6 +42,7 @@ export default defineConfig({
               text: 'Introduction',
               items: [
                 { text: 'Getting Started', link: '/guide/getting-started' },
+                { text: 'Migration from i18n-ally', link: '/guide/migration' },
                 { text: 'Supported Frameworks', link: '/guide/supported-frameworks' },
                 { text: 'Locale Formats', link: '/guide/locale-formats' },
               ],
@@ -145,6 +146,7 @@ export default defineConfig({
               text: '简介',
               items: [
                 { text: '快速开始', link: '/zh-CN/guide/getting-started' },
+                { text: '从 i18n-ally 迁移', link: '/zh-CN/guide/migration' },
                 { text: '支持的框架', link: '/zh-CN/guide/supported-frameworks' },
                 { text: '语言文件格式', link: '/zh-CN/guide/locale-formats' },
               ],

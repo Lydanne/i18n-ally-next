@@ -1,0 +1,4 @@
+reviews:
+  common.hello:
+    approved: true
+    comment: "Reviewed and approved"

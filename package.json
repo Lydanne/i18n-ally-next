@@ -308,6 +308,11 @@
         "category": "%extname%",
         "title": "%command.review_apply_all_translations%",
         "icon": "$(check-all)"
+      },
+      {
+        "command": "i18n-ally-next.migrate-from-i18n-ally",
+        "category": "%extname%",
+        "title": "%command.migrate_from_i18n_ally%"
       }
     ],
     "menus": {
