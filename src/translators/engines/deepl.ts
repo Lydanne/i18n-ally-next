@@ -29,7 +29,7 @@ deepl.interceptors.request.use((req) => {
 
   if (req.method === 'POST' || req.method === 'post') {
     req.headers['Content-Type'] = 'application/x-www-form-urlencoded'
-    req.headers['Authorization'] = 'DeepL-Auth-Key ' + Config.deeplApiKey;
+    req.headers['Authorization'] = 'DeepL-Auth-Key ' + Config.deeplApiKey
     req.data = qs.stringify(req.data)
   }
 
