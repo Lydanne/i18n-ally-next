@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.14](https://github.com/lydanne/i18n-ally-next/compare/v3.0.13...v3.0.14) (2026-03-10)
+
+
+### 🐞 Bug Fixes
+
+* **deepl:** send auth key via Authorization header to resolve 403 ([59b7c00](https://github.com/lydanne/i18n-ally-next/commit/59b7c00abba40d66668ee741547e90b28d0ff6f3))
+
 ### [3.0.13](https://github.com/lydanne/i18n-ally-next/compare/v3.0.12...v3.0.13) (2026-02-26)
 
 
