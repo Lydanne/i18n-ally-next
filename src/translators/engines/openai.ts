@@ -48,7 +48,11 @@ export default class OpenAITranslate extends TranslateEngine {
   transform(response: any, options: TranslateOptions): TranslateResult {
     const { text, from = 'auto', to = 'auto' } = options
 
-    const translatedText = response.data.choices[0].message.content?.trim()
+    const choices = response.data?.choices
+    if (!choices || choices.length === 0)
+      throw new Error(`Unexpected OpenAI response: ${JSON.stringify(response.data)}`)
+
+    const translatedText = choices[0]?.message?.content?.trim()
 
     const r: TranslateResult = {
       text,
