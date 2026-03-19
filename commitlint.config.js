@@ -19,5 +19,9 @@ module.exports = {
     'subject-empty': [2, 'never'],
     // type 不能为空
     'type-empty': [2, 'never'],
+    // 允许 subject 首字母大写（Copilot 生成的 commit 常用大写）
+    'subject-case': [0],
+    // 放宽 body 行长度限制
+    'body-max-line-length': [0],
   },
 }
