@@ -43,9 +43,10 @@ export class Refactor implements CodeActionProvider {
     const action = new CodeAction(title, CodeActionKind.QuickFix)
     action.command = {
       title,
-      command: Commands.edit_key,
+      command: Config.preferEditor ? Commands.open_in_editor : Commands.edit_key,
       arguments: [{
         keypath: key,
+        mode: 'currentFile',
         locale: Config.displayLanguage,
       }],
     }
