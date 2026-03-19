@@ -1,0 +1,9 @@
+{
+  "i18n-ally-next.sourceLanguage": "en",
+  "i18n-ally-next.enabledFrameworks": ["transloco"],
+  "i18n-ally-next.dirStructure": "dir",
+  "i18n-ally-next.keystyle": "nested",
+  "i18n-ally-next.localesPaths": ["projects"],
+  "i18n-ally-next.namespace": true,
+  "i18n-ally-next.pathMatcher": "{namespace?}/assets/i18n/{locale}.json"
+}

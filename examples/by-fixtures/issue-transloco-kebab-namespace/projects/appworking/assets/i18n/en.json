@@ -1,0 +1,8 @@
+{
+  "test": {
+    "anotherkey": "Camel namespace test value"
+  },
+  "shared": {
+    "title": "App Working Title"
+  }
+}

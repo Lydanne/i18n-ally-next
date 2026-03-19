@@ -1,0 +1,8 @@
+{
+  "test": {
+    "key": "Kebab namespace test value"
+  },
+  "shared": {
+    "title": "App Not Working Title"
+  }
+}
