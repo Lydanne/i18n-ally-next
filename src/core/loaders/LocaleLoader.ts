@@ -681,12 +681,12 @@ export class LocaleLoader extends Loader {
                 continue
               let aliasTree = root.getChild(alias) as LocaleTree | undefined
               if (!aliasTree || aliasTree.type !== 'tree') {
-                // keypath uses the original namespace (ns) so that child keypaths point to
-                // the actual locale file; keyname uses the alias for the tree node identifier.
-                aliasTree = new LocaleTree({ keypath: ns, keyname: alias, meta: { namespace: ns } })
+                // keypath uses the alias so that child keypaths like 'appNotWorking.test.key'
+                // can be resolved correctly; meta.namespace keeps the original ns for file mapping.
+                aliasTree = new LocaleTree({ keypath: alias, keyname: alias, meta: { namespace: ns } })
                 root.setChild(alias, aliasTree)
               }
-              this.updateTree(aliasTree, file.value, ns, alias, { ...file, meta: { namespace: file.namespace } }, false, delimiter)
+              this.updateTree(aliasTree, file.value, alias, alias, { ...file, meta: { namespace: file.namespace } }, false, delimiter)
             }
           }
           else {
