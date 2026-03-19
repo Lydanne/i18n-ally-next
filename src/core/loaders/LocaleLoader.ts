@@ -671,6 +671,23 @@ export class LocaleLoader extends Loader {
               root.setChild(ns, nsTree)
             }
             this.updateTree(nsTree, file.value, ns, ns, { ...file, meta: { namespace: file.namespace } }, false, delimiter)
+
+            // Register camelCase / alternative namespace aliases provided by frameworks.
+            // For example, Transloco converts kebab-case 'app-not-working' to 'appNotWorking'
+            // so that keys like 'appNotWorking.test.key' are resolved correctly.
+            const aliases = Global.enabledFrameworks.flatMap(f => f.getNamespaceAliases(ns))
+            for (const alias of aliases) {
+              if (!alias || alias === ns)
+                continue
+              let aliasTree = root.getChild(alias) as LocaleTree | undefined
+              if (!aliasTree || aliasTree.type !== 'tree') {
+                // keypath uses the original namespace (ns) so that child keypaths point to
+                // the actual locale file; keyname uses the alias for the tree node identifier.
+                aliasTree = new LocaleTree({ keypath: ns, keyname: alias, meta: { namespace: ns } })
+                root.setChild(alias, aliasTree)
+              }
+              this.updateTree(aliasTree, file.value, ns, alias, { ...file, meta: { namespace: file.namespace } }, false, delimiter)
+            }
           }
           else {
             this.updateTree(root, file.value, '', '', { ...file, meta: { namespace: file.namespace } })

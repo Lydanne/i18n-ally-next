@@ -1,6 +1,7 @@
 import type { TextDocument } from 'vscode'
 import type { ScopeRange } from './base'
 import type { LanguageId } from '~/utils'
+import { camelCase } from 'change-case'
 import { Parser } from 'htmlparser2'
 import { Framework } from './base'
 
@@ -62,6 +63,14 @@ export default class TranslocoFramework extends Framework {
 
     // return new key if the extra scope regex matched
     return actualKey && scope ? `${scope}.${actualKey}` : key
+  }
+
+  // Transloco converts kebab-case scope names to camelCase for use as key prefixes.
+  // e.g., scope 'app-not-working' → keys prefixed with 'appNotWorking.'
+  // Register these camelCase aliases so the extension can look them up correctly.
+  getNamespaceAliases(namespace: string): string[] {
+    const alias = camelCase(namespace)
+    return alias !== namespace ? [alias] : []
   }
 
   // support for `read` syntax

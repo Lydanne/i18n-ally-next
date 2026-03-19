@@ -96,6 +96,16 @@ export abstract class Framework {
     return key
   }
 
+  /**
+   * Return alternative aliases for a namespace.
+   * Override in frameworks that use namespace name transformations.
+   * For example, Transloco converts kebab-case scope names like 'app-not-working'
+   * to camelCase aliases like 'appNotWorking' for use as key prefixes in templates.
+   */
+  getNamespaceAliases(namespace: string): string[] {
+    return []
+  }
+
   preprocessData(data: object, context: DataProcessContext): object {
     return data
   }
