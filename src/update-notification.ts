@@ -22,7 +22,7 @@ export function checkNotification(ctx: ExtensionContext) {
     //   message: i18n.t('notification.v2-update'),
     //   buttons: [{
     //     text: i18n.t('notification.migrate'),
-    //     url: 'https://lydanne.github.io/i18n-ally-next/',
+    //     url: 'https://lydanne.github.io/i18n-ally-next/guide/migration',
     //   }],
     // },
   ]
