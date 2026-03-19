@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.15](https://github.com/lydanne/i18n-ally-next/compare/v3.0.14...v3.0.15) (2026-03-19)
+
+
+### ⚗ Tests
+
+* **transloco:** Add e2e test for Transloco kebab-case namespace fix ([a027edd](https://github.com/lydanne/i18n-ally-next/commit/a027edd7ac97ea134fa5ae28d19621c1c7d94cf1))
+
+
+### 📚 Documentations
+
+* **copilot:** 添加 Copilot 指令文档,规范提交信息和代码风格 ([4415635](https://github.com/lydanne/i18n-ally-next/commit/44156358620b75f0213c022ed9464a2522b4b3bf))
+
+
+### 🐞 Bug Fixes
+
+* **commitlint:** 放宽提交信息格式限制以兼容 Copilot 生成的提交 ([2675d58](https://github.com/lydanne/i18n-ally-next/commit/2675d58bdb4d89ca82a5e96ee645b6721d625c30))
+* replace old wiki/README doc links with new documentation site URL ([1776cdc](https://github.com/lydanne/i18n-ally-next/commit/1776cdcfb12712757142c0941126bff6126ba9af))
+* **transloco:** Fix Transloco kebab-case namespace key recognition (closes #issue) ([823c85e](https://github.com/lydanne/i18n-ally-next/commit/823c85e23e46059b244fa6b3103fb4519d999e34))
+* **transloco:** 修复 kebab-case 命名空间别名的 keypath 解析 ([e0cb644](https://github.com/lydanne/i18n-ally-next/commit/e0cb644d1f51dab53d14dac85e8772a1486b5849))
+* update migration URL to guide/migration page ([9945228](https://github.com/lydanne/i18n-ally-next/commit/994522842431aa9c237fb4619ddeaec207389e24))
+
 ### [3.0.14](https://github.com/lydanne/i18n-ally-next/compare/v3.0.13...v3.0.14) (2026-03-10)
 
 
