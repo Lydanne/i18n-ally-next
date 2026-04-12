@@ -88,7 +88,7 @@ export class CurrentFile {
   }
 
   static updateLoaders() {
-    const loaders: Loader[] = [Global.loader]
+    const loaders: Loader[] = [Global.loader].filter(Boolean) as Loader[]
 
     if (this.VueSfc && this._vue_sfc_loader)
       loaders.push(this._vue_sfc_loader)
