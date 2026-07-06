@@ -289,5 +289,7 @@
   "view.usage_keys_in_use": "กำลังใช้ {0} คีย์",
   "view.usage_keys_missing": "{0} คีย์หายไป",
   "view.usage_keys_not_in_use": "{0} คีย์ไม่ได้ถูกใช้งาน",
-  "view.usage_report_none": "กดรีเฟรชเพื่อเริ่มวิเคราะห์การใช้คีย์"
+  "view.usage_report_none": "กดรีเฟรชเพื่อเริ่มวิเคราะห์การใช้คีย์",
+  "command.deepl-update-glossaries": "อัปเดตพจนานุกรมของ DeepL",
+  "command.deepl-update-glossary": "การอัปเดตพจนานุกรม DeepL"
 }

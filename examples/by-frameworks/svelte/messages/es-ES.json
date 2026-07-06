@@ -18,5 +18,7 @@
     "es_ES": "Espanol",
     "ar": "عربى"
   },
-  "direction": "ltr"
+  "direction": "ltr",
+  "command.deepl-update-glossaries": "Actualizar los glosarios de DeepL",
+  "command.deepl-update-glossary": "Actualizar un glosario de DeepL"
 }

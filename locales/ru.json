@@ -289,5 +289,7 @@
   "view.usage_keys_in_use": "{0} ключей используется",
   "view.usage_keys_missing": "{0} ключей отсутствует",
   "view.usage_keys_not_in_use": "{0} ключей НЕ используется",
-  "view.usage_report_none": "Обновите, чтобы начать анализ использования ключа"
+  "view.usage_report_none": "Обновите, чтобы начать анализ использования ключа",
+  "command.deepl-update-glossaries": "Обновить глоссарии DeepL",
+  "command.deepl-update-glossary": "Обновление глоссария DeepL"
 }

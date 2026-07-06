@@ -289,5 +289,7 @@
   "migrate.files_migrated": "文件已重命名：{0}",
   "migrate.completed": "迁移完成：{0}",
   "migrate.completed_with_errors": "迁移完成，但有错误：{0}",
-  "migrate.reload_window": "重新加载窗口"
+  "migrate.reload_window": "重新加载窗口",
+  "command.deepl-update-glossaries": "更新 DeepL 词汇表",
+  "command.deepl-update-glossary": "更新 DeepL 词汇表"
 }

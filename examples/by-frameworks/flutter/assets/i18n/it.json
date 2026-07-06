@@ -14,5 +14,7 @@
     "times-0": "Hai premuto {times} volte!",
     "times-1": "Hai premuto {time} volta!",
     "times-2": "Hai premuto {times} volte!"
-  }
+  },
+  "command.deepl-update-glossaries": "Aggiornare i glossari di DeepL",
+  "command.deepl-update-glossary": "Aggiornare un glossario DeepL"
 }

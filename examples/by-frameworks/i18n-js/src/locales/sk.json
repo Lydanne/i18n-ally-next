@@ -1,5 +1,7 @@
 {
   "home": {
     "headline": "Vitajte"
-  }
+  },
+  "command.deepl-update-glossaries": "Aktualizovať slovníky DeepL",
+  "command.deepl-update-glossary": "Aktualizácia slovníka DeepL"
 }
