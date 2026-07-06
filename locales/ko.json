@@ -289,5 +289,7 @@
   "view.usage_keys_in_use": "{0} 키가 사용 중",
   "view.usage_keys_missing": "{0} 키가 누락되었습니다.",
   "view.usage_keys_not_in_use": "{0} 키가 사용되지 않습니다.",
-  "view.usage_report_none": "키 사용량 분석을 시작하려면 새로고침을 누르세요."
+  "view.usage_report_none": "키 사용량 분석을 시작하려면 새로고침을 누르세요.",
+  "command.deepl-update-glossaries": "DeepL 용어집 업데이트하기",
+  "command.deepl-update-glossary": "DeepL 용어집 업데이트하기"
 }

@@ -18,5 +18,7 @@
     "es_ES": "Espanol",
     "ar": "عربى"
   },
-  "direction": "rtl"
+  "direction": "rtl",
+  "command.deepl-update-glossaries": "تحديث قوائم المصطلحات في DeepL",
+  "command.deepl-update-glossary": "تحديث مسرد مصطلحات DeepL"
 }

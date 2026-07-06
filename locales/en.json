@@ -289,5 +289,7 @@
   "migrate.files_migrated": "Files renamed: {0}",
   "migrate.completed": "Migration completed: {0}",
   "migrate.completed_with_errors": "Migration completed with errors: {0}",
-  "migrate.reload_window": "Reload Window"
+  "migrate.reload_window": "Reload Window",
+  "command.deepl-update-glossaries": "Update DeepL glossaries",
+  "command.deepl-update-glossary": "Update a DeepL glossary"
 }

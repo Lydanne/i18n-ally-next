@@ -6,5 +6,7 @@
         "encoding": "UTF-8 BOM"
       }
     }
-  }
+  },
+  "command.deepl-update-glossaries": "Update DeepL glossaries",
+  "command.deepl-update-glossary": "Update a DeepL glossary"
 }

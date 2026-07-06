@@ -289,5 +289,7 @@
   "view.usage_keys_in_use": "{0} キーを使用中",
   "view.usage_keys_missing": "{0} 個のキーが欠落しています",
   "view.usage_keys_not_in_use": "{0} キーは使用していません",
-  "view.usage_report_none": "リフレッシュを押してキー使用状況の分析を開始してください"
+  "view.usage_report_none": "リフレッシュを押してキー使用状況の分析を開始してください",
+  "command.deepl-update-glossaries": "DeepLの用語集を更新する",
+  "command.deepl-update-glossary": "DeepLの用語集を更新する"
 }

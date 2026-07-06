@@ -289,5 +289,8 @@
   "view.usage_keys_in_use": "{0} clé(s) en utilisation.",
   "view.usage_keys_missing": "{0} clé(s) manquante(s)",
   "view.usage_keys_not_in_use": "{0} clé(s) non-utilisée(s).",
-  "view.usage_report_none": "Appuyez sur rafraîchir pour commencer l'analyse de l'utilisation des clés."
+  "view.usage_report_none": "Appuyez sur rafraîchir pour commencer l'analyse de l'utilisation des clés.",
+  "command.deepl-update-glossaries": "Mettre à jour les glossaires DeepL",
+  "command.deepl-update-glossary": "Mettre à jour un glossaire DeepL",
+  "command.deepl-list-glossaries": "Lister les glossaires disponibles"
 }

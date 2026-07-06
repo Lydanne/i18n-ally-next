@@ -289,5 +289,7 @@
   "view.usage_keys_in_use": "{0} chaves em uso",
   "view.usage_keys_missing": "{0} chaves faltantes",
   "view.usage_keys_not_in_use": "{0} chaves não estão em uso",
-  "view.usage_report_none": "Pressione atualizar para começar a analisar o uso das chaves"
+  "view.usage_report_none": "Pressione atualizar para começar a analisar o uso das chaves",
+  "command.deepl-update-glossaries": "Atualizar os glossários do DeepL",
+  "command.deepl-update-glossary": "Atualizar um glossário do DeepL"
 }

@@ -289,5 +289,7 @@
   "view.usage_keys_in_use": "{0} nøkler er i bruk",
   "view.usage_keys_missing": "{0} nøkler mangler",
   "view.usage_keys_not_in_use": "{0} nøkler er IKKE i bruk",
-  "view.usage_report_none": "Trykk oppdater for å starte analyse av nøkkelbruk"
+  "view.usage_report_none": "Trykk oppdater for å starte analyse av nøkkelbruk",
+  "command.deepl-update-glossaries": "Oppdatere DeepL-ordlister",
+  "command.deepl-update-glossary": "Oppdatere en DeepL-ordliste"
 }
