@@ -38,6 +38,7 @@ i18n Ally Next 可以检测代码中的硬编码字符串，并帮助你将它�
   // "empty" — 留空键名，手动输入
   // "source" — 使用源字符串作为键名
   // "template" — 通过模板字符串生成键名（见下方）
+  // "templateWithKeygen" — 通过模板生成键名前缀和文案末段（见下方）
   "i18n-ally-next.extract.keygenStrategy": "slug",
 
   // 键名风格: "default", "camelCase", "PascalCase", "snake_case", "kebab-case"
@@ -92,6 +93,29 @@ i18n Ally Next 可以检测代码中的硬编码字符串，并帮助你将它�
 ::: tip
 模板模式非常适合启用了命名空间的项目。例如 <code v-pre>{{dirname}}:</code> 可以自动生成映射到正确命名空间文件的键名。
 :::
+
+### 自动键名模板模式
+
+当 `keygenStrategy` 设置为 `"templateWithKeygen"` 时，`keygenTemplateWithKeygen` 负责生成键名前缀，插件再根据原始文案追加末段键名。此模式支持与 `template` 相同的模板变量。与将模板结果作为完整键名的 `template` 不同，它让单条提取和批量提取使用相同的、与文案内容相关的键名生成规则。
+
+```jsonc
+{
+  "i18n-ally-next.extract.keygenStrategy": "templateWithKeygen",
+  "i18n-ally-next.extract.keygenTemplateWithKeygen": "{{filename}}",
+  // 可用值："slug"、"random"、"source"
+  "i18n-ally-next.extract.keygenTemplateWithKeygenStrategy": "slug"
+}
+```
+
+例如，使用上述配置提取 `loader.py` 中的 `"Hello World!"`，会生成 `loader.hello-world`：
+
+```python
+# 提取前
+print("Hello World!")
+
+# 提取后
+print(_("loader.hello-world"))
+```
 
 ## 目标文件选择策略
 

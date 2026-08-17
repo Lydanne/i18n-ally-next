@@ -38,6 +38,7 @@ Control how keys are auto-generated:
   // "empty" — generates empty keys (for manual input)
   // "source" — uses the source text as key
   // "template" — generates keys from a template (see below)
+  // "templateWithKeygen" — generates a template prefix and a text-derived final segment (see below)
   "i18n-ally-next.extract.keygenStrategy": "slug",
 
   // Key name style: "default", "camelCase", "PascalCase", "snake_case", "kebab-case"
@@ -92,6 +93,29 @@ The final key will be `setup:setup.command` + the text you enter in the key inpu
 ::: tip
 Template mode works well with namespace-enabled projects. For example, <code v-pre>{{dirname}}:</code> generates keys that automatically map to the correct namespace file.
 :::
+
+### Template with Generated Key Mode
+
+When `keygenStrategy` is set to `"templateWithKeygen"`, `keygenTemplateWithKeygen` generates the key prefix and the extension appends a final segment generated from the source text. This mode supports the same template variables as `template`. Unlike `template`, which treats the template result as the complete key, it gives single and batch extraction the same content-aware key generation behavior.
+
+```jsonc
+{
+  "i18n-ally-next.extract.keygenStrategy": "templateWithKeygen",
+  "i18n-ally-next.extract.keygenTemplateWithKeygen": "{{filename}}",
+  // Available values: "slug", "random", "source"
+  "i18n-ally-next.extract.keygenTemplateWithKeygenStrategy": "slug"
+}
+```
+
+For example, extracting `"Hello World!"` from `loader.py` with the configuration above generates `loader.hello-world`:
+
+```python
+# Before extraction
+print("Hello World!")
+
+# After extraction
+print(_("loader.hello-world"))
+```
 
 ## Target File Picking Strategy
 
