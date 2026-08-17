@@ -1,6 +1,6 @@
 import type { ConfigurationScope, ExtensionContext, WorkspaceFolder } from 'vscode'
 import type { DirStructureAuto, KeyStyle, SortCompare } from '.'
-import type { ExtractionBabelOptions, ExtractionHTMLOptions } from '~/extraction/parsers/options'
+import type { ExtractionBabelOptions, ExtractionHTMLOptions, ExtractionPythonOptions, PythonFStringArgumentStyle } from '~/extraction/parsers/options'
 import type { CaseStyles } from '~/utils/changeCase'
 import { execSync } from 'child_process'
 import path from 'path'
@@ -39,6 +39,9 @@ export class Config {
     'regex.key',
     'regex.usageMatch',
     'regex.usageMatchAppend',
+    'extract.namespaceMode',
+    'extract.parsers.python.fStringArgumentStyle',
+    'extract.parsers.python.ignoredCalls',
   ]
 
   static readonly usageRefreshConfigs = [
@@ -480,6 +483,10 @@ export class Config {
     return this.getConfig<number>('extract.keyMaxLength') ?? Infinity
   }
 
+  static get extractNamespaceMode() {
+    return this.getConfig<boolean>('extract.namespaceMode') ?? false
+  }
+
   static get extractAutoDetect() {
     return this.getConfig<boolean>('extract.autoDetect') ?? false
   }
@@ -495,6 +502,13 @@ export class Config {
 
   static get extractParserBabelOptions() {
     return this.getConfig<ExtractionBabelOptions>('extract.parsers.babel') ?? {}
+  }
+
+  static get extractParserPythonOptions(): ExtractionPythonOptions {
+    return {
+      fStringArgumentStyle: this.getConfig<PythonFStringArgumentStyle>('extract.parsers.python.fStringArgumentStyle') ?? 'keyword-arguments',
+      ignoredCalls: this.getConfig<string[]>('extract.parsers.python.ignoredCalls'),
+    }
   }
 
   static get extractScanningInclude() {

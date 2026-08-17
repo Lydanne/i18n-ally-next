@@ -9,6 +9,7 @@ import { isMatch } from 'micromatch'
 import { commands, EventEmitter, window, workspace } from 'vscode'
 import i18n from '~/i18n'
 import { getExtOfLanguageId, Log, normalizeUsageMatchRegex } from '~/utils'
+import { applyRefactorTemplate } from '~/utils/resolveRefactorTemplate'
 import { ConfigLocalesGuide } from '../commands/configLocalePaths'
 import { getEnabledFrameworks, getEnabledFrameworksByIds, getPackageDependencies } from '../frameworks'
 import { EXT_NAMESPACE } from '../meta'
@@ -130,14 +131,9 @@ export class Global {
         }
         return true
       })
-    const argsString = args?.length ? `,${args?.join(',')}` : ''
-
     const customReplacers = customTemplates
       .flatMap(i => i.templates)
-      .map(i => i
-        .replace(/\{key\}/, keypath)
-        .replace(/\{args\}/, argsString),
-      )
+      .map(i => applyRefactorTemplate(i, keypath, args, detection?.namedArgs))
 
     const frameworkReplacers = this.enabledFrameworks
       .flatMap(f => f.refactorTemplates(keypath, args, document, detection))

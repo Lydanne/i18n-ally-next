@@ -24,6 +24,7 @@ import NgxTranslateFramework from './ngx-translate'
 import PhpGettextFramework from './php-gettext'
 import PhpJoomlaFramework from './php-joomla'
 import PolyglotFramework from './polyglot'
+import PythonFramework from './python'
 import ReactI18nextFramework from './react-i18next'
 import ReactFramework from './react-intl'
 import RubyRailsFramework from './ruby-rails'
@@ -66,6 +67,7 @@ export const frameworks: Framework[] = [
   new UI5Framework(),
   new NextTranslateFramework(),
   new PhpGettextFramework(),
+  new PythonFramework(),
   new LinguiFramework(),
   new JekyllFramework(),
   new GeneralFramework(),

@@ -6,7 +6,12 @@ import { keypathValidate, Log } from '~/utils'
 import { LocaleTreeItem } from '~/views'
 import { overrideConfirm } from '../overrideConfirm'
 
-export async function RenameKey(item?: LocaleTreeItem | string) {
+interface RenameKeyOptions {
+  preventOverride?: boolean
+  showErrors?: boolean
+}
+
+export async function RenameKey(item?: LocaleTreeItem | string, options: RenameKeyOptions = {}) {
   if (!item)
     return
 
@@ -37,13 +42,21 @@ export async function RenameKey(item?: LocaleTreeItem | string) {
     if (!newkeypath)
       return
 
+    if (newkeypath === oldkeypath)
+      return oldkeypath
+
     if (!keypathValidate(newkeypath)) {
       window.showWarningMessage(i18n.t('prompt.invalid_keypath'))
-      await RenameKey(item)
+      await RenameKey(item, options)
       return
     }
 
-    if (await overrideConfirm(newkeypath) !== 'override')
+    if (options.preventOverride && CurrentFile.loader.getTreeNodeByKey(newkeypath)) {
+      window.showWarningMessage(i18n.t('prompt.key_already_exists'))
+      return
+    }
+
+    if (!options.preventOverride && await overrideConfirm(newkeypath) !== 'override')
       return
 
     const edit = await Global.loader.renameKey(oldkeypath, newkeypath) // TODO:sfc
@@ -53,5 +66,7 @@ export async function RenameKey(item?: LocaleTreeItem | string) {
   }
   catch (err) {
     Log.error(err)
+    if (options.showErrors)
+      window.showErrorMessage(err instanceof Error ? err.message : String(err))
   }
 }

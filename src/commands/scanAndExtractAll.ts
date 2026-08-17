@@ -109,6 +109,7 @@ async function extractFileHardStrings(document: TextDocument, detections: Detect
         const result = parseHardString(options.rawText, options.document.languageId, options.isDynamic)
         options.text = result?.text || ''
         options.args = result?.args
+        options.namedArgs = result?.namedArgs
       }
       const { rawText, text, range, args } = options
       const filepath = document.uri.fsPath

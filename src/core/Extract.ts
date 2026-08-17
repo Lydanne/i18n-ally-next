@@ -1,10 +1,11 @@
 import type { TextDocument } from 'vscode'
-import type { ExtractInfo } from './types'
+import type { ExtractInfo, PendingWrite } from './types'
 import { existsSync, readFileSync } from 'fs'
 import { basename, dirname, extname, resolve } from 'path'
 import limax from 'limax'
 import { nanoid } from 'nanoid'
 import { window } from 'vscode'
+import { replaceExtractionKey } from '~/extraction/utils'
 import { changeCase } from '~/utils/changeCase'
 import { Config, Global } from '../extension'
 import { CurrentFile } from './CurrentFile'
@@ -120,12 +121,39 @@ export async function extractHardStrings(document: TextDocument, extracts: Extra
   const editor = await window.showTextDocument(document)
   const filepath = document.uri.fsPath
   const sourceLanguage = Config.sourceLanguage
+  const pendingWrites: PendingWrite[] = []
+  const resolvedExtracts: ExtractInfo[] = []
 
-  extracts.sort((a, b) => b.range.start.compareTo(a.range.start))
+  for (const extract of extracts) {
+    if (extract.keypath == null || extract.message == null) {
+      resolvedExtracts.push(extract)
+      continue
+    }
+
+    const originalKey = extract.keypath
+    const pending = await Global.loader.resolvePendingWrite({
+      textFromPath: filepath,
+      filepath: undefined,
+      keypath: originalKey,
+      value: extract.message,
+      locale: extract.locale || sourceLanguage,
+      inferNamespaceFromKey: Config.extractNamespaceMode,
+      includeFileNamespace: true,
+    })
+    if (!pending)
+      continue
+
+    extract.keypath = pending.keypath
+    extract.replaceTo = replaceExtractionKey(extract.replaceTo, originalKey, pending.keypath)
+    pendingWrites.push(pending)
+    resolvedExtracts.push(extract)
+  }
+
+  resolvedExtracts.sort((a, b) => b.range.start.compareTo(a.range.start))
 
   // replace
   await editor.edit((editBuilder) => {
-    for (const extract of extracts) {
+    for (const extract of resolvedExtracts) {
       editBuilder.replace(
         extract.range,
         extract.replaceTo,
@@ -134,17 +162,7 @@ export async function extractHardStrings(document: TextDocument, extracts: Extra
   })
 
   // save keys
-  await CurrentFile.loader.write(
-    extracts
-      .filter(i => i.keypath != null && i.message != null)
-      .map(e => ({
-        textFromPath: filepath,
-        filepath: undefined,
-        keypath: e.keypath!,
-        value: e.message!,
-        locale: e.locale || sourceLanguage,
-      })),
-  )
+  await CurrentFile.loader.write(pendingWrites)
 
   if (saveFile)
     await document.save()

@@ -103,6 +103,8 @@ export interface PendingWrite {
   filepath?: string
   value?: string
   namespace?: string
+  inferNamespaceFromKey?: boolean
+  includeFileNamespace?: boolean
   features?: OptionalFeatures
 }
 
@@ -168,7 +170,16 @@ export enum TargetPickingStrategy {
   MostSimilarByKey = 'most-similar-by-key',
 }
 
-export type DetectionSource = 'html-attribute' | 'html-inline' | 'js-string' | 'js-template' | 'jsx-text'
+export type DetectionSource = 'html-attribute' | 'html-inline' | 'js-string' | 'js-template' | 'jsx-text' | 'python-string' | 'python-fstring'
+
+export interface NamedInterpolationArgument {
+  /** Placeholder name written to the locale message. */
+  name: string
+  /** Original Python expression passed to the translation call. */
+  expression: string
+  /** Zero-based evaluation order in the original f-string. */
+  order: number
+}
 
 export interface DetectionResult {
   text: string
@@ -180,6 +191,12 @@ export interface DetectionResult {
   fullStart?: number
   fullEnd?: number
   source: DetectionSource
+  /** Decoded message, including normalized named placeholders. */
+  translationText?: string
+  /** Named interpolation arguments collected while parsing an f-string. */
+  namedArgs?: NamedInterpolationArgument[]
+  /** Keep the parser-provided source range when the decoded value has edge whitespace. */
+  preserveRange?: boolean
 }
 
 export interface ExtractInfo {

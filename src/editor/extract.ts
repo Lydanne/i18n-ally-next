@@ -14,8 +14,11 @@ export function DetectionResultToExtraction(detection: DetectionResult, document
   return {
     isDynamic: detection.isDynamic,
     document,
-    text: '',
-    rawText: detection.text.trim(),
+    text: detection.translationText ?? '',
+    rawText: (detection.translationText ?? detection.text).trim(),
+    args: detection.namedArgs?.map(argument => argument.expression),
+    namedArgs: detection.namedArgs,
+    detection,
     isInsert: false,
     range: new Range(
       document.positionAt(detection.start),
@@ -86,7 +89,17 @@ class ExtractProvider implements CodeActionProvider {
     if (!result)
       return []
 
-    const { text, args } = result
+    const { text, args, namedArgs } = result
+    const selectedDetection: DetectionResult | undefined = document.languageId === 'python' && namedArgs
+      ? {
+          text,
+          translationText: text,
+          namedArgs,
+          source: namedArgs.length ? 'python-fstring' : 'python-string',
+          start: document.offsetAt(selection.start),
+          end: document.offsetAt(selection.end),
+        }
+      : undefined
     const actions: (Command | CodeAction)[] = []
 
     actions.push({
@@ -102,7 +115,7 @@ class ExtractProvider implements CodeActionProvider {
         description: CurrentFile.loader.getValueByKey(key, Config.displayLanguage, 30),
       }))
       .filter(labelDescription => labelDescription.description === text)
-      .flatMap(t => Global.interpretRefactorTemplates(t.label, args, document, diagnostic?.detection))
+      .flatMap(t => Global.interpretRefactorTemplates(t.label, args, document, diagnostic?.detection ?? selectedDetection))
       .map(t => ({
         command: Commands.replace_with,
         title: i18n.t('refactor.replace_with', t),

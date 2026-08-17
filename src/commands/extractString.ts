@@ -1,5 +1,5 @@
 import type { QuickPickItem, TextDocument } from 'vscode'
-import type { DetectionResult } from '~/core'
+import type { DetectionResult, NamedInterpolationArgument } from '~/core'
 import type { ExtensionModule } from '~/modules'
 import { relative } from 'path'
 import { trim } from 'lodash'
@@ -21,6 +21,8 @@ export interface ExtractTextOptions {
   text: string
   rawText?: string
   args?: string[]
+  namedArgs?: NamedInterpolationArgument[]
+  detection?: DetectionResult
   range: Range
   isDynamic?: boolean
   document: TextDocument
@@ -44,7 +46,7 @@ async function ExtractOrInsertCommnad(options?: ExtractTextOptions, detection?: 
 
     let selRange: Range = editor.selection
     const selText = currentDoc.getText(editor.selection)
-    const trimmed = trim(selText, '\'"` ')
+    const trimmed = currentDoc.languageId === 'python' ? selText.trim() : trim(selText, '\'"` ')
     const quoteChars = `'"\``
     const charBefore = selRange.start.character > 0
       ? currentDoc.getText(new Range(selRange.start.translate(0, -1), selRange.start))
@@ -53,9 +55,13 @@ async function ExtractOrInsertCommnad(options?: ExtractTextOptions, detection?: 
     if (quoteChars.includes(charBefore) && charBefore === charAfter)
       selRange = new Range(selRange.start.translate(0, -1), selRange.end.translate(0, 1))
 
+    const rawText = currentDoc.languageId === 'python'
+      ? currentDoc.getText(selRange).trim()
+      : trimmed
+
     options = {
       text: '',
-      rawText: trimmed,
+      rawText,
       range: selRange,
       document: currentDoc,
       isInsert: editor.selection.start.isEqual(editor.selection.end),
@@ -69,9 +75,21 @@ async function ExtractOrInsertCommnad(options?: ExtractTextOptions, detection?: 
     const result = parseHardString(options.rawText, options.document?.languageId, options.isDynamic)
     options.text = result?.text || ''
     options.args = result?.args
+    options.namedArgs = result?.namedArgs
   }
 
-  const { text, rawText, range, args, document, isInsert } = options
+  const { text, rawText, range, args, namedArgs, document, isInsert } = options
+  detection ||= options.detection
+  if (!detection && document.languageId === 'python' && namedArgs) {
+    detection = {
+      text,
+      translationText: text,
+      namedArgs,
+      source: namedArgs.length ? 'python-fstring' : 'python-string',
+      start: document.offsetAt(range.start),
+      end: document.offsetAt(range.end),
+    }
+  }
   const filepath = document.uri.fsPath
 
   const default_keypath = generateKeyFromText(rawText || text, filepath)

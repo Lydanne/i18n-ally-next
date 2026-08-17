@@ -21,6 +21,7 @@ export const enum Commands {
   open_key = 'i18n-ally-next.open-key',
   delete_key = 'i18n-ally-next.delete-key',
   rename_key = 'i18n-ally-next.rename-key',
+  rename_key_at_cursor = 'i18n-ally-next.rename-key-at-cursor',
   new_key = 'i18n-ally-next.new-key',
   insert_key = 'i18n-ally-next.insert-key',
   duplicate_key = 'i18n-ally-next.duplicate-key',
