@@ -78,6 +78,8 @@
   "config.keygen_strategy": "Стратегія генерації ключа.",
   "config.keygen_style": "Стиль регістру для генерації ключа.",
   "config.keygen_template": "Шаблон для генерації ключа, коли keygenStrategy має значення 'template'. Доступні змінні: {{dirname}} (назва поточної директорії файлу), {{filename}} (назва поточного файлу без розширення), {{package.name}} (назва найближчого package.json), {{package_dirname}} (назва директорії, де знаходиться найближчий package.json). Приклад: {{dirname}}:{{filename}}",
+  "config.keygen_template_with_keygen": "Префікс шаблону для keygenStrategy 'templateWithKeygen'. Ключ, згенерований із тексту, додається до цього префікса. Підтримуються ті самі змінні, що й у keygenTemplate. Приклад: {{filename}} перетворює Test у loader.py на ключ loader.test.",
+  "config.keygen_template_with_keygen_strategy": "Стратегія створення останнього сегмента ключа, коли keygenStrategy має значення 'templateWithKeygen'.",
   "config.keys_in_use": "Ключі, які потрібно відзначити як використовувані, незважаючи на те, що вони не відображаються в коді",
   "config.keystyle": "Стиль ключа перекладу",
   "config.language_tag_system": "Використання мовної системи тегів.",

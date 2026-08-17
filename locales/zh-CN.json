@@ -76,6 +76,8 @@
   "config.key_prefix": "提取出的文案路径前缀",
   "config.keygen_strategy": "提取文案路径的生成策略",
   "config.keygen_template": "当 keygenStrategy 为 'template' 时的模板。可用变量：{{dirname}}（当前文件所在目录名）、{{filename}}（当前文件名，不含扩展名）、{{package.name}}（最近的 package.json 的 name）、{{package_dirname}}（最近的 package.json 所在目录名）。示例：{{dirname}}:{{filename}}",
+  "config.keygen_template_with_keygen": "当 keygenStrategy 为 'templateWithKeygen' 时使用的模板前缀。根据文本自动生成的 key 会追加在此前缀之后。支持与 keygenTemplate 相同的变量。例如，{{filename}} 会将 loader.py 中的 Test 生成为 loader.test。",
+  "config.keygen_template_with_keygen_strategy": "当 keygenStrategy 为 'templateWithKeygen' 时，用于生成最后一段 key 名称的策略。",
   "config.keygen_style": "生成密钥的大小写样式。",
   "config.keys_in_use": "尽管代码中没有出现，但仍标记为正在使用的键",
   "config.keystyle": "翻译路径格式",

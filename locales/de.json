@@ -78,6 +78,8 @@
   "config.keygen_strategy": "Strategie der Schlüsselerzeugung.",
   "config.keygen_style": "Groß-/Kleinschreibung zum Generieren des Schlüssels.",
   "config.keygen_template": "Vorlage zum Generieren des Schlüssels, wenn keygenStrategy 'template' ist. Verfügbare Variablen: {{dirname}} (Name des aktuellen Dateiverzeichnisses), {{filename}} (aktueller Dateiname ohne Erweiterung), {{package.name}} (Name der nächsten package.json), {{package_dirname}} (Verzeichnisname, in dem sich die nächste package.json befindet). Beispiel: {{dirname}}:{{filename}}",
+  "config.keygen_template_with_keygen": "Vorlagenpräfix für keygenStrategy 'templateWithKeygen'. Der aus dem Text erzeugte Schlüssel wird an dieses Präfix angehängt. Unterstützt dieselben Variablen wie keygenTemplate. Beispiel: {{filename}} erzeugt für Test in loader.py den Schlüssel loader.test.",
+  "config.keygen_template_with_keygen_strategy": "Strategie zum Generieren des letzten Schlüsselsegments bei keygenStrategy 'templateWithKeygen'.",
   "config.keys_in_use": "Schlüssel, die als verwendet markiert werden sollen, obwohl sie nicht im Code vorkommen",
   "config.keystyle": "Stil der Lokalisierungsschlüssel",
   "config.language_tag_system": "Sprachen tag system",

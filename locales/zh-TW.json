@@ -78,6 +78,8 @@
   "config.keygen_strategy": "文案 key 的生成策略, slug 默認策略, random 生成隨機字串",
   "config.keygen_style": "產生金鑰的大小寫樣式。",
   "config.keygen_template": "當 keygenStrategy 為 'template' 時，用於產生金鑰的範本。可用變數：{{dirname}} (目前檔案目錄名稱)，{{filename}} (目前檔案名稱，不含副檔名)，{{package.name}} (最近的 package.json 名稱)，{{package_dirname}} (最近的 package.json 所在目錄名稱)。範例：{{dirname}}:{{filename}}",
+  "config.keygen_template_with_keygen": "當 keygenStrategy 為 'templateWithKeygen' 時使用的範本前綴。根據文字自動產生的 key 會附加在此前綴之後。支援與 keygenTemplate 相同的變數。例如，{{filename}} 會將 loader.py 中的 Test 產生為 loader.test。",
+  "config.keygen_template_with_keygen_strategy": "當 keygenStrategy 為 'templateWithKeygen' 時，用於產生最後一段 key 名稱的策略。",
   "config.keys_in_use": "儘管程式碼中沒有出現，但仍標記為正在使用的鍵",
   "config.keystyle": "翻譯路徑格式",
   "config.language_tag_system": "語言標籤系統",

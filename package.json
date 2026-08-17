@@ -1206,7 +1206,8 @@
             "random",
             "empty",
             "source",
-            "template"
+            "template",
+            "templateWithKeygen"
           ],
           "description": "%config.keygen_strategy%"
         },
@@ -1214,6 +1215,21 @@
           "type": "string",
           "default": "",
           "description": "%config.keygen_template%"
+        },
+        "i18n-ally-next.extract.keygenTemplateWithKeygen": {
+          "type": "string",
+          "default": "",
+          "description": "%config.keygen_template_with_keygen%"
+        },
+        "i18n-ally-next.extract.keygenTemplateWithKeygenStrategy": {
+          "type": "string",
+          "default": "slug",
+          "enum": [
+            "slug",
+            "random",
+            "source"
+          ],
+          "description": "%config.keygen_template_with_keygen_strategy%"
         },
         "i18n-ally-next.extract.keygenStyle": {
           "type": "string",

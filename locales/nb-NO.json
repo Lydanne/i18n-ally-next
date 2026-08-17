@@ -78,6 +78,8 @@
   "config.keygen_strategy": "Strategi for generering av nøkkel.",
   "config.keygen_style": "Sakstil for generering av nøkkel.",
   "config.keygen_template": "Mal for å generere nøkkel når keygenStrategy er 'template'. Tilgjengelige variabler: {{dirname}} (gjeldende filkatalogens navn), {{filename}} (gjeldende filnavn uten utvidelse), {{package.name}} (nærmeste package.json navn), {{package_dirname}} (katalognavn hvor den nærmeste package.json er plassert). Eksempel: {{dirname}}:{{filename}}",
+  "config.keygen_template_with_keygen": "Malprefiks for keygenStrategy 'templateWithKeygen'. Nøkkelen som genereres fra teksten, legges til etter dette prefikset. Støtter de samme variablene som keygenTemplate. Eksempel: {{filename}} gjør Test i loader.py til nøkkelen loader.test.",
+  "config.keygen_template_with_keygen_strategy": "Strategi for å generere det siste nøkkelsegmentet når keygenStrategy er 'templateWithKeygen'.",
   "config.keys_in_use": "Nøkler som skal merkes som i bruk til tross for at de ikke vises i koden",
   "config.keystyle": "Oversettelseskodestil",
   "config.language_tag_system": "Språktag-system du bruker.",

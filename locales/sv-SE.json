@@ -78,6 +78,8 @@
   "config.keygen_strategy": "Strategi för att generera nycklar.",
   "config.keygen_style": "Skiftläge för nyckelgenerering.",
   "config.keygen_template": "Mall för att generera nyckel när keygenStrategy är 'template'. Tillgängliga variabler: {{dirname}} (aktuell filkatalogs namn), {{filename}} (aktuellt filnamn utan tillägg), {{package.name}} (närmaste package.json namn), {{package_dirname}} (katalognamn där närmaste package.json finns). Exempel: {{dirname}}:{{filename}}",
+  "config.keygen_template_with_keygen": "Mallprefix för keygenStrategy 'templateWithKeygen'. Nyckeln som genereras från texten läggs till efter detta prefix. Stöder samma variabler som keygenTemplate. Exempel: {{filename}} gör Test i loader.py till nyckeln loader.test.",
+  "config.keygen_template_with_keygen_strategy": "Strategi för att generera det sista nyckelsegmentet när keygenStrategy är 'templateWithKeygen'.",
   "config.keys_in_use": "Nycklar att markera som i användning, även fast de inte dyker upp i koden",
   "config.keystyle": "locale-fils nyckelstilmall",
   "config.language_tag_system": "Språkmärkningssystem som används.",

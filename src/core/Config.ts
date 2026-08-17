@@ -2,6 +2,7 @@ import type { ConfigurationScope, ExtensionContext, WorkspaceFolder } from 'vsco
 import type { DirStructureAuto, KeyStyle, SortCompare } from '.'
 import type { ExtractionBabelOptions, ExtractionHTMLOptions, ExtractionPythonOptions, PythonFStringArgumentStyle } from '~/extraction/parsers/options'
 import type { CaseStyles } from '~/utils/changeCase'
+import type { TemplateWithKeygenStrategy } from '~/utils/keygen'
 import { execSync } from 'child_process'
 import path from 'path'
 import { trimEnd, uniq } from 'lodash'
@@ -469,6 +470,14 @@ export class Config {
 
   static get keygenTemplate() {
     return this.getConfig<string>('extract.keygenTemplate') ?? ''
+  }
+
+  static get keygenTemplateWithKeygen() {
+    return this.getConfig<string>('extract.keygenTemplateWithKeygen') ?? ''
+  }
+
+  static get keygenTemplateWithKeygenStrategy(): TemplateWithKeygenStrategy {
+    return this.getConfig<TemplateWithKeygenStrategy>('extract.keygenTemplateWithKeygenStrategy') ?? 'slug'
   }
 
   static get keygenStyle(): CaseStyles {

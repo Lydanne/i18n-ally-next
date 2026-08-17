@@ -78,6 +78,8 @@
   "config.keygen_strategy": "Estratégia de geração de chave.",
   "config.keygen_style": "Estilo de maiúsculas e minúsculas para geração de chave.",
   "config.keygen_template": "Modelo para gerar chave quando keygenStrategy é 'template'. Variáveis disponíveis: {{dirname}} (nome do diretório do arquivo atual), {{filename}} (nome do arquivo atual sem extensão), {{package.name}} (nome do package.json mais próximo), {{package_dirname}} (nome do diretório onde o package.json mais próximo está localizado). Exemplo: {{dirname}}:{{filename}}",
+  "config.keygen_template_with_keygen": "Prefixo de modelo para keygenStrategy 'templateWithKeygen'. A chave gerada a partir do texto é acrescentada a esse prefixo. Aceita as mesmas variáveis de keygenTemplate. Exemplo: {{filename}} transforma Test em loader.py na chave loader.test.",
+  "config.keygen_template_with_keygen_strategy": "Estratégia usada para gerar o segmento final da chave quando keygenStrategy é 'templateWithKeygen'.",
   "config.keys_in_use": "Chaves para marcar como em uso apesar de não aparecerem no código",
   "config.keystyle": "Estilo de chave de tradução",
   "config.language_tag_system": "Sistema de tag de idioma que você está usando.",

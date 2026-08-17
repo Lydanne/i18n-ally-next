@@ -78,6 +78,8 @@
   "config.keygen_strategy": "Strategie voor het genereren van sleutel.",
   "config.keygen_style": "Hoofdletterstijl voor het genereren van sleutel.",
   "config.keygen_template": "Sjabloon voor het genereren van sleutel wanneer keygenStrategy 'template' is. Beschikbare variabelen: {{dirname}} (naam van huidige bestandmap), {{filename}} (huidige bestandsnaam zonder extensie), {{package.name}} (naam van dichtstbijzijnde package.json), {{package_dirname}} (mapnaam waar de dichtstbijzijnde package.json zich bevindt). Voorbeeld: {{dirname}}:{{filename}}",
+  "config.keygen_template_with_keygen": "Sjabloonvoorvoegsel voor keygenStrategy 'templateWithKeygen'. De uit de tekst gegenereerde sleutel wordt aan dit voorvoegsel toegevoegd. Ondersteunt dezelfde variabelen als keygenTemplate. Voorbeeld: {{filename}} maakt van Test in loader.py de sleutel loader.test.",
+  "config.keygen_template_with_keygen_strategy": "Strategie voor het genereren van het laatste sleutelsegment wanneer keygenStrategy 'templateWithKeygen' is.",
   "config.keys_in_use": "Sleutels om als in gebruik te markeren, ondanks dat ze niet in de code verschijnen",
   "config.keystyle": "Locale sleutel stijl",
   "config.language_tag_system": "Taal-tag systeem dat u gebruikt.",

@@ -2,11 +2,11 @@ import type { TextDocument } from 'vscode'
 import type { ExtractInfo, PendingWrite } from './types'
 import { existsSync, readFileSync } from 'fs'
 import { basename, dirname, extname, resolve } from 'path'
-import limax from 'limax'
 import { nanoid } from 'nanoid'
 import { window } from 'vscode'
 import { replaceExtractionKey } from '~/extraction/utils'
 import { changeCase } from '~/utils/changeCase'
+import { generateSlugKey, generateTemplateWithKeygenKey } from '~/utils/keygen'
 import { Config, Global } from '../extension'
 import { CurrentFile } from './CurrentFile'
 
@@ -35,10 +35,19 @@ export function generateKeyFromText(text: string, filepath?: string, reuseExisti
   else if (keygenStrategy === 'template') {
     key = resolveTemplate(Config.keygenTemplate, filepath)
   }
+  else if (keygenStrategy === 'templateWithKeygen') {
+    const prefix = resolveTemplate(Config.keygenTemplateWithKeygen, filepath)
+    key = generateTemplateWithKeygenKey(
+      prefix,
+      text,
+      Config.preferredDelimiter,
+      Config.keygenStyle,
+      Config.extractKeyMaxLength ?? Infinity,
+      Config.keygenTemplateWithKeygenStrategy,
+    )
+  }
   else {
-    text = text.replace(/\$/g, '')
-    key = limax(text, { separator: Config.preferredDelimiter, tone: false })
-      .slice(0, Config.extractKeyMaxLength ?? Infinity)
+    key = generateSlugKey(text, Config.preferredDelimiter, Config.extractKeyMaxLength ?? Infinity)
   }
 
   const keyPrefix = Config.keyPrefix
@@ -51,7 +60,9 @@ export function generateKeyFromText(text: string, filepath?: string, reuseExisti
       .replace('{fileNameWithoutExt}', basename(filepath, extname(filepath)))
   }
 
-  key = changeCase(key, Config.keygenStyle).trim()
+  key = keygenStrategy === 'templateWithKeygen'
+    ? key.trim()
+    : changeCase(key, Config.keygenStyle).trim()
 
   // some symbol can't convert to alphabet correctly, apply a default key to it
   if (!key)

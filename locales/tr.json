@@ -78,6 +78,8 @@
   "config.keygen_strategy": "Anahtar oluşturma yöntemi.",
   "config.keygen_style": "Anahtarın oluşturulacağı alanın stili.",
   "config.keygen_template": "keygenStrategy 'template' olduğunda anahtar oluşturmak için şablon. Kullanılabilir değişkenler: {{dirname}} (geçerli dosya dizin adı), {{filename}} (uzantısız geçerli dosya adı), {{package.name}} (en yakın package.json adı), {{package_dirname}} (en yakın package.json'ın bulunduğu dizin adı). Örnek: {{dirname}}:{{filename}}",
+  "config.keygen_template_with_keygen": "'templateWithKeygen' keygenStrategy için şablon öneki. Metinden oluşturulan anahtar bu öneke eklenir. keygenTemplate ile aynı değişkenleri destekler. Örnek: {{filename}}, loader.py içindeki Test metnini loader.test anahtarına dönüştürür.",
+  "config.keygen_template_with_keygen_strategy": "keygenStrategy 'templateWithKeygen' olduğunda son anahtar bölümünü oluşturmak için kullanılan strateji.",
   "config.keys_in_use": "Kod içerisinde belirtilmeyen ama kullanımda olarak işaretlenecek çeviriler",
   "config.keystyle": "Çeviri anahtarı görünümü",
   "config.language_tag_system": "Kullandığınız dil eki sistemi",

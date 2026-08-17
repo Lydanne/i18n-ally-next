@@ -75,6 +75,8 @@
   "config.key_prefix": "String to prepend to the extracting key. You can use {fileName} for the file name, and {fileNameWithoutExt} for the part of the file name before the first dot.",
   "config.keygen_strategy": "Strategy of generating key.",
   "config.keygen_template": "Template for generating key when keygenStrategy is 'template'. Available variables: {{dirname}} (current file directory name), {{filename}} (current file name without extension), {{package.name}} (nearest package.json name), {{package_dirname}} (directory name where the nearest package.json is located). Example: {{dirname}}:{{filename}}",
+  "config.keygen_template_with_keygen": "Template prefix used when keygenStrategy is 'templateWithKeygen'. The key generated from the text is appended to this prefix. Supports the same variables as keygenTemplate. Example: {{filename}} turns Test in loader.py into loader.test.",
+  "config.keygen_template_with_keygen_strategy": "Strategy used to generate the final key segment when keygenStrategy is 'templateWithKeygen'.",
   "config.keygen_style": "Case style for generating key.",
   "config.keys_in_use": "Keys to mark as in use despite not appearing in the code",
   "config.keystyle": "Locale key style",

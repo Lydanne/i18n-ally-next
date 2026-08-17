@@ -78,6 +78,8 @@
   "config.keygen_strategy": "A kulcs generálási stratégiája",
   "config.keygen_style": "Az esetstílus a kulcs generálásához.",
   "config.keygen_template": "Sablon a kulcs generálásához, amikor a keygenStrategy 'template'. Elérhető változók: {{dirname}} (aktuális fájl könyvtárának neve), {{filename}} (aktuális fájl neve kiterjesztés nélkül), {{package.name}} (legközelebbi package.json neve), {{package_dirname}} (a könyvtár neve, ahol a legközelebbi package.json található). Példa: {{dirname}}:{{filename}}",
+  "config.keygen_template_with_keygen": "Sablonelőtag a 'templateWithKeygen' keygenStrategy beállításhoz. A szövegből generált kulcs ehhez az előtaghoz fűződik. A keygenTemplate változóival azonos változókat támogatja. Példa: a {{filename}} a loader.py fájlban lévő Test szövegből loader.test kulcsot készít.",
+  "config.keygen_template_with_keygen_strategy": "A végső kulcsszegmens generálási stratégiája, amikor a keygenStrategy értéke 'templateWithKeygen'.",
   "config.keys_in_use": "A kulcsok jelölése használatban, még akkor is, ha nem jelennek meg a kódban.",
   "config.keystyle": "A kulcs stílusa",
   "config.language_tag_system": "A nyelvi címke rendszerének használata.",

@@ -78,6 +78,8 @@
   "config.keygen_strategy": "키 생성 전략.",
   "config.keygen_style": "키 생성을 위한 케이스 스타일.",
   "config.keygen_template": "keygenStrategy가 'template'일 때 키를 생성하기 위한 템플릿. 사용 가능한 변수: {{dirname}} (현재 파일 디렉터리 이름), {{filename}} (확장자 없는 현재 파일 이름), {{package.name}} (가장 가까운 package.json 이름), {{package_dirname}} (가장 가까운 package.json이 위치한 디렉터리 이름). 예시: {{dirname}}:{{filename}}",
+  "config.keygen_template_with_keygen": "keygenStrategy가 'templateWithKeygen'일 때 사용할 템플릿 접두사입니다. 텍스트에서 생성된 키가 이 접두사 뒤에 추가됩니다. keygenTemplate과 같은 변수를 지원합니다. 예: {{filename}}을 사용하면 loader.py의 Test가 loader.test 키가 됩니다.",
+  "config.keygen_template_with_keygen_strategy": "keygenStrategy가 'templateWithKeygen'일 때 마지막 키 세그먼트를 생성하는 전략입니다.",
   "config.keys_in_use": "코드에 나타나지 않아도 사용 중으로 표시하는 키",
   "config.keystyle": "로케일 키 스타일",
   "config.language_tag_system": "언어 태그 시스템을 사용하고 있습니다.",
