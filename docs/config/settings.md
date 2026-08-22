@@ -379,7 +379,7 @@ Manually specify which i18n frameworks to enable.
 
 **When to use:** Override auto-detection when it picks the wrong framework, or when you need to enable multiple frameworks simultaneously.
 
-Available values: `vue`, `react`, `vscode`, `ngx-translate`, `i18next`, `react-i18next`, `i18next-shopify`, `i18n-tag`, `flutter`, `vue-sfc`, `ember`, `chrome-ext`, `ruby-rails`, `custom`, `laravel`, `transloco`, `svelte`, `globalize`, `ui5`, `next-translate`, `php-gettext`, `general`, `lingui`, `jekyll`, `fluent-vue`, `fluent-vue-sfc`, `next-intl`, `next-international`
+Available values: `vue`, `react`, `vscode`, `ngx-translate`, `i18next`, `react-i18next`, `i18next-shopify`, `i18n-tag`, `flutter`, `vue-sfc`, `ember`, `chrome-ext`, `ruby-rails`, `custom`, `laravel`, `transloco`, `svelte`, `globalize`, `ui5`, `next-translate`, `php-gettext`, `general`, `lingui`, `jekyll`, `fluent-vue`, `fluent-vue-sfc`, `next-intl`, `next-international`, `python`
 
 ```jsonc
 // Use only Vue and custom framework
@@ -529,6 +529,25 @@ Automatically detect hard-coded strings when opening a supported file.
 
 **When to use:** Enable to get automatic highlighting of strings that should be extracted to i18n. Useful during initial i18n migration of a project.
 
+### `extract.namespaceMode`
+
+- **Type**: `boolean` — **Default**: `false`
+
+Treat the first segment of a generated key as the locale file namespace when extracting hard-coded strings.
+
+**When to use:** Enable this when the project splits locale files by namespace and the namespace in a key should determine the target file automatically. This setting only takes effect when `namespace` is enabled and `pathMatcher` contains `{namespace}` or `{namespaces}`.
+
+For example, the following configuration interprets `common` in `common.welcome` as the file namespace and writes `welcome` to `locales/en/common.json`:
+
+```jsonc
+{
+  "i18n-ally-next.namespace": true,
+  "i18n-ally-next.localesPaths": ["locales"],
+  "i18n-ally-next.pathMatcher": "{locale}/{namespace}.json",
+  "i18n-ally-next.extract.namespaceMode": true
+}
+```
+
 ### `extract.parsers.html`
 
 - **Type**: `object` — **Default**: `{}`
@@ -544,6 +563,51 @@ Parser options for extracting hard-coded strings from HTML files.
 Parser options for extracting hard-coded strings from JS/TS/JSX/TSX files.
 
 **When to use:** When you need to customize how the extension detects extractable strings in JavaScript/TypeScript files. See [parser options source](https://github.com/lydanne/i18n-ally-next/blob/master/src/extraction/parsers/options.ts) for available options.
+
+### `extract.parsers.python.fStringArgumentStyle`
+
+- **Type**: `"keyword-arguments" | "format"` — **Default**: `"keyword-arguments"`
+
+Controls how named interpolation arguments are passed after extracting a Python f-string.
+
+**When to use:** Choose the call form expected by the project's gettext wrapper. If `f"Hello {name}"` is extracted to the key `hello`:
+
+- `keyword-arguments` (default) — Generates `_("hello", name=name)`.
+- `format` — Generates `_("hello").format(name=name)`, suitable for standard gettext usage where the returned string is formatted afterward.
+
+```jsonc
+{
+  "i18n-ally-next.extract.parsers.python.fStringArgumentStyle": "format"
+}
+```
+
+### `extract.parsers.python.ignoredCalls`
+
+- **Type**: `string[]` — **Default**: built-in Python call list
+
+Specifies Python calls whose string arguments should be excluded from hard-coded string detection. Both simple function names such as `gettext` and qualified names such as `os.path.join` are supported.
+
+By default, the extension ignores gettext functions, `pathlib` and `os.path` path functions, `re.compile`, reflection functions, and dynamic execution functions. This prevents translation keys, paths, regular expressions, and code fragments from being mistaken for user-facing text.
+
+**When to use:** Add project APIs that accept technical strings rather than user-facing text. For example, exclude `api.query("status = active")`:
+
+::: warning
+A custom array replaces the built-in ignore list instead of extending it. Keep any default entries that the project still needs.
+:::
+
+```jsonc
+{
+  "i18n-ally-next.extract.parsers.python.ignoredCalls": [
+    "_",
+    "gettext",
+    "ngettext",
+    "Path",
+    "os.path.join",
+    "re.compile",
+    "api.query"
+  ]
+}
+```
 
 ### `extract.scanningInclude`
 
@@ -580,7 +644,7 @@ Glob patterns for files to ignore when batch scanning for hard-coded strings.
 
 ### `extract.keygenStrategy`
 
-- **Type**: `"slug" | "random" | "empty" | "source" | "template"` — **Default**: `"slug"`
+- **Type**: `"slug" | "random" | "empty" | "source" | "template" | "templateWithKeygen"` — **Default**: `"slug"`
 
 Strategy for generating key names when extracting strings.
 
@@ -591,6 +655,7 @@ Strategy for generating key names when extracting strings.
 - `empty` — Leave the key empty for manual input.
 - `source` — Use the source string as the key: `"Hello World"` → `Hello World`.
 - `template` — Generate keys from a template string (see `extract.keygenTemplate` below).
+- `templateWithKeygen` — Generate a key prefix from a template, then append a final segment generated from the source string (see `extract.keygenTemplateWithKeygen` below).
 
 ```jsonc
 { "i18n-ally-next.extract.keygenStrategy": "slug" }
@@ -625,11 +690,46 @@ Template string for generating key names when `keygenStrategy` is `"template"`.
 }
 ```
 
+### `extract.keygenTemplateWithKeygen`
+
+- **Type**: `string` — **Default**: `""`
+
+Template string used as the key prefix when `keygenStrategy` is `"templateWithKeygen"`. It supports the same variables as `extract.keygenTemplate`.
+
+Unlike `template`, which uses the template result as the complete key, `templateWithKeygen` appends a final segment generated from the source text. This gives single and batch extraction the same key generation behavior.
+
+**When to use:** Use this when keys should include both file context and the meaning of the source text. For example, `"Welcome Back"` in `loader.py` can generate `loader.welcome-back`.
+
+When the template prefix has no trailing separator, the extension joins the two parts with `.`. If the template ends with `.`, `:`, `/`, `_`, or `-`, that separator is preserved.
+
+```jsonc
+{
+  "i18n-ally-next.extract.keygenStrategy": "templateWithKeygen",
+  "i18n-ally-next.extract.keygenTemplateWithKeygen": "{{filename}}",
+  "i18n-ally-next.extract.keygenTemplateWithKeygenStrategy": "slug",
+  "i18n-ally-next.extract.keygenStyle": "kebab-case"
+}
+```
+
+### `extract.keygenTemplateWithKeygenStrategy`
+
+- **Type**: `"slug" | "random" | "source"` — **Default**: `"slug"`
+
+Controls how the final key segment is generated in `templateWithKeygen` mode.
+
+**When to use:**
+
+- `slug` (default) — Generate a readable slug from the source text.
+- `random` — Generate a random final key segment.
+- `source` — Use the original source text as the final key segment.
+
+`extract.keygenStyle` is applied only to the generated final segment, so path and namespace separators in the template prefix remain unchanged.
+
 ### `extract.keygenStyle`
 
 - **Type**: `"default" | "kebab-case" | "snake_case" | "camelCase" | "PascalCase" | "ALL_CAPS"` — **Default**: `"default"`
 
-Casing style for generated key names (only applies when `keygenStrategy` is `slug`).
+Casing style for generated key names. It normally applies to the complete key; in `templateWithKeygen` mode, it applies only to the generated final segment so hierarchy separators in the template prefix remain unchanged.
 
 **When to use:** Match your project's key naming convention.
 
@@ -642,7 +742,7 @@ Casing style for generated key names (only applies when `keygenStrategy` is `slu
 
 - **Type**: `number` — **Default**: `Infinity`
 
-Maximum length for generated keys.
+Maximum length for slug keys generated from source text. With the `slug` strategy in `templateWithKeygen` mode, this limits only the generated final segment and does not include the template prefix.
 
 **When to use:** Limit key length to keep locale files readable, especially when generating from long strings.
 
@@ -728,7 +828,7 @@ Custom refactor templates for string extraction, with fine-grained control over 
 
 Each template object supports:
 
-- `source` — Context type: `html-attribute`, `html-inline`, `js-string`, `js-template`, `jsx-text`
+- `source` — Context type: `html-attribute`, `html-inline`, `js-string`, `js-template`, `jsx-text`, `python-string`, `python-fstring`
 - `template` / `templates` — Replacement template(s), use `$1` for key
 - `include` / `exclude` — Glob patterns to filter files
 

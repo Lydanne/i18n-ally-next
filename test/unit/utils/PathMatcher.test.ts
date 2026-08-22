@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { ParsePathMatcher, ReplaceLocale } from '../../../src/utils/PathMatcher'
+import { GetNamespaceFromKeypath, MaterializePathMatcher, ParsePathMatcher, PathMatcherHasNamespace, ReplaceLocale } from '../../../src/utils/PathMatcher'
 
 describe('pathMatching', () => {
   const cases = [
@@ -51,4 +51,36 @@ describe('replaceLocale', () => {
       ).to.eql(result)
     })
   }
+})
+
+describe('extraction namespace path', () => {
+  it('detects namespace placeholders', () => {
+    expect(PathMatcherHasNamespace('{locale}/{namespace}.json')).to.eql(true)
+    expect(PathMatcherHasNamespace('{locale}/{namespaces}.{ext}')).to.eql(true)
+    expect(PathMatcherHasNamespace('{locale}.json')).to.eql(false)
+  })
+
+  it('extracts the first namespace segment with a dot delimiter', () => {
+    expect(GetNamespaceFromKeypath('hello.welcome', '.')).to.eql('hello')
+    expect(GetNamespaceFromKeypath('hello.welcome.title', '.')).to.eql('hello')
+    expect(GetNamespaceFromKeypath('welcome', '.')).to.eql(undefined)
+  })
+
+  it('supports non-dot namespace delimiters', () => {
+    expect(GetNamespaceFromKeypath('errors:network.timeout', ':')).to.eql('errors')
+  })
+
+  it('materializes a filename namespace path', () => {
+    expect(MaterializePathMatcher('{locale}/{namespace}.json', 'zh-CN', 'hello')).to.eql('zh-CN/hello.json')
+    expect(MaterializePathMatcher('{locale}/**/{namespace}.{ext}', 'zh-CN', 'hello', 'json')).to.eql('zh-CN/hello.json')
+  })
+
+  it('materializes nested namespace paths', () => {
+    expect(MaterializePathMatcher('{locale}/{namespaces}.{ext}', 'en', 'account.profile', 'json')).to.eql('en/account/profile.json')
+  })
+
+  it('does not materialize locale-only or ambiguous wildcard paths', () => {
+    expect(MaterializePathMatcher('{locale}.json', 'en', 'hello')).to.eql(undefined)
+    expect(MaterializePathMatcher('{locale}/*/{namespace}.json', 'en', 'hello')).to.eql(undefined)
+  })
 })

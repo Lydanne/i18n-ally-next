@@ -76,6 +76,7 @@ export async function BatchHardStringExtraction(...args: any[]) {
             const result = parseHardString(options.rawText, options.document.languageId, options.isDynamic)
             options.text = result?.text || ''
             options.args = result?.args
+            options.namedArgs = result?.namedArgs
           }
 
           const { rawText, text, range, args } = options

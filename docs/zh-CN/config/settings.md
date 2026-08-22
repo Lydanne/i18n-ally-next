@@ -379,7 +379,7 @@ locale 文件在磁盘上的组织方式。
 
 **使用场景：** 当自动检测选择了错误的框架，或需要同时启用多个框架时覆盖。
 
-可用值：`vue`、`react`、`vscode`、`ngx-translate`、`i18next`、`react-i18next`、`i18next-shopify`、`i18n-tag`、`flutter`、`vue-sfc`、`ember`、`chrome-ext`、`ruby-rails`、`custom`、`laravel`、`transloco`、`svelte`、`globalize`、`ui5`、`next-translate`、`php-gettext`、`general`、`lingui`、`jekyll`、`fluent-vue`、`fluent-vue-sfc`、`next-intl`、`next-international`
+可用值：`vue`、`react`、`vscode`、`ngx-translate`、`i18next`、`react-i18next`、`i18next-shopify`、`i18n-tag`、`flutter`、`vue-sfc`、`ember`、`chrome-ext`、`ruby-rails`、`custom`、`laravel`、`transloco`、`svelte`、`globalize`、`ui5`、`next-translate`、`php-gettext`、`general`、`lingui`、`jekyll`、`fluent-vue`、`fluent-vue-sfc`、`next-intl`、`next-international`、`python`
 
 ```jsonc
 // 仅使用 Vue 和自定义框架
@@ -529,6 +529,25 @@ Ruby on Rails 作用域解析的根目录。
 
 **使用场景：** 启用后可自动高亮应提取为 i18n 的字符串。在项目初始 i18n 迁移时非常有用。
 
+### `extract.namespaceMode`
+
+- **类型**：`boolean` — **默认值**：`false`
+
+提取硬编码字符串时，将生成键名的第一段作为 locale 文件的命名空间。
+
+**使用场景：** 当项目按命名空间拆分 locale 文件，并希望键名中的命名空间自动决定写入文件时启用。此配置仅在已启用 `namespace`，且 `pathMatcher` 包含 `{namespace}` 或 `{namespaces}` 时生效。
+
+例如，以下配置会将键 `common.welcome` 中的 `common` 识别为文件命名空间，并把 `welcome` 写入 `locales/en/common.json`：
+
+```jsonc
+{
+  "i18n-ally-next.namespace": true,
+  "i18n-ally-next.localesPaths": ["locales"],
+  "i18n-ally-next.pathMatcher": "{locale}/{namespace}.json",
+  "i18n-ally-next.extract.namespaceMode": true
+}
+```
+
 ### `extract.parsers.html`
 
 - **类型**：`object` — **默认值**：`{}`
@@ -544,6 +563,51 @@ Ruby on Rails 作用域解析的根目录。
 从 JS/TS/JSX/TSX 文件中提取硬编码字符串的解析器选项。
 
 **使用场景：** 当需要自定义插件如何在 JavaScript/TypeScript 文件中检测可提取的字符串时。参见[解析器选项源码](https://github.com/lydanne/i18n-ally-next/blob/master/src/extraction/parsers/options.ts)。
+
+### `extract.parsers.python.fStringArgumentStyle`
+
+- **类型**：`"keyword-arguments" | "format"` — **默认值**：`"keyword-arguments"`
+
+控制 Python f-string 提取后如何传递命名插值参数。
+
+**使用场景：** 根据项目使用的 gettext 包装函数选择调用形式。假设 `f"Hello {name}"` 被提取为键 `hello`：
+
+- `keyword-arguments`（默认）— 生成 `_("hello", name=name)`。
+- `format` — 生成 `_("hello").format(name=name)`，适用于标准 gettext 返回字符串后再格式化的用法。
+
+```jsonc
+{
+  "i18n-ally-next.extract.parsers.python.fStringArgumentStyle": "format"
+}
+```
+
+### `extract.parsers.python.ignoredCalls`
+
+- **类型**：`string[]` — **默认值**：内置 Python 调用列表
+
+指定哪些 Python 函数调用中的字符串参数不参与硬编码字符串检测。支持函数名（如 `gettext`）和完整限定名（如 `os.path.join`）。
+
+默认会忽略 gettext 系列函数、`pathlib` 与 `os.path` 路径函数、`re.compile`、反射函数及动态执行函数，避免把翻译键、路径、正则表达式或代码片段误判为待提取文案。
+
+**使用场景：** 当项目中的 API 接收技术字符串而非用户可见文案时，将其加入忽略列表。例如忽略 `api.query("status = active")`：
+
+::: warning
+自定义数组会替换内置忽略列表，而不是在其后追加。请保留项目仍然需要的默认项。
+:::
+
+```jsonc
+{
+  "i18n-ally-next.extract.parsers.python.ignoredCalls": [
+    "_",
+    "gettext",
+    "ngettext",
+    "Path",
+    "os.path.join",
+    "re.compile",
+    "api.query"
+  ]
+}
+```
 
 ### `extract.scanningInclude`
 
@@ -580,7 +644,7 @@ Ruby on Rails 作用域解析的根目录。
 
 ### `extract.keygenStrategy`
 
-- **类型**：`"slug" | "random" | "empty" | "source" | "template"` — **默认值**：`"slug"`
+- **类型**：`"slug" | "random" | "empty" | "source" | "template" | "templateWithKeygen"` — **默认值**：`"slug"`
 
 提取字符串时生成键名的策略。
 
@@ -591,6 +655,7 @@ Ruby on Rails 作用域解析的根目录。
 - `empty` — 留空键名，手动输入。
 - `source` — 使用源字符串作为键：`"Hello World"` → `Hello World`。
 - `template` — 通过模板字符串生成键名（参见下方 `extract.keygenTemplate`）。
+- `templateWithKeygen` — 使用模板生成键名前缀，再根据字符串内容生成末段键名（参见下方 `extract.keygenTemplateWithKeygen`）。
 
 ```jsonc
 { "i18n-ally-next.extract.keygenStrategy": "slug" }
@@ -625,11 +690,46 @@ Ruby on Rails 作用域解析的根目录。
 }
 ```
 
+### `extract.keygenTemplateWithKeygen`
+
+- **类型**：`string` — **默认值**：`""`
+
+当 `keygenStrategy` 为 `"templateWithKeygen"` 时，用于生成键名前缀的模板字符串。支持与 `extract.keygenTemplate` 相同的变量。
+
+与 `template` 将模板结果作为完整键名不同，`templateWithKeygen` 会在模板前缀后追加一个根据原始文案生成的末段键名，因此单条提取和批量提取都可以使用相同的键名生成规则。
+
+**使用场景：** 当你希望键名同时包含文件上下文和文案含义时使用。例如，`loader.py` 中的 `"Welcome Back"` 可以生成 `loader.welcome-back`。
+
+模板前缀没有结尾分隔符时，插件使用 `.` 连接两部分；如果模板以 `.`、`:`、`/`、`_` 或 `-` 结尾，则保留该分隔符。
+
+```jsonc
+{
+  "i18n-ally-next.extract.keygenStrategy": "templateWithKeygen",
+  "i18n-ally-next.extract.keygenTemplateWithKeygen": "{{filename}}",
+  "i18n-ally-next.extract.keygenTemplateWithKeygenStrategy": "slug",
+  "i18n-ally-next.extract.keygenStyle": "kebab-case"
+}
+```
+
+### `extract.keygenTemplateWithKeygenStrategy`
+
+- **类型**：`"slug" | "random" | "source"` — **默认值**：`"slug"`
+
+控制 `templateWithKeygen` 模式下末段键名的生成方式。
+
+**使用场景：**
+
+- `slug`（默认）— 根据原始文案生成便于阅读的 slug。
+- `random` — 生成随机末段键名。
+- `source` — 直接使用原始文案作为末段键名。
+
+`extract.keygenStyle` 只应用于生成的末段，不会修改模板前缀中的路径或命名空间分隔符。
+
 ### `extract.keygenStyle`
 
 - **类型**：`"default" | "kebab-case" | "snake_case" | "camelCase" | "PascalCase" | "ALL_CAPS"` — **默认值**：`"default"`
 
-生成键名的命名风格（仅在 `keygenStrategy` 为 `slug` 时生效）。
+生成键名的命名风格。通常应用于完整键名；在 `templateWithKeygen` 模式下仅应用于生成的末段键名，避免改变模板前缀中的层级分隔符。
 
 **使用场景：** 匹配项目的键命名规范。
 
@@ -642,7 +742,7 @@ Ruby on Rails 作用域解析的根目录。
 
 - **类型**：`number` — **默认值**：`Infinity`
 
-生成键名的最大长度。
+根据文案生成 slug 键名时的最大长度。在 `templateWithKeygen` 的 `slug` 策略下，仅限制生成的末段键名，不包含模板前缀。
 
 **使用场景：** 限制键长度以保持 locale 文件可读性，特别是从长字符串生成时。
 
@@ -728,7 +828,7 @@ Ruby on Rails 作用域解析的根目录。
 
 每个模板对象支持：
 
-- `source` — 上下文类型：`html-attribute`、`html-inline`、`js-string`、`js-template`、`jsx-text`
+- `source` — 上下文类型：`html-attribute`、`html-inline`、`js-string`、`js-template`、`jsx-text`、`python-string`、`python-fstring`
 - `template` / `templates` — 替换模板，使用 `$1` 代替键
 - `include` / `exclude` — 过滤文件的 glob 模式
 

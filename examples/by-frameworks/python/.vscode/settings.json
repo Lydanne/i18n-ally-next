@@ -1,0 +1,10 @@
+{
+  "i18n-ally-next.localesPaths": "locales",
+  "i18n-ally-next.sourceLanguage": "en",
+  "i18n-ally-next.displayLanguage": "en",
+  "i18n-ally-next.keystyle": "nested",
+  "i18n-ally-next.extract.autoDetect": true,
+  "i18n-ally-next.extract.keygenStrategy": "templateWithKeygen",
+  "i18n-ally-next.extract.keygenTemplateWithKeygen": "{{filename}}",
+  "i18n-ally-next.extract.keygenTemplateWithKeygenStrategy": "slug"
+}

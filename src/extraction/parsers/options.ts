@@ -36,3 +36,28 @@ export interface ExtractionBabelOptions {
    */
   ignoredJSXAttributes?: string[]
 }
+
+export type PythonFStringArgumentStyle = 'keyword-arguments' | 'format'
+
+export interface ExtractionPythonOptions {
+  /**
+   * How named f-string interpolation arguments are applied.
+   *
+   * @default 'keyword-arguments'
+   */
+  fStringArgumentStyle?: PythonFStringArgumentStyle
+
+  /**
+   * Calls whose string arguments should not be extracted. Both simple and
+   * qualified call names are supported.
+   */
+  ignoredCalls?: string[]
+
+  /**
+   * Python line-comment directives that suppress hard-coded string extraction
+   * on the same physical line. The leading `#` is optional.
+   *
+   * @default ['i18n-ally-ignore']
+   */
+  ignoredLineComments?: string[]
+}

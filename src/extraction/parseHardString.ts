@@ -1,3 +1,5 @@
+import { parseStringExpression } from './parsers/python'
+
 /**
  * 'foo' + bar() + ' is cool' -> `foo${bar()} is cool`
  */
@@ -28,6 +30,19 @@ export function parseHardString(text = '', languageId?: string, isDynamic = fals
   const args: string[] = []
   if (!trimmed)
     return null
+
+  if (languageId === 'python') {
+    const parsed = parseStringExpression(text.trim())
+    if (parsed) {
+      return {
+        trimmed,
+        text: parsed.text,
+        args: parsed.namedArgs.map(argument => argument.expression),
+        namedArgs: parsed.namedArgs,
+        source: parsed.source,
+      }
+    }
+  }
 
   if (isDynamic && ['vue', 'js'].includes(languageId || ''))
     processed = stringConcatenationToTemplate(processed).slice(1, -1)

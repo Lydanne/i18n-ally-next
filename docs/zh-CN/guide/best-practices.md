@@ -10,6 +10,7 @@
 - **[React & Next.js](/zh-CN/guide/frameworks/react)** — React I18next、next-intl、next-i18next
 - **[Angular](/zh-CN/guide/frameworks/angular)** — ngx-translate
 - **[Svelte、Laravel 与 Rails](/zh-CN/guide/frameworks/others)** — svelte-i18n、Laravel、Ruby on Rails
+- **[Python](/zh-CN/guide/frameworks/python)** — Python 与 gettext 风格工作流
 - **[自定义框架](/zh-CN/guide/frameworks/custom)** — 通过 YAML 配置定义自己的框架
 - **[Monorepo](/zh-CN/guide/monorepo)** — 多包工作区配置
 

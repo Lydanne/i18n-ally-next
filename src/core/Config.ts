@@ -1,7 +1,8 @@
 import type { ConfigurationScope, ExtensionContext, WorkspaceFolder } from 'vscode'
 import type { DirStructureAuto, KeyStyle, SortCompare } from '.'
-import type { ExtractionBabelOptions, ExtractionHTMLOptions } from '~/extraction/parsers/options'
+import type { ExtractionBabelOptions, ExtractionHTMLOptions, ExtractionPythonOptions, PythonFStringArgumentStyle } from '~/extraction/parsers/options'
 import type { CaseStyles } from '~/utils/changeCase'
+import type { TemplateWithKeygenStrategy } from '~/utils/keygen'
 import { execSync } from 'child_process'
 import path from 'path'
 import { trimEnd, uniq } from 'lodash'
@@ -39,6 +40,10 @@ export class Config {
     'regex.key',
     'regex.usageMatch',
     'regex.usageMatchAppend',
+    'extract.namespaceMode',
+    'extract.parsers.python.fStringArgumentStyle',
+    'extract.parsers.python.ignoredCalls',
+    'extract.parsers.python.ignoredLineComments',
   ]
 
   static readonly usageRefreshConfigs = [
@@ -468,6 +473,14 @@ export class Config {
     return this.getConfig<string>('extract.keygenTemplate') ?? ''
   }
 
+  static get keygenTemplateWithKeygen() {
+    return this.getConfig<string>('extract.keygenTemplateWithKeygen') ?? ''
+  }
+
+  static get keygenTemplateWithKeygenStrategy(): TemplateWithKeygenStrategy {
+    return this.getConfig<TemplateWithKeygenStrategy>('extract.keygenTemplateWithKeygenStrategy') ?? 'slug'
+  }
+
   static get keygenStyle(): CaseStyles {
     return this.getConfig<CaseStyles>('extract.keygenStyle') ?? 'default'
   }
@@ -478,6 +491,10 @@ export class Config {
 
   static get extractKeyMaxLength() {
     return this.getConfig<number>('extract.keyMaxLength') ?? Infinity
+  }
+
+  static get extractNamespaceMode() {
+    return this.getConfig<boolean>('extract.namespaceMode') ?? false
   }
 
   static get extractAutoDetect() {
@@ -495,6 +512,14 @@ export class Config {
 
   static get extractParserBabelOptions() {
     return this.getConfig<ExtractionBabelOptions>('extract.parsers.babel') ?? {}
+  }
+
+  static get extractParserPythonOptions(): ExtractionPythonOptions {
+    return {
+      fStringArgumentStyle: this.getConfig<PythonFStringArgumentStyle>('extract.parsers.python.fStringArgumentStyle') ?? 'keyword-arguments',
+      ignoredCalls: this.getConfig<string[]>('extract.parsers.python.ignoredCalls'),
+      ignoredLineComments: this.getConfig<string[]>('extract.parsers.python.ignoredLineComments'),
+    }
   }
 
   static get extractScanningInclude() {

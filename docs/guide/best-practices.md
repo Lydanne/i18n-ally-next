@@ -10,6 +10,7 @@ Detailed setup and usage patterns for each framework:
 - **[React & Next.js](/guide/frameworks/react)** — React I18next, next-intl, next-i18next
 - **[Angular](/guide/frameworks/angular)** — ngx-translate
 - **[Svelte, Laravel & Rails](/guide/frameworks/others)** — svelte-i18n, Laravel, Ruby on Rails
+- **[Python](/guide/frameworks/python)** — Python and gettext-style workflows
 - **[Custom Framework](/guide/frameworks/custom)** — Define your own framework via YAML config
 - **[Monorepo](/guide/monorepo)** — Multi-package workspace configuration
 

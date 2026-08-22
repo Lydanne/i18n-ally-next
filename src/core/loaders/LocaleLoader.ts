@@ -5,7 +5,7 @@ import fs from 'fs-extra'
 import _, { throttle, uniq } from 'lodash'
 import { RelativePattern, window, workspace, WorkspaceEdit } from 'vscode'
 import i18n from '~/i18n'
-import { applyPendingToObject, getCache, getLocaleCompare, Log, NodeHelper, ReplaceLocale, setCache, unflatten } from '~/utils'
+import { applyPendingToObject, getCache, getLocaleCompare, GetNamespaceFromKeypath, Log, MaterializePathMatcher, NodeHelper, PathMatcherHasNamespace, ReplaceLocale, setCache, unflatten, withFileNamespace } from '~/utils'
 import { Analyst, Config, Global } from '..'
 import { FILEWATCHER_TIMEOUT } from '../../meta'
 import { AllyError, ErrorType } from '../Errors'
@@ -147,27 +147,82 @@ export class LocaleLoader extends Loader {
       : 'file'
   }
 
+  private getNamespacePathMatchers() {
+    return this._path_matchers.filter(({ matcher }) => PathMatcherHasNamespace(matcher))
+  }
+
+  private resolveNewNamespaceFilepath(locale: string, namespace: string) {
+    for (const { matcher } of this.getNamespacePathMatchers()) {
+      const exemplar = this.files.find(file => file.matcher === matcher && file.locale === locale)
+        || this.files.find(file => file.matcher === matcher && file.locale === Config.sourceLanguage)
+        || this.files.find(file => file.matcher === matcher)
+      const dirpath = exemplar?.dirpath || this._locale_dirs[0]
+      if (!dirpath)
+        continue
+
+      const extension = path.extname(exemplar?.filepath || '').slice(1)
+        || Global.enabledParserExts.split('|').find(ext => /^[\w-]+$/.test(ext))
+        || 'json'
+      const relative = MaterializePathMatcher(matcher, locale, namespace, extension)
+      if (!relative)
+        continue
+
+      const filepath = path.resolve(dirpath, relative)
+      const relativeToDir = path.relative(dirpath, filepath)
+      if (
+        relativeToDir === ''
+        || relativeToDir === '..'
+        || relativeToDir.startsWith(`..${path.sep}`)
+        || path.isAbsolute(relativeToDir)
+      ) {
+        continue
+      }
+
+      const info = this.getFileInfo(dirpath, relative)
+      if (info?.parser && info.locale === locale && info.namespace === namespace)
+        return filepath
+    }
+
+    return undefined
+  }
+
   async requestMissingFilepath(pending: PendingWrite) {
     const { locale, keypath } = pending
 
     // try to match namespaces
     if (Global.namespaceEnabled) {
       const delimiter = Global.getNamespaceDelimiter()
+      const inferredExtractionNamespace = pending.inferNamespaceFromKey && this.getNamespacePathMatchers().length
+        ? GetNamespaceFromKeypath(keypath, delimiter)?.replace(/[\\/]/g, '.')
+        : undefined
       const nsFromKeypath = delimiter !== '.'
         ? (keypath.includes(delimiter) ? keypath.slice(0, keypath.indexOf(delimiter)) : undefined)
         : undefined
-      const namespace = pending.namespace || this.getNodeByKey(keypath)?.meta?.namespace || nsFromKeypath || Config.defaultNamespace
+      const namespace = pending.namespace || inferredExtractionNamespace || this.getNodeByKey(keypath)?.meta?.namespace || nsFromKeypath || Config.defaultNamespace
 
       const filesSameLocale = this.files.find(f => f.namespace === namespace && f.locale === locale)
 
-      if (filesSameLocale)
+      if (filesSameLocale) {
+        if (namespace === inferredExtractionNamespace)
+          pending.namespace = namespace
         return filesSameLocale.filepath
+      }
 
       const fileSource = this.files.find(f => f.namespace === namespace && f.locale === Config.sourceLanguage)
       if (fileSource && fileSource.matcher) {
         const relative = path.relative(fileSource.dirpath, fileSource.filepath)
         const newFilepath = ReplaceLocale(relative, fileSource.matcher, locale, Global.enabledParserExts)
+        if (namespace === inferredExtractionNamespace)
+          pending.namespace = namespace
         return path.join(fileSource.dirpath, newFilepath)
+      }
+
+      if (namespace && namespace === inferredExtractionNamespace) {
+        const newFilepath = this.resolveNewNamespaceFilepath(locale, namespace)
+        if (newFilepath) {
+          pending.namespace = namespace
+          return newFilepath
+        }
       }
     }
 
@@ -207,6 +262,21 @@ export class LocaleLoader extends Loader {
       return this.handleExtractToGlobalPrevious(paths, keypath)
 
     return await this.promptPathToSave(paths, keypath)
+  }
+
+  async resolvePendingWrite(pending: PendingWrite) {
+    const filepath = pending.filepath || await this.requestMissingFilepath(pending)
+    if (!filepath)
+      return undefined
+
+    pending.filepath = filepath
+    if (Global.namespaceEnabled) {
+      pending.namespace = pending.namespace || this.getNamespaceFromFilepath(filepath)
+      if (pending.includeFileNamespace)
+        pending.keypath = withFileNamespace(pending.keypath, pending.namespace, Global.getNamespaceDelimiter())
+    }
+
+    return pending
   }
 
   async promptPathToSave(paths: string[], keypath: string) {
@@ -342,14 +412,13 @@ export class LocaleLoader extends Loader {
 
     // distribute pendings writes by files
     for (const pending of pendings) {
-      const filepath = pending.filepath || await this.requestMissingFilepath(pending)
-      if (!filepath) {
+      const resolved = await this.resolvePendingWrite(pending)
+      if (!resolved?.filepath) {
         Log.info(`💥 Unable to find path for writing ${JSON.stringify(pending)}`)
         continue
       }
 
-      if (Global.namespaceEnabled)
-        pending.namespace = pending.namespace || this._files[filepath]?.namespace
+      const filepath = resolved.filepath
 
       if (!distributed[filepath])
         distributed[filepath] = []
@@ -427,31 +496,45 @@ export class LocaleLoader extends Loader {
     oldkey = this.rewriteKeys(oldkey, 'source')
     newkey = this.rewriteKeys(newkey, 'reference')
 
+    const namespace = this.getNodeByKey(oldkey)?.meta?.namespace
+    if (namespace && !newkey.startsWith(`${namespace}${Global.getNamespaceDelimiter()}`))
+      throw new Error(i18n.t('errors.rename_across_namespaces'))
+
     const locations = await Analyst.getAllOccurrenceLocations(oldkey)
 
     for (const location of locations)
       edit.replace(location.uri, location.range, newkey)
 
-    this.renameKeyInLocales(oldkey, newkey)
+    await this.renameKeyInLocales(oldkey, newkey)
 
     return edit
   }
 
   async renameKeyInLocales(oldkey: string, newkey: string) {
+    const delimiter = Global.getNamespaceDelimiter()
     const writes = _(this._files)
       .entries()
       .flatMap(([filepath, file]) => {
-        const value = _.get(file.value, oldkey)
+        if (file.namespace && !oldkey.startsWith(`${file.namespace}${delimiter}`))
+          return []
+
+        const oldFileKey = file.namespace
+          ? oldkey.slice(file.namespace.length + delimiter.length)
+          : oldkey
+        const newFileKey = file.namespace
+          ? newkey.slice(file.namespace.length + delimiter.length)
+          : newkey
+        const value = _.get(file.value, oldFileKey)
         if (value === undefined)
           return []
         return [{
           value: undefined,
-          keypath: oldkey,
+          keypath: oldFileKey,
           filepath,
           locale: file.locale,
         }, {
-          value: _.get(file.value, oldkey),
-          keypath: newkey,
+          value,
+          keypath: newFileKey,
           filepath,
           locale: file.locale,
         }]
@@ -465,10 +548,15 @@ export class LocaleLoader extends Loader {
   }
 
   getNamespaceFromFilepath(filepath: string) {
+    filepath = path.resolve(filepath)
     const file = this._files[filepath]
 
     if (file)
       return file.namespace
+
+    const { dirpath, relative } = this.getRelativePath(filepath) || {}
+    if (dirpath && relative)
+      return this.getFileInfo(dirpath, relative)?.namespace
   }
 
   private getFileInfo(dirpath: string, relativePath: string) {
