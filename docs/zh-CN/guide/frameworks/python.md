@@ -282,3 +282,28 @@ parser.add_argument("--name", help="请输入用户名")
 ```
 
 `ignoredCalls` 数组会成为实际使用的忽略列表。自定义时，应保留项目仍然需要的 gettext、路径、正则、反射和动态执行等默认项。
+
+#### 使用注释忽略物理行
+
+在 Python 行中添加 `# i18n-ally-ignore`，即可忽略该物理行中的所有硬编码字符串：
+
+```python
+machine_code = "ERR_CONNECTION_RESET"  # i18n-ally-ignore
+```
+
+指令后可以使用空格或冒号补充原因：
+
+```python
+machine_code = "ERR_CONNECTION_RESET"  # i18n-ally-ignore: 协议常量
+```
+
+若要使用其他指令，可以配置 `ignoredLineComments`。开头的 `#` 可以省略；配置的数组会替换默认指令列表：
+
+```json
+{
+  "i18n-ally-next.extract.parsers.python.ignoredLineComments": [
+    "noqa: I18N",
+    "project-ignore-i18n"
+  ]
+}
+```

@@ -43,6 +43,7 @@ export class Config {
     'extract.namespaceMode',
     'extract.parsers.python.fStringArgumentStyle',
     'extract.parsers.python.ignoredCalls',
+    'extract.parsers.python.ignoredLineComments',
   ]
 
   static readonly usageRefreshConfigs = [
@@ -517,6 +518,7 @@ export class Config {
     return {
       fStringArgumentStyle: this.getConfig<PythonFStringArgumentStyle>('extract.parsers.python.fStringArgumentStyle') ?? 'keyword-arguments',
       ignoredCalls: this.getConfig<string[]>('extract.parsers.python.ignoredCalls'),
+      ignoredLineComments: this.getConfig<string[]>('extract.parsers.python.ignoredLineComments'),
     }
   }
 

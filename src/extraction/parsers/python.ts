@@ -45,6 +45,10 @@ export const DEFAULT_PYTHON_IGNORED_CALLS = [
   'compile',
 ] as const
 
+export const DEFAULT_PYTHON_IGNORED_LINE_COMMENTS = [
+  'i18n-ally-ignore',
+] as const
+
 const PYTHON_KEYWORDS = new Set([
   'False',
   'None',
@@ -159,12 +163,19 @@ export function detect(
   userOptions: ExtractionPythonOptions = {},
 ): DetectionResult[] {
   const ignoredCalls = userOptions.ignoredCalls ?? [...DEFAULT_PYTHON_IGNORED_CALLS]
+  const ignoredLineComments = userOptions.ignoredLineComments ?? [...DEFAULT_PYTHON_IGNORED_LINE_COMMENTS]
   const tree = parser.parse(input)
+  const ignoredLineStarts = collectIgnoredLineStarts(tree.topNode, input, ignoredLineComments)
   const detections: DetectionResult[] = []
 
   visit(tree.topNode, (node) => {
-    if (!isOutermostString(node) || isIgnoredContext(node, input, ignoredCalls))
+    if (
+      !isOutermostString(node)
+      || ignoredLineStarts.has(lineStartAt(input, node.from))
+      || isIgnoredContext(node, input, ignoredCalls)
+    ) {
       return
+    }
 
     const parsed = parseStringNode(node, input)
     if (!parsed)
@@ -401,6 +412,43 @@ function isIgnoredContext(node: PythonSyntaxNode, input: string, ignoredCalls: r
     }
   }
   return false
+}
+
+function collectIgnoredLineStarts(
+  root: PythonSyntaxNode,
+  input: string,
+  directives: readonly string[],
+): Set<number> {
+  const normalizedDirectives = directives
+    .map(normalizeCommentDirective)
+    .filter(Boolean)
+  const ignoredLineStarts = new Set<number>()
+  if (!normalizedDirectives.length)
+    return ignoredLineStarts
+
+  visit(root, (node) => {
+    if (node.name !== 'Comment')
+      return
+    const comment = normalizeCommentDirective(input.slice(node.from, node.to))
+    if (normalizedDirectives.some(directive => matchesCommentDirective(comment, directive)))
+      ignoredLineStarts.add(lineStartAt(input, node.from))
+  })
+  return ignoredLineStarts
+}
+
+function normalizeCommentDirective(value: string): string {
+  return value.trim().replace(/^#\s*/, '').trim()
+}
+
+function matchesCommentDirective(comment: string, directive: string): boolean {
+  if (comment === directive)
+    return true
+  const next = comment[directive.length]
+  return comment.startsWith(directive) && (next === ':' || /\s/.test(next || ''))
+}
+
+function lineStartAt(input: string, offset: number): number {
+  return input.lastIndexOf('\n', offset - 1) + 1
 }
 
 function collapseEscapedFormatBraces(value: string): string {

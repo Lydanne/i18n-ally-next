@@ -52,4 +52,12 @@ export interface ExtractionPythonOptions {
    * qualified call names are supported.
    */
   ignoredCalls?: string[]
+
+  /**
+   * Python line-comment directives that suppress hard-coded string extraction
+   * on the same physical line. The leading `#` is optional.
+   *
+   * @default ['i18n-ally-ignore']
+   */
+  ignoredLineComments?: string[]
 }

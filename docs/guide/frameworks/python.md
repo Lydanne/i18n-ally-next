@@ -292,3 +292,28 @@ For example, to prevent strings passed to `api.query()` from being extracted:
 ```
 
 The `ignoredCalls` array replaces the effective ignore list. When customizing it, retain the default entries your project still needs for gettext, paths, regular expressions, reflection, dynamic execution, and similar calls.
+
+#### Ignore a Physical Line with a Comment
+
+Add `# i18n-ally-ignore` to a Python line to suppress hard-coded string extraction for every string on that physical line:
+
+```python
+machine_code = "ERR_CONNECTION_RESET"  # i18n-ally-ignore
+```
+
+The directive can include a reason after whitespace or a colon:
+
+```python
+machine_code = "ERR_CONNECTION_RESET"  # i18n-ally-ignore: protocol constant
+```
+
+To use another directive, configure `ignoredLineComments`. The leading `#` is optional, and the configured array replaces the default directive list:
+
+```json
+{
+  "i18n-ally-next.extract.parsers.python.ignoredLineComments": [
+    "noqa: I18N",
+    "project-ignore-i18n"
+  ]
+}
+```

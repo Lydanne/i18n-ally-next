@@ -3,7 +3,10 @@ import { tmpdir } from 'os'
 import { join } from 'path'
 import { expect } from 'chai'
 import packageJson from '../../../package.json'
-import { DEFAULT_PYTHON_IGNORED_CALLS } from '../../../src/extraction/parsers/python'
+import {
+  DEFAULT_PYTHON_IGNORED_CALLS,
+  DEFAULT_PYTHON_IGNORED_LINE_COMMENTS,
+} from '../../../src/extraction/parsers/python'
 import { buildPythonRefactorTemplate, isPythonProject } from '../../../src/frameworks/python-utils'
 import { applyRefactorTemplate } from '../../../src/utils/resolveRefactorTemplate'
 
@@ -37,6 +40,11 @@ describe('python framework helpers', () => {
   it('keeps the configured ignored-call defaults aligned with the parser', () => {
     const configured = packageJson.contributes.configuration.properties['i18n-ally-next.extract.parsers.python.ignoredCalls'].default
     expect(configured).to.deep.equal([...DEFAULT_PYTHON_IGNORED_CALLS])
+  })
+
+  it('keeps the configured ignored-comment defaults aligned with the parser', () => {
+    const configured = packageJson.contributes.configuration.properties['i18n-ally-next.extract.parsers.python.ignoredLineComments'].default
+    expect(configured).to.deep.equal([...DEFAULT_PYTHON_IGNORED_LINE_COMMENTS])
   })
 
   it('detects Python project markers and root Python files', () => {

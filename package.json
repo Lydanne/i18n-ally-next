@@ -1343,6 +1343,16 @@
           ],
           "description": "Python calls whose string arguments are ignored during hard-coded string extraction."
         },
+        "i18n-ally-next.extract.parsers.python.ignoredLineComments": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "i18n-ally-ignore"
+          ],
+          "description": "Python line-comment directives that suppress hard-coded string extraction on the same physical line. The leading # is optional."
+        },
         "i18n-ally-next.extract.autoDetect": {
           "type": "boolean",
           "default": false,

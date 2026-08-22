@@ -161,6 +161,41 @@ describe('detections - python', () => {
     ])
   })
 
+  it('ignores strings on lines with an ignored line-comment directive', () => {
+    const source = [
+      `ignored = "Generated identifier" # i18n-ally-ignore`,
+      `ignored_with_reason = f"Generated value {name}" # i18n-ally-ignore: not user-facing`,
+      `first = "First generated value"; second = "Second generated value" # i18n-ally-ignore generated values`,
+      `inside_string = "保留 # i18n-ally-ignore 作为文本"`,
+      `# i18n-ally-ignore`,
+      `next_line = "Keep the next line"`,
+      `similar = "Keep a similar directive" # i18n-ally-ignore-extra`,
+      `unrelated = "Keep an unrelated comment" # noqa`,
+    ].join('\n')
+
+    expect(python.detect(source).map(item => item.text)).to.deep.equal([
+      '保留 # i18n-ally-ignore 作为文本',
+      'Keep the next line',
+      'Keep a similar directive',
+      'Keep an unrelated comment',
+    ])
+  })
+
+  it('supports custom ignored line-comment directives', () => {
+    const source = [
+      `custom = "Ignore custom directive" # noqa: I18N`,
+      `default_directive = "Keep default directive" # i18n-ally-ignore`,
+    ].join('\n')
+
+    expect(python.detect(source, undefined, { ignoredLineComments: ['# noqa'] }).map(item => item.text)).to.deep.equal([
+      'Keep default directive',
+    ])
+    expect(python.detect(source, undefined, { ignoredLineComments: [] }).map(item => item.text)).to.deep.equal([
+      'Ignore custom directive',
+      'Keep default directive',
+    ])
+  })
+
   it('recovers after incomplete literals and skips uncertain boundaries', () => {
     const source = [
       `broken = "Unclosed text`,
