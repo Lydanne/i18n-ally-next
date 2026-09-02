@@ -124,6 +124,14 @@ export class Config {
     this.setConfig('annotations', value, true)
   }
 
+  static get codeLens(): boolean {
+    return this.getConfig<boolean>('codeLens') ?? true
+  }
+
+  static set codeLens(value: boolean) {
+    this.setConfig('codeLens', value, true)
+  }
+
   static get annotationMaxLength(): number {
     return this.getConfig<number>('annotationMaxLength') || 40
   }

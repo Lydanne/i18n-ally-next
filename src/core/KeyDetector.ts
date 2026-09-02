@@ -5,6 +5,7 @@ import type { KeyInDocument } from '~/core'
 import type { ScopeRange } from '~/frameworks'
 import { Position, Range, workspace } from 'vscode'
 import { CurrentFile } from '~/core'
+import { joinNamespaceKey } from '~/core/keypath'
 import { regexFindKeys } from '~/utils'
 import { Config } from './Config'
 import { Global } from './Global'
@@ -34,6 +35,23 @@ export class KeyDetector {
   static getKeyRange(document: TextDocument, position: Position, dotEnding?: boolean) {
     if (Config.disablePathParsing)
       dotEnding = true
+
+    const isLocaleFile = CurrentFile.loader.files.some(f => f?.filepath === document.uri.fsPath)
+    if (isLocaleFile) {
+      const usages = KeyDetector.getUsages(document, CurrentFile.loader)
+      const offset = document.offsetAt(position)
+      const found = usages?.keys.find(k => KeyDetector.hasOffset(k, offset, true))
+      if (found) {
+        const key = KeyDetector.getKeypath(found.key, usages?.namespace)
+        const range = KeyDetector.getRange(document, found, true)
+        if (!dotEnding)
+          return { range, key }
+
+        const delimiter = Global.getNamespaceDelimiter()
+        if (!key || key.endsWith('.') || (delimiter && key.endsWith(delimiter)))
+          return { range, key }
+      }
+    }
 
     const regs = Global.getUsageMatchRegex(document.languageId, document.uri.fsPath)
     for (const regex of regs) {
@@ -66,6 +84,26 @@ export class KeyDetector {
     }
   }
 
+  static getKeypath(key: string, namespace?: string) {
+    return joinNamespaceKey(key, namespace, Global.getNamespaceDelimiter())
+  }
+
+  static getOffsets(key: KeyInDocument, useKeyRange = false) {
+    if (useKeyRange && key.keyStart != null && key.keyEnd != null)
+      return { start: key.keyStart, end: key.keyEnd }
+    return { start: key.start, end: key.end }
+  }
+
+  static getRange(document: TextDocument, key: KeyInDocument, useKeyRange = false) {
+    const { start, end } = KeyDetector.getOffsets(key, useKeyRange)
+    return new Range(document.positionAt(start), document.positionAt(end))
+  }
+
+  static hasOffset(key: KeyInDocument, offset: number, useKeyRange = false) {
+    const { start, end } = KeyDetector.getOffsets(key, useKeyRange)
+    return start <= offset && offset <= end
+  }
+
   static getKeyAndRange(document: TextDocument, position: Position, dotEnding?: boolean) {
     const { range, key } = KeyDetector.getKeyRange(document, position, dotEnding) || {}
     if (!range || !key)
@@ -87,6 +125,17 @@ export class KeyDetector {
     workspace.onDidChangeTextDocument(
       (e) => {
         delete this._get_keys_cache[e.document.uri.fsPath]
+        delete this._get_locale_keys_cache[e.document.uri.fsPath]
+      },
+      null,
+      ctx.subscriptions,
+    )
+    CurrentFile.loader.onDidChange(
+      (source) => {
+        if (!source)
+          return
+        this._get_keys_cache = {}
+        this._get_locale_keys_cache = {}
       },
       null,
       ctx.subscriptions,
@@ -94,6 +143,7 @@ export class KeyDetector {
   }
 
   private static _get_keys_cache: Record<string, KeyInDocument[]> = {}
+  private static _get_locale_keys_cache: Record<string, KeyInDocument[]> = {}
 
   static getKeys(document: TextDocument | string, regs?: RegExp[], dotEnding?: boolean, scopes?: ScopeRange[]): KeyInDocument[] {
     let text = ''
@@ -144,8 +194,10 @@ export class KeyDetector {
         namespace = loader.getNamespaceFromFilepath(filepath)
 
       locale = localeFile.locale
-      keys = parser.annotationGetKeys(document)
-        .filter(({ key }) => loader!.getTreeNodeByKey(key)?.type === 'node')
+      const parsedKeys = this._get_locale_keys_cache[filepath]
+        || (this._get_locale_keys_cache[filepath] = parser.annotationGetKeys(document))
+      keys = parsedKeys
+        .filter(({ key }) => loader!.getTreeNodeByKey(KeyDetector.getKeypath(key, namespace))?.type === 'node')
     }
     // code
     else if (Global.isLanguageIdSupported(document.languageId)) {

@@ -1,5 +1,6 @@
 import type { TextDocument } from 'vscode'
 import type { KeyOccurrence, KeyUsage } from '.'
+import type { OccurrenceIndex } from './OccurrenceIndex'
 import type { UsageReport } from './types'
 import fs from 'fs'
 import _, { uniq } from 'lodash'
@@ -10,19 +11,23 @@ import { gitignoredGlob } from '~/utils/glob'
 import { Config, KeyDetector } from '.'
 import { CurrentFile } from './CurrentFile'
 import { Global } from './Global'
+import { createOccurrenceIndex } from './OccurrenceIndex'
 
 export class Analyst {
   private static _cache: KeyOccurrence[] | null = null
+  private static _occurrenceIndex: OccurrenceIndex | null = null
+  private static _scanPromise: Promise<KeyOccurrence[]> | null = null
+  private static _cacheRevision = 0
   static readonly _onDidUsageReportChanged = new EventEmitter<UsageReport>()
   static readonly onDidUsageReportChanged = Analyst._onDidUsageReportChanged.event
+  static readonly _onDidOccurrencesChanged = new EventEmitter<void>()
+  static readonly onDidOccurrencesChanged = Analyst._onDidOccurrencesChanged.event
 
   static invalidateCache() {
+    this._cacheRevision++
     this._cache = null
-  }
-
-  static invalidateCacheOf(filepath: string) {
-    if (this._cache)
-      this._cache = this._cache.filter(o => o.filepath !== filepath)
+    this._occurrenceIndex = null
+    this._scanPromise = null
   }
 
   static watch() {
@@ -44,11 +49,17 @@ export class Analyst {
     if (!Global.isLanguageIdSupported(doc.languageId))
       return
 
+    const revision = this._cacheRevision
     const filepath = doc.uri.fsPath
     Log.info(`🔄 Update usage cache of ${filepath}`)
-    this.invalidateCacheOf(filepath)
     const occurrences = await this.getOccurrencesOfText(doc, filepath)
+    if (!this._cache || revision !== this._cacheRevision)
+      return
+
+    this._cache = this._cache.filter(o => o.filepath !== filepath)
     this._cache.push(...occurrences)
+    this._occurrenceIndex = createOccurrenceIndex(this._cache, key => this.normalizeKey(key))
+    this._onDidOccurrencesChanged.fire()
   }
 
   private static async enumerateDocumentPaths() {
@@ -74,29 +85,65 @@ export class Analyst {
         start,
         end,
         filepath,
+        line: doc.positionAt(start).line + 1,
       })
     }
 
     return occurrences
   }
 
-  static async getAllOccurrences(targetKey?: string, useCache = true) {
-    if (!useCache)
-      this._cache = null
+  private static async scanOccurrences() {
+    const occurrences: KeyOccurrence[] = []
+    const filepaths = await this.enumerateDocumentPaths()
 
-    if (!this._cache) {
-      const occurrences: KeyOccurrence[] = []
-      const filepaths = await this.enumerateDocumentPaths()
+    for (const filepath of filepaths)
+      occurrences.push(...await this.getOccurrencesOfFile(filepath))
 
-      for (const filepath of filepaths)
-        occurrences.push(...await this.getOccurrencesOfFile(filepath))
+    return occurrences
+  }
 
-      this._cache = occurrences
+  private static async ensureOccurrenceCache() {
+    if (this._cache && this._occurrenceIndex)
+      return
+
+    if (!this._scanPromise) {
+      const revision = this._cacheRevision
+      const scanPromise = this.scanOccurrences()
+      this._scanPromise = scanPromise
+
+      try {
+        const occurrences = await scanPromise
+        if (revision === this._cacheRevision) {
+          this._cache = occurrences
+          this._occurrenceIndex = createOccurrenceIndex(occurrences, key => this.normalizeKey(key))
+          this._onDidOccurrencesChanged.fire()
+        }
+      }
+      finally {
+        if (this._scanPromise === scanPromise)
+          this._scanPromise = null
+      }
+    }
+    else {
+      await this._scanPromise
     }
 
+    if (!this._cache || !this._occurrenceIndex)
+      await this.ensureOccurrenceCache()
+  }
+
+  static async getOccurrenceIndex(useCache = true): Promise<OccurrenceIndex> {
+    if (!useCache)
+      this.invalidateCache()
+    await this.ensureOccurrenceCache()
+    return this._occurrenceIndex!
+  }
+
+  static async getAllOccurrences(targetKey?: string, useCache = true) {
+    const index = await this.getOccurrenceIndex(useCache)
     if (targetKey)
-      return this._cache.filter(({ keypath }) => keypath === targetKey)
-    return this._cache
+      return index.get(this.normalizeKey(targetKey)) || []
+    return this._cache!
   }
 
   static async getAllOccurrenceLocations(targetKey: string) {

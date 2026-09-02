@@ -60,6 +60,29 @@
   "contributes": {
     "commands": [
       {
+        "command": "i18n-ally-next.search-by-value",
+        "category": "%extname%",
+        "title": "%command.search_by_value%",
+        "icon": {
+          "light": "res/light/globe-search.svg",
+          "dark": "res/dark/globe-search.svg"
+        }
+      },
+      {
+        "command": "i18n-ally-next.find-in-file-by-value",
+        "category": "%extname%",
+        "title": "%command.find_in_file_by_value%",
+        "icon": {
+          "light": "res/light/globe-search.svg",
+          "dark": "res/dark/globe-search.svg"
+        }
+      },
+      {
+        "command": "i18n-ally-next.show-key-references",
+        "category": "%extname%",
+        "title": "%command.show_key_references%"
+      },
+      {
         "command": "i18n-ally-next.config-locales",
         "title": "%command.config_locales%",
         "category": "%extname%"
@@ -407,6 +430,10 @@
           "when": "false"
         },
         {
+          "command": "i18n-ally-next.show-key-references",
+          "when": "false"
+        },
+        {
           "command": "i18n-ally-next.edit-key",
           "when": "false"
         },
@@ -537,16 +564,38 @@
           "group": "inline@5"
         }
       ],
+      "editor/title": [
+        {
+          "command": "i18n-ally-next.search-by-value",
+          "group": "navigation",
+          "when": "i18n-ally-next-enabled"
+        }
+      ],
       "view/title": [
+        {
+          "command": "i18n-ally-next.search-by-value",
+          "group": "navigation@1",
+          "when": "view =~ /i18n-ally-next-locales-tree/"
+        },
+        {
+          "command": "i18n-ally-next.new-key",
+          "group": "navigation@2",
+          "when": "view =~ /i18n-ally-next-locales-tree/"
+        },
+        {
+          "command": "i18n-ally-next.search-by-value",
+          "group": "navigation@1",
+          "when": "view =~ /i18n-ally-next-locales-sidebar-file/"
+        },
+        {
+          "command": "i18n-ally-next.search-by-value",
+          "group": "navigation@1",
+          "when": "view =~ /i18n-ally-next-locales-progress/"
+        },
         {
           "command": "i18n-ally-next.refresh-usage",
           "group": "navigation",
           "when": "view =~ /i18n-ally-next-locales-usage/"
-        },
-        {
-          "command": "i18n-ally-next.new-key",
-          "group": "navigation",
-          "when": "view =~ /i18n-ally-next-locales-tree/"
         },
         {
           "command": "i18n-ally-next.translate-all-missing",
@@ -613,6 +662,20 @@
       ],
       "comments/comment/context": []
     },
+    "keybindings": [
+      {
+        "command": "i18n-ally-next.find-in-file-by-value",
+        "key": "alt+f",
+        "mac": "cmd+alt+f",
+        "when": "editorTextFocus && i18n-ally-next-enabled"
+      },
+      {
+        "command": "i18n-ally-next.search-by-value",
+        "key": "alt+shift+f",
+        "mac": "cmd+alt+shift+f",
+        "when": "i18n-ally-next-enabled"
+      }
+    ],
     "viewsContainers": {
       "activitybar": [
         {
@@ -671,6 +734,11 @@
           "type": "boolean",
           "default": false,
           "description": "%config.disabled%"
+        },
+        "i18n-ally-next.codeLens": {
+          "type": "boolean",
+          "default": true,
+          "description": "%config.code_lens%"
         },
         "i18n-ally-next.autoDetection": {
           "type": "boolean",

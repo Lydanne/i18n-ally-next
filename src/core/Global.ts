@@ -196,6 +196,19 @@ export class Global {
       .map(id => ({ scheme: 'file', language: id }))
   }
 
+  static getLocaleDocumentSelectors() {
+    return uniq(this.enabledParsers.flatMap(p => p.annotationLanguageIds))
+      .map(id => ({ scheme: 'file', language: id }))
+  }
+
+  static getAllDocumentSelectors() {
+    const ids = uniq([
+      ...this.enabledFrameworks.flatMap(f => f.languageIds),
+      ...this.enabledParsers.flatMap(p => p.annotationLanguageIds),
+    ])
+    return ids.map(id => ({ scheme: 'file', language: id }))
+  }
+
   static get enabledParserExts() {
     return this.enabledParsers
       .flatMap(f => [

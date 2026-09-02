@@ -1,6 +1,7 @@
 import type { ExtensionModule } from '~/modules'
 import { flatten } from 'lodash'
 import annotation from './annotation'
+import codelens from './codelens'
 import completion from './completion'
 import definition from './definition'
 import extract from './extract'
@@ -13,6 +14,7 @@ import statusbar from './statusbar'
 const m: ExtensionModule = (ctx) => {
   return flatten([
     annotation(ctx),
+    codelens(ctx),
     completion(ctx),
     extract(ctx),
     refactor(ctx),
