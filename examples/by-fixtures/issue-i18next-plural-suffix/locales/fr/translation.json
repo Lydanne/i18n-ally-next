@@ -1,0 +1,6 @@
+{
+  "cart.title": "Votre panier",
+  "cart.items_one": "{{count}} article",
+  "cart.items_other": "{{count}} articles",
+  "cart.removed_one": "Un article retiré"
+}

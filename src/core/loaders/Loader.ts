@@ -219,10 +219,25 @@ export abstract class Loader extends Disposable {
     return firstPluralizationKey ? (value as Record<string, any>)[firstPluralizationKey] : undefined
   }
 
+  // A key used with a count lives only under its suffixed forms, so read the plural form when the bare key is absent.
+  private getTreeNodeOrDerivedByKey(key: string) {
+    const node = resolveFlattenRoot(this.getTreeNodeByKey(key))
+    if (node)
+      return node
+
+    const rules = Global.enabledFrameworks.flatMap(f => f.derivedKeyRules || [])
+    const ordered = uniq(['{key}_other', '{key}_plural', ...rules]).filter(rule => rules.includes(rule))
+    for (const rule of ordered) {
+      const derived = resolveFlattenRoot(this.getTreeNodeByKey(rule.replace('{key}', key)))
+      if (derived)
+        return derived
+    }
+  }
+
   getValueByKey(key: string, locale?: string, maxlength = 0, stringifySpace?: number, context: RewriteKeyContext = {}) {
     locale = locale || Config.displayLanguage
 
-    const node = resolveFlattenRoot(this.getTreeNodeByKey(key))
+    const node = this.getTreeNodeOrDerivedByKey(key)
 
     if (!node)
       return undefined
@@ -258,7 +273,7 @@ export abstract class Loader extends Disposable {
   }
 
   getNodeByKey(key: string, shadow = false, locale?: string): LocaleNode | undefined {
-    const node = resolveFlattenRoot(this.getTreeNodeByKey(key))
+    const node = this.getTreeNodeOrDerivedByKey(key)
     if (!node && shadow)
       return this.getShadowNodeByKey(key)
     if (node && node.type !== 'tree')

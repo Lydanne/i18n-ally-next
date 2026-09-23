@@ -1,0 +1,10 @@
+{
+  "i18n-ally-next.sourceLanguage": "en",
+  "i18n-ally-next.displayLanguage": "en",
+  "i18n-ally-next.enabledFrameworks": ["react-i18next"],
+  "i18n-ally-next.localesPaths": ["locales"],
+  "i18n-ally-next.pathMatcher": "{locale}/{namespace}.json",
+  "i18n-ally-next.namespace": true,
+  "i18n-ally-next.defaultNamespace": "translation",
+  "i18n-ally-next.keystyle": "flat"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "issue-i18next-plural-suffix",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "i18next": "^23.0.0",
+    "react-i18next": "^14.0.0"
+  }
+}
