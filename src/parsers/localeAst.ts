@@ -57,13 +57,14 @@ export function parseYamlLocaleAst(text: string): KeyInDocument[] {
       return
 
     const keyQuoted = node.key.type === 'QUOTE_DOUBLE' || node.key.type === 'QUOTE_SINGLE'
+    const valueQuoted = node.value.type === 'QUOTE_DOUBLE' || node.value.type === 'QUOTE_SINGLE'
     results.push({
-      start: valueRange[0] + 1,
-      end: valueRange[1] - 1,
+      start: valueRange[0] + (valueQuoted ? 1 : 0),
+      end: valueRange[1] - (valueQuoted ? 1 : 0),
       keyStart: keyRange[0] + (keyQuoted ? 1 : 0),
       keyEnd: keyRange[1] - (keyQuoted ? 1 : 0),
       key: [...path, key].join('.'),
-      quoted: true,
+      quoted: valueQuoted,
     })
   }
 

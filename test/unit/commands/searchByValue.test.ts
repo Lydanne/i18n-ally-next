@@ -122,12 +122,12 @@ describe('searchByValue & AST Parsers', () => {
 
       const greeting = pairs.find(p => p.key === 'greeting')
       expect(greeting).to.not.equal(undefined)
-      expect(yamlText.slice(greeting!.start - 1, greeting!.end + 1)).to.equal('Hello World')
+      expect(yamlText.slice(greeting!.start, greeting!.end)).to.equal('Hello World')
       expect(yamlText.slice(greeting!.keyStart, greeting!.keyEnd)).to.equal('greeting')
 
       const nestedItem = pairs.find(p => p.key === 'nested.item')
       expect(nestedItem).to.not.equal(undefined)
-      expect(yamlText.slice(nestedItem!.start - 1, nestedItem!.end + 1)).to.equal('Val')
+      expect(yamlText.slice(nestedItem!.start, nestedItem!.end)).to.equal('Val')
       expect(yamlText.slice(nestedItem!.keyStart, nestedItem!.keyEnd)).to.equal('item')
     })
   })

@@ -44,8 +44,11 @@ export class Analyst {
   }
 
   private static async updateCache(doc: TextDocument) {
-    if (!this._cache)
+    if (!this._cache) {
+      if (this._scanPromise)
+        this.invalidateCache()
       return
+    }
     if (!Global.isLanguageIdSupported(doc.languageId))
       return
 

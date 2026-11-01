@@ -24,7 +24,11 @@ setupTest('翻譯文字反向引用', () => {
       const key = usages.keys.find(key => key.key === 'save')!
       const range = KeyDetector.getRange(document, key, true)
       expect(document.getText(range)).to.equal('save')
+      expect(document.getText(KeyDetector.getRange(document, key))).to.equal(file.endsWith('.yaml') ? '儲存變更' : 'Save changes')
       expect(KeyDetector.getKey(document, range.start)).to.equal('common:save')
+      const renameTarget = KeyDetector.getKeyAndRange(document, range.start)!
+      expect(renameTarget.key).to.equal('common:save')
+      expect(document.getText(renameTarget.range)).to.equal('save')
 
       const references = await commands.executeCommand<Location[]>('vscode.executeReferenceProvider', document.uri, range.start)
       expect(references).to.have.lengthOf(1)

@@ -109,6 +109,9 @@ export class KeyDetector {
     if (!range || !key)
       return
 
+    if (CurrentFile.loader.files.some(file => file?.filepath === document.uri.fsPath))
+      return { range, key }
+
     const end = range.end.character - 1
     const start = end - key.length
     const keyRange = new Range(
