@@ -1,5 +1,7 @@
-import child_process from 'child_process'
+import type { spawn as Spawn } from 'child_process'
 import path from 'path'
+// @ts-expect-error cross-spawn does not ship TypeScript declarations
+import spawn from 'cross-spawn'
 import { Config, Global } from '~/core'
 import i18n from '~/i18n'
 import { Log } from '~/utils'
@@ -40,15 +42,28 @@ export class EcmascriptParser extends Parser {
       module: 'commonjs',
       ...Config.parsersTypescriptCompilerOption,
     }
-    const options = JSON.stringify(compilerOptions).replace(/"/g, '\\"')
+    const options = JSON.stringify(compilerOptions)
 
     return new Promise<any>((resolve, reject) => {
-      const cmd = `${tsNode} --dir "${dir}" --transpile-only --compiler-options "${options}" "${loader}" "${filepath}"`
-      // eslint-disable-next-line no-console
-      console.log(`[i18n-ally-next] spawn: ${cmd}`)
-      child_process.exec(cmd, (err, stdout) => {
-        if (err)
-          return reject(err)
+      const command = tsNode === 'ts-node' ? tsNode : 'node'
+      const args = [...(tsNode === 'ts-node' ? [] : [tsNode]), '--dir', dir, '--transpile-only', '--compiler-options', options, loader, filepath]
+      const child = (spawn as typeof Spawn)(command, args)
+      let stdout = ''
+      let stderr = ''
+      child.stdout!.setEncoding('utf8').on('data', (chunk: string) => {
+        stdout += chunk
+        if (Buffer.byteLength(stdout) > 1024 * 1024) {
+          child.kill()
+          reject(new Error('Locale loader output exceeds 1 MiB'))
+        }
+      })
+      child.stderr!.setEncoding('utf8').on('data', (chunk: string) => {
+        stderr = (stderr + chunk).slice(-1024 * 1024)
+      })
+      child.on('error', reject)
+      child.on('close', (code) => {
+        if (code !== 0)
+          return reject(new Error(`Locale loader exited with code ${code}: ${stderr}`))
         try {
           resolve(JSON.parse(stdout.trim()))
         }

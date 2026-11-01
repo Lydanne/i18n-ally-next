@@ -1387,6 +1387,7 @@
     "bcp-47-normalize": "^2.0.1",
     "change-case": "^4.1.2",
     "consolidate": "^1.0.4",
+    "cross-spawn": "7.0.6",
     "esm": "^3.2.25",
     "fast-glob": "^3.2.7",
     "fluent-vue-cli": "^3.0.4",
