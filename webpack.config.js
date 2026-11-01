@@ -27,7 +27,6 @@ const config = {
     'nodejieba': 'nodejieba',
     'esm': 'esm',
     'ts-node': 'ts-node',
-    'consolidate': 'consolidate',
     'fluent-vue-cli': 'fluent-vue-cli',
     'less': '_',
     'sass': '_',
@@ -35,12 +34,9 @@ const config = {
     '@microsoft/typescript-etw': '_',
   },
   resolve: {
+    // Only the SFC parser is used; the browser build excludes optional template engines.
     alias: {
-      // The locale-message library only uses parse(); its package entry also
-      // imports optional template engines that are unrelated to SFC parsing.
-      '@vue/component-compiler-utils$': require.resolve('@vue/component-compiler-utils/dist/parse', { paths: [require.resolve('vue-i18n-locale-message')] }),
-      // Parsing an SFC does not require the consumer's Vue runtime version.
-      'vue-template-compiler$': require.resolve('vue-template-compiler/build'),
+      '@vue/compiler-sfc$': require.resolve('@vue/compiler-sfc/dist/compiler-sfc.esm-browser.js'),
     },
     extensions: ['.ts', '.js'],
     plugins: [

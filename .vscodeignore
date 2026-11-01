@@ -79,16 +79,3 @@ jest.config.js
 !node_modules/diff
 !node_modules/diff/**/*.js
 !node_modules/diff/**/*.json
-
-# vue-i18n-locale-messages
-!node_modules/consolidate
-!node_modules/consolidate/**/*.js
-!node_modules/consolidate/*.json
-!node_modules/bluebird
-!node_modules/bluebird/**/*.js
-!node_modules/bluebird/*.json
-
-# vue
-!node_modules/vue/dist
-!node_modules/vue/dist/vue.min.js
-

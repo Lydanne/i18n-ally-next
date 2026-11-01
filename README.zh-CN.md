@@ -117,7 +117,7 @@
 
 | 功能 | 使用场景 | 安装命令 |
 | --- | --- | --- |
-| **Vue SFC `<i18n>` 块** | 在 `.vue` 文件中使用内联 `<i18n>` 翻译块 | `npm i -D vue-template-compiler vue-i18n-locale-message` |
+| **Vue SFC `<i18n>` 块** | 在 `.vue` 文件中使用内联 `<i18n>` 翻译块 | 扩展已内置 |
 | **Fluent Vue SFC** | 在 `.vue` SFC 文件中使用 Fluent 语法 | `npm i -D fluent-vue-cli` |
 
 > **提示：** 如果你使用独立的翻译文件（如 `locales/en.json`），则无需安装任何额外依赖。以上依赖仅在使用 SFC 内联翻译块时需要。
@@ -128,7 +128,7 @@
 
 ## ❤️ 致谢
 
-本插件最初受 [think2011/vscode-vue-i18n](https://github.com/think2011/vscode-vue-i18n) 启发。Vue SFC 支持由 [kazupon/vue-i18n-locale-message](https://github.com/kazupon/vue-i18n-locale-message) 提供。
+本插件最初受 [think2011/vscode-vue-i18n](https://github.com/think2011/vscode-vue-i18n) 启发，早期 Vue SFC 支持使用了 [kazupon/vue-i18n-locale-message](https://github.com/kazupon/vue-i18n-locale-message)。
 
 ### 贡献者
 

@@ -1,17 +1,13 @@
-import type { TextDocument, Uri } from 'vscode'
+import type { Uri } from 'vscode'
 import type { NodeOptions, PendingWrite } from '../types'
+import type { VueSfcMessageSection } from './vueSfcMessages'
 import { Range, workspace, WorkspaceEdit } from 'vscode'
 import { applyPendingToObject, File, Log, unflatten } from '~/utils'
 import { Config } from '../Config'
 import { Global } from '../Global'
 import { LocaleTree } from '../Nodes'
 import { Loader } from './Loader'
-
-const _vueSfcMsg: typeof import('vue-i18n-locale-message') | undefined = (() => {
-  // eslint-disable-next-line ts/no-require-imports
-  try { return require('vue-i18n-locale-message') }
-  catch { return undefined }
-})()
+import { parseVueSfcMessages, renderVueSfcMessages } from './vueSfcMessages'
 
 export class VueSfcLoader extends Loader {
   constructor(
@@ -22,8 +18,8 @@ export class VueSfcLoader extends Loader {
     this.load()
   }
 
-  _parsedSections: any[] = []
-  _meta: any | undefined
+  _parsedSections: VueSfcMessageSection[] = []
+  _loaded = false
 
   get filepath() {
     return this.uri.fsPath
@@ -37,18 +33,16 @@ export class VueSfcLoader extends Loader {
     const filepath = this.filepath
     Log.info(`📑 Loading sfc ${filepath}`)
     const doc = await workspace.openTextDocument(this.uri)
-    if (!_vueSfcMsg)
-      throw new Error('vue-i18n-locale-message is not installed')
-    const meta = this._meta = _vueSfcMsg.squeeze(Global.rootpath, this.getSFCFileInfo(doc))
-    this._parsedSections = meta.components[filepath]
+    this._parsedSections = parseVueSfcMessages(doc.getText(), filepath)
+    this._loaded = true
 
     this.updateLocalesTree()
     this._onDidChange.fire(this.name)
   }
 
-  private getOptions(section: any, locale: string, index: number): NodeOptions {
+  private getOptions(_section: VueSfcMessageSection, locale: string, index: number): NodeOptions {
     return {
-      filepath: section.src || this.uri.fsPath,
+      filepath: this.uri.fsPath,
       locale: Config.normalizeLocale(locale),
       features: {
         VueSfc: true,
@@ -58,13 +52,6 @@ export class VueSfcLoader extends Loader {
         VueSfcLocale: locale,
       },
     }
-  }
-
-  private getSFCFileInfo(doc: TextDocument) {
-    return [{
-      path: this.filepath,
-      content: doc.getText(),
-    }]
   }
 
   _locales = new Set<string>()
@@ -95,8 +82,14 @@ export class VueSfcLoader extends Loader {
       pendings = [pendings]
     pendings = pendings.filter(i => i)
 
-    if (!this._meta)
+    if (!this._loaded)
       return
+
+    const doc = await workspace.openTextDocument(this.uri)
+    const version = doc.version
+    const source = doc.getText()
+    const sections = parseVueSfcMessages(source, this.filepath)
+    const changed = new Set<VueSfcMessageSection>()
 
     for (const pending of pendings) {
       const record = this.getRecordByKey(pending.keypath, pending.locale, true)
@@ -105,7 +98,10 @@ export class VueSfcLoader extends Loader {
 
       const sectionIndex = record.meta ? (record.meta.VueSfcSectionIndex || 0) : 0
 
-      const section = this._meta.components[this.filepath][sectionIndex]
+      const section = sections[sectionIndex]
+      const previous = this._parsedSections[sectionIndex]
+      if (!section || !previous || section.lang !== previous.lang || section.locale !== previous.locale || section.originalContent !== previous.originalContent)
+        throw new Error(`The i18n block in ${this.filepath} changed; reload it before writing`)
 
       const locale = record?.meta?.VueSfcLocale || pending.locale
 
@@ -115,27 +111,30 @@ export class VueSfcLoader extends Loader {
         pending.value,
         await Global.requestKeyStyle(),
       )
+      changed.add(section)
     }
 
-    const doc = await workspace.openTextDocument(this.uri)
-    if (!_vueSfcMsg)
-      throw new Error('vue-i18n-locale-message is not installed')
-    const [file] = _vueSfcMsg.infuse(Global.rootpath, this.getSFCFileInfo(doc), this._meta)
+    if (!changed.size)
+      return
+    if (doc.version !== version)
+      throw new Error(`The document ${this.filepath} changed while translations were being written`)
+    const content = renderVueSfcMessages(source, [...changed])
 
     if (doc.isDirty) {
       const edit = new WorkspaceEdit()
-      edit.replace(this.uri, new Range(doc.positionAt(0), doc.positionAt(Infinity)), file.content)
+      edit.replace(this.uri, new Range(doc.positionAt(0), doc.positionAt(Infinity)), content)
 
-      await workspace.applyEdit(edit)
+      if (!await workspace.applyEdit(edit))
+        throw new Error(`Could not update the document ${this.filepath}`)
     }
     else {
-      await File.write(this.filepath, file.content)
+      await File.write(this.filepath, content)
     }
 
     await this.load()
   }
 
   canHandleWrites(pending: PendingWrite) {
-    return !!this._meta && pending.filepath === this.filepath
+    return this._loaded && pending.filepath === this.filepath
   }
 }
