@@ -23,8 +23,5 @@ export function resolveRefactorTemplate(arr: (string | CustomRefactorTemplate & 
  * Supports both `$1` and `{key}` as key placeholders, and `{args}` for arguments.
  */
 export function applyRefactorTemplate(template: string, keypath: string, argsString = ''): string {
-  return template
-    .replace(/\$1/g, keypath)
-    .replace(/\{key\}/g, keypath)
-    .replace(/\{args\}/g, argsString)
+  return template.replace(/\$1|\{key\}|\{args\}/g, match => match === '{args}' ? argsString : keypath)
 }
