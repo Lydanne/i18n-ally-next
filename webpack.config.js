@@ -28,16 +28,20 @@ const config = {
     'esm': 'esm',
     'ts-node': 'ts-node',
     'consolidate': 'consolidate',
-    'vue-i18n-locale-message': 'vue-i18n-locale-message',
-    'vue-template-compiler': 'vue-template-compiler',
     'fluent-vue-cli': 'fluent-vue-cli',
     'less': '_',
     'sass': '_',
     'stylus': '_',
-    'prettier': 'prettier',
     '@microsoft/typescript-etw': '_',
   },
   resolve: {
+    alias: {
+      // The locale-message library only uses parse(); its package entry also
+      // imports optional template engines that are unrelated to SFC parsing.
+      '@vue/component-compiler-utils$': require.resolve('@vue/component-compiler-utils/dist/parse', { paths: [require.resolve('vue-i18n-locale-message')] }),
+      // Parsing an SFC does not require the consumer's Vue runtime version.
+      'vue-template-compiler$': require.resolve('vue-template-compiler/build'),
+    },
     extensions: ['.ts', '.js'],
     plugins: [
       new TsconfigPathsPlugin(),
