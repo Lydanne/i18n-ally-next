@@ -1135,7 +1135,7 @@
         },
         "i18n-ally-next.parsers.typescript.tsNodePath": {
           "type": "string",
-          "default": "node_modules/ts-node/dist/bin.js"
+          "default": "dist/ts-parser/node_modules/ts-node/dist/bin.js"
         },
         "i18n-ally-next.parsers.typescript.compilerOptions": {
           "type": "object",
@@ -1352,7 +1352,7 @@
     "release:minor": "standard-version --release-as minor && git push --follow-tags",
     "release:patch": "standard-version --release-as patch && git push --follow-tags",
     "gh:release": "conventional-github-releaser -p angular",
-    "build": "rimraf dist && pnpm run i18n:build && pnpm run main:build && pnpm run editor:build && esno scripts/post-build.ts",
+    "build": "rimraf dist && pnpm run i18n:build && pnpm run main:build && pnpm run editor:build && esno scripts/post-build.ts && node scripts/package-ts-parser.cjs",
     "dev": "run-p *:dev",
     "main:build": "cross-env I18N_ALLY_ENV=production webpack --mode development",
     "main:dev": "cross-env I18N_ALLY_ENV=development webpack --mode development --watch --info-verbosity verbose",

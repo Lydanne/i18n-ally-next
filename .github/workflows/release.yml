@@ -42,6 +42,9 @@ jobs:
       - name: Package VSIX
         run: pnpm exec vsce package --no-dependencies
 
+      - name: Test packaged TypeScript parser
+        run: node scripts/test-packaged-ts-parser.cjs ./*.vsix
+
       # TODO: 配置 VSCE_TOKEN 后启用 VS Code Marketplace 发布
       # - name: Publish to VS Code Marketplace
       #   run: pnpm exec vsce publish --no-dependencies -p ${{secrets.VSCE_TOKEN}}
