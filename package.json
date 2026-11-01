@@ -1537,7 +1537,7 @@
     "@types/webpack": "^5.28.5",
     "@vitejs/plugin-vue": "^6.0.4",
     "@vscode/test-electron": "^2.3.0",
-    "@vscode/vsce": "^3.9.2",
+    "@vscode/vsce": "^4.1.0",
     "axios": "^1.21.0",
     "blueimp-md5": "^2.18.0",
     "chai": "^4.3.4",

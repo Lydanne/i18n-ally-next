@@ -32,8 +32,16 @@ class ReleaseTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 r.validate_tag(tag)
         with patch.dict(os.environ, {'GITHUB_REPOSITORY': 'owner/repo'}, clear=True):
-            with self.assertRaisesRegex(ValueError, 'VSCE_PAT'):
+            with self.assertRaisesRegex(ValueError, 'OVSX_PAT'):
                 r.preflight('v' + r.VERSION)
+
+        credentials = {'GITHUB_REPOSITORY': 'owner/repo', 'OVSX_PAT': 'fixture', 'GH_TOKEN': 'fixture'}
+        with patch.dict(os.environ, credentials, clear=True):
+            r.preflight('v' + r.VERSION)
+            with self.assertRaisesRegex(ValueError, 'OIDC'):
+                r.preflight('v' + r.VERSION, require_oidc=True)
+        with patch.dict(os.environ, {**credentials, 'ACTIONS_ID_TOKEN_REQUEST_URL': 'https://example.invalid', 'ACTIONS_ID_TOKEN_REQUEST_TOKEN': 'fixture'}, clear=True):
+            r.preflight('v' + r.VERSION, require_oidc=True)
 
     def test_compare_actual_content_and_validate_manifest(self):
         r.validate_vsix(vsix())
@@ -86,7 +94,7 @@ class ReleaseTests(unittest.TestCase):
             infos = [{'draft': True, 'assets': [{'name': r.ASSET}]}, {'draft': False, 'assets': [{'name': r.ASSET}]}]
             with patch.object(r, 'open_vsx_package', return_value=expected), patch.object(r, 'marketplace_package', side_effect=[None, expected, expected]), patch.object(r, 'run') as run, patch.object(r, 'release_info', side_effect=infos), patch.object(r, 'gh', side_effect=fake_gh) as gh:
                 r.publish('v' + r.VERSION, path)
-                run.assert_called_once_with(['pnpm', 'exec', 'vsce', 'publish', '--packagePath', str(path)])
+                run.assert_called_once_with(['pnpm', 'exec', 'vsce', 'publish', '--oidc', '--packagePath', str(path)])
                 self.assertEqual(gh.call_args_list[-1], call('release', 'edit', 'v' + r.VERSION, '--repo', 'owner/repo', '--draft=false'))
 
     def test_missing_release_is_created_draft_and_asset_uploaded(self):
@@ -116,12 +124,25 @@ class ReleaseTests(unittest.TestCase):
                 gh.assert_not_called()
 
     def test_each_cli_only_receives_its_own_credential(self):
-        env = {'GH_TOKEN': 'gh-token', 'VSCE_PAT': 'vsce-token', 'OVSX_PAT': 'ovsx-token'}
-        for args, expected in [(['gh', 'release'], 'GH_TOKEN'), (['pnpm', 'exec', 'vsce'], 'VSCE_PAT'), (['pnpm', 'exec', 'ovsx'], 'OVSX_PAT')]:
+        env = {'GH_TOKEN': 'gh-token', 'VSCE_PAT': 'vsce-token', 'OVSX_PAT': 'ovsx-token', 'ACTIONS_ID_TOKEN_REQUEST_URL': 'oidc-url', 'ACTIONS_ID_TOKEN_REQUEST_TOKEN': 'oidc-token'}
+        for args, expected in [(['gh', 'release'], {'GH_TOKEN'}), (['pnpm', 'exec', 'vsce'], {'ACTIONS_ID_TOKEN_REQUEST_URL', 'ACTIONS_ID_TOKEN_REQUEST_TOKEN'}), (['pnpm', 'exec', 'ovsx'], {'OVSX_PAT'})]:
             with self.subTest(command=args), patch.dict(os.environ, env, clear=True), patch.object(r.subprocess, 'run') as run:
                 r.run(args)
                 child = run.call_args.kwargs['env']
-                self.assertEqual({key for key in env if key in child}, {expected})
+                self.assertEqual({key for key in env if key in child}, expected)
+
+    def test_recover_requires_existing_asset_and_downloads_it(self):
+        with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {'GITHUB_REPOSITORY': 'owner/repo'}):
+            path = Path(directory) / 'nested' / r.ASSET
+            def fake_gh(*args):
+                (Path(args[-1]) / r.ASSET).write_bytes(vsix())
+            with patch.object(r, 'release_info', return_value={'draft': True, 'assets': [{'name': r.ASSET}]}), patch.object(r, 'gh', side_effect=fake_gh):
+                r.recover_asset('v' + r.VERSION, path)
+            self.assertTrue(path.exists())
+            with patch.object(r, 'release_info', return_value={'draft': True, 'assets': []}), patch.object(r, 'gh') as gh:
+                with self.assertRaisesRegex(RuntimeError, 'missing'):
+                    r.recover_asset('v' + r.VERSION, path)
+                gh.assert_not_called()
 
     def test_published_release_without_asset_fails_closed(self):
         with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {'GITHUB_REPOSITORY': 'owner/repo'}):
