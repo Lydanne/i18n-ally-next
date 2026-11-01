@@ -61,6 +61,24 @@ class ReleaseTests(unittest.TestCase):
             with self.assertRaises(urllib.error.HTTPError):
                 r.open_vsx_package()
 
+    def test_open_vsx_polls_use_a_fresh_cache_key(self):
+        error = urllib.error.HTTPError('url', 404, 'missing', {}, None)
+        with patch.object(r.time, 'time_ns', side_effect=[1, 2]), patch.object(r, 'request', side_effect=error) as request:
+            self.assertIsNone(r.open_vsx_package())
+            self.assertIsNone(r.open_vsx_package())
+            self.assertTrue(request.call_args_list[0].args[0].endswith('?release-check=1'))
+            self.assertTrue(request.call_args_list[1].args[0].endswith('?release-check=2'))
+
+    def test_wait_stops_on_match_or_bounded_timeout(self):
+        expected = vsix()
+        with patch.object(r.time, 'sleep') as sleep:
+            r.wait_for_match(expected, unittest.mock.Mock(side_effect=[None, None, expected]), 'Marketplace', attempts=3, delay=1)
+            self.assertEqual(sleep.call_count, 2)
+        with patch.object(r.time, 'sleep') as sleep:
+            with self.assertRaisesRegex(RuntimeError, 'not visible'):
+                r.wait_for_match(expected, lambda: None, 'Marketplace', attempts=3, delay=1)
+            self.assertEqual(sleep.call_count, 2)
+
     def test_retry_reuses_saved_asset_instead_of_overwriting_it(self):
         saved, rebuilt = vsix(b'original'), vsix(b'rebuilt')
         with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {'GITHUB_REPOSITORY': 'owner/repo'}):

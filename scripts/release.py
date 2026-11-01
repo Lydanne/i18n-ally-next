@@ -89,7 +89,9 @@ def same_vsix(expected, actual):
 
 def open_vsx_package():
     try:
-        metadata = json.loads(request(f'{OPEN_VSX}/api/{PUBLISHER}/{NAME}/{VERSION}'))
+        # A cached 404 can outlive the registry's scan/activation. Use a fresh
+        # query on each poll so the newly published version can become visible.
+        metadata = json.loads(request(f'{OPEN_VSX}/api/{PUBLISHER}/{NAME}/{VERSION}?release-check={time.time_ns()}'))
     except urllib.error.HTTPError as error:
         if error.code == 404:
             return None
@@ -120,13 +122,16 @@ def ensure_matching(expected, actual, platform):
     return actual is not None
 
 
-def wait_for_match(expected, lookup, platform, attempts=12, delay=10):
-    for _ in range(attempts):
+def wait_for_match(expected, lookup, platform, attempts=180, delay=10):
+    for attempt in range(attempts):
         actual = lookup()
         if ensure_matching(expected, actual, platform):
             print(f'{platform}: {VERSION} verified')
             return
-        time.sleep(delay)
+        if attempt % 6 == 0:
+            print(f'{platform}: waiting for {VERSION} to become visible', flush=True)
+        if attempt + 1 < attempts:
+            time.sleep(delay)
     raise RuntimeError(f'{platform}: {VERSION} not visible after publishing; retry the workflow')
 
 
