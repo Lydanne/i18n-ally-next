@@ -871,6 +871,7 @@ Uses `translate.google.cn` endpoint. No API key required. Best for users in main
 - `translate.libre.apiKey` — Optional API key for authenticated LibreTranslate instances.
 
 When an API key is configured, it is included in the translation request body using the `api_key` field.
+Authenticated requests do not follow redirects, so configure the final HTTPS endpoint directly for remote servers.
 
 If no API key is configured, translation requests remain unchanged, maintaining compatibility with instances that do not require authentication.
 
