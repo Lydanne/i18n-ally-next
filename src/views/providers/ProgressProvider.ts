@@ -18,7 +18,8 @@ export class ProgressProvider implements TreeDataProvider<BaseTreeItem> {
     EditorPanel.onDidChange(throttledRefresh)
     Global.onDidChangeLoader(() => {
       throttledRefresh()
-      Global.loader.onDidChange(throttledRefresh)
+      if (Global.loader)
+        Global.loader.onDidChange(throttledRefresh)
       CurrentFile.loader.onDidChange(throttledRefresh)
     })
     Global.onDidChangeEnabled(throttledRefresh)
