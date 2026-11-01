@@ -1,11 +1,14 @@
 import type { LocaleRecord } from '~/core'
-import { MarkdownString } from 'vscode'
+import path from 'path'
+import { slash } from '@antfu/utils'
+import { MarkdownString, workspace } from 'vscode'
 import { Commands } from '~/commands'
-import { ActionSource, Config, CurrentFile, Global } from '~/core'
+import { ActionSource, Analyst, Config, CurrentFile, Global } from '~/core'
 import i18n from '~/i18n'
 import { decorateLocale, escapeMarkdown, NodeHelper } from '~/utils'
 
 const EmptyButton = '⠀⠀'
+const MAX_HOVER_OCCURRENCES = 8
 
 function makeMarkdownCommand(command: Commands, args: any): string {
   return `command:${command}?${encodeURIComponent(JSON.stringify({ actionSource: ActionSource.Hover, ...args }))}`
@@ -92,7 +95,7 @@ export function createTable(visibleLocales: string[], records: Record<string, Lo
   return `| | | | | |\n|---|---:|---|---|---:|\n${transTable}\n| | | | | |`
 }
 
-export function createHover(keypath: string, maxLength = 0, mainLocale?: string, keyIndex?: number) {
+export async function createHover(keypath: string, maxLength = 0, mainLocale?: string, keyIndex?: number, showUsages = false) {
   const loader = CurrentFile.loader
   const records = loader.getTranslationsByKey(keypath, undefined)
   if (!Object.keys(records).length)
@@ -102,10 +105,49 @@ export function createHover(keypath: string, maxLength = 0, mainLocale?: string,
 
   const locales = Global.visibleLocales.filter(i => i !== mainLocale)
   const table1 = createTable([mainLocale, ...locales], records, maxLength, keyIndex)
-  const markdown = `${table1}`
+  let markdown = `${table1}`
+
+  if (showUsages) {
+    const occurrences = await Analyst.getAllOccurrences(keypath)
+    const root = Global.rootpath || ''
+    if (occurrences.length > 0) {
+      markdown += `\n\n---\n\n**${i18n.t('hover.usages', occurrences.length)}**:\n\n`
+      const displayOccurrences = occurrences.slice(0, MAX_HOVER_OCCURRENCES)
+      for (const occ of displayOccurrences) {
+        let relPath = slash(path.relative(root, occ.filepath))
+        if (!relPath.startsWith('.'))
+          relPath = `./${relPath}`
+        const doc = workspace.textDocuments.find(d => d.uri.fsPath === occ.filepath)
+        const line = occ.line || (doc ? doc.positionAt(occ.start).line + 1 : 1)
+        const args = { filepath: occ.filepath, start: occ.start, end: occ.end }
+        const openCmd = `command:${Commands.go_to_location}?${encodeURIComponent(JSON.stringify(args))}`
+        const escapedPath = `${relPath}:${line}`
+          .replace(/\r?\n/g, ' ')
+          .replace(/([\\`*_{}#+\-.!])/g, '\\$1')
+        const label = escapeMarkdown(escapedPath)
+        markdown += `- [📄 ${label}](${openCmd})\n`
+      }
+      if (occurrences.length > MAX_HOVER_OCCURRENCES) {
+        const moreCmd = `command:${Commands.show_key_references}?${encodeURIComponent(JSON.stringify({ keypath }))}`
+        markdown += `\n[${i18n.t('hover.more_references', occurrences.length - MAX_HOVER_OCCURRENCES)}](${moreCmd})\n`
+      }
+    }
+    else {
+      markdown += `\n\n---\n\n*$(circle-slash) ${i18n.t('hover.no_usages')}*`
+    }
+  }
 
   const markdownText = new MarkdownString(`${markdown}`, true)
-  markdownText.isTrusted = true
+  markdownText.isTrusted = {
+    enabledCommands: [
+      Commands.open_in_editor,
+      Commands.translate_key,
+      Commands.edit_key,
+      Commands.open_key,
+      Commands.go_to_location,
+      Commands.show_key_references,
+    ],
+  }
 
   return markdownText
 }

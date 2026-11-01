@@ -3,6 +3,7 @@ import type { KeyUsages, Loader } from '~/core'
 import type { ExtensionModule } from '~/modules'
 import throttle from 'lodash/throttle'
 import { Hover, languages, Range, window, workspace } from 'vscode'
+import { searchDecorations } from '~/commands/searchDecorations'
 import { Config, CurrentFile, Global, KeyDetector } from '~/core'
 import { THROTTLE_DELAY } from '../meta'
 import { getCommentState } from '../utils/shared'
@@ -167,6 +168,12 @@ const annotation: ExtensionModule = (ctx) => {
         }
       }
 
+      const isSearchMatch = usageType === 'code' && searchDecorations.has(editor, range)
+      if (isSearchMatch) {
+        editing = true
+        inplace = false
+      }
+
       if (text) {
         text = text.replace(/\r?\n/g, ' ')
         if (annotationBrackets)
@@ -201,7 +208,7 @@ const annotation: ExtensionModule = (ctx) => {
           range: annotationInPlaceFullMatch ? fullMatchRange : rangeWithQuotes,
         })
       }
-      else if (usageType === 'code') {
+      else if (usageType === 'code' && !isSearchMatch) {
         underlines.push({
           range,
         })
@@ -240,7 +247,8 @@ const annotation: ExtensionModule = (ctx) => {
     if (!document)
       return
 
-    if (!Global.isLanguageIdSupported(document.languageId))
+    const isLocaleFile = CurrentFile.loader.files.some(f => f?.filepath === document.uri.fsPath)
+    if (!Global.isLanguageIdSupported(document.languageId) && !isLocaleFile)
       return
 
     _current_doc = document
@@ -253,6 +261,7 @@ const annotation: ExtensionModule = (ctx) => {
 
   const disposables: Disposable[] = []
   CurrentFile.loader.onDidChange(throttledUpdate, null, disposables)
+  searchDecorations.onDidChange(throttledRefresh, null, disposables)
   Global.reviews.onDidChange(throttledUpdate, null, disposables)
   window.onDidChangeActiveTextEditor(throttledUpdate, null, disposables)
   window.onDidChangeTextEditorSelection(throttledRefresh, null, disposables)
@@ -268,29 +277,28 @@ const annotation: ExtensionModule = (ctx) => {
   )
 
   // hover
-  languages.registerHoverProvider('*', {
-    provideHover(document, position) {
+  disposables.push(languages.registerHoverProvider('*', {
+    async provideHover(document, position) {
       if (document !== _current_doc || !_current_usages)
         return
 
       const offset = document.offsetAt(position)
-      const key = _current_usages.keys.find(k => k.start <= offset && k.end >= offset)
+      const isLocale = _current_usages.type === 'locale'
+      const key = _current_usages.keys.find(k => KeyDetector.hasOffset(k, offset, isLocale))
       if (!key)
         return
 
-      const markdown = createHover(key.key, Config.annotationMaxLength, undefined, _current_usages.keys.indexOf(key))
+      const keypath = KeyDetector.getKeypath(key.key, _current_usages.namespace)
+      const markdown = await createHover(keypath, Config.annotationMaxLength, undefined, _current_usages.keys.indexOf(key), isLocale)
       if (!markdown)
         return
 
       return new Hover(
         markdown,
-        new Range(
-          document.positionAt(key.start),
-          document.positionAt(key.end),
-        ),
+        KeyDetector.getRange(document, key, isLocale),
       )
     },
-  })
+  }))
 
   update()
 

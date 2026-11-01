@@ -57,6 +57,7 @@ export default defineConfig({
                 { text: 'Machine Translation', link: '/guide/translation' },
                 { text: 'Visual Editor', link: '/guide/editor' },
                 { text: 'Usage Report', link: '/guide/usage-report' },
+                { text: '翻譯文字搜尋與反向引用', link: '/guide/search-by-value' },
               ],
             },
             {
@@ -161,6 +162,7 @@ export default defineConfig({
                 { text: '机器翻译', link: '/zh-CN/guide/translation' },
                 { text: '可视化编辑器', link: '/zh-CN/guide/editor' },
                 { text: '使用报告', link: '/zh-CN/guide/usage-report' },
+                { text: '翻譯文字搜尋與反向引用', link: '/guide/search-by-value' },
               ],
             },
             {

@@ -10,6 +10,7 @@ export interface CommandOptions {
   from?: string
   locales?: string[]
   keyIndex?: number
+  mode?: 'standalone' | 'currentFile'
   actionSource?: ActionSource
 }
 
