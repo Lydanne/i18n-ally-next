@@ -60,22 +60,33 @@ class ParaglideFramework extends Framework {
   preferredLocalePaths = ['messages']
   preferredKeystyle = 'flat' as const
   usageMatchRegex: string[] = []
+  private cachedText?: string
+  private cachedLanguage?: string
+  private cachedKeys: KeyInDocument[] = []
 
   getDocumentKeyUsages(text: string, languageId?: string) {
     if (!languageId || !this.languageIds.includes(languageId as LanguageId))
       return []
-    if (languageId !== 'svelte' && languageId !== 'vue')
-      return findCalls(text)
+    if (text === this.cachedText && languageId === this.cachedLanguage)
+      return this.cachedKeys
     const keys: KeyInDocument[] = []
-    const document = parseDocument(text, { withStartIndices: true, withEndIndices: true })
-    for (const node of document.children) {
-      if (node.type !== 'script' || node.startIndex == null || node.endIndex == null)
-        continue
-      const start = text.indexOf('>', node.startIndex) + 1
-      const closing = text.lastIndexOf('</', node.endIndex)
-      if (start > node.startIndex && closing >= start)
-        keys.push(...findCalls(text.slice(start, closing), start))
+    if (languageId !== 'svelte' && languageId !== 'vue') {
+      keys.push(...findCalls(text))
     }
+    else {
+      const document = parseDocument(text, { withStartIndices: true, withEndIndices: true })
+      for (const node of document.children) {
+        if (node.type !== 'script' || node.startIndex == null || node.endIndex == null)
+          continue
+        const start = text.indexOf('>', node.startIndex) + 1
+        const closing = text.lastIndexOf('</', node.endIndex)
+        if (start > node.startIndex && closing >= start)
+          keys.push(...findCalls(text.slice(start, closing), start))
+      }
+    }
+    this.cachedText = text
+    this.cachedLanguage = languageId
+    this.cachedKeys = keys
     return keys
   }
 
