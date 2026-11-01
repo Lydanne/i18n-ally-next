@@ -1,0 +1,4 @@
+interface:
+  display_name: "仓库问题处理"
+  short_description: "处理 Issue、PR 和安全告警"
+  default_prompt: "请按我的要求处理当前仓库的 Issue、PR 或安全问题，完成验证并处理对应状态。"

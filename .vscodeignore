@@ -1,4 +1,5 @@
 .github/**
+.agents/**
 .vscode/**
 .vscode-test/**
 node_modules/*
