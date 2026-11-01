@@ -375,7 +375,7 @@ Baseline versions: 7.0.39, 8.5.6, 8.5.8. Exposure: Tooling/transitive.
 | [PostCSS: Arbitrary file read and information disclosure via attacker-controlled sourceMappingURL in CSS comments](https://github.com/advisories/GHSA-6g55-p6wh-862q) | high | Resolved in audit |
 | [PostCSS line return parsing error](https://github.com/advisories/GHSA-7fh5-64p2-3v2j) | moderate | Resolved in audit |
 | [PostCSS: incomplete fix of GHSA-6g55-p6wh-862q — attacker-controlled sourceMappingURL reads arbitrary .map files when `from` is unset](https://github.com/advisories/GHSA-fxqj-rqcc-2cmp) | moderate | Resolved in audit |
-| [PostCSS has XSS via Unescaped </style> in its CSS Stringify Output](https://github.com/advisories/GHSA-qx2v-qp2m-jg93) | moderate | Resolved in audit |
+| [PostCSS has XSS via Unescaped &lt;/style&gt; in its CSS Stringify Output](https://github.com/advisories/GHSA-qx2v-qp2m-jg93) | moderate | Resolved in audit |
 | [PostCSS: Path Traversal in Previous Source Map Auto-Loading (sourceMappingURL) leads to Arbitrary .map File Disclosure](https://github.com/advisories/GHSA-r28c-9q8g-f849) | high | Resolved in audit |
 
 ### postcss-selector-parser
@@ -424,7 +424,7 @@ Baseline versions: 6.0.2. Exposure: Tooling/transitive.
 | Advisory | Severity | Status |
 | --- | --- | --- |
 | [Serialize JavaScript is Vulnerable to RCE via RegExp.flags and Date.prototype.toISOString()](https://github.com/advisories/GHSA-5c6j-r48x-rmvq) | high | Resolved in audit |
-| [Serialize JavaScript: Cross-site scripting (XSS) via unescaped </script at the end of a serialized function body](https://github.com/advisories/GHSA-m5mm-p8h7-m29v) | low | Resolved in audit |
+| [Serialize JavaScript: Cross-site scripting (XSS) via unescaped &lt;/script at the end of a serialized function body](https://github.com/advisories/GHSA-m5mm-p8h7-m29v) | low | Resolved in audit |
 | [Serialize JavaScript has CPU Exhaustion Denial of Service via crafted array-like objects](https://github.com/advisories/GHSA-qj8w-gfj5-8c6v) | moderate | Resolved in audit |
 
 ### shell-quote

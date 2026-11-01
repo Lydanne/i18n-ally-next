@@ -23,6 +23,7 @@ jobs:
           restore-keys: pnpm-
       - run: pnpm install --frozen-lockfile
       - run: pnpm test:unit
+      - run: python3 -m unittest discover -s test/release
 
   e2e:
     runs-on: ${{ matrix.os }}

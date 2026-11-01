@@ -21,3 +21,7 @@ test/e2e-fixtures-temp/
 test/fixtures-temp/
 test/fixture-scripts-out/
 /.idea/
+
+# Python release checks
+__pycache__/
+*.py[cod]
