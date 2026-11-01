@@ -21,6 +21,7 @@ import NextInternationalFramework from './next-international'
 import NextIntlFramework from './next-intl'
 import NextTranslateFramework from './next-translate'
 import NgxTranslateFramework from './ngx-translate'
+import ParaglideFramework from './paraglide'
 import PhpGettextFramework from './php-gettext'
 import PhpJoomlaFramework from './php-joomla'
 import PolyglotFramework from './polyglot'
@@ -56,6 +57,7 @@ export const frameworks: Framework[] = [
   new I18nTagFramework(),
   new FluentVueFramework(),
   new PhpJoomlaFramework(),
+  new ParaglideFramework(),
   new LaravelFramework(),
   new ChromeExtensionFramework(),
   new RubyRailsFramework(),

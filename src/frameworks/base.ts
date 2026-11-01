@@ -1,6 +1,6 @@
 /* eslint-disable unused-imports/no-unused-vars */
 import type { TextDocument } from 'vscode'
-import type { DataProcessContext, DirStructure, KeyStyle, OptionalFeatures, RewriteKeyContext, RewriteKeySource } from '~/core'
+import type { DataProcessContext, DirStructure, KeyInDocument, KeyStyle, OptionalFeatures, RewriteKeyContext, RewriteKeySource } from '~/core'
 import type { DetectionResult } from '~/core/types'
 import type { LanguageId } from '~/utils'
 import { Config } from '~/core'
@@ -90,6 +90,10 @@ export abstract class Framework {
     else
       reg = this.usageMatchRegex
     return reg
+  }
+
+  getDocumentKeyUsages(_text: string, _languageId?: string): KeyInDocument[] {
+    return []
   }
 
   rewriteKeys(key: string, source: RewriteKeySource, context: RewriteKeyContext = {}) {

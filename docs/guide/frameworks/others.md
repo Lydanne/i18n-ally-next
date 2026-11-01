@@ -24,6 +24,12 @@
 <p>{$_('home.description', { values: { name: 'World' } })}</p>
 ```
 
+## Paraglide.js
+
+For the usual `messages/{locale}.json` layout, set `i18n-ally-next.localesPaths` to `["messages"]`. The extension detects `@inlang/paraglide-js` and recognizes static calls such as `m.hello_world()` and `m['hello-world']()` when `m` is imported from a `paraglide/messages` module. Namespace aliases are supported in JavaScript, TypeScript and component script blocks.
+
+Dynamic calls such as `m[key]()`, calls in Vue or Svelte templates, and custom generated paths without a `paraglide/messages` segment are not detected. These usages may appear unused in the usage report. Complex message variants, generated names for nested message keys and extraction are not yet supported.
+
 ## Laravel
 
 ### Recommended Setup

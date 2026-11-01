@@ -24,6 +24,12 @@
 <p>{$_('home.description', { values: { name: 'World' } })}</p>
 ```
 
+## Paraglide.js
+
+使用常见的 `messages/{locale}.json` 目录时，将 `i18n-ally-next.localesPaths` 设置为 `["messages"]`。扩展会检测 `@inlang/paraglide-js`，并在 `m` 从 `paraglide/messages` 模块导入时识别 JavaScript、TypeScript 和组件脚本中的 `m.hello_world()`、`m['hello-world']()` 等静态调用，也支持命名空间别名。
+
+目前不能识别 `m[key]()` 等动态调用、Vue 或 Svelte 模板内的调用，以及不含 `paraglide/messages` 路径片段的自定义生成目录；这些调用可能在使用报告中显示为未使用。复杂消息变体、嵌套 key 的生成名称和文本提取暂不支持。
+
 ## Laravel
 
 ### 推荐配置

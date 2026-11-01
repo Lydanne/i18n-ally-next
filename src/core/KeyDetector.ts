@@ -53,6 +53,16 @@ export class KeyDetector {
       }
     }
 
+    if (!isLocaleFile && !Config._regexUsageMatch) {
+      const offset = document.offsetAt(position)
+      const usage = Global.enabledFrameworks.flatMap(f => f.getDocumentKeyUsages(document.getText(), document.languageId))
+        .find(item => item.start <= offset && offset <= item.end)
+      if (usage) {
+        const range = new Range(document.positionAt(usage.start), document.positionAt(usage.end))
+        if (!dotEnding || usage.key.endsWith('.'))
+          return { range, key: usage.key, exactRange: true }
+      }
+    }
     const regs = Global.getUsageMatchRegex(document.languageId, document.uri.fsPath)
     for (const regex of regs) {
       const range = document.getWordRangeAtPosition(position, regex)
@@ -105,12 +115,20 @@ export class KeyDetector {
   }
 
   static getKeyAndRange(document: TextDocument, position: Position, dotEnding?: boolean) {
-    const { range, key } = KeyDetector.getKeyRange(document, position, dotEnding) || {}
+    const result = KeyDetector.getKeyRange(document, position, dotEnding)
+    const { range, key } = result || {}
     if (!range || !key)
       return
 
-    if (CurrentFile.loader.files.some(file => file?.filepath === document.uri.fsPath))
+    if ((result && 'exactRange' in result) || CurrentFile.loader.files.some(file => file?.filepath === document.uri.fsPath))
       return { range, key }
+
+    const matchText = document.getText(range)
+    const relativeStart = matchText.lastIndexOf(key)
+    if (relativeStart >= 0) {
+      const start = document.offsetAt(range.start) + relativeStart
+      return { range: new Range(document.positionAt(start), document.positionAt(start + key.length)), key }
+    }
 
     const end = range.end.character - 1
     const start = end - key.length
@@ -157,8 +175,8 @@ export class KeyDetector {
       if (this._get_keys_cache[filepath])
         return this._get_keys_cache[filepath]
 
-      regs = regs ?? Global.getUsageMatchRegex(document.languageId, filepath)
       text = document.getText()
+      regs = regs ?? Global.getUsageMatchRegex(document.languageId, filepath)
       rewriteContext = {
         targetFile: filepath,
       }
@@ -170,6 +188,13 @@ export class KeyDetector {
     }
 
     const keys = regexFindKeys(text, regs, dotEnding, rewriteContext, scopes)
+    if (typeof document !== 'string' && !Config._regexUsageMatch) {
+      for (const usage of Global.enabledFrameworks.flatMap(f => f.getDocumentKeyUsages(text, document.languageId))) {
+        if (!keys.some(key => key.start === usage.start))
+          keys.push(usage)
+      }
+      keys.sort((a, b) => a.start - b.start)
+    }
     if (filepath)
       this._get_keys_cache[filepath] = keys
     return keys
