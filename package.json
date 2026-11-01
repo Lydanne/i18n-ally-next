@@ -805,7 +805,8 @@
               "fluent-vue",
               "fluent-vue-sfc",
               "next-intl",
-              "next-international"
+              "next-international",
+              "paraglide"
             ]
           },
           "description": "%config.enabled_frameworks%"
