@@ -1,0 +1,3 @@
+interface:
+  display_name: "Git PR Workflow"
+  short_description: "Deliver repository changes as a pull request"
