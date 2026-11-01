@@ -1,0 +1,7 @@
+languageIds:
+  - javascript
+usageMatchRegex:
+  - "(?:^|[^\\w])t\\(['\"]({key})['\"]"
+namespace: true
+namespaceDelimiter: ':'
+monopoly: true

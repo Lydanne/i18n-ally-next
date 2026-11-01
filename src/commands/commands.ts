@@ -51,4 +51,8 @@ export const enum Commands {
   check_stale_translations = 'i18n-ally-next.check-stale-translations',
   select_editor_llm_model = 'i18n-ally-next.select-editor-llm-model',
   migrate_from_i18n_ally = 'i18n-ally-next.migrate-from-i18n-ally',
+  search_by_value = 'i18n-ally-next.search-by-value',
+  find_in_file_by_value = 'i18n-ally-next.find-in-file-by-value',
+  show_key_references = 'i18n-ally-next.show-key-references',
+  go_to_location = 'i18n-ally-next.go-to-location',
 }

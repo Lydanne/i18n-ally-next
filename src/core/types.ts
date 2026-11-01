@@ -119,6 +119,8 @@ export interface ParserOptions {
 export interface KeyInDocument {
   start: number
   end: number
+  keyStart?: number
+  keyEnd?: number
   key: string
   quoted: boolean
   fullMatchStart?: number
@@ -130,6 +132,7 @@ export interface KeyOccurrence {
   filepath: string
   start: number
   end: number
+  line?: number
 }
 
 export interface KeyUsage {

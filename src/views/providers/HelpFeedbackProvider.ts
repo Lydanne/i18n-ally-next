@@ -26,6 +26,13 @@ export class HelpFeedbackProvider implements TreeDataProvider<FeedbackItem> {
       return [] // no child
 
     return ([{
+      text: i18n.t('command.search_by_value') || 'Search translation by value',
+      icon: 'search',
+      command: {
+        title: i18n.t('command.search_by_value') || 'Search translation by value',
+        command: Commands.search_by_value,
+      },
+    }, {
       text: i18n.t('feedback.document'),
       icon: 'help-documentation',
       url: Links.document,

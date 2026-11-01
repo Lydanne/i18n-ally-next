@@ -7,6 +7,7 @@ import deepl from './deepl'
 import detectHardStrings from './detectHardStrings'
 import extractText from './extractString'
 import batchHardStringsExtract from './extractStringBulk'
+import findInFileByValue from './findInFileByValue'
 import gotoNextUsage from './gotoNextUsage'
 import gotoRange from './gotoRange'
 import help from './help'
@@ -16,11 +17,15 @@ import editor from './openEditor'
 import refreshUsageReport from './refreshUsageReport'
 import review from './review'
 import scanAndExtractAll from './scanAndExtractAll'
+import searchByValue from './searchByValue'
+import { searchDecorations } from './searchDecorations'
 import selectEditorLLMModel from './selectEditorLLMModel'
+import showReferences from './showReferences'
 import translateAllMissing from './translateAllMissing'
 
 const m: ExtensionModule = (ctx) => {
   return flatten([
+    searchDecorations,
     configLocales(ctx),
     configLanguages(ctx),
     keyManipulations(ctx),
@@ -39,6 +44,9 @@ const m: ExtensionModule = (ctx) => {
     checkStaleTranslations(ctx),
     selectEditorLLMModel(ctx),
     migrate(ctx),
+    searchByValue(ctx),
+    findInFileByValue(ctx),
+    showReferences(ctx),
   ])
 }
 

@@ -43,7 +43,7 @@ class Provider implements ReferenceProvider, RenameProvider {
 const m: ExtensionModule = (ctx) => {
   const provider = new Provider(ctx)
   return [
-    languages.registerReferenceProvider(Global.getDocumentSelectors(), provider),
+    languages.registerReferenceProvider(Global.getAllDocumentSelectors(), provider),
     languages.registerRenameProvider(Global.getDocumentSelectors(), provider),
   ]
 }
