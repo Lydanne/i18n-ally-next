@@ -10,7 +10,7 @@ i18n Ally Next supports multiple translation engines to automatically translate 
 | **Google Translate (CN)** | `google-cn` | Optional |
 | **DeepL** | `deepl` | ✅ |
 | **Baidu** | `baidu` | ✅ |
-| **LibreTranslate** | `libretranslate` | - (self-hosted) |
+| **LibreTranslate** | `libretranslate` | Optional (self-hosted) |
 | **OpenAI** | `openai` | ✅ |
 | **Ollama** | `ollama` | - (local, free) |
 | **Editor LLM** | `editor-llm` | - (uses built-in Copilot, VS Code only) |
@@ -41,8 +41,9 @@ i18n Ally Next supports multiple translation engines to automatically translate 
   "i18n-ally-next.translate.baidu.appid": "YOUR_APPID",
   "i18n-ally-next.translate.baidu.apiSecret": "YOUR_SECRET",
 
-  // LibreTranslate
+  // LibreTranslate (API key optional)
   "i18n-ally-next.translate.libre.apiRoot": "http://localhost:5000",
+  "i18n-ally-next.translate.libre.apiKey": "YOUR_API_KEY",
 
   // OpenAI
   "i18n-ally-next.translate.openai.apiKey": "YOUR_KEY",

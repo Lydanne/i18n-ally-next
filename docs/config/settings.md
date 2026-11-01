@@ -862,11 +862,20 @@ Uses `translate.google.cn` endpoint. No API key required. Best for users in main
 ```jsonc
 {
   "i18n-ally-next.translate.engines": ["libretranslate"],
-  "i18n-ally-next.translate.libre.apiRoot": "http://localhost:5000"
+  "i18n-ally-next.translate.libre.apiRoot": "http://localhost:5000",
+  "i18n-ally-next.translate.libre.apiKey": "YOUR_API_KEY"
 }
 ```
 
 - `translate.libre.apiRoot` — LibreTranslate server URL. Default is `http://localhost:5000` for self-hosted instances.
+- `translate.libre.apiKey` — Optional API key for authenticated LibreTranslate instances.
+
+When an API key is configured, it is included in the translation request body using the `api_key` field.
+Authenticated requests do not follow redirects, so configure the final HTTPS endpoint directly for remote servers.
+
+If no API key is configured, translation requests remain unchanged, maintaining compatibility with instances that do not require authentication.
+
+Dev Note: for security, store API keys in VS Code User Settings rather than Workspace Settings to avoid accidentally committing credentials to version control !!!
 
 #### OpenAI
 

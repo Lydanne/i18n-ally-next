@@ -1077,6 +1077,11 @@
           "default": "http://localhost:5000",
           "description": "%config.libretranslate_api_root%"
         },
+        "i18n-ally-next.translate.libre.apiKey": {
+          "type": "string",
+          "default": null,
+          "description": "%config.libretranslate_api_key%"
+        },
         "i18n-ally-next.translate.openai.apiKey": {
           "type": "string",
           "default": null,

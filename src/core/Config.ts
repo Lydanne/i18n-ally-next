@@ -600,6 +600,10 @@ export class Config {
     return this.getConfig<string | null | undefined>('translate.libre.apiRoot')
   }
 
+  static get libreTranslateApiKey() {
+    return this.getConfig<string | null | undefined>('translate.libre.apiKey')
+  }
+
   static get editorLLMModel() {
     return this.getConfig<string | null | undefined>('translate.editor-llm.model')
   }

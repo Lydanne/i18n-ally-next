@@ -1,7 +1,7 @@
 import type { TranslateOptions, TranslateResult } from './base'
-import axios from 'axios'
 import { Config } from '~/core'
 import TranslateEngine from './base'
+import { requestLibreTranslation } from './libretranslateRequest'
 
 export default class LibreTranslate extends TranslateEngine {
   apiRoot = 'http://localhost:5000'
@@ -16,16 +16,9 @@ export default class LibreTranslate extends TranslateEngine {
     if (Config.libreTranslateApiRoot)
       apiRoot = Config.libreTranslateApiRoot
 
-    const response = await axios.post(`${apiRoot}/translate`, {
-      q: options.text,
-      source: from,
-      target: to,
-      format: 'html',
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    const apiKey = Config.libreTranslateApiKey
+
+    const response = await requestLibreTranslation(apiRoot, options.text, from, to, apiKey)
 
     return this.transform(response, options)
   }
