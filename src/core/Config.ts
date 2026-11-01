@@ -254,7 +254,7 @@ export class Config {
     if (config === 'ts-node')
       return config
 
-    return `node "${path.resolve(this.extensionPath!, config)}"`
+    return path.resolve(this.extensionPath!, config)
   }
 
   static get parsersTypescriptCompilerOption(): any {
