@@ -29,6 +29,15 @@ export default <ExtensionModule> function (ctx) {
     let mode: EditorPanel['mode'] = 'standalone'
     let index: number | undefined
 
+    if (
+      item
+      && typeof item !== 'string'
+      && !(item instanceof LocaleTreeItem)
+      && 'mode' in item
+      && item.mode
+    ) {
+      mode = item.mode
+    }
     // from command pattele
     if (!item) {
       actionSource = ActionSource.CommandPattele
