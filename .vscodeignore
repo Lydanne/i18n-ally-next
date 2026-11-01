@@ -1,5 +1,6 @@
 .github/**
 .agents/**
+AGENTS.md
 .vscode/**
 .vscode-test/**
 node_modules/*
