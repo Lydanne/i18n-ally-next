@@ -36,9 +36,9 @@
 
 | 命令 | 说明 |
 | --- | --- |
-| `pnpm release` | 完整发布流程：构建 → patch 版本号 → 打包 vsix |
-| `pnpm release:patch` | 使用 standard-version 递增 patch 版本并推送 tag |
-| `pnpm release:minor` | 使用 standard-version 递增 minor 版本并推送 tag |
+| `pnpm release` | 准备 patch 版本、运行单元测试并打包 VSIX；不会提交、打标签或推送 |
+| `pnpm release:patch` | 准备 patch 版本及更新日志，不会提交或打标签 |
+| `pnpm release:minor` | 准备 minor 版本及更新日志，不会提交或打标签 |
 
 ### 其他
 
@@ -99,6 +99,8 @@ code --install-extension ./i18n-ally-next-*.vsix --force
 ```bash
 pnpm release
 ```
+
+将版本和更新日志改动通过 PR 合并后，在已合并的提交上创建并推送匹配的 `vMAJOR.MINOR.PATCH` 标签，触发双平台发布。必须先配置 `VSCE_TOKEN` 和 `OVSX_TOKEN`。失败重试和核验步骤见仓库的 `dual-marketplace-release` 技能。
 
 ## 环境变量
 

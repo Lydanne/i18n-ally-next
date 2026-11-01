@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -15,6 +19,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - uses: actions/setup-node@v4
         with:
@@ -22,41 +27,36 @@ jobs:
 
       - uses: pnpm/action-setup@v4
 
-      - name: Cache pnpm store
-        uses: actions/cache@v4
-        with:
-          path: ~/.local/share/pnpm/store/v3
-          key: pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: pnpm-
+      - name: Validate tag and credentials before any publication
+        run: python3 scripts/release.py preflight
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VSCE_PAT: ${{ secrets.VSCE_TOKEN }}
+          OVSX_PAT: ${{ secrets.OVSX_TOKEN }}
 
       - run: pnpm install --frozen-lockfile
-
-      - name: Build
-        run: pnpm run build
+      - run: pnpm test:unit
+      - run: python3 -m unittest discover -s test/release
+      - run: pnpm run build
 
       - name: Package VSIX
-        run: pnpm exec vsce package --no-dependencies
+        run: |
+          mkdir -p /tmp/i18n-release
+          pnpm exec vsce package --no-dependencies --out "/tmp/i18n-release/i18n-ally-next-$(node -p "require('./package.json').version").vsix"
 
-      - name: Test packaged TypeScript parser
-        run: node scripts/test-packaged-ts-parser.cjs ./*.vsix
-
-      - name: Create GitHub Release
-        run: pnpm run gh:release
+      - name: Persist or recover the release asset
+        run: python3 scripts/release.py prepare
         env:
-          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VSCE_PAT: ${{ secrets.VSCE_TOKEN }}
+          OVSX_PAT: ${{ secrets.OVSX_TOKEN }}
 
-      # TODO: 配置 VSCE_TOKEN 后启用 VS Code Marketplace 发布
-      # - name: Publish to VS Code Marketplace
-      #   run: pnpm exec vsce publish --no-dependencies -p ${{secrets.VSCE_TOKEN}}
-      #   env:
-      #     VSCE_TOKEN: ${{secrets.VSCE_TOKEN}}
+      - name: Test the exact release asset
+        run: node scripts/test-packaged-ts-parser.cjs /tmp/i18n-release/*.vsix
 
-      - name: Publish to Open VSX
-        run: pnpx ovsx publish *.vsix -p ${{secrets.OVSX_TOKEN}}
+      - name: Publish and verify both marketplaces
+        run: python3 scripts/release.py publish
         env:
-          OVSX_TOKEN: ${{secrets.OVSX_TOKEN}}
-
-      - name: Upload VSIX to GitHub Release
-        run: gh release upload ${{github.ref_name}} *.vsix --clobber
-        env:
-          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VSCE_PAT: ${{ secrets.VSCE_TOKEN }}
+          OVSX_PAT: ${{ secrets.OVSX_TOKEN }}

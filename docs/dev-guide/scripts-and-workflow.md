@@ -36,9 +36,9 @@
 
 | Command | Description |
 | --- | --- |
-| `pnpm release` | Full release flow: build → bump patch version → package vsix |
-| `pnpm release:patch` | Bump patch version with standard-version and push tags |
-| `pnpm release:minor` | Bump minor version with standard-version and push tags |
+| `pnpm release` | Prepare a patch version, run unit tests and package a VSIX; no commit, tag or push |
+| `pnpm release:patch` | Prepare a patch version and changelog without committing or tagging |
+| `pnpm release:minor` | Prepare a minor version and changelog without committing or tagging |
 
 ### Others
 
@@ -99,6 +99,8 @@ After submitting a Pull Request, maintainers can assign **Copilot** as a reviewe
 ```bash
 pnpm release
 ```
+
+Merge the version and changelog changes through a PR, then create and push a matching `vMAJOR.MINOR.PATCH` tag on the merged commit to start the dual marketplace release. Configure `VSCE_TOKEN` and `OVSX_TOKEN` first. See the repository `dual-marketplace-release` skill for recovery and verification.
 
 ## Environment Variables
 
