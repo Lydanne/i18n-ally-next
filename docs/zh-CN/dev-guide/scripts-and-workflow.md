@@ -100,7 +100,7 @@ code --install-extension ./i18n-ally-next-*.vsix --force
 pnpm release
 ```
 
-将版本和更新日志改动通过 PR 合并后，在已合并的提交上创建并推送匹配的 `vMAJOR.MINOR.PATCH` 标签，触发双平台发布。必须先配置 `VSCE_TOKEN` 和 `OVSX_TOKEN`。失败重试和核验步骤见仓库的 `dual-marketplace-release` 技能。
+将版本和更新日志改动通过 PR 合并后，在已合并的提交上创建并推送匹配的 `vMAJOR.MINOR.PATCH` 标签，触发双平台发布。必须先配置 `OVSX_TOKEN`，并为此仓库和 `release.yml` 工作流配置 Marketplace Trusted Publishing；无需 `VSCE_TOKEN`。发布工具需要 Node 22 或更高版本。失败重试和核验步骤见仓库的 `dual-marketplace-release` 技能。
 
 ## 环境变量
 

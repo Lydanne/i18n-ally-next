@@ -41,8 +41,12 @@ def run(args, *, capture=False):
         env.pop('VSCE_PAT', None)
         env.pop('GH_TOKEN', None)
     elif args[:3] == ['pnpm', 'exec', 'vsce']:
+        env.pop('VSCE_PAT', None)
         env.pop('OVSX_PAT', None)
         env.pop('GH_TOKEN', None)
+    if args[:3] != ['pnpm', 'exec', 'vsce']:
+        env.pop('ACTIONS_ID_TOKEN_REQUEST_URL', None)
+        env.pop('ACTIONS_ID_TOKEN_REQUEST_TOKEN', None)
     return subprocess.run(args, check=True, text=True, capture_output=capture, env=env)
 
 
@@ -126,12 +130,14 @@ def wait_for_match(expected, lookup, platform, attempts=12, delay=10):
     raise RuntimeError(f'{platform}: {VERSION} not visible after publishing; retry the workflow')
 
 
-def preflight(tag):
+def preflight(tag, *, require_oidc=False):
     validate_tag(tag)
-    credentials = {'VSCE_PAT': 'VSCE_TOKEN', 'OVSX_PAT': 'OVSX_TOKEN', 'GH_TOKEN': 'GITHUB_TOKEN'}
+    credentials = {'OVSX_PAT': 'OVSX_TOKEN', 'GH_TOKEN': 'GITHUB_TOKEN'}
     missing = [f'{secret} ({key})' for key, secret in credentials.items() if not os.environ.get(key)]
     if missing:
         raise ValueError('Missing required release credentials: ' + ', '.join(missing))
+    if require_oidc and not all(os.environ.get(key) for key in ('ACTIONS_ID_TOKEN_REQUEST_URL', 'ACTIONS_ID_TOKEN_REQUEST_TOKEN')):
+        raise ValueError('GitHub Actions OIDC is unavailable; grant id-token: write to the publish job')
     if not re.fullmatch(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+', os.environ.get('GITHUB_REPOSITORY', '')):
         raise ValueError('Invalid GITHUB_REPOSITORY')
 
@@ -139,7 +145,7 @@ def preflight(tag):
 def release_info(tag):
     # gh resolves draft pending tag names through GraphQL; REST by-tag only
     # returns published releases, and REST listings may use untagged-* names.
-    env = {key: value for key, value in os.environ.items() if key not in ('VSCE_PAT', 'OVSX_PAT')}
+    env = {key: value for key, value in os.environ.items() if key not in ('VSCE_PAT', 'OVSX_PAT', 'ACTIONS_ID_TOKEN_REQUEST_URL', 'ACTIONS_ID_TOKEN_REQUEST_TOKEN')}
     result = subprocess.run(['gh', 'release', 'view', tag, '--repo', os.environ['GITHUB_REPOSITORY'], '--json', 'tagName,isDraft,assets'], text=True, capture_output=True, env=env)
     if result.returncode:
         if result.stderr.strip() == 'release not found':
@@ -180,6 +186,16 @@ def prepare_asset(tag, path):
         print('Saved VSIX to draft GitHub release')
 
 
+def recover_asset(tag, path):
+    release = release_info(tag)
+    if release is None or len([asset for asset in release['assets'] if asset['name'] == ASSET]) != 1:
+        raise RuntimeError('Expected persisted GitHub release asset is missing or ambiguous')
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.unlink(missing_ok=True)
+    gh('release', 'download', tag, '--repo', os.environ['GITHUB_REPOSITORY'], '--pattern', ASSET, '--dir', str(path.parent))
+    validate_vsix(path.read_bytes())
+
+
 def publish(tag, path):
     expected = path.read_bytes()
     validate_vsix(expected)
@@ -190,7 +206,7 @@ def publish(tag, path):
         run(['pnpm', 'exec', 'ovsx', 'publish', '--packagePath', str(path)])
         wait_for_match(expected, open_vsx_package, 'Open VSX')
     if not market_exists:
-        run(['pnpm', 'exec', 'vsce', 'publish', '--packagePath', str(path)])
+        run(['pnpm', 'exec', 'vsce', 'publish', '--oidc', '--packagePath', str(path)])
         wait_for_match(expected, marketplace_package, 'VS Code Marketplace')
     # Check both again before turning the draft into a public GitHub release.
     wait_for_match(expected, open_vsx_package, 'Open VSX')
@@ -214,14 +230,16 @@ def publish(tag, path):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('step', choices=['preflight', 'prepare', 'publish'])
+    parser.add_argument('step', choices=['preflight', 'prepare', 'recover', 'publish'])
     parser.add_argument('--asset-dir', default='/tmp/i18n-release')
     args = parser.parse_args()
     tag = os.environ.get('GITHUB_REF_NAME', '')
-    preflight(tag)
+    preflight(tag, require_oidc=args.step in ('recover', 'publish'))
     path = Path(args.asset_dir).resolve() / ASSET
     if args.step == 'prepare':
         prepare_asset(tag, path)
+    elif args.step == 'recover':
+        recover_asset(tag, path)
     elif args.step == 'publish':
         publish(tag, path)
 

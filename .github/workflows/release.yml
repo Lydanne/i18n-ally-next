@@ -5,58 +5,74 @@ on:
     tags:
       - v*
 
-permissions:
-  contents: write
+permissions: {}
 
 concurrency:
   group: release-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
-  release:
+  prepare:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           persist-credentials: false
-
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-
+          node-version: 22
       - uses: pnpm/action-setup@v4
-
       - name: Validate tag and credentials before any publication
         run: python3 scripts/release.py preflight
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VSCE_PAT: ${{ secrets.VSCE_TOKEN }}
           OVSX_PAT: ${{ secrets.OVSX_TOKEN }}
-
       - run: pnpm install --frozen-lockfile
       - run: pnpm test:unit
       - run: python3 -m unittest discover -s test/release
       - run: pnpm run build
-
       - name: Package VSIX
         run: |
           mkdir -p /tmp/i18n-release
           pnpm exec vsce package --no-dependencies --out "/tmp/i18n-release/i18n-ally-next-$(node -p "require('./package.json').version").vsix"
-
       - name: Persist or recover the release asset
         run: python3 scripts/release.py prepare
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VSCE_PAT: ${{ secrets.VSCE_TOKEN }}
           OVSX_PAT: ${{ secrets.OVSX_TOKEN }}
-
       - name: Test the exact release asset
         run: node scripts/test-packaged-ts-parser.cjs /tmp/i18n-release/*.vsix
 
+  publish:
+    needs: prepare
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+      # No dependency lifecycle scripts execute in the OIDC-enabled job.
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Recover the tested asset
+        run: python3 scripts/release.py recover
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OVSX_PAT: ${{ secrets.OVSX_TOKEN }}
+      - name: Test the recovered asset
+        run: node scripts/test-packaged-ts-parser.cjs /tmp/i18n-release/*.vsix
+      - name: Verify Marketplace trusted publishing before either upload
+        run: node scripts/check-marketplace-oidc.cjs
       - name: Publish and verify both marketplaces
         run: python3 scripts/release.py publish
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VSCE_PAT: ${{ secrets.VSCE_TOKEN }}
           OVSX_PAT: ${{ secrets.OVSX_TOKEN }}

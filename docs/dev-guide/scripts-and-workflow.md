@@ -100,7 +100,7 @@ After submitting a Pull Request, maintainers can assign **Copilot** as a reviewe
 pnpm release
 ```
 
-Merge the version and changelog changes through a PR, then create and push a matching `vMAJOR.MINOR.PATCH` tag on the merged commit to start the dual marketplace release. Configure `VSCE_TOKEN` and `OVSX_TOKEN` first. See the repository `dual-marketplace-release` skill for recovery and verification.
+Merge the version and changelog changes through a PR, then create and push a matching `vMAJOR.MINOR.PATCH` tag on the merged commit to start the dual marketplace release. Configure `OVSX_TOKEN` and Marketplace Trusted Publishing for this repository and the `release.yml` workflow first; no `VSCE_TOKEN` is needed. The publisher requires Node 22 or newer. See the repository `dual-marketplace-release` skill for recovery and verification.
 
 ## Environment Variables
 
