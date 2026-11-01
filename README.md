@@ -117,7 +117,7 @@ Some advanced features require additional packages to be installed **in your pro
 
 | Feature | When needed | Install |
 | --- | --- | --- |
-| **Vue SFC `<i18n>` block** | Using inline `<i18n>` blocks in `.vue` files | `npm i -D vue-template-compiler vue-i18n-locale-message` |
+| **Vue SFC `<i18n>` block** | Using inline `<i18n>` blocks in `.vue` files | Bundled with the extension |
 | **Fluent Vue SFC** | Using Fluent syntax in `.vue` SFC files | `npm i -D fluent-vue-cli` |
 
 > **Note:** If you use standalone locale files (e.g. `locales/en.json`), no extra dependencies are needed. The above packages are only required for SFC inline translation blocks.
@@ -143,7 +143,7 @@ This extension itself supports i18n. It auto-matches your VS Code display langua
 
 ## ❤️ Credits
 
-This extension was originally inspired by [think2011/vscode-vue-i18n](https://github.com/think2011/vscode-vue-i18n). Vue SFC support is powered by [kazupon/vue-i18n-locale-message](https://github.com/kazupon/vue-i18n-locale-message).
+This extension was originally inspired by [think2011/vscode-vue-i18n](https://github.com/think2011/vscode-vue-i18n). Earlier Vue SFC support used [kazupon/vue-i18n-locale-message](https://github.com/kazupon/vue-i18n-locale-message).
 
 ### Contributors
 
