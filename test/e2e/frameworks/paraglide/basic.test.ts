@@ -1,4 +1,4 @@
-import { Range, window } from 'vscode'
+import { languages, Range, window } from 'vscode'
 import { expect, Global, KeyDetector, openFile, setupTest, timeout } from '../../ctx'
 
 setupTest('Paraglide messages', () => {
@@ -24,5 +24,10 @@ setupTest('Paraglide messages', () => {
   it('does not treat an unrelated m object as translations', async () => {
     await openFile('src/unrelated.js')
     expect(KeyDetector.getKeys(window.activeTextEditor!.document)).to.deep.equal([])
+  })
+  it('only reads top-level component scripts', async () => {
+    await openFile('src/Component.vue')
+    const document = await languages.setTextDocumentLanguage(window.activeTextEditor!.document, 'vue')
+    expect(KeyDetector.getKeys(document).map(key => key.key)).to.deep.equal(['hello_world'])
   })
 })

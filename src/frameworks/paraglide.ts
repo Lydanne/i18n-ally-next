@@ -3,6 +3,7 @@ import type { LanguageId } from '~/utils'
 import { parse } from '@babel/parser'
 // @ts-ignore -- @babel/traverse has no bundled declarations in this project
 import traverse from '@babel/traverse'
+import { parseDocument } from 'htmlparser2'
 import { Framework } from './base'
 
 function isMessagesModule(source: string) {
@@ -66,10 +67,14 @@ class ParaglideFramework extends Framework {
     if (languageId !== 'svelte' && languageId !== 'vue')
       return findCalls(text)
     const keys: KeyInDocument[] = []
-    const scripts = /<script\b[^>]*>([\s\S]*?)<\/script\s*>/gi
-    for (const match of text.matchAll(scripts)) {
-      const start = match.index! + match[0].indexOf('>') + 1
-      keys.push(...findCalls(match[1], start))
+    const document = parseDocument(text, { withStartIndices: true, withEndIndices: true })
+    for (const node of document.children) {
+      if (node.type !== 'script' || node.startIndex == null || node.endIndex == null)
+        continue
+      const start = text.indexOf('>', node.startIndex) + 1
+      const closing = text.lastIndexOf('</', node.endIndex)
+      if (start > node.startIndex && closing >= start)
+        keys.push(...findCalls(text.slice(start, closing), start))
     }
     return keys
   }
