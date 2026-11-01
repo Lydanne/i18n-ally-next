@@ -15,6 +15,7 @@ import { EXT_NAMESPACE } from '../meta'
 import { AvailableParsers, DefaultEnabledParsers } from '../parsers'
 import { checkNotification } from '../update-notification'
 import { ParsePathMatcher } from '../utils/PathMatcher'
+import { applyRefactorTemplate } from '~/utils/resolveRefactorTemplate'
 import { Analyst } from './Analyst'
 import { Config } from './Config'
 import { CurrentFile } from './CurrentFile'
@@ -134,10 +135,7 @@ export class Global {
 
     const customReplacers = customTemplates
       .flatMap(i => i.templates)
-      .map(i => i
-        .replace(/\{key\}/, keypath)
-        .replace(/\{args\}/, argsString),
-      )
+      .map(i => applyRefactorTemplate(i, keypath, argsString))
 
     const frameworkReplacers = this.enabledFrameworks
       .flatMap(f => f.refactorTemplates(keypath, args, document, detection))

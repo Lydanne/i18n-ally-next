@@ -6,10 +6,12 @@ import { trim } from 'lodash'
 import { commands, Range, window } from 'vscode'
 import { Config, CurrentFile, extractHardStrings, generateKeyFromText, Global, Telemetry, TelemetryKey } from '~/core'
 import { parseHardString } from '~/extraction/parseHardString'
+import { detectionForSelection } from '~/extraction/utils'
 import i18n from '~/i18n'
 import { keypathValidate, Log, promptTemplates } from '~/utils'
 import { Commands } from './commands'
 
+import { DetectHardStrings } from './detectHardStrings'
 import { overrideConfirm } from './overrideConfirm'
 
 interface QuickPickItemWithKey extends QuickPickItem {
@@ -73,6 +75,15 @@ async function ExtractOrInsertCommnad(options?: ExtractTextOptions, detection?: 
 
   const { text, rawText, range, args, document, isInsert } = options
   const filepath = document.uri.fsPath
+
+  // Manual selections do not carry the diagnostic that identifies their
+  // source. Recover it only when the selection unambiguously overlaps one
+  // detected string, so source-specific templates work in this path too.
+  if (!detection && !isInsert) {
+    const start = document.offsetAt(range.start)
+    const end = document.offsetAt(range.end)
+    detection = detectionForSelection(await DetectHardStrings(document, false) || [], start, end)
+  }
 
   const default_keypath = generateKeyFromText(rawText || text, filepath)
 
