@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.16](https://github.com/lydanne/i18n-ally-next/compare/v3.0.15...v3.0.16) (2026-11-01)
+
+
+### ⚡ Features
+
+* detect static Paraglide message calls ([cdb9a10](https://github.com/lydanne/i18n-ally-next/commit/cdb9a1003e5dc0f7a298eaaeb1424b4efc6735e5))
+* respect editor preference for quick fixes ([eba9280](https://github.com/lydanne/i18n-ally-next/commit/eba9280b2b3a31c7fb060b47a443743ef3374a0f))
+* search translations by value and navigate to usages ([4c8c773](https://github.com/lydanne/i18n-ally-next/commit/4c8c773b6c44d57ef1b33aa08975c7e70447473b))
+* support LibreTranslate API key authentication ([5e2ff5e](https://github.com/lydanne/i18n-ally-next/commit/5e2ff5ed39b4ed580580ab7ccf5aa75b03e5c6c4))
+
+
+### 🐞 Bug Fixes
+
+* avoid shell evaluation when loading locale files ([782cc62](https://github.com/lydanne/i18n-ally-next/commit/782cc62661b3da3acdebdab508a232d60d646f37))
+* handle unloaded locale loaders on workspace changes ([5c5e2c2](https://github.com/lydanne/i18n-ally-next/commit/5c5e2c2414170b592b63b753a555082d988ebeac))
+* harden dual marketplace release workflow ([#41](https://github.com/lydanne/i18n-ally-next/issues/41)) ([96fa868](https://github.com/lydanne/i18n-ally-next/commit/96fa868a82916b04dacbf68ae63a2f2f3cad87d4))
+* include TypeScript parser runtime in VSIX ([5657f93](https://github.com/lydanne/i18n-ally-next/commit/5657f93012c18e4e78dd4e827e498d22db47d0ff))
+* load Vue SFC messages in packaged extension ([2428a2c](https://github.com/lydanne/i18n-ally-next/commit/2428a2cb1120d6fc35700bc6c005a58f76717b59))
+* remediate dependency security advisories ([#39](https://github.com/lydanne/i18n-ally-next/issues/39)) ([5d8553d](https://github.com/lydanne/i18n-ally-next/commit/5d8553d805d8b868a14566b685b6a71a98129174))
+* support custom refactor templates ([4931b17](https://github.com/lydanne/i18n-ally-next/commit/4931b1795cb04a5d8befc98841963073e718a8d4))
+* use trusted publishing for marketplace releases ([#42](https://github.com/lydanne/i18n-ally-next/issues/42)) ([96ddf38](https://github.com/lydanne/i18n-ally-next/commit/96ddf3859132e109b711562993b69c5183fa8f28))
+
 ### [3.0.15](https://github.com/lydanne/i18n-ally-next/compare/v3.0.14...v3.0.15) (2026-03-19)
 
 

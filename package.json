@@ -2,7 +2,7 @@
   "publisher": "lydanne",
   "name": "i18n-ally-next",
   "displayName": "i18n Ally Next",
-  "version": "3.0.15",
+  "version": "3.0.16",
   "packageManager": "pnpm@9.15.4",
   "pnpm": {
     "overrides": {
