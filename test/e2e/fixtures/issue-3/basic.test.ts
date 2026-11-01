@@ -1,5 +1,5 @@
-import { window } from 'vscode'
-import { expect, getExt, Global, is, KeyDetector, not, openFile, setupTest, timeout } from '../../ctx'
+import { ConfigurationTarget, window, workspace } from 'vscode'
+import { CurrentFile, expect, getExt, Global, is, KeyDetector, not, openFile, setupTest, timeout } from '../../ctx'
 
 setupTest('React with i18next Explicit Namespace (Issue 3)', () => {
   it('opens entry file', async () => {
@@ -32,5 +32,22 @@ setupTest('React with i18next Explicit Namespace (Issue 3)', () => {
     not(treeNode, undefined)
     is(treeNode?.type, 'node')
     is(treeNode?.value, 'You are not authorized to perform this action')
+  })
+
+  it('clears the current loader when the extension is disabled and restores it when enabled', async () => {
+    const config = workspace.getConfiguration('i18n-ally-next')
+    try {
+      await config.update('disabled', true, ConfigurationTarget.Workspace)
+      await Global.update()
+      is(Global.loader, undefined)
+      is(CurrentFile.loader.loaders.length, 0)
+      expect(() => CurrentFile.loader.root).not.to.throw()
+    }
+    finally {
+      await config.update('disabled', undefined, ConfigurationTarget.Workspace)
+      await Global.update()
+    }
+    not(Global.loader, undefined)
+    expect(CurrentFile.loader.loaders).to.include(Global.loader)
   })
 })
