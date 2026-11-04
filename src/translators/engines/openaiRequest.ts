@@ -7,8 +7,9 @@ export async function requestOpenAITranslation(apiRoot: string, apiKey: string |
       model,
       // Reasoning models reject the sampling and penalty settings used by
       // legacy models. Bound output for OpenAI without imposing a specific
-      // request schema on OpenAI-compatible providers.
-      ...(isOpenAI ? { max_completion_tokens: 4096 } : {}),
+      // request schema on OpenAI-compatible providers. Keep their previous
+      // output limit to avoid unexpectedly increasing usage.
+      ...(isOpenAI ? { max_completion_tokens: 4096 } : { max_tokens: 1000 }),
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt },

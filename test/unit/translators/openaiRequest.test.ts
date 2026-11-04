@@ -32,7 +32,7 @@ describe('openAI translation requests', () => {
     expect(requests[0]).to.deep.equal({
       path: '/v1/chat/completions',
       authorization: 'Bearer synthetic-key',
-      body: { model: 'gpt-6-sol', messages: [{ role: 'system', content: 'Translate.' }, { role: 'user', content: 'Hello' }] },
+      body: { model: 'gpt-6-sol', max_tokens: 1000, messages: [{ role: 'system', content: 'Translate.' }, { role: 'user', content: 'Hello' }] },
     })
     expect(result.data.choices[0].message.content).to.equal('Bonjour')
     expect(inspect(result, { depth: 10 })).not.to.include('synthetic-key')
