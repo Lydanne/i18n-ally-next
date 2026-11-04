@@ -625,7 +625,7 @@ export class Config {
   }
 
   static get openaiApiModel() {
-    return this.getConfig<string>('translate.openai.apiModel') ?? 'gpt-3.5-turbo'
+    return this.getConfig<string>('translate.openai.apiModel') ?? 'gpt-5.6-terra'
   }
 
   static get ollamaApiRoot() {
