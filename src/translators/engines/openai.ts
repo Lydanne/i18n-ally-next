@@ -1,7 +1,7 @@
 import type { TranslateOptions, TranslateResult } from './base'
-import axios from 'axios'
 import { Config } from '~/core'
 import TranslateEngine from './base'
+import { requestOpenAITranslation } from './openaiRequest'
 
 export default class OpenAITranslate extends TranslateEngine {
   apiRoot = 'https://api.openai.com'
@@ -14,32 +14,12 @@ export default class OpenAITranslate extends TranslateEngine {
       apiRoot = Config.openaiApiRoot.replace(/\/$/, '')
     const model = Config.openaiApiModel
 
-    const response = await axios.post(
-      `${apiRoot}/v1/chat/completions`,
-      {
-        model,
-        temperature: 0,
-        max_tokens: 1000,
-        top_p: 1,
-        frequency_penalty: 1,
-        presence_penalty: 1,
-        messages: [
-          {
-            role: 'system',
-            content: this.systemPrompt,
-          },
-          {
-            role: 'user',
-            content: this.generateUserPrompts(options),
-          },
-        ],
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
-        },
-      },
+    const response = await requestOpenAITranslation(
+      apiRoot,
+      apiKey,
+      model,
+      this.systemPrompt,
+      this.generateUserPrompts(options),
     )
 
     return this.transform(response, options)
