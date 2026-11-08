@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.17](https://github.com/lydanne/i18n-ally-next/compare/v3.0.16...v3.0.17) (2026-11-08)
+
+
+### 🐞 Bug Fixes
+
+* allow time for marketplace verification ([#43](https://github.com/lydanne/i18n-ally-next/issues/43)) ([d47fb3b](https://github.com/lydanne/i18n-ally-next/commit/d47fb3b435ec929b61caf7b0f24fa135a54a94e4))
+* support current OpenAI translation models ([#46](https://github.com/lydanne/i18n-ally-next/issues/46)) ([8633dbb](https://github.com/lydanne/i18n-ally-next/commit/8633dbb209132af5dfa353f5885145990625d73a))
+
+
+### 📚 Documentations
+
+* design weekly automated releases ([#47](https://github.com/lydanne/i18n-ally-next/issues/47)) ([142debc](https://github.com/lydanne/i18n-ally-next/commit/142debc83097a47e1de4d14663e7f48426bfd749))
+
 ### [3.0.16](https://github.com/lydanne/i18n-ally-next/compare/v3.0.15...v3.0.16) (2026-11-01)
 
 
