@@ -2,13 +2,18 @@ import { languages, Range, window } from 'vscode'
 import { expect, Global, KeyDetector, openFile, setupTest, timeout } from '../../ctx'
 
 setupTest('Paraglide messages', () => {
-  it('detects message calls from an imported namespace', async () => {
+  it('detects message calls from an imported namespace', async function () {
+    this.timeout(10000)
     await openFile('src/app.js')
     await timeout(500)
     expect(Global.enabledFrameworks.map(f => f.id)).to.include('paraglide')
     const doc = window.activeTextEditor!.document
     const keys = KeyDetector.getKeys(doc)
     expect(keys.map(key => key.key)).to.deep.equal(['hello_world', 'hello-world', 'hello_world', 'hello-world'])
+    const deadline = Date.now() + 8000
+    while (!Global.loader && Date.now() < deadline)
+      await timeout(100)
+    expect(Boolean(Global.loader), 'locale loader should initialize').to.equal(true)
     for (const key of keys) {
       const target = KeyDetector.getKeyAndRange(doc, doc.positionAt(key.start))!
       expect(doc.getText(target.range)).to.equal(key === keys[3] ? 'hello\\x2dworld' : key.key)
