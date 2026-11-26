@@ -9,15 +9,16 @@
 </p>
 
 <p align="center">
-<a href="https://github.com/lydanne/i18n-ally-next/blob/main/readme.md">English</a> | 简体中文
+<a href="https://github.com/lydanne/i18n-ally-next/blob/main/README.md">English</a> | 简体中文
 </p>
 
 <p align="center">
-<a href="https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next"><img src="https://img.shields.io/visual-studio-marketplace/v/lydanne.i18n-ally-next?color=6366f1&amp;label=Marketplace&logo=visual-studio-code" alt="VS Code Marketplace" /></a>
-<a href="https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next"><img src="https://img.shields.io/visual-studio-marketplace/d/lydanne.i18n-ally-next?color=06b6d4" alt="Downloads" /></a>
-<a href="https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next"><img src="https://img.shields.io/visual-studio-marketplace/i/lydanne.i18n-ally-next?color=10b981" alt="Installs" /></a>
+<a href="https://marketplace.visualstudio.com/items?itemName=lydanne.i18n-ally-next"><img src="https://img.shields.io/badge/VS%20Code-Marketplace-6366f1?logo=visual-studio-code" alt="VS Code Marketplace" /></a>
+<a href="https://open-vsx.org/extension/lydanne/i18n-ally-next"><img src="https://img.shields.io/badge/Open%20VSX-Registry-10b981" alt="Open VSX Registry" /></a>
 <a href="https://github.com/lydanne/i18n-ally-next"><img alt="GitHub stars" src="https://img.shields.io/github/stars/lydanne/i18n-ally-next?style=social"></a>
 </p>
+
+i18n Ally Next 是 [i18n Ally](https://github.com/lokalise/i18n-ally) 的持续维护分支。
 
 ---
 
